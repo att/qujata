@@ -27,7 +27,7 @@ The project maintainers are responsible for:
   
 ## Enforcement  
   
-If you observe any violations of this code of conduct, please report it to the project maintainers at [insert contact email or other reporting mechanism]. All reports will be kept confidential, and the project maintainers will investigate the reported behavior and take appropriate action.  
+If you observe any violations of this code of conduct, please report it to the project maintainers at [dl-info-qujata@intl.att.com](mailto:dl-info-qujata@intl.att.com). All reports will be kept confidential, and the project maintainers will investigate the reported behavior and take appropriate action.  
   
 ## Attribution  
   
