@@ -1,0 +1,34 @@
+@import 'src/styles/variables-keys';
+@import './AttSelect.reference';
+
+$attSelectSpinnerSizeValue: var($selectSpinnerSize, 18px);
+$attSelectSpinnerRightMarginValue: var($selectSpinnerRightMargin, 10px);
+$attSelectSpinnerLeftMarginValue: var($selectSpinnerLeftMargin, 2px);
+
+.att_select_primary_theme {
+  #{$selectBorderColor}: var($attCobalt);
+  #{$selectControlBackgroundColor}: transparent;
+  #{$selectPlaceholderColor}: var($attCobalt);
+  #{$selectIndicatorsColor}: var($attCobalt);
+  &:hover {
+    #{$selectControlBackgroundColor}: var($attCobalt);
+    #{$selectPlaceholderColor}: var($primaryWhite);
+    #{$selectIndicatorsColor}: var($primaryWhite);
+  }
+}
+
+.att_select_wrapper_theme {
+  #{$selectControlBackgroundColor}: transparent;
+  #{$selectBorderColor}: transparent;
+}
+
+.att_select_error {
+  #{$selectBorderColor}: var($errorTextColor);
+}
+
+.att_select_spinner {
+  block-size: $attSelectSpinnerSizeValue;
+  inline-size: $attSelectSpinnerSizeValue;
+  margin-inline-end: $attSelectSpinnerRightMarginValue;
+  margin-inline-start: $attSelectSpinnerLeftMarginValue;
+}

@@ -1,0 +1,141 @@
+@import './variables-keys';
+@import './global-reference';
+@import './z-index';
+
+$selectBorderColorDefault: #dcdfe3;
+$selectBorderColorValue: var($selectBorderColor, $selectBorderColorDefault);
+$selectOptionHoverBackgroundColor: #e5eef7;
+$selectDisabledBackgroundColor: #f9f9f9;
+$selectTagBorderColor: #454b52;
+
+.att_select_container {
+  &.att_select_container--is-loading {
+    .att_select__dropdown-indicator {
+      display: none;
+    }
+  }
+  &.att_select--is-disabled {
+    #{$selectBorderColor}: initial;
+    #{$selectPlaceholderColor}: initial;
+  }
+
+  &.att_select_multi_container {
+    .att_select__control {
+      block-size: var($selectControlHeight, 60px);
+    }
+  }
+
+  .att_select__menu {
+    border-radius: 2px;
+    margin-block-start: 0;
+    inline-size: max-content;
+    min-inline-size: 100%;
+    max-inline-size: var($selectOptionMaxWidth, 420px);
+    z-index: $selectOpenOptionsModeZindex;
+  }
+
+  .att_select__control {
+    background-color: var($selectControlBackgroundColor, var($backgroundColorWhite));
+    block-size: var($selectControlHeight, 48px);
+    border-radius: 2px;
+    border: 1px solid $selectBorderColorValue;
+    box-shadow: none;
+    inline-size: 100%;
+    transition: all 100ms, border-color 0s;
+
+    &:hover {
+      border-color: $selectBorderColorValue;
+      cursor: pointer;
+    }
+
+    .att_select__value-container.att_select__value-container--is-multi {
+      flex-wrap: nowrap;
+    }
+
+    .att_select__multi-value {
+      border: solid 1px $selectTagBorderColor;
+      padding: 1px;
+      background-color: transparent;
+      line-height: 16px;
+      margin-inline-end: 8px;
+      block-size: 28px;
+    }
+
+    .att_select__multi-value__label {
+      color: var($textBlack);
+      font-size: 15px;
+    }
+
+    .att_select__multi-value__remove {
+      color: var($textBlack);
+
+      &:hover {
+        background-color: transparent;
+      }
+    }
+  }
+
+  .att_select__option {
+    background-color: inherit;
+    color: var($textBlack);
+    cursor: pointer;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+    &.att_select__option--is-selected {
+      font-family: var($fontMedium);
+    }
+
+    &:not(.att_select__option--is-disabled) {
+      &:hover, &.att_select__option--is-focused {
+        background-color: $selectOptionHoverBackgroundColor;
+      }
+    }
+
+    &.att_select__option--is-disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+    }
+  }
+
+  .att_select__control--is-disabled {
+    background-color: $selectDisabledBackgroundColor;
+  }
+
+  &.att_select_container--is-readonly {
+    .att_select__indicators {
+      visibility: hidden;
+    }
+    .att_select__single-value{
+      color: var($textBlack);
+    }
+  }
+
+  .att_select__placeholder {
+    @extend %ellipsis;
+    color: var($selectPlaceholderColor, #878c94);
+
+  }
+
+  .att_select__indicator {
+    color: var($selectIndicatorsColor);
+  }
+
+  .att_select__control--is-disabled {
+    #{$selectIndicatorsColor}: #878c94;
+  }
+
+  &.eda-select-hide-caret-indicator {
+    .att_select__input {
+      caret-color: transparent;
+    }
+  }
+
+}
+
+.capitalize_select_option {
+  .att_select__option, .att_select__single-value {
+    text-transform: capitalize;
+  }
+}

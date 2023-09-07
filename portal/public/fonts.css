@@ -1,0 +1,18 @@
+@font-face {
+  font-family: 'ATTAleckSans';
+  font-display: swap;
+  src: url('fonts/ATTAleckSans_W_Rg.woff2') format('woff2'),
+       url('fonts/ATTAleckSans_W_Rg.woff') format('woff');   /* Pretty Modern Browsers */
+}
+@font-face {
+  font-family: 'ATTAleckSansBold';
+  font-display: swap;
+  src: url('fonts/ATTAleckSans_W_Bd.woff2') format('woff2'),
+       url('fonts/ATTAleckSans_W_Bd.woff') format('woff'); /* Pretty Modern Browsers */
+}
+@font-face {
+  font-family: 'ATTAleckSansMed';
+  font-display: swap;
+  src: url('fonts/ATTAleckSans_W_Md.woff2') format('woff2'),
+       url('fonts/ATTAleckSans_W_Md.woff') format('woff'); /* Pretty Modern Browsers */
+}

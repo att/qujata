@@ -1,0 +1,10 @@
+@import "src/styles/variables-keys";
+
+.wrapper{
+  margin-block-start: 32px;
+  inline-size: 100%;
+  display: flex;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+  gap: 31px;
+}

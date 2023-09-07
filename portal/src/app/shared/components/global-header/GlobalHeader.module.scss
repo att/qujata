@@ -1,0 +1,39 @@
+@import "src/styles/variables-keys";
+
+$headerFontSize: 16px;
+$headerBackgroundColor: black;
+$headerSuperReader: #e1baff;
+$headerSuperUser: #a4f1c1;
+
+.global_header {
+  background-color: $headerBackgroundColor;
+  block-size: var($headerSize);
+  color: var($primaryWhite);
+  display: flex;
+  font-size: $headerFontSize;
+  justify-content: space-between;
+  line-height: var($headerSize);
+  padding-inline-end: var($layoutPadding);
+  padding-inline-start: var($layoutPadding);
+}
+
+.header_left_block,
+.header_right_block {
+  align-items: center;
+  display: flex;
+}
+
+.home_icon {
+  margin-inline-end: 10px;
+  block-size: 24px;
+  inline-size: 24px;
+}
+
+.avatar_style {
+  block-size: 24px;
+  inline-size: 24px;
+}
+
+.name {
+  margin-inline-end: 20px;
+}

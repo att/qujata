@@ -1,0 +1,49 @@
+@import './../att-button/Button.reference';
+
+%linkDefinitions {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  text-decoration: none;
+  
+  @extend %basicButtonStyle;
+}
+
+.sm_link {
+  @extend %smallSize;
+}
+
+.md_link {
+  @extend %mediumSize;
+}
+
+.lg_link {
+  @extend %largeSize;
+}
+
+.primary_link {
+  @extend %linkDefinitions;
+  @extend %primaryStyle;
+}
+
+.secondary_link {
+  @extend %linkDefinitions;
+  @extend %secondaryStyle;
+}
+
+.wrapper_link {
+  text-decoration: none;
+  color: var($attCobalt);
+}
+
+.text_link {
+  &:not(:hover) {
+    color: var($attCobalt);
+    text-decoration: none;
+  }
+
+  &:hover {
+    color: var($actionTextHoverColor);
+    text-decoration: underline;
+  }
+}

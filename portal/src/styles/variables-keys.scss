@@ -1,0 +1,58 @@
+$headerSize: --att-header-size;
+
+/* Subheader: */
+$subHeaderBackgroundColor: --att-subheader-bg-color;
+$subheaderFontSize: --att-subheader-font-size;
+$subheaderLineHeight: --att-subheader-line-height;
+$subheaderMarginBottom: --att-subheader-margin-bottom;
+$subheaderPaddingInline: --att-subheader-padding-inline;
+$subheaderPaddingBlock: --att-subheader-padding-block;
+$subheaderPaddingBlockStart: --att-subheader-padding-block-start;
+$subheaderPaddingBlockEnd: --att-subheader-padding-block-end;
+
+/* NavigationTabs: */
+$navigationTabsSize: --att-navigatio-tabs-size;
+
+$fontRegular: --att-font-regular;
+$fontMedium: --att-font-medium;
+$fontBold: --att-font-bold;
+$layoutPadding: --att-layout-padding;
+$layoutContentPaddingRightLeft: --att-layout-content-padding-right-left;
+$layoutContentPaddingTop: --att-layout-content-padding-top;
+$layoutContentPaddingBottom: --att-layout-content-padding-bottom;
+$applicationContentBackgroundColor: --att-application-content-background-color;
+$sideBarWidth: --side-bar-width;
+$sideBarCollapseDuration: --side-bar-collapse-duration;
+$toastTypeIndicationColor: --att-toast-type-indication-color;
+$sidePanelWidth: --att-side-panel-width;
+$getStartedWidth: --att-get-started-width;
+
+/* Colors: */
+$primaryWhite: --att-primary-white;
+$textBlack: --att-text-black;
+$errorTextColor: --att-error-text-red;
+$actionTextHoverColor: --att-hover-text-color;
+$subTextColor: --att-sub-text-color;
+$backgroundColorBlack: --att-background-color-black;
+$backgroundColorGray: --att-background-color-gray;
+$backgroundColorWhite: --att-background-color-white;
+$attCobalt: --att-att-cobalt;
+$attBlue: --att-att-blue;
+$attPurple: --att-att-purple;
+$attLime: --att-att-lime;
+$attBerry: --att-att-berry;
+$attTangerine: --att-att-tangerine;
+$attMint: --att-att-mint;
+
+/* Modal: */
+$modalActionBackgroundColor: --att-modal-action-background-color;
+$modalPaddingInline: --eattda-modal-padding-inline;
+
+
+/* Select: */
+$selectBorderColor: --att-select-border-color;
+$selectControlHeight: --att-select-control-height;
+$selectOptionMaxWidth: --att-select-option-max-width;
+$selectControlBackgroundColor: --att-select-control-background-color;
+$selectPlaceholderColor: --att-select-placeholder-color;
+$selectIndicatorsColor: --att-select-indicators-color;

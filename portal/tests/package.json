@@ -1,0 +1,27 @@
+{
+    "name": "e2e",
+    "version": "1.0.0",
+    "main": "index.js",
+    "author": "adi bar",
+    "scripts": {
+        "cypress:run": "cypress run",
+        "cypress:open": "cypress open",
+        "cypress:merge:report": "npx mochawesome-merge ./reports/mochawesome/mochawesome*.json -o ./reports/mochawesome_summary.json",
+        "cypress:generate:report": "marge ./reports/mochawesome_summary.json -o ./reports -f mochawesome_summary.html --inline",
+        "precypress:run": "rimraf ./reports",
+        "e2e:ci": "yarn cypress:run"
+    },
+    "devDependencies": {
+        "@types/node": "^18.6.3",
+        "cypress": "^10.3.1",
+        "cypress-multi-reporters": "^1.6.1",
+        "mocha-junit-reporter": "^2.0.2",
+        "mochawesome": "^7.1.3",
+        "mochawesome-merge": "^4.2.1",
+        "mochawesome-report-generator": "^6.2.0",
+        "rimraf": "^3.0.2"
+    },
+    "dependencies": {
+        "typescript": "^4.7.4"
+    }
+}

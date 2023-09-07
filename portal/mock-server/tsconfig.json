@@ -1,0 +1,29 @@
+{
+  "compileOnSave": false,
+  "exclude": [
+    "api",
+    "node_modules",
+    "**/*.spec.ts"
+  ],
+  "compilerOptions": {
+    "jsx": "react",
+    "baseUrl": "./",
+    "outDir": "./dist",
+    "sourceMap": false,
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
+    "declaration": false,
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "target": "es2015",
+    "typeRoots": [
+      "node_modules/@types"
+    ],
+    "lib": [
+      "es2017",
+      "dom"
+    ]
+  }
+}

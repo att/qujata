@@ -1,0 +1,24 @@
+/* You can add global styles to this file, and also import other style files */
+@import "./variables-keys";
+@import "./global-reference";
+
+$highlightColor: #D0E8FA;
+
+html {
+  background-color: rgba(var($applicationContentBackgroundColor), 1);
+  block-size: 100%;
+  box-sizing: border-box;
+  overflow-x: hidden;
+
+  *, *::before, *::after {
+    box-sizing: inherit;
+  }
+}
+
+body {
+  block-size: 100%;
+  color: var($textBlack);
+  font-family: var($fontRegular);
+  font-size: 15px;
+  margin: 0;
+}

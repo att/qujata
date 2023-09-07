@@ -1,0 +1,90 @@
+@import 'src/styles/variables-keys';
+
+$extraSmallSpinnerSize: 24px;
+$smallSpinnerSize: 28px;
+$mediumSpinnerSize: 36px;
+$largeSpinnerSize: 40px;
+$spinnerColor: var($attBlue);
+$spinnerInnerColor: #878c94;
+
+.spinner {
+  animation: spinner_group 2.25s linear infinite;
+  transform-origin: center center;
+}
+
+.spinner_inner {
+  @extend %spinnerStrokeWidth;
+  stroke: $spinnerInnerColor;
+  opacity: 0.25;
+}
+
+.spinner_outer {
+  @extend %spinnerStrokeWidth;
+  stroke-dasharray: 89, 200;
+  stroke-dashoffset: 0;
+  stroke: $spinnerColor;
+  animation: spinner_outer 1.6875s ease-in-out infinite;
+}
+
+%extraSmalSize {
+  block-size: $extraSmallSpinnerSize;
+  inline-size: $extraSmallSpinnerSize;
+}
+
+%smallSize {
+  block-size: $smallSpinnerSize;
+  inline-size: $smallSpinnerSize;
+}
+
+%mediumSize {
+  block-size: $mediumSpinnerSize;
+  inline-size: $mediumSpinnerSize;
+}
+
+%largeSize {
+  block-size: $largeSpinnerSize;
+  inline-size: $largeSpinnerSize;
+}
+
+%spinnerStrokeWidth {
+  stroke-width: 3;
+}
+
+.xs_spinner {
+  @extend %extraSmalSize;
+}
+
+.sm_spinner {
+  @extend %smallSize;
+}
+
+.md_spinner {
+  @extend %mediumSize;
+}
+
+.lg_spinner {
+  @extend %largeSize;
+}
+
+@keyframes spinner_group {
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes spinner_outer {
+  0% {
+    stroke-dasharray: 1, 200;
+    stroke-dashoffset: 0
+  }
+
+  50% {
+    stroke-dasharray: 89, 200;
+    stroke-dashoffset: -35px
+  }
+
+  100% {
+    stroke-dasharray: 89, 200;
+    stroke-dashoffset: -124px
+  }
+}

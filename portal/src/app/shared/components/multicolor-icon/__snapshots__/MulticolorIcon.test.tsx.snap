@@ -1,0 +1,22 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MulticolorIcon renders multicolor icon with 4 nodes 1`] = `
+<i
+  class="eda xaaf-icon"
+>
+  <i
+    class="xaaf-icon-path1"
+  />
+  <i
+    class="xaaf-icon-path2"
+  />
+  <i
+    class="xaaf-icon-path3"
+  />
+  <i
+    class="xaaf-icon-path4"
+  />
+</i>
+`;
+
+exports[`MulticolorIcon should not render when receive wrong size 1`] = `null`;

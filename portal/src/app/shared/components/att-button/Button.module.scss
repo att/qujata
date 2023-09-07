@@ -1,0 +1,72 @@
+@import './../../../../styles/variables-keys';
+@import './Button.reference';
+
+$txtColor: var($attCobalt);
+
+.button {
+  border: none;
+  font-size: $buttonFontSize;
+  outline: none;
+  @extend %basicButtonStyle;
+
+  &:not(:disabled) {
+    cursor: pointer;
+  }
+
+  &:disabled {
+    @extend %disableStyle;
+  }
+}
+
+.wrapper_button, .txt_button {
+  &:disabled {
+    background-color: transparent;
+    border: 0;
+  }
+}
+
+.primary_button:not(:disabled) {
+  @extend %primaryStyle;
+}
+
+.secondary_button:not(:disabled) {
+  @extend %secondaryStyle;
+}
+
+.txt_button {
+  @extend %buttonReset;
+  font: inherit;
+  block-size: auto;
+  min-inline-size: auto;
+  text-align: left;
+
+  &:not(:disabled) {
+    &:not(:hover) {
+      color: $txtColor;
+    }
+
+    &:hover {
+      color: var($actionTextHoverColor);
+      text-decoration: underline;
+    }
+  }
+}
+
+.wrapper_button {
+  @extend %buttonReset;
+  min-inline-size: 0;
+  padding: 0;
+}
+
+.sm_button {
+  @extend %smallSize;
+  min-inline-size: 80px;
+}
+
+.md_button {
+  @extend %mediumSize;
+}
+
+.lg_button {
+  @extend %largeSize;
+}

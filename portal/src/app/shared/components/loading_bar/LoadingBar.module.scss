@@ -1,0 +1,38 @@
+@import './../../../../styles/variables-keys';
+
+$loadingBarBackgroundColor: #dcdfe3;
+$loadingBarColor: var($attCobalt);
+
+.loading_bar_container {
+  background-color: $loadingBarBackgroundColor;
+  block-size: 2px;
+  border-radius: 2px;
+  inline-size: 130px;
+  overflow: hidden;
+  position: relative;
+  transition: transform .3s ease-in;
+}
+
+.loading_bar {
+  animation: loading-bar-animation 1.5s ease infinite;
+  background-color: $loadingBarColor;
+  block-size: 100%;
+  border-radius: 2px;
+  inline-size: 52%;
+  position: absolute;
+  transform: translate(-26%);
+}
+
+@keyframes loading-bar-animation {
+  0% {
+    transform: translate(-50%)
+  }
+
+  50% {
+    transform: translate(150%)
+  }
+
+  to {
+    transform: translate(-50%)
+  }
+}

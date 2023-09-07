@@ -1,0 +1,27 @@
+@import "./variables-keys";
+
+:root {
+    #{$headerSize}: 64px;
+    #{$fontRegular}: ATTAleckSans;
+    #{$fontMedium}: ATTAleckSansMed;
+    #{$fontBold}: ATTAleckSansBold;
+    #{$layoutPadding}: 24px;
+    #{$layoutContentPaddingRightLeft}: 32px;
+    #{$layoutContentPaddingBottom}: 32px;
+    #{$layoutContentPaddingTop}: 24px;
+    #{$modalActionBackgroundColor}: #f9f9f9;
+    #{$modalPaddingInline}: 32px;
+    #{$sidePanelWidth}: 410px;
+    #{$applicationContentBackgroundColor}: 249, 249, 249;
+
+    #{$subHeaderBackgroundColor}: #f9f9f9;
+    #{$subheaderFontSize}: 26px;
+    #{$subheaderLineHeight}: 32px;
+    #{$subheaderMarginBottom}: 24px;
+    #{$subheaderPaddingInline}: var($layoutContentPaddingRightLeft);
+    #{$subheaderPaddingBlock}: var($layoutContentPaddingTop);
+    #{$subheaderPaddingBlockStart}: var($subheaderPaddingBlock);
+    #{$subheaderPaddingBlockEnd}: var($subheaderPaddingBlock);
+
+    #{$navigationTabsSize}: 50px;
+}

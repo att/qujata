@@ -1,0 +1,28 @@
+@import "src/styles/variables-keys";
+@import "src/styles/z-index";
+
+.global_header {
+  position: sticky;
+  top: 0;
+  z-index: $globalHeaderZindex;
+}
+
+.app_wrapper {
+  min-width: 848px;
+  padding-inline-start: 216px;
+  padding-inline-end: 222px;
+  padding-block: 27px;
+}
+
+
+.image_wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.init_image {
+  margin-block-start: 120px;
+  font-family: var($fontBold);
+}

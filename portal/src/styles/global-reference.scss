@@ -1,0 +1,8 @@
+@import 'src/styles/variables-keys';
+@import "src/styles/z-index";
+
+%ellipsis {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }

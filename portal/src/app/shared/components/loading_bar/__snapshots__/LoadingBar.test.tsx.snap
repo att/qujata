@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`LoadingBar renders LoadingBar 1`] = `
+<div
+  class="loading_bar_container"
+>
+  <div
+    class="loading_bar"
+  />
+</div>
+`;

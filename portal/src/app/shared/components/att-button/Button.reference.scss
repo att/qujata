@@ -1,0 +1,81 @@
+@import 'src/styles/variables-keys';
+
+$primaryTextColor: var($attCobalt);
+$primaryBorderColor: var($attCobalt);
+$primaryHoverBackgroundColor: var($attCobalt);
+
+$secondaryTextColor: #c70032;
+$secondaryBorderColor: #c70032;
+$secondaryBackgroundColor: white;
+$secondaryBorder: white;
+$secondaryHoverBackgroundColor: #c70032;
+
+$disableBackgroundColor: #eeeeee;
+$disableBorderColor: #d8d8d8;
+$disableTextColor: #B7BABF;
+
+$buttonFontSize: 16px;
+$smallButtonSize: 28px;
+$mediumButtonSize: 36px;
+$largeButtonSize: 48px;
+
+%buttonReset {
+  background-color: transparent;
+  box-shadow: none;
+  border: 0;
+  outline: none;
+  color: var($attCobalt);
+}
+
+%basicButtonStyle {
+  font-family: var($fontRegular);
+  min-inline-size: 80px;
+  padding: 0 16px;
+  white-space: nowrap;
+}
+
+%primaryStyle {
+  border: 1px solid $primaryHoverBackgroundColor;
+  border-radius: 2px;
+  color: var($primaryWhite);
+  background-color: $primaryHoverBackgroundColor;
+
+}
+
+%secondaryStyle {
+  background-color: transparent;
+  color: $secondaryTextColor;
+  border: solid 1px $secondaryBorderColor;
+  &:hover, &:focus  {
+    background-color: $secondaryHoverBackgroundColor;
+    border-color: $secondaryHoverBackgroundColor;
+    color: var($primaryWhite);
+  }
+}
+
+%disableStyle {
+  background-color: $disableBackgroundColor;
+  border: solid 1px $disableBorderColor;
+  color: $disableTextColor;
+  cursor: initial;
+  pointer-events: none;
+
+  i {
+    color: $disableTextColor;
+  }
+}
+
+%smallSize {
+  block-size: $smallButtonSize;
+  font-size: 13px;
+}
+
+%mediumSize {
+  block-size: $mediumButtonSize;
+  font-size: 14px;
+}
+
+%largeSize {
+  block-size: $largeButtonSize;
+  font-size: 16px;
+}

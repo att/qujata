@@ -1,0 +1,53 @@
+/**
+ * Browser support: https://caniuse.com/?search=%3A%3A-webkit-scrollbar
+ */
+
+$scrollbarWidth: 10px;
+$scrollbarBorderRadius: 10px;
+$grayShadeLightest: rgb(220, 223, 227);
+$grayShadeLight: rgb(198, 200, 204);
+$grayShadeNormal: rgb(176, 178, 181);
+$grayShadeDark: rgb(154, 156, 158);
+$grayShadeDarkest: rgb(126, 126, 126);
+
+::-webkit-scrollbar {
+  width: $scrollbarWidth;
+}
+
+::-webkit-scrollbar-track, ::-webkit-scrollbar-thumb {
+  border-radius: $scrollbarBorderRadius;
+}
+
+::-webkit-scrollbar-corner {
+  background: transparent;
+}
+
+// scrollbar style for <body> element
+body::-webkit-scrollbar-track {
+  background: $grayShadeLightest;
+}
+
+body::-webkit-scrollbar-thumb {
+  background: $grayShadeNormal;
+}
+
+body::-webkit-scrollbar-thumb:hover {
+  background: $grayShadeDark;
+}
+
+body::-webkit-scrollbar-thumb:active {
+  background: $grayShadeDarkest;
+}
+
+// scrollbar style for all elements except <body> element
+:not(body)::-webkit-scrollbar-thumb {
+  background: $grayShadeLightest;
+}
+
+:not(body)::-webkit-scrollbar-thumb:hover {
+  background: $grayShadeLight;
+}
+
+:not(body)::-webkit-scrollbar-thumb:active {
+  background: $grayShadeNormal;
+}

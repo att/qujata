@@ -1,0 +1,58 @@
+@import "src/styles/variables-keys";
+
+.wrapper{
+  inline-size: 100%;
+  display: flex;
+  justify-content: space-between;
+  gap: 24px;
+  @media (max-width: '1000px') {
+    flex-direction: column;
+    width: 310px;
+  }
+}
+
+.main_box_wrapper{
+  background: #FFFFFF;
+  border: 1px solid #BDC2C7;
+  block-size: 130px;
+  inline-size: 100%;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.main_box_title{
+  font-family: var($fontBold);
+  font-size: 16px;
+  @media (max-width: '1395px') { font-size: 13px; }
+  @media (max-width: '1222px') { font-size: 11px; }
+  @media (max-width: '1115px') { font-size: 9px; }
+  @media (max-width: '1000px') { font-size: 16px; }
+}
+
+.main_box_value{
+  font-family: var($fontRegular);
+  font-size: 48px;
+  margin-block-start: 5px;
+  @media (max-width: '1395px') { font-size: 38px; }
+  @media (max-width: '1222px') { font-size: 28px; }
+  @media (max-width: '1115px') { font-size: 20px; }
+  @media (max-width: '1000px') { font-size: 48px; }
+}
+
+.main_box_unit{
+  font-family: var($fontRegular);
+  font-size: 18px;
+  margin-block-start: 15px;
+}
+
+.main_box_minmax{
+  font-family: var($fontRegular);
+  font-size: 18px;
+  margin-block-start: 15px;
+  display: flex;
+  @media (max-width: '1222px') { font-size: 15px; }
+  @media (max-width: '1115px') { font-size: 13px; }
+  @media (max-width: '1000px') { font-size: 18px; }
+}

@@ -1,0 +1,37 @@
+@import "src/styles/variables-keys";
+
+.wrapper{
+  display: flex;
+  gap:21px;
+  flex-wrap: wrap;
+}
+
+.error{
+  color:red;
+}
+.form_item{
+  display: flex;
+  flex-direction: column;
+}
+.select_form_item{
+  max-inline-size:795px;
+  margin-block-start: 4px;
+  min-height: 48px;
+  #{$selectControlHeight}: 48px;
+}
+
+.input_form_item{
+  max-inline-size: 170px;
+  block-size: 38px;
+  border: 1px solid #dcdfe3;
+  border-radius: 2px;
+  inline-size: 100%;
+  outline: none;
+  padding: 8px;
+  margin-block-start: 4px;
+  min-height: 48px;
+  min-width: 170px;
+}
+.button{
+  margin-block-start: 21px;
+}

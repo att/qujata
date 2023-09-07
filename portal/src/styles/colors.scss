@@ -1,0 +1,22 @@
+@import './variables-keys';
+
+:root {
+  #{$primaryWhite}: white;
+  #{$textBlack}: #1D2329;
+  #{$backgroundColorBlack}: black;
+  #{$backgroundColorGray}: #F2F2F2;
+  #{$backgroundColorWhite}: white;
+  #{$errorTextColor}: #c70032;
+  #{$actionTextHoverColor}: #02254c;
+  #{$subTextColor}: #02254c;
+
+
+  // AT&T Brand Colors
+  #{$attCobalt}: #0057B8;
+  #{$attBlue}: #009fdb;
+  #{$attPurple}: #AF29BB;
+  #{$attLime}: #91DC00;
+  #{$attBerry}: #FF585D;
+  #{$attTangerine}: #FFB000;
+  #{$attMint}: #49EEDC;
+}
