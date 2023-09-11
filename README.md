@@ -83,7 +83,9 @@ Not all algorithms are equally well-supported on all platforms. In case of quest
 </ul>
 
 ### `Development`
-`api`:
+Install [Docker engine](https://docs.docker.com/engine/install/), if not yet installed
+
+#### api
 
 1. First, open a Terminal / Command-Line on this project's folder and run:<br/>
 ```bash
@@ -115,7 +117,7 @@ curl --location 'http://localhost:3010/test/' \
 ```
 - Run the FrontEnd Portal (pqc-quantum-portal), from this repository: <ENTER_GITHUB_PORTAL_URL_HERE>
 
-`portal`:
+#### portal
 
 1. Start a development server.
     - Working with mock-data server:
