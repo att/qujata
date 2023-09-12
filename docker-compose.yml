@@ -3,10 +3,9 @@ services:
     image: openquantumsafe/nginx
     ports:
       - 4433:4433
-    restart: always
     environment:
-      - DEFAULT_GROUPS=x25519:x448:kyber512:p256_kyber512:kyber768:p384_kyber768:kyber1024:p521_kyber1024:bikel1:bikel3:x25519_kyber768:prime256v1
-
+      - DEFAULT_GROUPS=prime256v1:secp384r1:frodo640aes:frodo640shake:frodo976aes:frodo976shake:frodo1344aes:frodo1344shake:kyber512:p256_kyber512:kyber768:p384_kyber768:x25519_kyber768:kyber1024:bikel1:bikel3:bikel5:hqc128:hqc192:hqc256
+  
   curl:
     image: openquantumsafe/curl
     command: tail -F anything
@@ -14,7 +13,7 @@ services:
   api:
     image: qujata/api:1.0.0
     ports:
-      - 3010:3010
+      - 3020:3010
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
 
@@ -23,4 +22,4 @@ services:
     ports:
       - 8080:80
     environment:
-      - PQC_PORTAL__BASE_API_URL=http://localhost:3010
+      - PQC_PORTAL__BASE_API_URL=http://localhost:3020
