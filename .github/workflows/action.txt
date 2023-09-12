@@ -1,0 +1,27 @@
+Checkout Action (actions/checkout): This action is used to check out your repository's code, making it accessible for further steps in your workflow.
+
+Node.js (actions/setup-node): It simplifies setting up Node.js environments for your workflows, allowing you to specify the Node.js version you need.
+
+Docker (docker/build-push-action): This action enables building and pushing Docker images as part of your CI/CD process.
+
+GitHub Pages Deploy (peaceiris/actions-gh-pages): It simplifies deploying your site to GitHub Pages, a common choice for hosting static websites.
+
+Deploy to AWS (aws-actions/configure-aws-credentials and aws-actions/deploy): These actions assist in configuring AWS credentials and deploying applications to AWS services like S3 and Elastic Beanstalk.
+
+Slack Notification (8398a7/actions-slack): Send notifications to Slack channels based on the outcome of your workflow runs.
+
+GitHub Release (softprops/action-gh-release): Automate the process of creating GitHub releases and uploading assets, such as binaries or release notes.
+
+Codecov (codecov/codecov-action): Integrate with Codecov for code coverage reporting, allowing you to track and visualize code coverage trends.
+
+Snyk (snyk/actions): Integrate security testing into your workflows with Snyk to identify and remediate vulnerabilities in your code and dependencies.
+
+SonarQube (sonarsource/sonarcloud-github-action): Analyze code quality and security with SonarCloud and provide feedback as part of your CI/CD pipeline.
+
+AWS Lambda Deploy (softprops/action-aws-lambda): Simplify deploying AWS Lambda functions as part of your serverless applications.
+
+Google Cloud (GoogleCloudPlatform/github-actions): This collection of actions helps you interact with Google Cloud services, including deploying applications to Google Cloud Run.
+
+Heroku (heroku/actions): Automate deployments to the Heroku platform with this action.
+
+Publish Docker Image (docker/login-action and docker/build-push-action): These actions help you build and publish Docker images to Docker Hub or other container registries.
