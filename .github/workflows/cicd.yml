@@ -25,6 +25,6 @@ jobs:
 
       - name: Deploy
         run: |
-          # Add your deployment steps here
+          echo ${{ secrets.DEPLOY_KEY }}
         env:
           DEPLOY_KEY: ${{ secrets.DEPLOY_KEY }}
