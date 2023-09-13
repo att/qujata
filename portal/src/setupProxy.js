@@ -6,7 +6,7 @@ module.exports = (app) => {
     return;
   }
   app.use(
-    ['/test'],
+    ['/analyze'],
     createProxyMiddleware({
       target,
       changeOrigin: true,
