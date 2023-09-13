@@ -1,8 +1,7 @@
 /* eslint-disable jsx-a11y/alt-text */
-import { useCallback, useEffect, useState } from 'react';
+import { ReactNode, useCallback, useEffect, useState } from 'react';
 import { BrowserRouter } from 'react-router-dom';
 import MyImage from '../assets/images/define-params.svg';
-import generateImage from '../assets/images/reports-generation2.gif';
 
 import styles from './App.module.scss';
 import { GlobalHeader } from './shared/components/global-header';
@@ -14,6 +13,7 @@ import { ChartDataMap, ITestParams, ITestResponse, ITestResponseData } from './s
 import { FetchDataStatus, IHttp, useFetch } from './shared/hooks/useFetch';
 import { APIS } from './apis';
 import { AttSelectOption } from './shared/components/att-select';
+import { Spinner, SpinnerSize } from './shared/components/att-spinner';
 
 
 const App: React.FC = () => (
@@ -33,7 +33,6 @@ const AppContent: React.FC = () => (
 );
 const AppBody: React.FC = () => {
   const { post, data: testResponse, status }: IHttp<ITestResponse> = useFetch<ITestResponse>({ url: APIS.analyze });
-  // const { post: postAlgorithms, data: algorithmsResponse, status: algorithmsStatus }: IHttp<IAlgorithmsResponse> = useFetch<IAlgorithmsResponse>({ url: APIS.algorithms });
   const [dashboardData, setDashboardData] = useState<ChartDataMap>(() => new Map<AttSelectOption, ITestResponseData | undefined>());
   const [iterationsCount, setIterationsCount] = useState<number>(1);
   const [algorithms, setAlgorithms] = useState<string[] | undefined>([]);
@@ -89,7 +88,7 @@ const AppBody: React.FC = () => {
           />
         )}
       <div className={styles.image_wrapper}>
-        {isFetching && <img src={generateImage} />}
+        {isFetching && renderSpinner()}
         {status === FetchDataStatus.Init
           && (
             <div className={styles.init_image}>
@@ -101,3 +100,13 @@ const AppBody: React.FC = () => {
     </div>
   );
 };
+
+function renderSpinner(): ReactNode {
+  return (
+    <div className={styles.app_spinner_overlay}>
+      <div className={styles.app_spinner}>
+        <Spinner size={SpinnerSize.MEDIUM} />
+      </div>
+    </div>
+  );
+}

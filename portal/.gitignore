@@ -1,0 +1,83 @@
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# dependencies
+/node_modules
+/.pnp
+.pnp.js
+
+# testing
+/coverage
+
+# production
+/build
+
+# misc
+.DS_Store
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# compiled output
+/mock-server/dist
+/src/assets/fonts/att-icons
+/src/styles/att-icons.scss
+/src/styles/att-icons.enum.ts
+/src/styles/att-icons-reference.scss
+/src/styles/att-icons-multicolor.scss
+
+# dependencies
+/node_modules
+e2e/node_modules
+/mock-server/node_modules
+/.pnp
+.pnp.js
+
+
+# IDEs and editors
+/.idea
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
+
+# IDE - VSCode
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+.history/*
+
+# production
+/build
+
+# reports
+/reports
+/e2e/reports
+# ut coverage
+/coverage
+
+# misc
+.eslintcache
+.DS_Store
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+package-lock.json
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+/mock-server/yarn.lock
+/mock-server/package-lock.json
+/tests/node_modules/*
+/tests/reports/*
