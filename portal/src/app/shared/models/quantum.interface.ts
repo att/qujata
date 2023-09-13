@@ -33,13 +33,3 @@ export interface ITimeData {
   connectTime: ITimeDataItem;
   downloadSpeed: ITimeDataItem;
 }
-
-// export interface IAlgorithmsResponse {
-//   data: IAlgorithmsResponseData;
-// }
-
-// export interface IAlgorithmsResponseData {
-//   classic: string[];
-//   hybrid: string[];
-//   pq: string[];
-// }
