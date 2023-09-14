@@ -8,7 +8,6 @@
 }
 
 .app_wrapper {
-  min-width: 848px;
   padding-inline-start: 216px;
   padding-inline-end: 222px;
   padding-block: 27px;
@@ -25,4 +24,22 @@
 .init_image {
   margin-block-start: 120px;
   font-family: var($fontBold);
+}
+
+.app_spinner_overlay {
+  inline-size: 100%;
+  block-size: 100%;
+  position: absolute;
+  background: var($backgroundColorWhite);
+  opacity: 0.6;
+  top: 0;
+  left: 0;
+  z-index: $appSpinnerZindex;
+}
+
+.app_spinner {
+  position: sticky;
+  top: 50%;
+  left: 50%;
+  text-align: center;
 }
