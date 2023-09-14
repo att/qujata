@@ -7,6 +7,7 @@ import { AttSelect, AttSelectOption } from '../../shared/components/att-select';
 import { AllAlgorithms } from './ProtocolQuery.const';
 import styles from './ProtocolQuery.module.scss';
 import { PROTOCOL_QUERY_EN } from './translate/en';
+import { QueryDefaultIterationsCount } from '../../models/query.const';
 
 export type SelectOptionType = AttSelectOption | Options<AttSelectOption> | null;
 type onTextChangedEvent = (e: React.ChangeEvent<HTMLInputElement>) => void;
@@ -20,7 +21,7 @@ export interface ProtocolQueryProps {
 export const ProtocolQuery: React.FC<ProtocolQueryProps> = (props: ProtocolQueryProps) => {
   const { isFetching, onRunClick } = props;
   const [algorithms, setAlgorithms] = useState<SelectOptionType>([AllAlgorithms[1]]);
-  const [iterationsCount, setIterationsCount] = useState<number>(10);
+  const [iterationsCount, setIterationsCount] = useState<number>(QueryDefaultIterationsCount);
   const algorithmsCount: number = (algorithms as AttSelectOption[]).length;
 
   const onSubmitHandler = (event: React.FormEvent<HTMLFormElement>) => {

@@ -13,15 +13,11 @@
   padding-block: 27px;
 }
 
-
-.image_wrapper {
+.init_state_wrapper {
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-block-start: 10%;
-}
-
-.init_image {
+  flex-direction: column;
   margin-block-start: 120px;
   font-family: var($fontBold);
 }
