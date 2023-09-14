@@ -1,27 +1,30 @@
 @import "src/styles/variables-keys";
 
-.wrapper{
+.wrapper {
   display: flex;
   gap:21px;
   flex-wrap: wrap;
 }
 
-.error{
-  color:red;
+.error {
+  color: var($attBerry);
 }
-.form_item{
+
+.form_item { 
   display: flex;
   flex-direction: column;
+  inline-size: 320px;
+  font-size: 14px;
 }
-.select_form_item{
-  max-inline-size:795px;
+
+.select_form_item {
+  max-inline-size: 795px;
   margin-block-start: 4px;
-  min-height: 48px;
+  min-block-size: 48px;
   #{$selectControlHeight}: 48px;
 }
 
-.input_form_item{
-  max-inline-size: 170px;
+.input_form_item {
   block-size: 38px;
   border: 1px solid #dcdfe3;
   border-radius: 2px;
@@ -29,9 +32,9 @@
   outline: none;
   padding: 8px;
   margin-block-start: 4px;
-  min-height: 48px;
-  min-width: 170px;
+  block-size: 48px;
 }
-.button{
+
+.run_button {
   margin-block-start: 21px;
 }

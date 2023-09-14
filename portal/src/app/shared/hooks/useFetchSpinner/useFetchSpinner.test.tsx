@@ -15,37 +15,37 @@ describe('useFetchSpinner', () => {
   })
 
   test('should set spinner as false for single status Init', () => {
-    renderHook(() => useFetchSpinner('uniqueKey', FetchDataStatus.Init));
-    expect(setSpinner).toHaveBeenCalledWith('uniqueKey', false);
+    renderHook(() => useFetchSpinner(FetchDataStatus.Init));
+    expect(setSpinner).toHaveBeenCalledWith(false);
   });
 
   test('should set spinner as false for single status Success', () => {
-    renderHook(() => useFetchSpinner('uniqueKey', FetchDataStatus.Success));
-    expect(setSpinner).toHaveBeenCalledWith('uniqueKey', false);
+    renderHook(() => useFetchSpinner(FetchDataStatus.Success));
+    expect(setSpinner).toHaveBeenCalledWith(false);
   });
 
   test('should set spinner as false for single status Error', () => {
-    renderHook(() => useFetchSpinner('uniqueKey', FetchDataStatus.Error));
-    expect(setSpinner).toHaveBeenCalledWith('uniqueKey', false);
+    renderHook(() => useFetchSpinner(FetchDataStatus.Error));
+    expect(setSpinner).toHaveBeenCalledWith(false);
   });
 
   test('should set spinner as false for single status Canceled', () => {
-    renderHook(() => useFetchSpinner('uniqueKey', FetchDataStatus.Canceled));
-    expect(setSpinner).toHaveBeenCalledWith('uniqueKey', false);
+    renderHook(() => useFetchSpinner(FetchDataStatus.Canceled));
+    expect(setSpinner).toHaveBeenCalledWith(false);
   });
 
   test('should set spinner as true for single status Fetching', () => {
-    renderHook(() => useFetchSpinner('uniqueKey', FetchDataStatus.Fetching));
-    expect(setSpinner).toHaveBeenCalledWith('uniqueKey', true);
+    renderHook(() => useFetchSpinner(FetchDataStatus.Fetching));
+    expect(setSpinner).toHaveBeenCalledWith(true);
   });
 
   test('should set spinner as false when Fetching in silent mode', () => {
-    renderHook(() => useFetchSpinner('uniqueKey', FetchDataStatus.Fetching, true));
-    expect(setSpinner).toHaveBeenCalledWith('uniqueKey', false);
+    renderHook(() => useFetchSpinner(FetchDataStatus.Fetching, true));
+    expect(setSpinner).toHaveBeenCalledWith(false);
   });
 
   test('should set spinner as true when Fetching and silent mode is off', () => {
-    renderHook(() => useFetchSpinner('uniqueKey', FetchDataStatus.Fetching, false));
-    expect(setSpinner).toHaveBeenCalledWith('uniqueKey', true);
+    renderHook(() => useFetchSpinner(FetchDataStatus.Fetching, false));
+    expect(setSpinner).toHaveBeenCalledWith(true);
   });
 });
