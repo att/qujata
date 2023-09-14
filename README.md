@@ -65,7 +65,7 @@ cd qujata
 ```bash
 docker compose up
 ```
-3. The application is now avaalable on the below url:
+3. The application is now available on the below url:
 ```bash
 http://localhost:8080/
 ``` 

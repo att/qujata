@@ -4,7 +4,7 @@ import { Request, Response, Router as CoreRouter } from 'express-serve-static-co
 const router: CoreRouter = Router();
 
 
-router.post('/test', async (req: Request, res: Response) => {
+router.post('/analyze', async (req: Request, res: Response) => {
   console.log(`-${req.method} ${req.url}`);
   let data;
   if( ['prime256v1', 'secp384r1'].includes(req.body.algorithm)){
