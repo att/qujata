@@ -7,3 +7,4 @@ export enum ClassicOrHybridAlgorithms {
   P384_KYBER768 = 'p384_kyber768',
   X25519_KYBER786 = 'x25519_kyber768',
 }
+

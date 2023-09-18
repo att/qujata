@@ -9,17 +9,3 @@ services:
   curl:
     image: openquantumsafe/curl
     command: tail -F anything
-
-  api:
-    image: qujata/api:1.0.0
-    ports:
-      - 3020:3010
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-
-  pqc-portal:
-    image: qujata/portal:1.0.0
-    ports:
-      - 8080:80
-    environment:
-      - PQC_PORTAL__BASE_API_URL=http://localhost:3020
