@@ -1,5 +1,6 @@
 <img src="https://github.com/att/qujata/assets/7979328/199a9c84-840b-415e-a221-621c22184ad2" width="300">
 
+
 # Table of Contents
 
 - [**Overview**](#overview)
@@ -56,7 +57,7 @@ As standardization for these algorithms within TLS is not done, all TLS code poi
 
 We suggest using the docker-compose distribution via the instructions below, but there is also a [Development Installation](#development) procedure if you’d prefer to run the Qujata in development mode.
 
-1. To start, clone the qujata repository.
+1. To start, clone the qujata repository:
 ```bash
 git clone https://github.com/att/qujata.git
 cd qujata
@@ -104,7 +105,8 @@ Information about how to contribute, can be found [here](CONTRIBUTING.md).
 
 # Releases
 
-Please note, a  Changelog for more details about a  releases will be available soon.
+Please note, for more details about releases, a Changelog file will be available soon.
+
 
 # Acknowledgements
 

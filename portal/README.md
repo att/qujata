@@ -3,7 +3,7 @@
 ## Description
 This is a `Post Quantum Cryptography` tool,
 <br/>
-using [React](https://github.com/facebook/create-react-app) framework TypeScript starter repository.
+using [React](https://github.com/facebook/create-react-app) framework.
 
 
 ## Pre-requisite
@@ -11,7 +11,7 @@ using [React](https://github.com/facebook/create-react-app) framework TypeScript
 
 ## Installation
 
-1. To start, clone the qujata repository.
+1. To start, clone the qujata repository:
 ```bash
 git clone https://github.com/att/qujata.git
 cd qujata/portal

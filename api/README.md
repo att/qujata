@@ -22,7 +22,7 @@ Not all algorithms are equally well-supported on all platforms. In case of quest
 [Node.js](#https://nodejs.org/en/download) (includes npm) and [Docker](https://docs.docker.com/engine/install) have to be installed on your system in order to run this project.
 
 ## Installation
-1. To start, clone the qujata repository.
+1. To start, clone the qujata repository:
 ```bash
 git clone https://github.com/att/qujata.git
 cd qujata/api
