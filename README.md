@@ -76,11 +76,11 @@ http://localhost:8080/
 
 ### Server 
 
-The procedure is available [here](#https://github.com/att/qujata/tree/main/api/README.md) 
+The procedure is available [here](https://github.com/att/qujata/tree/main/api/README.md) 
 
 ### Client
 
-The procedure is available [here](#https://github.com/att/qujata/tree/main/portal/README.md) 
+The procedure is available [here](https://github.com/att/qujata/tree/main/portal/README.md) 
 
 
 
