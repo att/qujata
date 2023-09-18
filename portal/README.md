@@ -42,4 +42,29 @@ yarn install
 yarn serve # if the command fails, run `yarn run-server` to start
 ```
 
+## How to Use the Portal
+
+### Page initial
+- <b>`Algorithm(s)` section</b> - features a comprehensive list of supported algorithms, sorted by their types (Classic, Hybrid, PQ).
+- <b>`Number of iterations` section</b> - specifies the number of iterations for each algorithm. <br />Increasing the input value will result in longer processing times but improved outcomes.
+- <b>`Run` button</b> - initiates the process upon clicking.
+
+Upon completion of the process, the results will be generated.
+
+### Post-Process Completion
+Upon completion, the page will present the results for the selected algorithms. For each executed algorithm, you'll encounter three segments:
+- <b>Average `Session Time` (mSec)</b>
+- <b>Average `Session Handshake Time` (mSec)</b>
+- <b>Average `Download Speed` (kB/sec)</b>
+
+In each segment, you'll receive the overall average, along with the minimum and maximum values observed during the process.
+
+### Charts
+Following the completion of the process, four charts will be displayed, illustrating the performance of each algorithm:
+- `Server Memory (%)`
+- `Server CPU (%)`
+- `Client Memory (%)`
+- `Client CPU (%)`
+
+These diagrams will present the values for each iteration throughout the process. Every chart includes all the algorithms involved in the process.
 
