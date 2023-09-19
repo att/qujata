@@ -12,6 +12,8 @@ import { ITestParams } from './shared/models/quantum.interface';
 import { FetchDataStatus } from './shared/hooks/useFetch';
 import { Spinner, SpinnerSize } from './shared/components/att-spinner';
 import { useDashboardData } from './hooks/useDashboardData';
+import { downloadCsvFile } from './utils/download';
+import { mapDashboardDataToCsvDataType } from './components/dashboard/utils/dashboard-data-report.util';
 
 
 const App: React.FC = () => (
@@ -38,9 +40,15 @@ const AppBody: React.FC = () => {
     handleRunQueryClick(params);
   }, [handleRunQueryClick]);
 
+  const handleDownloadDataClicked: () => void = useCallback((): void => {
+    // todo rename file name
+    const csvFileName: string = 'pqc.csv';
+    downloadCsvFile(mapDashboardDataToCsvDataType(data), csvFileName);
+  }, [data]);
+  console.log('dta', data);
   return (
     <div className={styles.app_wrapper}>
-      <ProtocolQuery isFetching={status === FetchDataStatus.Fetching} onRunClick={handleRunClick} />
+      <ProtocolQuery isFetching={status === FetchDataStatus.Fetching} onRunClick={handleRunClick} canExportFile={!!data.size} onDownloadDataClicked={handleDownloadDataClicked} />
       {algorithms === undefined
         && (
           <DashboardMemoized
