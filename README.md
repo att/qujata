@@ -98,6 +98,20 @@ Not all algorithms are equally well-supported on all platforms. In case of quest
   <li>Other Platforms were not tested yet.</li>
 </ul>
 
+# Project Roadmap
+Our benchmarking tool aims to understand, evaluate, and prepare for the integration of post-quantum cryptographic (PQC) algorithms in real-world scenarios. As we progress, our roadmap is designed to deepen our understanding, enhance our tools, and provide the community with valuable insights.
+
+1. **Full-Stack Benchmarking Tool for TLS**:
+Our primary focus is on delivering a comprehensive benchmarking tool targeting PQC in the context of TLS. This tool evaluates various performance metrics, including handshake time, data transfer time, and more, all within a containerized environment to ensure repeatability and scalability.
+
+2. **Advanced Real-World Scenarios**:
+While the initial tool provides insights under controlled conditions, our next step is to simulate more diverse real-world scenarios. This could include testing under varying network conditions, dealing with different types of server workloads, or simulating various client behaviors.
+
+3. **Extend to Non-TLS Protocols**:
+TLS is a critical protocol for secure communications, but it's one of many. We aim to expand our benchmarking to other common protocols (like SSH, VPNs, etc.) to get a more holistic understanding of PQC's impact.
+
+4. **Community Engagement and Open Data**:
+Our long-term vision goes beyond internal knowledge. We plan to share our findings, engage with the community for feedback, and consider open-sourcing our tools for broader use and collaborative enhancement.
 
 # Contributing
 
