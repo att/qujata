@@ -2,6 +2,7 @@
 export const PROTOCOL_QUERY_EN = {
     ACTION_BUTTONS: {
         RUN: 'Run',
+        EXPORT: 'Export',
     },
     FIELDS_LABEL: {
         ITERATIONS_NUMBER: 'Number of iterations',
