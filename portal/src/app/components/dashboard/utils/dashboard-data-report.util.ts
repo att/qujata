@@ -11,7 +11,6 @@ const DashboardDataReportCsvFileTitles: string[] = [
 ];
 
 export function mapDashboardDataToCsvDataType(data: ChartDataMap): CsvDataType {
-  console.log('--- ', data);
   const convertedData: IConvertData[] = convertData(data);
   return [
     DashboardDataReportCsvFileTitles,
