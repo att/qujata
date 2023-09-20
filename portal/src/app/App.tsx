@@ -45,7 +45,7 @@ const AppBody: React.FC = () => {
     const csvFileName: string = 'pqc.csv';
     downloadCsvFile(mapDashboardDataToCsvDataType(data), csvFileName);
   }, [data]);
-  console.log('dta', data);
+
   return (
     <div className={styles.app_wrapper}>
       <ProtocolQuery isFetching={status === FetchDataStatus.Fetching} onRunClick={handleRunClick} canExportFile={!!data.size} onDownloadDataClicked={handleDownloadDataClicked} />
