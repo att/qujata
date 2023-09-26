@@ -7,6 +7,7 @@
 - [**Algorithms**](#algorithms)
 - [**Getting Started**](#getting-started)
 - [**Development**](#development)
+- [**Project Roadmap**](#project-roadmap)
 - [**Contributing**](#contributing)
 - [**Releases**](#releases)
 - [**Code of Conduct**](#code-of-conduct)
