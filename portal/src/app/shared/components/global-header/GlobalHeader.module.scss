@@ -1,7 +1,7 @@
 @import "src/styles/variables-keys";
 
 $headerFontSize: 16px;
-$headerBackgroundColor: black;
+$headerBackgroundColor: #6D3FFC;
 $headerSuperReader: #e1baff;
 $headerSuperUser: #a4f1c1;
 
@@ -25,8 +25,8 @@ $headerSuperUser: #a4f1c1;
 
 .home_icon {
   margin-inline-end: 10px;
-  block-size: 24px;
-  inline-size: 24px;
+  block-size: 100%;
+  inline-size: 100%;
 }
 
 .avatar_style {
@@ -36,4 +36,10 @@ $headerSuperUser: #a4f1c1;
 
 .name {
   margin-inline-end: 20px;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  block-size: 30px;
 }
