@@ -99,7 +99,7 @@ Not all algorithms are equally well-supported on all platforms. In case of quest
   <li>Other Platforms were not tested yet.</li>
 </ul>
 
-# Project Roadmap and Current State
+# Project Roadmap and Architecture
 Information about our roadmap can be found [here](ROADMAP.md).
 
 # Contributing
