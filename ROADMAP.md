@@ -10,13 +10,14 @@ Our benchmarking tool aims to understand, evaluate, and prepare for the integrat
 ### Phase 3: Benchmarking Non-TLS Protocols
 * Functional Path: Expand the tool's capabilities to also benchmark popular non-TLS protocols integrating PQC, such as SSH, VPNs, and secure file transfers.
 * Architectural Path: Introduce protocol-specific plugins or extensions to the benchmarking tool, ensuring flexible and accurate metrics collection for each protocol.
-### Continuous Enhancements:
+### Continuous Enhancements
 * Functional Path: Consistently update the tool to accommodate the latest PQC algorithms and stay aligned with evolving standards.
 * Architectural Path: Adopt a plug-and-play model to seamlessly integrate new algorithms or protocols into the benchmarking tool. Ensure the platform remains cloud-agnostic, facilitating deployments on any major cloud service or on-premises.
 * Analysis and Refinement: Regularly analyze the collected metrics, refining tools based on insights, and re-evaluating the significance of certain metrics to ensure the tool's continued relevance and accuracy.
-### Community Engagement and Open Data:
+### Community Engagement and Open Data
 Our ultimate goal is not just internal knowledge but to provide the community with valuable insights. We plan to make our findings public, engage with the community for feedback, and potentially open-source our tools for collaborative enhancement.
 
-# Current State - Moving from our working prototype to Phase 1
+# Architecture
+### Moving from our working prototype (current state) to phase 1
 
 ![image](https://github.com/att/qujata/assets/142991359/d2daca87-884c-4a05-95e5-8fa3c7168340)
