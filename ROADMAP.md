@@ -15,7 +15,7 @@ Our benchmarking tool aims to understand, evaluate, and prepare for the integrat
 * Architectural Path: Adopt a plug-and-play model to seamlessly integrate new algorithms or protocols into the benchmarking tool. Ensure the platform remains cloud-agnostic, facilitating deployments on any major cloud service or on-premises.
 * Analysis and Refinement: Regularly analyze the collected metrics, refining tools based on insights, and re-evaluating the significance of certain metrics to ensure the tool's continued relevance and accuracy.
 ### Community Engagement and Open Data
-Our ultimate goal is not just internal knowledge but to provide the community with valuable insights. We plan to make our findings public, engage with the community for feedback, and potentially open-source our tools for collaborative enhancement.
+Our ultimate goal is not just internal knowledge but to provide the community with valuable insights. We plan to make our findings public, engage with the community for feedback, and open-source our tools for collaborative enhancement.
 
 # Architecture
 ### Moving from our working prototype (phase 0) to phase 1
