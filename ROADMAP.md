@@ -18,6 +18,6 @@ Our benchmarking tool aims to understand, evaluate, and prepare for the integrat
 Our ultimate goal is not just internal knowledge but to provide the community with valuable insights. We plan to make our findings public, engage with the community for feedback, and potentially open-source our tools for collaborative enhancement.
 
 # Architecture
-### Moving from our working prototype (current state) to phase 1
+### Moving from our working prototype (phase 0) to phase 1
 
 ![image](https://github.com/att/qujata/assets/142991359/d2daca87-884c-4a05-95e5-8fa3c7168340)
