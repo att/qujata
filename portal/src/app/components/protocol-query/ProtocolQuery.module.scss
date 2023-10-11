@@ -41,9 +41,15 @@
 
 .protocol_query_wrapper {
   display: flex;
-  align-items: flex-end;
+  flex-direction: column;
 }
 
 .export_button {
   margin-inline-start: 30px;
+}
+
+.protocol_query_title {
+  font-size: 18px;
+  font-family: var($fontBold);
+  margin-block-end: 40px;
 }

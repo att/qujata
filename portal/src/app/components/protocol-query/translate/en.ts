@@ -1,5 +1,6 @@
 // eslint-disable-next-line @typescript-eslint/typedef
 export const PROTOCOL_QUERY_EN = {
+    TITLE: 'Define parameters to view the dashboard ',
     ACTION_BUTTONS: {
         RUN: 'Run',
         EXPORT: 'Export',

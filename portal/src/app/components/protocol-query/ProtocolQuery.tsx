@@ -43,6 +43,7 @@ export const ProtocolQuery: React.FC<ProtocolQueryProps> = (props: ProtocolQuery
 
   return (
     <div className={styles.protocol_query_wrapper}>
+      <div className={styles.protocol_query_title}>{PROTOCOL_QUERY_EN.TITLE}</div>
       <form className={styles.wrapper} onSubmit={onSubmitHandler}>
           <div className={styles.form_item}>
               <label>
@@ -81,7 +82,7 @@ export const ProtocolQuery: React.FC<ProtocolQueryProps> = (props: ProtocolQuery
             {PROTOCOL_QUERY_EN.ACTION_BUTTONS.RUN}
           </Button>
        </form>
-       <Button
+       {/* <Button
             className={styles.export_button}
             actionType={ButtonActionType.BUTTON}
             size={ButtonSize.LARGE}
@@ -90,7 +91,7 @@ export const ProtocolQuery: React.FC<ProtocolQueryProps> = (props: ProtocolQuery
             onButtonClick={onDownloadDataClicked}
         >
           {PROTOCOL_QUERY_EN.ACTION_BUTTONS.EXPORT}
-        </Button>
+        </Button> */}
     </div>
   );
 };
