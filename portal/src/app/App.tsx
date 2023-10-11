@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/alt-text */
-import { ReactNode, useCallback } from 'react';
+import { ReactNode, useCallback, useState } from 'react';
 import { BrowserRouter } from 'react-router-dom';
 import MyImage from '../assets/images/define-params.svg';
 import styles from './App.module.scss';
@@ -14,6 +14,7 @@ import { Spinner, SpinnerSize } from './shared/components/att-spinner';
 import { useDashboardData } from './hooks/useDashboardData';
 import { downloadCsvFile } from './utils/download';
 import { mapDashboardDataToCsvDataType } from './components/dashboard/utils/dashboard-data-report.util';
+import { SubHeader } from './components/sub-header';
 
 
 const App: React.FC = () => (
@@ -26,12 +27,21 @@ const App: React.FC = () => (
 
 export default App;
 
-const AppContent: React.FC = () => (
-  <>
-    <GlobalHeader className={styles.global_header} title={SHARED_EN.WEB_PORTAL_NAME} />
-    <AppBody />
-  </>
-);
+const AppContent: React.FC = () => {
+  const [isSubHeaderOpen, setIsSubHeaderOpen] = useState<boolean>(true);
+
+  const handleSubHeaderCloseClick: () => void = useCallback((): void => {
+    setIsSubHeaderOpen(false);
+  }, []);
+  
+  return (
+    <>
+      <GlobalHeader className={styles.global_header} title={SHARED_EN.WEB_PORTAL_NAME} />
+      {isSubHeaderOpen && <SubHeader handleCloseClick={handleSubHeaderCloseClick} />}
+      <AppBody />
+    </>
+  );
+}
 
 const AppBody: React.FC = () => {
   const { handleRunQueryClick, data, algorithms, status } = useDashboardData();
