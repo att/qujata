@@ -43,10 +43,9 @@ export const ProtocolQuery: React.FC<ProtocolQueryProps> = (props: ProtocolQuery
 
   return (
     <div className={styles.protocol_query_wrapper}>
-      <div className={styles.protocol_query_title}>{PROTOCOL_QUERY_EN.TITLE}</div>
       <form className={styles.wrapper} onSubmit={onSubmitHandler}>
           <div className={styles.form_item}>
-              <label>
+              <label className={styles.form_item_label}>
                 {PROTOCOL_QUERY_EN.FIELDS_LABEL.ALGORITHM} {algorithmsCount > 3 && <span className={styles.error}> {PROTOCOL_QUERY_EN.ALGORITHM_LABEL_DESCRIPTION}</span>}
               </label>
               <AttSelect
@@ -59,7 +58,7 @@ export const ProtocolQuery: React.FC<ProtocolQueryProps> = (props: ProtocolQuery
               />
           </div>
           <div className={styles.form_item}>
-              <label>{PROTOCOL_QUERY_EN.FIELDS_LABEL.ITERATIONS_NUMBER}</label>
+              <label className={styles.form_item_label}>{PROTOCOL_QUERY_EN.FIELDS_LABEL.ITERATIONS_NUMBER}</label>
               <input
                 className={styles.input_form_item}
                 name='iterationNum'
