@@ -1,5 +1,5 @@
 # Project Roadmap 
-Our benchmarking tool aims to understand, evaluate, and prepare for the integration of post-quantum cryptographic (PQC) algorithms in real-world scenarios. As we progress, our roadmap is designed to deepen our understanding, enhance our tools, and provide the community with valuable insights.
+Our benchmarking tool aims to understand, evaluate, and prepare for the integration of post-quantum cryptographic (PQC) algorithms in real-world scenarios. As we progress, our roadmap is designed to deepen our understanding, enhance our tools, learn from the community and gather valuable insights together.
 
 ### Phase 1: Full Stack Benchmarking Tool for TLS
 * Functional Path: Develop a comprehensive benchmarking tool that evaluates the performance of post-quantum cryptographic algorithms within the context of a full TLS handshake. This will provide a holistic view of how these algorithms influence real-world applications.
