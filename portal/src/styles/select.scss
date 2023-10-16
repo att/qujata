@@ -4,9 +4,10 @@
 
 $selectBorderColorDefault: #dcdfe3;
 $selectBorderColorValue: var($selectBorderColor, $selectBorderColorDefault);
-$selectOptionHoverBackgroundColor: #e5eef7;
+$selectOptionHoverBackgroundColor: #F3F1F9;
 $selectDisabledBackgroundColor: #f9f9f9;
 $selectTagBorderColor: #454b52;
+$selectTagBackgroundColor: #EAEAEA;
 
 .att_select_container {
   &.att_select_container--is-loading {
@@ -37,11 +38,12 @@ $selectTagBorderColor: #454b52;
   .att_select__control {
     background-color: var($selectControlBackgroundColor, var($backgroundColorWhite));
     block-size: var($selectControlHeight, 48px);
-    border-radius: 2px;
+    border-radius: 44px;
     border: 1px solid $selectBorderColorValue;
     box-shadow: none;
     inline-size: 100%;
     transition: all 100ms, border-color 0s;
+    padding-inline: 8px;
 
     &:hover {
       border-color: $selectBorderColorValue;
@@ -53,9 +55,9 @@ $selectTagBorderColor: #454b52;
     }
 
     .att_select__multi-value {
-      border: solid 1px $selectTagBorderColor;
-      padding: 1px;
-      background-color: transparent;
+      border-radius: 8px;
+      background-color: $selectTagBackgroundColor;
+      padding: 2px;
       line-height: 16px;
       margin-inline-end: 8px;
       block-size: 28px;
@@ -82,6 +84,9 @@ $selectTagBorderColor: #454b52;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    block-size: 40px;
+    display: flex;
+    align-items: center;
 
     &.att_select__option--is-selected {
       font-family: var($fontMedium);

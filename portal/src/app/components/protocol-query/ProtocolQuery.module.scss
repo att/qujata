@@ -1,8 +1,10 @@
 @import "src/styles/variables-keys";
 
+$inputBorderColor: #DCDFE3;
+
 .wrapper {
   display: flex;
-  gap:21px;
+  gap: 30px;
   flex-wrap: wrap;
 }
 
@@ -13,7 +15,7 @@
 .form_item { 
   display: flex;
   flex-direction: column;
-  inline-size: 320px;
+  inline-size: 420px;
   font-size: 14px;
 }
 
@@ -26,24 +28,29 @@
 
 .input_form_item {
   block-size: 38px;
-  border: 1px solid #dcdfe3;
-  border-radius: 2px;
+  border: 1px solid $inputBorderColor;
+  border-radius: 44px;
   inline-size: 100%;
   outline: none;
-  padding: 8px;
   margin-block-start: 4px;
   block-size: 48px;
+  padding-inline: 22px;
 }
 
 .run_button {
-  margin-block-start: 21px;
+  margin-block-start: 30px;
+  inline-size: 120px;
 }
 
 .protocol_query_wrapper {
   display: flex;
-  align-items: flex-end;
+  flex-direction: column;
 }
 
 .export_button {
   margin-inline-start: 30px;
+}
+
+.form_item_label {
+  margin-block-end: 8px;
 }

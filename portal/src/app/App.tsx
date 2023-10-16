@@ -58,6 +58,7 @@ const AppBody: React.FC = () => {
 
   return (
     <div className={styles.app_wrapper}>
+      {data.size === 0 && <div className={styles.protocol_query_title}>{SHARED_EN.TITLE}</div>}
       <ProtocolQuery isFetching={status === FetchDataStatus.Fetching} onRunClick={handleRunClick} canExportFile={!!data.size} onDownloadDataClicked={handleDownloadDataClicked} />
       {algorithms === undefined
         && (
@@ -66,7 +67,7 @@ const AppBody: React.FC = () => {
           />
         )}
         {status === FetchDataStatus.Fetching && renderSpinner()}
-        {status === FetchDataStatus.Init && renderInitialState()}
+        {/* {status === FetchDataStatus.Init && renderInitialState()} */}
     </div>
   );
 };

@@ -45,7 +45,7 @@ export const ProtocolQuery: React.FC<ProtocolQueryProps> = (props: ProtocolQuery
     <div className={styles.protocol_query_wrapper}>
       <form className={styles.wrapper} onSubmit={onSubmitHandler}>
           <div className={styles.form_item}>
-              <label>
+              <label className={styles.form_item_label}>
                 {PROTOCOL_QUERY_EN.FIELDS_LABEL.ALGORITHM} {algorithmsCount > 3 && <span className={styles.error}> {PROTOCOL_QUERY_EN.ALGORITHM_LABEL_DESCRIPTION}</span>}
               </label>
               <AttSelect
@@ -58,7 +58,7 @@ export const ProtocolQuery: React.FC<ProtocolQueryProps> = (props: ProtocolQuery
               />
           </div>
           <div className={styles.form_item}>
-              <label>{PROTOCOL_QUERY_EN.FIELDS_LABEL.ITERATIONS_NUMBER}</label>
+              <label className={styles.form_item_label}>{PROTOCOL_QUERY_EN.FIELDS_LABEL.ITERATIONS_NUMBER}</label>
               <input
                 className={styles.input_form_item}
                 name='iterationNum'
@@ -81,7 +81,7 @@ export const ProtocolQuery: React.FC<ProtocolQueryProps> = (props: ProtocolQuery
             {PROTOCOL_QUERY_EN.ACTION_BUTTONS.RUN}
           </Button>
        </form>
-       <Button
+       {/* <Button
             className={styles.export_button}
             actionType={ButtonActionType.BUTTON}
             size={ButtonSize.LARGE}
@@ -90,7 +90,7 @@ export const ProtocolQuery: React.FC<ProtocolQueryProps> = (props: ProtocolQuery
             onButtonClick={onDownloadDataClicked}
         >
           {PROTOCOL_QUERY_EN.ACTION_BUTTONS.EXPORT}
-        </Button>
+        </Button> */}
     </div>
   );
 };
