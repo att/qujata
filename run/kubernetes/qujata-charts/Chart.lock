@@ -1,0 +1,15 @@
+dependencies:
+- name: curl
+  repository: file://./charts/curl
+  version: 0.1.0
+- name: nginx
+  repository: file://./charts/nginx
+  version: 0.1.0
+- name: prometheus
+  repository: file://./charts/prometheus
+  version: 0.1.0
+- name: grafana
+  repository: file://./charts/grafana
+  version: 0.1.0
+digest: sha256:b490ae530d0698ca949aecbb99fb19bd728dab94b38f5553edc0258d93bd03db
+generated: "2023-10-19T09:36:03.010404+03:00"

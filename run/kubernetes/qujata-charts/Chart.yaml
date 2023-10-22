@@ -1,0 +1,20 @@
+apiVersion: v2
+name: qujata-chart
+description: A parent chart for deploying multiple sub-charts
+version: 0.1.0
+dependencies:
+  - name: curl
+    version: 0.1.0
+    repository: "file://./charts/curl"
+  - name: nginx
+    version: 0.1.0
+    repository: "file://./charts/nginx"
+  - name: prometheus
+    version: 0.1.0
+    repository: "file://./charts/prometheus"
+  - name: grafana
+    version: 0.1.0
+    repository: "file://./charts/grafana"
+  # - name: cadvisor
+  #   version: 0.1.0
+  #   repository: "file://./charts/cadvisor"
