@@ -1,7 +1,7 @@
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
-  name: prometheus-nodes-list
+  name: {{.Chart.Name}}-nodes-list
 rules:
 - apiGroups: [""]
   resources: ["nodes"]
@@ -12,15 +12,15 @@ rules:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
-  name: prometheus-nodes-list
+  name: {{.Chart.Name}}-nodes-list
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
-  name: prometheus-nodes-list
+  name: {{.Chart.Name}}-nodes-list
 subjects:
 - kind: ServiceAccount
-  name: qujata-prometheus
-  namespace: qujata-1
+  name: {{.Release.Name}}
+  namespace: {{.Release.Namespace}}
 
 ---
 
@@ -28,7 +28,7 @@ subjects:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
-  name: prometheus
+  name: {{.Chart.Name}}
 rules:
 - apiGroups:
   - ""
@@ -58,17 +58,17 @@ rules:
 apiVersion: v1
 kind: ServiceAccount
 metadata:
-  name: prometheus
+  name: {{.Chart.Name}}
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
-  name: prometheus
+  name: {{.Chart.Name}}
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
-  name: prometheus
+  name: {{.Chart.Name}}
 subjects:
 - kind: ServiceAccount
-  name: prometheus
-  namespace: qujata-1
+  name: {{.Chart.Name}}
+  namespace: {{.Release.Namespace}}

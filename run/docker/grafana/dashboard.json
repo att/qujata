@@ -206,7 +206,7 @@
             "uid": "PB08949F94AB73929"
           },
           "editorMode": "code",
-          "expr": "sum(rate(container_memory_usage_bytes{name=\"nginx\"}[30m:1m])) by (name) ",
+          "expr": "sum(rate(container_memory_usage_bytes{name=\"nginx\"}[30s])) by (name) ",
           "hide": false,
           "interval": "",
           "intervalFactor": 2,
@@ -425,7 +425,7 @@
             "uid": "PB08949F94AB73929"
           },
           "editorMode": "code",
-          "expr": "sum(rate(container_memory_usage_bytes{name=\"curl\"}[30m:1m])) by (name) ",
+          "expr": "sum(rate(container_memory_usage_bytes{name=\"curl\"}[30s])) by (name) ",
           "hide": false,
           "interval": "",
           "intervalFactor": 2,
