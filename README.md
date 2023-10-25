@@ -55,48 +55,87 @@ As standardization for these algorithms within TLS is not done, all TLS code poi
 
 # Getting Started
 
-We suggest using the docker-compose distribution via the instructions below, but there is also a [Development Installation](#development) procedure if you’d prefer to run the Qujata in development mode.
+We suggest using the [Docker Compose](#docker) distribution, but a [Kubernetes Helm](#kubernetes)  charts procedure is avalable if you’d prefer to run the Qujata in your kubernetes environment.
 
-1. To start, clone the qujata repository:
+also a [Development Installation](#development) procedure to run the Qujata in development mode is provided.
+
+
+To start, clone the qujata repository:
 ```bash
 git clone https://github.com/att/qujata.git
 cd qujata
+```
+
+# Docker
+Prerequisit: Docker, Docker Compose. <br>
+Docker Compose is included in [Docker Desktop installation](https://www.docker.com/products/docker-desktop/) <br>
+
+
+1. cd to the following directory:
+```bash
+cd run/docker
 ```
 2. Start the application using:
 ```bash
 docker compose up
 ```
-3. The application is now available on the below url:
+3. The grafana ui is now available on the below url:
 ```bash
-http://localhost:8080/
+http://localhost:3000/
+``` 
+4. running your test using curl:
+```bash
+curl http://localhost:3010/curl -H 'Content-Type: application/json'  --data-raw '{"algorithm":"kyber512", "iterationsCount":3000}'
+``` 
+
+# Kubernetes 
+Prerequisit: [Kubernetes](https://kubernetes.io/releases/download/), [Helm](https://helm.sh/docs/intro/install/) <br>
+If you're using Docker Desktop you can  [Enable Kuberenets in Docker Desktop](https://docs.docker.com/desktop/kubernetes/) <br>
+
+1. cd to the following directory:
+```bash
+cd run/kuberenetes
+```
+2. install helm charts:
+```bash
+helm dependency update
+helm install -i  qujata –create-namespace qujata --namespace qujata
+```
+3. to expose grafana and curl you can use both options:
+
+### port forward:<br>
+*    expose ports:
+```bash
+kubectl port-forward service/qujata-grafana 3000:3000 -n qujata
+kubectl port-forward service/qujata-curl 3010:3010 -n qujata
+```
+*    The grafana ui is now available on the below url:
+```bash
+http://localhost:3000/
+``` 
+*    running your test using curl:
+```bash
+curl http://localhost:3010/curl -H 'Content-Type: application/json'  --data-raw '{"algorithm":"kyber512", "iterationsCount":3000}'
+``` 
+
+### ingress-controller:<br>
+*    install ingress-controller if not installed yet
+```bash
+helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
+helm repo update
+helm install ingress-nginx ingress-nginx/ingress-nginx --create-namespace --namespace ingress-nginx
+```
+*    The grafana ui is now available on the below url:
+```bash
+http://localhost/grafana
+``` 
+*    running your test using curl:
+```bash
+curl http://localhost/curl -H 'Content-Type: application/json'  --data-raw '{"algorithm":"kyber512", "iterationsCount":3000}'
 ``` 
 
 
 # Development
-
-### Server 
-
-The procedure is available [here](https://github.com/att/qujata/tree/main/api/README.md) 
-
-### Client
-
-The procedure is available [here](https://github.com/att/qujata/tree/main/portal/README.md) 
-
-
-
-
- 
-### Platform limitations 
-
-Pay attention that the Operating System of the machine running this project has an effect on the proper data returned in the results.
-<br/>
-Not all algorithms are equally well-supported on all platforms. In case of questions, it is first advised to review the [documentation files for each algorithm](https://github.com/open-quantum-safe/liboqs/tree/main/docs/algorithms).
-<br/>
-<ul>
-  <li>On Mac, it is expected to work well and was tested with AllowedAlgorithms.</li>
-  <li>On Windows, some Algorithms may not be supported by `Open Quantum Safe` docker images, but the code will work successfully.<br/>(Seeing `downloadSpeed=0` is suspected to be a sign of no-support for selected Algorithm).</li>
-  <li>Other Platforms were not tested yet.</li>
-</ul>
 
 
 # Contributing
