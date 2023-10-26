@@ -3,6 +3,9 @@ name: qujata-chart
 description: A parent chart for deploying multiple sub-charts
 version: 0.1.0
 dependencies:
+  - name: api
+    version: 0.1.0
+    repository: "file://./charts/api"
   - name: curl
     version: 0.1.0
     repository: "file://./charts/curl"
