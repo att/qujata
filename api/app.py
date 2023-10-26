@@ -12,7 +12,7 @@ load_dotenv()
 app = Flask(__name__)
 
 # Load configuration
-pqc_curl_target = os.environ.get('pqc_curl_target')
+qujata_curl_target = os.environ.get('CURL_URL')
 
 @app.route('/analysis', methods=['POST'])
 def get_algorithms_analysis():
@@ -24,20 +24,33 @@ def get_algorithms_analysis():
         return jsonify({'error': 'Invalid data provided'}), 400
 
     iterations_count = data['iterationsCount']
-    headers = {'Content-Type': 'application/json'}
+    headers = { 'Content-Type': 'application/json' }
 
-    for algorithm in data['algorithms']:
-      payload = {
-          'algorithm': algorithm,
-          'iterationsCount': iterations_count
-      }
+    # for algorithm in data['algorithms']:
+    #   payload = {
+    #       'algorithm': algorithm,
+    #       'iterationsCount': iterations_count
+    #   }
       
-      response = requests.post(pqc_curl_target, headers=headers, json=payload)
-      # Print response details
-      print("Status code:", response.status_code)
-      print("Headers:", response.headers)
-      print("Content (JSON):", json.dumps(response.json(), indent=2))
+    #   response = requests.post(pqc_curl_target, headers=headers, json=payload)
+    #   # Print response details
+    #   print('Status code:', response.status_code)
+    #   print('Headers:', response.headers)
+    #   print('Content (JSON): ', json.dumps(response.json(), indent=2))
 
+    payload = {
+        'algorithm': data['algorithms'][0],
+        'iterationsCount': iterations_count
+    }
+
+    print('payload: ', json.dumps(payload))
+
+    response = requests.post(qujata_curl_target + '/curl', headers=headers, json=payload)
+    # Print response details
+    print('Status code:', response.status_code)
+    print('Headers:', response.headers)
+    # print('Content (JSON): ', json.dumps(response.json(), indent=2))
+    
     end_time = int(datetime.timestamp(datetime.now()) * 1000)
     run_id = str(uuid.uuid4())
     
