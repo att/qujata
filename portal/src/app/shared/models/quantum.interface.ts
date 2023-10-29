@@ -12,6 +12,10 @@ export interface ITestResponse {
   data: ITestResponseData;
 }
 
+export interface IQueryResponse {
+  linkToResult: string;
+}
+
 export interface ITestResponseData {
   totalTime: number[];
   connectTime: number[];

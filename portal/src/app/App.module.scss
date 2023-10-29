@@ -43,3 +43,13 @@
   font-family: var($fontMedium);
   margin-block-end: 40px;
 }
+
+.response_wrapper {
+  margin-block-start: 60px;
+}
+
+.response_link {
+  border-radius: 12px;
+  background-color: var($attPurple);
+  padding: 14px;
+}
