@@ -99,7 +99,7 @@ cd run/kuberenetes
 2. install helm charts:
 ```bash
 helm dependency update
-helm install -i  qujata –create-namespace . --namespace qujata
+helm install -i  qujata --create-namespace . --namespace qujata
 ```
 3. to expose grafana and curl you can use both options:
 
