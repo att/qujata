@@ -9,7 +9,7 @@ algorithm="$4"
 i=0 ; 
 (
     while [ $i -le ${iteration_count} ] ; do 
-        curl https://${nginx_host}:${nginx_port}  -k  --curves  ${algorithm} &
+        curl https://${nginx_host}:${nginx_port}  -k  --curves  ${algorithm} -so /dev/null &
         i=`expr $i + 1`
     done 
 ) &
