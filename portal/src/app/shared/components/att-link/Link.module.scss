@@ -33,17 +33,17 @@
 
 .wrapper_link {
   text-decoration: none;
-  color: var($attCobalt);
+  color: var($primaryWhite);
 }
 
 .text_link {
   &:not(:hover) {
-    color: var($attCobalt);
+    color: var($primaryWhite);
     text-decoration: none;
   }
 
   &:hover {
-    color: var($actionTextHoverColor);
+    color: var($primaryWhite);
     text-decoration: underline;
   }
 }

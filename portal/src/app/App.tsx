@@ -15,6 +15,7 @@ import { useDashboardData } from './hooks/useDashboardData';
 import { downloadCsvFile } from './utils/download';
 import { mapDashboardDataToCsvDataType } from './components/dashboard/utils/dashboard-data-report.util';
 import { SubHeader } from './components/sub-header';
+import { ExternalLink, LinkRel, LinkSize, LinkStyle, LinkTarget } from './shared/components/att-link';
 
 
 const App: React.FC = () => (
@@ -44,28 +45,42 @@ const AppContent: React.FC = () => {
 }
 
 const AppBody: React.FC = () => {
-  const { handleRunQueryClick, data, algorithms, status } = useDashboardData();
+  //const { handleRunQueryClick, data, algorithms, status } = useDashboardData();
+  const { handleRunQueryClick, link, status } = useDashboardData();
 
   const handleRunClick: (params: ITestParams) => void = useCallback((params: ITestParams): void => {
     handleRunQueryClick(params);
   }, [handleRunQueryClick]);
 
-  const handleDownloadDataClicked: () => void = useCallback((): void => {
-    // todo rename file name
-    const csvFileName: string = 'pqc.csv';
-    downloadCsvFile(mapDashboardDataToCsvDataType(data), csvFileName);
-  }, [data]);
+  // const handleDownloadDataClicked: () => void = useCallback((): void => {
+  //   // todo rename file name
+  //   const csvFileName: string = 'pqc.csv';
+  //   downloadCsvFile(mapDashboardDataToCsvDataType(data), csvFileName);
+  // }, [data]);
 
   return (
     <div className={styles.app_wrapper}>
-      {data.size === 0 && <div className={styles.protocol_query_title}>{SHARED_EN.TITLE}</div>}
-      <ProtocolQuery isFetching={status === FetchDataStatus.Fetching} onRunClick={handleRunClick} canExportFile={!!data.size} onDownloadDataClicked={handleDownloadDataClicked} />
-      {algorithms === undefined
-        && (
-          <DashboardMemoized
-            data={data}
-          />
-        )}
+      {!link?.length && <div className={styles.protocol_query_title}>{SHARED_EN.TITLE}</div>}
+      <ProtocolQuery isFetching={status === FetchDataStatus.Fetching} onRunClick={handleRunClick} />
+      {link?.length > 0 &&
+        <div className={styles.response_wrapper}>
+          <ExternalLink
+              className={styles.response_link}
+              link={link}
+              styleType={LinkStyle.TEXT}
+              size={LinkSize.NONE}
+              target={LinkTarget.BLANK}
+              rel={LinkRel.NO_OPENER}
+            >
+              {SHARED_EN.LINK_TEXT}
+          </ExternalLink>
+        </div>
+        // && (
+        //   <DashboardMemoized
+        //     data={data}
+        //   />
+        // )
+        }
         {status === FetchDataStatus.Fetching && renderSpinner()}
         {/* {status === FetchDataStatus.Init && renderInitialState()} */}
     </div>
