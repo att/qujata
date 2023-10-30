@@ -21,10 +21,10 @@ export class CurlService {
     this.CURL_SCRIPT_PATH = "./scripts/run-curl-loop.sh"
   }
 
-  run(curlRequest: CurlRequest): void {
+  async run(curlRequest: CurlRequest): Promise<void> {
     this.validate();
     try { 
-      setTimeout(async () => {this.runCurls(curlRequest.iterationsCount, curlRequest.algorithm)},0);
+      return this.runCurls(curlRequest.iterationsCount, curlRequest.algorithm);
     } catch (err) {
       console.error('[CurlService:run] Error occurred: ', err);
       throw new HttpException("error occured when trying to run test with algorithm: " + curlRequest.algorithm, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -39,16 +39,23 @@ export class CurlService {
   }
 
   async runCurls(iterationsCount: number, algorithm: AllowedAlgorithmsType) {
-    (async () => {
       const curlCommand = this.format(`${this.CURL_SCRIPT_PATH} ${this.configService.get('nginx.host')} ${this.configService.get('nginx.port')} ${iterationsCount} ${algorithm}`);
       this.processIsRunning = true;
-      const _this = this;
-      this.currentProcess = shellJS.exec(curlCommand, function(code, stdout, stderr) {
-        console.log('[CurlService:run] Finished taking all curl samples');
-        _this.processIsRunning = false;
-        _this.currentProcess = undefined;
-      }); 
-    })();
+      await this.execAsync(curlCommand);
+      console.log('[CurlService:run] Finished taking all curl samples');
+      this.processIsRunning = false;
+  }
+
+  execAsync(command): Promise<void> {
+    return new Promise((resolve, reject) => {
+      shellJS.exec(command, { async: true }, (code, stdout, stderr) => {
+        if (code === 0) {
+          resolve(stdout);
+        } else {
+          reject(stderr);
+        }
+      });
+    });
   }
 
   format = (...args) => args.shift().replace(/%([jsd])/g, x => x === '%j' ? JSON.stringify(args.shift()) : args.shift())

@@ -8,9 +8,9 @@ export class CurlController {
   constructor(private readonly curlService: CurlService) {}
 
   @Post()
-  @HttpCode(HttpStatus.ACCEPTED)
-  create(@Body() curlRequest: CurlRequest): void {
+  @HttpCode(HttpStatus.CREATED)
+  async create(@Body() curlRequest: CurlRequest): Promise<void> {
     console.log('[CurlController:create] In Post func. Body: ', curlRequest);
-    this.curlService.run(curlRequest);
+    return await this.curlService.run(curlRequest);
   }
 }
