@@ -19,8 +19,6 @@ services:
   api:
     image: qujata/api:1.0.0
     container_name: api
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
     ports:
       - 3020:3020
     environment:
