@@ -5,6 +5,8 @@ import { FetchDataStatus, IHttp, useFetch } from '../shared/hooks/useFetch';
 import { useFetchSpinner } from '../shared/hooks/useFetchSpinner';
 import { APIS } from '../apis';
 import { AttSelectOption } from '../shared/components/att-select';
+import { Environment } from '../../environments/environment';
+import { DashBoardPrefixLink } from '../shared/constants/dashboard';
 
 export interface IUseDashboardData {
   link: string;
@@ -20,7 +22,9 @@ export function useDashboardData(): IUseDashboardData {
   const [dashboardData, setDashboardData] = useState<ChartDataMap>(() => new Map<AttSelectOption, ITestResponseData | undefined>());
   const [algorithms, setAlgorithms] = useState<string[] | undefined>([]);
   const [iterationsCount, setIterationsCount] = useState<number>(1);
-  const [link, setLink] = useState<string>('');
+  const generateFromTime: number = Date.now();
+  const initialLink: string = `${Environment.dashboardLinkHost}/${DashBoardPrefixLink}&from=${generateFromTime}&to=1698747480624`;
+  const [link, setLink] = useState<string>(initialLink);
 
   useFetchSpinner(status);
   useEffect(() => cancelRequest, [cancelRequest]);
@@ -31,7 +35,8 @@ export function useDashboardData(): IUseDashboardData {
 
   useEffect(() => {
     if (status === FetchDataStatus.Success && data) {
-        setLink(data.linkToResult);
+        const dashboardLink: string = `${Environment.dashboardLinkHost}/${DashBoardPrefixLink}&from=${data.from}&to=${data.to}`;
+        setLink(dashboardLink);
         // setAlgorithms((prev: string[] | undefined) => {
         //     prev?.splice(0, 1);
         //     if (prev && prev.length > 0) {
