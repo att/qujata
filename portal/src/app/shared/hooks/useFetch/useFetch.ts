@@ -54,6 +54,7 @@ export function useFetch<T, ERROR_TYPE = IServerError>(fetchDataProps: AxiosRequ
       params: requestProps.params as Record<string, string>,
       cancelToken: source.token,
       responseType: requestProps.responseType || axios.defaults.responseType,
+      timeout: 900000,
     };
 
     return options;
