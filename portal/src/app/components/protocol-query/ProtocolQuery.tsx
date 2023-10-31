@@ -15,9 +15,9 @@ export type OnSelectChanged = (event: SelectOptionType) => void;
 
 export interface ProtocolQueryProps {
   isFetching: boolean;
-  canExportFile: boolean;
+  canExportFile?: boolean;
   onRunClick: (data: ITestParams) => void;
-  onDownloadDataClicked: () => void;
+  onDownloadDataClicked?: () => void;
 }
 
 export const ProtocolQuery: React.FC<ProtocolQueryProps> = (props: ProtocolQueryProps) => {
