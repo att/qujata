@@ -9,5 +9,6 @@ export const PROTOCOL_QUERY_EN = {
         ALGORITHM: 'Algorithm(s)',
     },
     ALGORITHM_LABEL_DESCRIPTION: '1-3 algorithm(s) can be tested',
+    FETCH_DATA: 'Loading data...',
 };
   

@@ -16,6 +16,7 @@ export type OnSelectChanged = (event: OnSelectChangedType) => void;
 export interface AttSelectProps {
   options: AttSelectOption[];
   value: AttSelectOption | AttSelectOption[] | undefined | null;
+  required?: boolean;
   defaultValue?: AttSelectOption | AttSelectOption[];
   onChange: OnSelectChanged;
   onBlur?: FocusEventHandler<HTMLInputElement>;
@@ -59,6 +60,7 @@ const AttSelectPrivate: AttSelectPrivateType = (props: AttSelectProps, ref: Forw
     isClearable={props.isClearable}
     closeMenuOnSelect={props.closeMenuOnSelect}
     hideSelectedOptions={props.hideSelectedOptions}
+    required={props.required}
     components={{
       IndicatorSeparator,
       LoadingIndicator,
