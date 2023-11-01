@@ -35,7 +35,7 @@ securityContext: {}
   # runAsNonRoot: true
   # runAsUser: 1000
 env:
-  GF_SERVER_ROOT_URL: '%(protocol)s://%(domain)s:%(http_port)s/grafana/'
+  # GF_SERVER_ROOT_URL: '%(protocol)s://%(domain)s:%(http_port)s/grafana/'
   GF_SECURITY_ADMIN_USER: qujata
   GF_SECURITY_ADMIN_PASSWORD: qujata
 service:

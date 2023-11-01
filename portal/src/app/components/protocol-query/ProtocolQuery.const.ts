@@ -32,7 +32,7 @@ const HQCAlgorithms: AttSelectOption[] = ['hqc128', 'hqc192', 'hqc256'].map((alg
 export const PQAlgorithms: AttSelectOption[] = [...BikeAlgorithms, ...CRYSTALSKyberAlgorithms, ...HQCAlgorithms];
 export const ClassicAlgorithms: AttSelectOption[] = ['prime256v1', 'secp384r1'].map((algo: string) => ({ label: algo, value: algo }));
 export const HybridAlgorithms: AttSelectOption[] = ['p256_kyber512', 'p384_kyber768', 'x25519_kyber768'].map((algo: string) => ({ label: algo, value: algo }));
-export const AlgorithmTitles: AttSelectOption[] = ['─────────── Classic ───────────', '─────────── Hybrid ───────────', '──────────── PQ ───────────']
+export const AlgorithmTitles: AttSelectOption[] = ['─────────── Classic ─────────────', '─────────── Hybrid ─────────────', '─────────── PQ ──────────────']
   .map((algo: string) => ({ label: algo, value: algo, isDisabled: true }));
 
 export const AllAlgorithms: AttSelectOption[] = [

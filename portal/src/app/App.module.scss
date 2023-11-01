@@ -8,9 +8,7 @@
 }
 
 .app_wrapper {
-  padding-inline-start: 216px;
-  padding-inline-end: 222px;
-  padding-block: 27px;
+  padding: 80px;
 }
 
 .init_state_wrapper {
@@ -38,4 +36,20 @@
   top: 50%;
   left: 50%;
   text-align: center;
+}
+
+.protocol_query_title {
+  font-size: 18px;
+  font-family: var($fontMedium);
+  margin-block-end: 40px;
+}
+
+.response_wrapper {
+  margin-block-start: 60px;
+}
+
+.response_link {
+  border-radius: 12px;
+  background-color: var($attPurple);
+  padding: 14px;
 }

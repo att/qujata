@@ -7,6 +7,7 @@
 - [**Algorithms**](#algorithms)
 - [**Getting Started**](#getting-started)
 - [**Development**](#development)
+- [**Project Roadmap**](#project-roadmap)
 - [**Contributing**](#contributing)
 - [**Releases**](#releases)
 - [**Code of Conduct**](#code-of-conduct)
@@ -30,21 +31,21 @@ As standardization for these algorithms within TLS is not done, all TLS code poi
 <!--- OQS_TEMPLATE_FRAGMENT_IDS_START -->
 |Algorithm name | Enabled |  Type
 |---------------|----------------------|----------------------|
-| bikel1           | Yes     | Post Quantoum |
-| bikel3           | Yes     | Post Quantoum |
-| bikel5           | Yes     | Post Quantoum |
-| frodo1344aes     | Yes     | Post Quantoum |
-| frodo1344shake   | Yes     | Post Quantoum |
-| frodo640aes      | Yes     | Post Quantoum |
-| frodo640shake    | Yes     | Post Quantoum |
-| frodo976aes      | Yes     | Post Quantoum |
-| frodo976shake    | Yes     | Post Quantoum |
-| hqc128           | Yes     | Post Quantoum |
-| hqc192           | Yes     | Post Quantoum |
-| hqc256           | Yes     | Post Quantoum |
-| kyber1024        | Yes     | Post Quantoum |
-| kyber512         | Yes     | Post Quantoum |
-| kyber768         | Yes     | Post Quantoum |
+| bikel1           | Yes     | Post Quantum |
+| bikel3           | Yes     | Post Quantum |
+| bikel5           | Yes     | Post Quantum |
+| frodo1344aes     | Yes     | Post Quantum |
+| frodo1344shake   | Yes     | Post Quantum |
+| frodo640aes      | Yes     | Post Quantum |
+| frodo640shake    | Yes     | Post Quantum |
+| frodo976aes      | Yes     | Post Quantum |
+| frodo976shake    | Yes     | Post Quantum |
+| hqc128           | Yes     | Post Quantum |
+| hqc192           | Yes     | Post Quantum |
+| hqc256           | Yes     | Post Quantum |
+| kyber1024        | Yes     | Post Quantum |
+| kyber512         | Yes     | Post Quantum |
+| kyber768         | Yes     | Post Quantum |
 | p256_kyber512    | Yes     | Hybrid        |
 | p384_kyber768    | Yes     | Hybrid        |
 | prime256v1       | Yes     | Classic       |
@@ -137,6 +138,8 @@ curl http://localhost/curl -H 'Content-Type: application/json'  --data-raw '{"al
 
 # Development
 
+# Project Roadmap and Architecture
+Information about our roadmap can be found [here](ROADMAP.md).
 
 # Contributing
 

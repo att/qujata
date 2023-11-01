@@ -1,0 +1,69 @@
+@import "src/styles/variables-keys";
+
+$subHeaderColor: #7F848A;
+
+.sub_header_wrapper {
+    background-color: var($primaryWhite);
+    block-size: 300px;
+    position: sticky;
+    top: 60px;
+    z-index: 1;
+    padding: 20px 20px 20px 80px;
+}
+
+.close_button {
+    display: flex;
+    margin-inline-start: auto;
+    background-color: #F5F1FF;
+    inline-size: 34px;
+    block-size: 34px;
+    border-radius: 50%;
+    justify-content: center;
+    align-items: center;
+}
+
+.sub_header_title {
+    font-size: 20px;
+    color: $subHeaderColor;
+}
+
+.items_wrapper {
+    display: flex;
+    margin-block-start: 40px;
+}
+
+.item {
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    color: $subHeaderColor;
+    white-space: pre;
+}
+
+.item_icon_wrapper {
+    display: flex;
+    align-items: center;
+}
+
+.item_icon {
+    border: 1px solid $subHeaderColor;
+    border-radius: 50%;
+    inline-size: 46px;
+    block-size: 42px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.item_description {
+    line-height: 24px;
+    margin-block-start: 12px;
+    font-size: 16px;
+}
+
+.sperator {
+    inline-size: 100%;
+    block-size: 1px;
+    background-color: $subHeaderColor;
+}

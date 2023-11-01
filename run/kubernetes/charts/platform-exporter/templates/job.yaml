@@ -3,19 +3,15 @@ kind: Job
 metadata:
   name: {{ template "platform-exporter.fullname" . }}-{{ randAlphaNum 5 | lower }}
   labels:
-    app: {{ template "commands.name" . }}
-    chart: {{ template "commands.chart" . }}
-    release: {{ .Release.Name }}
-    heritage: {{ .Release.Service }}
+    {{- include "platform-exporter.labels" . | nindent 4 }}
 spec:
   activeDeadlineSeconds: 100 # We give 15 minutes for the job to complete (if not it will mark as failed)
   template:
     metadata:
       name: {{ template "platform-exporter.fullname" . }}
     spec:
-
       containers:
-        - name: {{ template "setup.fullname" . }}
+        - name: {{ .Chart.Name}}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           command: ["python", "export-platform-info.py"]
 

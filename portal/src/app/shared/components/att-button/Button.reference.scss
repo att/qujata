@@ -1,8 +1,8 @@
 @import 'src/styles/variables-keys';
 
 $primaryTextColor: var($attCobalt);
-$primaryBorderColor: var($attCobalt);
-$primaryHoverBackgroundColor: var($attCobalt);
+$primaryBorderColor: var($attPurple);
+$primaryHoverBackgroundColor: var($attPurple);
 
 $secondaryTextColor: #c70032;
 $secondaryBorderColor: #c70032;
@@ -36,10 +36,9 @@ $largeButtonSize: 48px;
 
 %primaryStyle {
   border: 1px solid $primaryHoverBackgroundColor;
-  border-radius: 2px;
+  border-radius: 48px;
   color: var($primaryWhite);
   background-color: $primaryHoverBackgroundColor;
-
 }
 
 %secondaryStyle {
@@ -56,6 +55,7 @@ $largeButtonSize: 48px;
 %disableStyle {
   background-color: $disableBackgroundColor;
   border: solid 1px $disableBorderColor;
+  border-radius: 48px;
   color: $disableTextColor;
   cursor: initial;
   pointer-events: none;

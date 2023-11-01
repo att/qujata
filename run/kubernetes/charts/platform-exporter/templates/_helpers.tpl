@@ -26,16 +26,16 @@ If release name contains chart name it will be used as a full name.
 {{/*
 Create chart name and version as used by the chart label.
 */}}
-{{- define "pushgateway.chart" -}}
+{{- define "platform-exporter.chart" -}}
 {{- printf "%s-%s" .Chart.Name .Chart.Version | replace "+" "_" | trunc 63 | trimSuffix "-" }}
 {{- end }}
 
 {{/*
 Common labels
 */}}
-{{- define "pushgateway.labels" -}}
-helm.sh/chart: {{ include "pushgateway.chart" . }}
-{{ include "pushgateway.selectorLabels" . }}
+{{- define "platform-exporter.labels" -}}
+helm.sh/chart: {{ include "platform-exporter.chart" . }}
+{{ include "platform-exporter.selectorLabels" . }}
 {{- if .Chart.AppVersion }}
 app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
 {{- end }}
@@ -45,17 +45,17 @@ app.kubernetes.io/managed-by: {{ .Release.Service }}
 {{/*
 Selector labels
 */}}
-{{- define "pushgateway.selectorLabels" -}}
-app.kubernetes.io/name: {{ include "pushgateway.name" . }}
+{{- define "platform-exporter.selectorLabels" -}}
+app.kubernetes.io/name: {{ include "platform-exporter.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
 
 {{/*
 Create the name of the service account to use
 */}}
-{{- define "pushgateway.serviceAccountName" -}}
+{{- define "platform-exporter.serviceAccountName" -}}
 {{- if .Values.serviceAccount.create }}
-{{- default (include "pushgateway.fullname" .) .Values.serviceAccount.name }}
+{{- default (include "platform-exporter.fullname" .) .Values.serviceAccount.name }}
 {{- else }}
 {{- default "default" .Values.serviceAccount.name }}
 {{- end }}
