@@ -1,5 +1,16 @@
 services:
-  
+  pushgateway:
+    image: prom/pushgateway:latest
+    container_name: pushgateway
+    ports:
+      - "9091:9091"
+
+  platform-exporter:
+    image: platform-exporter:1.0.0
+    container_name: qujata-platform-exporter
+    depends_on:
+      - pushgateway
+
   nginx:
     image: qujata/nginx:1.0.0
     container_name: nginx

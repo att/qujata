@@ -21,3 +21,10 @@ dependencies:
   - name: grafana
     version: 0.1.0
     repository: "file://./charts/grafana"
+  - name: pushgateway
+    version: 0.1.0
+    repository: "file://./charts/pushgateway"
+  - name: platform-exporter
+    version: 0.1.0
+    repository: "file://./charts/platform-exporter"
+
