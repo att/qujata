@@ -1,6 +1,5 @@
 run/kubernetes/charts/*-0.1.0.tgz
-run/kubernetes/charts/Chart.lock
-
+run/kubernetes/Chart.lock
 # compiled output
 node_modules
 dist

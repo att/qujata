@@ -24,6 +24,14 @@ services:
     environment:
       - CURL_URL=http://curl:3010
 
+  portal:
+    image: qujata/portal:1.0.0
+    container_name: portal
+    ports:
+      - 2000:80
+    environment:
+      - PQC_PORTAL__BASE_API_URL=http://localhost:3020
+
   cadvisor:
     image: gcr.io/cadvisor/cadvisor:v0.47.0
     container_name: cadvisor

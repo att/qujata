@@ -3,6 +3,9 @@ name: qujata-chart
 description: A parent chart for deploying multiple sub-charts
 version: 0.1.0
 dependencies:
+  - name: portal
+    version: 0.1.0
+    repository: "file://./charts/portal"
   - name: api
     version: 0.1.0
     repository: "file://./charts/api"
@@ -18,6 +21,3 @@ dependencies:
   - name: grafana
     version: 0.1.0
     repository: "file://./charts/grafana"
-  # - name: cadvisor
-  #   version: 0.1.0
-  #   repository: "file://./charts/cadvisor"

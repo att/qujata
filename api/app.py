@@ -4,6 +4,7 @@ import json
 import time
 from datetime import datetime, timedelta
 from flask import Flask, jsonify, request
+from flask_cors import CORS, cross_origin
 import requests
 # from dotenv import load_dotenv
 
@@ -11,6 +12,8 @@ import requests
 # load_dotenv()
 
 app = Flask(__name__)
+CORS(app,origin=['*'])
+app.config['CORS_HEADERS'] = 'Content-Type'
 
 # Load configuration
 qujata_curl_target = os.environ.get('CURL_URL')
@@ -18,10 +21,11 @@ request_timeout = os.environ.get('REQUEST_TIMEOUT', 900)
 test_is_running = False
 
 @app.route('/analyze', methods=['POST'])
+@cross_origin(origin=['*'],supports_credentials=True)
 def get_algorithms_analysis():
     global test_is_running
     print('analysis route was triggered.')
-    start_time = int(datetime.timestamp(datetime.now()) * 1000)
+    start_time = int(datetime.timestamp(datetime.now() - timedelta(seconds=60)) * 1000)
     data = request.get_json()
     print(test_is_running)
     if not data or 'algorithms' not in data:
@@ -54,7 +58,7 @@ def get_algorithms_analysis():
     print('Status code:', response.status_code)
     print('Headers:', response.headers)
     # print('Content (JSON): ', json.dumps(response.json(), indent=2))
-    end_time = int(datetime.timestamp(datetime.now() + timedelta(seconds=60)) * 1000)
+    end_time = int(datetime.timestamp(datetime.now() + timedelta(seconds=90)) * 1000)
     run_id = str(uuid.uuid4())
     
     return jsonify({
