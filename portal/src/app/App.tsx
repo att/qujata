@@ -47,9 +47,14 @@ const AppContent: React.FC = () => {
 const AppBody: React.FC = () => {
   //const { handleRunQueryClick, data, algorithms, status } = useDashboardData();
   const { handleRunQueryClick, link, status } = useDashboardData();
+  console.log('link=== ', link);
+  const [displayLinkButton, setDisplayLinkButton] = useState<boolean>(false);
 
   const handleRunClick: (params: ITestParams) => void = useCallback((params: ITestParams): void => {
-    handleRunQueryClick(params);
+    if (params.algorithms && params.iterationsCount) {
+      setDisplayLinkButton(true);
+      handleRunQueryClick(params);
+    }
   }, [handleRunQueryClick]);
 
   // const handleDownloadDataClicked: () => void = useCallback((): void => {
@@ -62,7 +67,7 @@ const AppBody: React.FC = () => {
     <div className={styles.app_wrapper}>
       {!link?.length && <div className={styles.protocol_query_title}>{SHARED_EN.TITLE}</div>}
       <ProtocolQuery isFetching={status === FetchDataStatus.Fetching} onRunClick={handleRunClick} />
-      {link?.length > 0 &&
+      {(link?.length > 0 && displayLinkButton) &&
         <div className={styles.response_wrapper}>
           <ExternalLink
               className={styles.response_link}
@@ -81,7 +86,7 @@ const AppBody: React.FC = () => {
         //   />
         // )
         }
-        {status === FetchDataStatus.Fetching && renderSpinner()}
+        {/* {status === FetchDataStatus.Fetching && renderSpinner()} */}
         {/* {status === FetchDataStatus.Init && renderInitialState()} */}
     </div>
   );

@@ -38,8 +38,8 @@ $inputBorderColor: #DCDFE3;
 }
 
 .run_button {
-  margin-block-start: 30px;
   inline-size: 120px;
+  margin-inline-end: 20px;
 }
 
 .protocol_query_wrapper {
@@ -53,4 +53,19 @@ $inputBorderColor: #DCDFE3;
 
 .form_item_label {
   margin-block-end: 8px;
+}
+
+.submitButtonWrapper {
+  display: flex;
+  align-items: center;
+  margin-block-start: 30px;
+}
+
+.spinnerWrapper {
+  display: flex;
+  align-items: center;
+}
+
+.text {
+  margin-inline-start: 8px;
 }
