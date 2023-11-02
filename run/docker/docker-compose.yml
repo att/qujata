@@ -10,6 +10,8 @@ services:
     container_name: qujata-platform-exporter
     depends_on:
       - pushgateway
+    environment:
+      - PUSHGATEWAY_URL=http://pushgateway:9091
 
   nginx:
     image: qujata/nginx:1.0.0

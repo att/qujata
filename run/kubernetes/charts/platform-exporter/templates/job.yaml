@@ -1,7 +1,7 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: {{ template "platform-exporter.fullname" . }}-{{ randAlphaNum 5 | lower }}
+  name: {{ template "platform-exporter.fullname" . }}
   labels:
     {{- include "platform-exporter.labels" . | nindent 4 }}
 spec:
@@ -10,6 +10,10 @@ spec:
     metadata:
       name: {{ template "platform-exporter.fullname" . }}
     spec:
+      initContainers:
+        - name: init-{{ .Chart.Name}}
+          image: alpine:latest
+          command: [ "sh", "-c", "until curl -sS http://qujata-pushgateway:9091; do sleep 5; done" ]
       containers:
         - name: {{ .Chart.Name}}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"

@@ -1,10 +1,11 @@
+import os
 import subprocess
 import platform
 import psutil
 
 def export_platform_info():
     # The Push Gateway URL
-    pushgateway_url = 'http://pushgateway:9091'
+    pushgateway_url = os.environ.get('PUSHGATEWAY_URL')
 
     # The job name
     job = 'platform-info-job'
