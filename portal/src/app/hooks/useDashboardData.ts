@@ -23,7 +23,7 @@ export function useDashboardData(): IUseDashboardData {
   const [algorithms, setAlgorithms] = useState<string[] | undefined>([]);
   const [iterationsCount, setIterationsCount] = useState<number>(1);
   const generateFromTime: number = Date.now();
-  const initialLink: string = `${Environment.dashboardLinkHost}/${DashBoardPrefixLink}&from=${generateFromTime}&to=1698747480624`;
+  const initialLink: string = `${Environment.dashboardLinkHost}/${DashBoardPrefixLink}&from=${generateFromTime}`;
   const [link, setLink] = useState<string>(initialLink);
 
   useFetchSpinner(status);
