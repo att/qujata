@@ -20,7 +20,7 @@ def export_platform_info():
     ram_info = psutil.virtual_memory()
 
     # Prepare the metric data
-    metric_data = f'platform_info{{system="{platform.system()}", release="{platform.release()}", architecture="{platform.architecture()[0]}", arch_linkage="{platform.architecture()[1]}", machine="{platform.machine()}", node="{platform.node()}", num_logical_cpus="{num_logical_cpus}", num_physical_cpus="{num_physical_cpus}", total_ram="{ram_info.total}" }} 1'
+    metric_data = f'platform_info{{system="{platform.system()}", release="{platform.release()}", architecture="{platform.architecture()[0]}", arch_linkage="{platform.architecture()[1]}", machine="{platform.machine()}", num_logical_cpus="{num_logical_cpus}", num_physical_cpus="{num_physical_cpus}", total_ram="{ram_info.total}" }} 1'
 
     # Use subprocess to execute the curl command
     cmd = f'echo \'{metric_data}\' | curl --data-binary @- {pushgateway_url}/metrics/job/{job}'

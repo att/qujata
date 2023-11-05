@@ -5,7 +5,7 @@ metadata:
   labels:
     {{- include "platform-exporter.labels" . | nindent 4 }}
 spec:
-  activeDeadlineSeconds: 100 # We give 15 minutes for the job to complete (if not it will mark as failed)
+#  activeDeadlineSeconds: 1000 # We give 15 minutes for the job to complete (if not it will mark as failed)
   template:
     metadata:
       name: {{ template "platform-exporter.fullname" . }}
@@ -13,7 +13,8 @@ spec:
       initContainers:
         - name: init-{{ .Chart.Name}}
           image: alpine:latest
-          command: [ "sh", "-c", "until curl -sS http://qujata-pushgateway:9091; do sleep 5; done" ]
+          command: ['sh', '-c', 'until wget -qO- http://qujata-pushgateway:9091; do echo waiting for ujata-pushgateway; sleep 5; done']
+      #          command: [ "sh", "-c", "until curl -sS http://qujata-pushgateway:9091; do sleep 5; done" ]
       containers:
         - name: {{ .Chart.Name}}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
