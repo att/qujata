@@ -35,7 +35,7 @@ spec:
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
             - name: http
-              containerPort: 4433
+              containerPort: {{ .Values.service.port }}
               protocol: TCP
           env:
             {{- range $name, $value := .Values.env }}
