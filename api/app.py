@@ -16,6 +16,7 @@ CORS(app,origin=['*'])
 app.config['CORS_HEADERS'] = 'Content-Type'
 
 # Load configuration
+qujata_platform_exporter_target = os.environ.get('PLATFORM_EXPORTER_URL')
 qujata_curl_target = os.environ.get('CURL_URL')
 request_timeout = os.environ.get('REQUEST_TIMEOUT', 900)
 test_is_running = False
@@ -23,6 +24,9 @@ test_is_running = False
 @app.route('/analyze', methods=['POST'])
 @cross_origin(origin=['*'],supports_credentials=True)
 def get_algorithms_analysis():
+    # export platform info to prometheus
+    response = requests.post(qujata_platform_exporter_target + "/export-platform-info")
+
     global test_is_running
     print('analysis route was triggered.')
     start_time = int(datetime.timestamp(datetime.now() - timedelta(seconds=60)) * 1000)

@@ -1,8 +1,12 @@
+from flask import Flask
 import os
 import subprocess
 import platform
 import psutil
 
+app = Flask(__name__)
+
+@app.route('/export-platform-info', methods=['POST'])
 def export_platform_info():
     # The Push Gateway URL
     pushgateway_url = os.environ.get('PUSHGATEWAY_URL')
@@ -15,7 +19,7 @@ def export_platform_info():
 
     # Get the number of physical CPUs
     num_physical_cpus = psutil.cpu_count(logical=False)
-    
+
     # Get RAM in bytes
     ram_info = psutil.virtual_memory()
 
@@ -29,4 +33,4 @@ def export_platform_info():
     return metric_data
 
 if __name__ == '__main__':
-    export_platform_info()
+    app.run(host='0.0.0.0', port=5000)

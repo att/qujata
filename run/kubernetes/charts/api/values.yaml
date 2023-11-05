@@ -37,6 +37,8 @@ securityContext: {}
 
 env:
   CURL_URL: http://qujata-curl:3010
+  PLATFORM_EXPORTER_URL: http://platform-exporter:5000
+
 service:
   type: ClusterIP
   port: 3020
