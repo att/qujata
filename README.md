@@ -80,14 +80,14 @@ cd run/docker
 ```bash
 docker compose up
 ```
-3. The grafana ui is now available on the below url:
+3. the UI is available on:
+```bash
+http://localhost:2000/
+``` 
+<!-- 4. The grafana ui is now available on the below url:
 ```bash
 http://localhost:3000/
-``` 
-4. running your test using curl:
-```bash
-curl http://localhost:3010/curl -H 'Content-Type: application/json'  --data-raw '{"algorithm":"kyber512", "iterationsCount":3000}'
-``` 
+```  -->
 
 # Kubernetes 
 Prerequisit: [Kubernetes](https://kubernetes.io/releases/download/), [Helm](https://helm.sh/docs/intro/install/) <br>
@@ -102,41 +102,18 @@ cd run/kuberenetes
 helm dependency update
 helm install qujata . --create-namespace --namespace qujata
 ```
-3. to expose grafana and curl you can use one of the following options:
+3. expose ports:
 
-### port forward:<br>
-*    expose ports:
 ```bash
 kubectl port-forward service/qujata-grafana 3000:3000 -n qujata
-kubectl port-forward service/qujata-curl 3010:3010 -n qujata
+kubectl port-forward service/qujata-portal 2000:80 -n qujata
 ```
-*    The grafana ui is now available on the below url:
+4. the UI is available on:
 ```bash
-http://localhost:3000/
-``` 
-*    running your test using curl:
-```bash
-curl http://localhost:3010/curl -H 'Content-Type: application/json'  --data-raw '{"algorithm":"kyber512", "iterationsCount":3000}'
-``` 
-
-### ingress-controller:<br>
-*    install ingress-controller if not installed yet
-```bash
-helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
-helm repo update
-helm install ingress-nginx ingress-nginx/ingress-nginx --create-namespace --namespace ingress-nginx
+http://localhost:2000/
 ```
-*    The grafana ui is now available on the below url:
-```bash
-http://localhost/grafana
-``` 
-*    running your test using curl:
-```bash
-curl http://localhost/curl -H 'Content-Type: application/json'  --data-raw '{"algorithm":"kyber512", "iterationsCount":3000}'
-``` 
 
-
-# Development
+<!-- # Development -->
 
 # Project Roadmap and Architecture
 Information about our roadmap can be found [here](ROADMAP.md).
