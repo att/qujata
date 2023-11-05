@@ -39,8 +39,8 @@ env:
 
 service:
   type: ClusterIP
-  port: 4433
-  targetPort: 4433
+  port: 5000
+  targetPort: 5000
 
 ingress:
   enabled: false

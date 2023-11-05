@@ -4,6 +4,7 @@ WORKDIR /app
 
 COPY export-platform-info.py /app/export-platform-info.py
 
+RUN pip3 install flask
 RUN pip3 install psutil
 RUN apt-get -y update; apt-get -y install curl
 
