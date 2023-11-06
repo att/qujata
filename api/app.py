@@ -5,6 +5,8 @@ import time
 from datetime import datetime, timedelta
 from flask import Flask, jsonify, request
 from flask_cors import CORS, cross_origin
+from algorithms import QuantumSafeAlgorithms, ClassicAlgorithms, HybridAlgorithms
+
 import requests
 # from dotenv import load_dotenv
 
@@ -16,14 +18,26 @@ CORS(app,origin=['*'])
 app.config['CORS_HEADERS'] = 'Content-Type'
 
 # Load configuration
+allowedAlgorithms = os.environ.get('DEFAULT_GROUPS',"").split(":")
 qujata_platform_exporter_target = os.environ.get('PLATFORM_EXPORTER_URL')
 qujata_curl_target = os.environ.get('CURL_URL')
 request_timeout = os.environ.get('REQUEST_TIMEOUT', 900)
 test_is_running = False
 
+
+@app.route('/algorithms', methods=['GET'])
+@cross_origin(origin=['*'], supports_credentials=True)
+def get_algorithms():
+    return {
+        "quantumSafe": [algorithm.value for algorithm in QuantumSafeAlgorithms if algorithm.value in allowedAlgorithms],
+        "classic": [algorithm.value for algorithm in ClassicAlgorithms if algorithm.value in allowedAlgorithms],
+        "hybrid": [algorithm.value for algorithm in HybridAlgorithms if algorithm.value in allowedAlgorithms],
+    }
+
+
 @app.route('/analyze', methods=['POST'])
 @cross_origin(origin=['*'],supports_credentials=True)
-def get_algorithms_analysis():
+def analyze():
     # export platform info to prometheus
     response = requests.post(qujata_platform_exporter_target + "/export-platform-info")
 
@@ -71,6 +85,7 @@ def get_algorithms_analysis():
         'to': end_time
     })
 
+
+
 if __name__ == '__main__':
-    # app.run(debug=True, port=3020)
     app.run(host='0.0.0.0',port=3020)
