@@ -1,7 +1,7 @@
 services:
   pushgateway:
     image: prom/pushgateway:latest
-    container_name: pushgateway
+    container_name: qujata-pushgateway
     ports:
       - "9091:9091"
 
@@ -17,7 +17,7 @@ services:
 
   nginx:
     image: qujata/nginx:1.0.0
-    container_name: nginx
+    container_name: qujata-nginx
     ports:
       - 4433:4433
     environment:
@@ -25,7 +25,7 @@ services:
   
   curl:
     image: qujata/curl:1.0.0
-    container_name: curl
+    container_name: qujata-curl
     ports:
       - 3010:3010
     environment:
@@ -33,17 +33,17 @@ services:
 
   api:
     image: qujata/api:1.0.0
-    container_name: api
+    container_name: qujata-api
     ports:
       - 3020:3020
     environment:
-      - CURL_URL=http://curl:3010
-      - PLATFORM_EXPORTER_URL=http://platform-exporter:5000
+      - CURL_URL=http://qujata-curl:3010
+      - PLATFORM_EXPORTER_URL=http://qujata-platform-exporter:5000
       - DEFAULT_GROUPS=prime256v1:secp384r1:frodo640aes:frodo640shake:frodo976aes:frodo976shake:frodo1344aes:frodo1344shake:kyber512:p256_kyber512:kyber768:p384_kyber768:x25519_kyber768:kyber1024:bikel1:bikel3:bikel5:hqc128:hqc192:hqc256
 
   portal:
     image: qujata/portal:1.0.0
-    container_name: portal
+    container_name: qujata-portal
     ports:
       - 2000:80
     environment:
@@ -51,7 +51,7 @@ services:
 
   cadvisor:
     image: gcr.io/cadvisor/cadvisor:v0.47.0
-    container_name: cadvisor
+    container_name: qujata-cadvisor
     restart: unless-stopped
     privileged: true
     volumes:
@@ -67,7 +67,7 @@ services:
 
   prometheus:
     image: prom/prometheus:latest
-    container_name: prometheus
+    container_name: qujata-prometheus
     volumes:
       - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
     command:
@@ -77,7 +77,7 @@ services:
 
   grafana:
     image: grafana/grafana:latest
-    container_name: grafana
+    container_name: qujata-grafana
     ports:
       - "3000:3000"
     environment:

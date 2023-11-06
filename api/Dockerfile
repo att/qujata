@@ -8,6 +8,7 @@ RUN pip3 install datetime
 RUN pip3 install requests
 
 COPY app.py .
+COPY algorithms.py .
 
 CMD ["python3", "app.py"]
 
