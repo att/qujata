@@ -108,6 +108,14 @@ helm install qujata . --create-namespace --namespace qujata
 kubectl port-forward service/qujata-grafana 3000:3000 -n qujata
 kubectl port-forward service/qujata-portal 2000:80 -n qujata
 ```
+**_NOTE:_** Please note port-forward command does not return. it will forward the port(s) until CTRL+C is pressed, so leave this terminal window(s) open until you are done. See this [page](https://kubernetes.io/docs/tasks/access-application-cluster/port-forward-access-application-cluster/) for more details.  
+
+To check if the right ports are indeed forwarded, open a new bash/terminal window and try the following command:
+
+```bash
+ps -f | grep 'kubectl' | grep 'port-forward' | awk '{print $10 " " $11}'
+```
+
 4. the UI is available on:
 ```bash
 http://localhost:2000/qujata
