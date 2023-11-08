@@ -7,7 +7,7 @@ replicaCount: 1
 image:
   repository: qujata/portal
   tag: "1.0.0"
-  pullPolicy: IfNotPresent
+  pullPolicy: Always
 
 
 imagePullSecrets: []
@@ -36,7 +36,9 @@ securityContext: {}
   # runAsNonRoot: true
   # runAsUser: 1000
 env:
+  PQC_PORTAL__DASHBOARD_LINK_HOST: http://localhost:3000/grafana
   PQC_PORTAL__BASE_API_URL: http://localhost:3020
+
 service:
   type: ClusterIP
   port: 80
@@ -45,17 +47,16 @@ service:
 ingress:
   enabled: true
   className: "nginx"
-  annotations: 
-    nginx.ingress.kubernetes.io/rewrite-target: /$2
+  annotations: {}
   hosts:
-    - host: localhost
+    - host: pqc.dev.att.com
       paths:
-        - path: /qujata(/|$)(.*)
+        - path: /qujata
           pathType: Prefix
-  # tls: 
-  #   - secretName: tls-secret
-  #     hosts:
-  #       - pqc.dev.att.com
+  tls: 
+    - secretName: tls-secret
+      hosts:
+        - pqc.dev.att.com
 
 resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious

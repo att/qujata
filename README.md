@@ -82,7 +82,7 @@ docker compose up
 ```
 3. the UI is available on:
 ```bash
-http://localhost:2000/
+http://localhost:2000/qujata
 ``` 
 <!-- 4. The grafana ui is now available on the below url:
 ```bash
@@ -110,7 +110,7 @@ kubectl port-forward service/qujata-portal 2000:80 -n qujata
 ```
 4. the UI is available on:
 ```bash
-http://localhost:2000/
+http://localhost:2000/qujata
 ```
 
 <!-- # Development -->

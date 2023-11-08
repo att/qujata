@@ -7,7 +7,7 @@ replicaCount: 1
 image:
   repository: qujata/api
   tag: "1.0.0"
-  pullPolicy: IfNotPresent
+  pullPolicy: Always
 
 imagePullSecrets: []
 nameOverride: ""
@@ -48,16 +48,17 @@ service:
 ingress:
   enabled: true
   className: "nginx"
-  annotations: {}
+  annotations: 
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
   hosts:
-    - host: localhost
+    - host: pqc.dev.att.com
       paths:
-        - path: /analyze
+        - path: /qujata-api(/|$)(.*)
           pathType: Prefix
-  tls: []
-  #  - secretName: chart-example-tls
-  #    hosts:
-  #      - chart-example.local
+  tls: 
+    - secretName: tls-secret
+      hosts:
+        - pqc.dev.att.com
 
 resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious

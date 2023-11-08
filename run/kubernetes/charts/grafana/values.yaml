@@ -35,7 +35,8 @@ securityContext: {}
   # runAsNonRoot: true
   # runAsUser: 1000
 env:
-  # GF_SERVER_ROOT_URL: '%(protocol)s://%(domain)s:%(http_port)s/grafana/'
+  GF_SERVER_ROOT_URL: '%(protocol)s://%(domain)s:%(http_port)s/grafana/'
+  GF_SERVER_SERVE_FROM_SUB_PATH: true
   GF_SECURITY_ADMIN_USER: qujata
   GF_SECURITY_ADMIN_PASSWORD: qujata
 service:
@@ -50,17 +51,16 @@ configMap:
 ingress:
   enabled: true
   className: "nginx"
-  annotations: 
-    nginx.ingress.kubernetes.io/rewrite-target: /$2
+  annotations: {}
   hosts:
-    - host: localhost
+    - host: pqc.dev.att.com
       paths:
-        - path: /grafana(/|$)(.*)
+        - path: /grafana
           pathType: Prefix
-  tls: []
-  #  - secretName: chart-example-tls
-  #    hosts:
-  #      - chart-example.local
+  tls: 
+    - secretName: tls-secret
+      hosts:
+        - pqc.dev.att.com
 
 resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious
