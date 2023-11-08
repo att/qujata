@@ -20,4 +20,5 @@ Our ultimate goal is not just internal knowledge but to provide the community wi
 # Architecture
 ### Moving from our working prototype (phase 0) to phase 1
 
-![image](https://github.com/att/qujata/assets/142991359/d2daca87-884c-4a05-95e5-8fa3c7168340)
+![image](https://github.com/att/qujata/assets/142991359/0b37cac3-0ba9-43e4-9c73-469efbb457a7)
+
