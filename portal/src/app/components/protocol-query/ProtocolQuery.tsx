@@ -4,11 +4,10 @@ import { Options } from 'react-select';
 import { ITestParams } from '../../shared/models/quantum.interface';
 import { Button, ButtonActionType, ButtonSize, ButtonStyleType } from '../../shared/components/att-button';
 import { AttSelect, AttSelectOption } from '../../shared/components/att-select';
-import { AllAlgorithms } from './ProtocolQuery.const';
 import styles from './ProtocolQuery.module.scss';
 import { PROTOCOL_QUERY_EN } from './translate/en';
-import { QueryDefaultIterationsCount } from '../../models/query.const';
 import { Spinner, SpinnerSize } from '../../shared/components/att-spinner';
+import { useGetAlgorithms } from './hooks/useGetAlgorithms';
 
 export type SelectOptionType = AttSelectOption | Options<AttSelectOption> | null;
 type onTextChangedEvent = (e: React.ChangeEvent<HTMLInputElement>) => void;
@@ -23,6 +22,7 @@ export interface ProtocolQueryProps {
 
 export const ProtocolQuery: React.FC<ProtocolQueryProps> = (props: ProtocolQueryProps) => {
   const { isFetching, canExportFile, onRunClick, onDownloadDataClicked } = props;
+  const { options } = useGetAlgorithms();
   const [algorithms, setAlgorithms] = useState<SelectOptionType>();
   const [iterationsCount, setIterationsCount] = useState<number>();
 
@@ -52,7 +52,7 @@ export const ProtocolQuery: React.FC<ProtocolQueryProps> = (props: ProtocolQuery
               </label>
               <AttSelect
                 className={styles.select_form_item}
-                options={AllAlgorithms}
+                options={options}
                 placeholder=''
                 value={algorithms as AttSelectOption[]}
                 onChange={onAlgorithmsChanged}
