@@ -51,6 +51,7 @@ $toastWarningColor: #FF8500;
 
 .Toastify__toast--error {
   #{$toastTypeIndicationColor}: $toastErrorColor;
+  border-top: 2px solid var($attBerry);
 }
 
 .Toastify__toast--warning {

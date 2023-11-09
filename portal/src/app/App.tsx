@@ -18,11 +18,14 @@ import { SubHeader } from './components/sub-header';
 import { ExternalLink, LinkRel, LinkSize, LinkStyle, LinkTarget } from './shared/components/att-link';
 import { Environment } from '../environments/environment';
 import { DashBoardPrefixLink } from './shared/constants/dashboard';
+import { ToastContainer } from 'react-toastify';
+import { ToastContainerConfig } from './shared/components/toast/toast-container-config.const';
 
 
 const App: React.FC = () => (
   <BrowserRouter>
     <RootContextState>
+      <ToastContainer {...ToastContainerConfig} />
       <AppContent />
     </RootContextState>
   </BrowserRouter>
