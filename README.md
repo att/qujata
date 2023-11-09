@@ -97,7 +97,7 @@ If you're using Docker Desktop you can  [Enable Kuberenets in Docker Desktop](ht
 
 1. cd to the following directory:
 ```bash
-cd run/kuberenetes
+cd run/kubernetes
 ```
 2. install helm charts:
 ```bash
