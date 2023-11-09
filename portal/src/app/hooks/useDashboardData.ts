@@ -7,6 +7,7 @@ import { APIS } from '../apis';
 import { AttSelectOption } from '../shared/components/att-select';
 import { Environment } from '../../environments/environment';
 import { DashBoardPrefixLink } from '../shared/constants/dashboard';
+import { useErrorMessage } from './useErrorMessage';
 
 export interface IUseDashboardData {
   link: string;
@@ -28,10 +29,7 @@ export function useDashboardData(): IUseDashboardData {
 
   useFetchSpinner(status);
   useEffect(() => cancelRequest, [cancelRequest]);
-
-  useEffect(() => {
-    error && console.log('error', error);
-  }, [error]);
+  useErrorMessage(error);
 
   useEffect(() => {
     if (status === FetchDataStatus.Success && data) {
