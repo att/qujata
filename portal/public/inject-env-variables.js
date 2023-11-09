@@ -16,7 +16,7 @@ fs.readFile(templateFilePath, 'utf8', function(error, indexHtmlTemplate){
         console.log(error);
         killProcess(templateFilePath);
     } else {
-        const updatedIndexHtml = indexHtmlTemplate.replace(placeholderTag, `${getEnvVariablesScript()}${placeholderTag}`)
+        updatedIndexHtml = indexHtmlTemplate.replace(placeholderTag, `${getEnvVariablesScript()}${placeholderTag}`);
         overrideIndexFile(indexFilePath, updatedIndexHtml);
     }
 });

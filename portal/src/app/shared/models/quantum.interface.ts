@@ -13,7 +13,8 @@ export interface ITestResponse {
 }
 
 export interface IQueryResponse {
-  linkToResult: string;
+  from: string;
+  to: string;
 }
 
 export interface ITestResponseData {

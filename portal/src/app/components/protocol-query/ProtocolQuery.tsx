@@ -4,10 +4,10 @@ import { Options } from 'react-select';
 import { ITestParams } from '../../shared/models/quantum.interface';
 import { Button, ButtonActionType, ButtonSize, ButtonStyleType } from '../../shared/components/att-button';
 import { AttSelect, AttSelectOption } from '../../shared/components/att-select';
-import { AllAlgorithms } from './ProtocolQuery.const';
 import styles from './ProtocolQuery.module.scss';
 import { PROTOCOL_QUERY_EN } from './translate/en';
-import { QueryDefaultIterationsCount } from '../../models/query.const';
+import { Spinner, SpinnerSize } from '../../shared/components/att-spinner';
+import { useGetAlgorithms } from './hooks/useGetAlgorithms';
 
 export type SelectOptionType = AttSelectOption | Options<AttSelectOption> | null;
 type onTextChangedEvent = (e: React.ChangeEvent<HTMLInputElement>) => void;
@@ -22,13 +22,15 @@ export interface ProtocolQueryProps {
 
 export const ProtocolQuery: React.FC<ProtocolQueryProps> = (props: ProtocolQueryProps) => {
   const { isFetching, canExportFile, onRunClick, onDownloadDataClicked } = props;
-  const [algorithms, setAlgorithms] = useState<SelectOptionType>([AllAlgorithms[1]]);
-  const [iterationsCount, setIterationsCount] = useState<number>(QueryDefaultIterationsCount);
-  const algorithmsCount: number = (algorithms as AttSelectOption[]).length;
+  const { options } = useGetAlgorithms();
+  const [algorithms, setAlgorithms] = useState<SelectOptionType>();
+  const [iterationsCount, setIterationsCount] = useState<number>();
+
+  const algorithmsCount: number = (algorithms as AttSelectOption[])?.length;
 
   const onSubmitHandler = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    onRunClick({ algorithms, iterationsCount });
+    onRunClick({ algorithms: algorithms as SelectOptionType, iterationsCount: iterationsCount as number });
   };
 
   const onAlgorithmsChanged: OnSelectChanged = useCallback((options: SelectOptionType): void => {
@@ -50,36 +52,44 @@ export const ProtocolQuery: React.FC<ProtocolQueryProps> = (props: ProtocolQuery
               </label>
               <AttSelect
                 className={styles.select_form_item}
-                options={AllAlgorithms}
+                options={options}
                 placeholder=''
                 value={algorithms as AttSelectOption[]}
                 onChange={onAlgorithmsChanged}
                 isMulti
+                required
               />
           </div>
           <div className={styles.form_item}>
               <label className={styles.form_item_label}>{PROTOCOL_QUERY_EN.FIELDS_LABEL.ITERATIONS_NUMBER}</label>
               <input
                 className={styles.input_form_item}
+                required
                 name='iterationNum'
                 type='number'
-                placeholder='10'
                 min='1'
-                max='50'
+                max='100000'
                 value={iterationsCount}
                 onChange={onIterationsNumChanged}
               />
           </div>
-          <Button
-            disabled={isFetching || algorithmsCount === 0 || algorithmsCount > 3}
-            actionType={ButtonActionType.SUBMIT}
-            size={ButtonSize.LARGE}
-            styleType={ButtonStyleType.PRIMARY}
-            onButtonClick={noop}
-            className={styles.run_button}
-          >
-            {PROTOCOL_QUERY_EN.ACTION_BUTTONS.RUN}
-          </Button>
+          <div className={styles.submitButtonWrapper}>
+              <Button
+                disabled={isFetching || algorithmsCount === 0 || algorithmsCount > 3}
+                actionType={ButtonActionType.SUBMIT}
+                size={ButtonSize.LARGE}
+                styleType={ButtonStyleType.PRIMARY}
+                onButtonClick={noop}
+                className={styles.run_button}
+              >
+                {PROTOCOL_QUERY_EN.ACTION_BUTTONS.RUN}
+              </Button>
+              {isFetching && 
+              <div className={styles.spinnerWrapper}>
+                    <Spinner size={SpinnerSize.EXTRA_SMALL} />
+                    <span className={styles.text}>{PROTOCOL_QUERY_EN.FETCH_DATA}</span>
+              </div>}
+          </div>
        </form>
        {/* <Button
             className={styles.export_button}

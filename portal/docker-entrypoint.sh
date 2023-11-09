@@ -1,6 +1,6 @@
 #!/bin/sh
 set -e
-WORK_DIR=/usr/share/nginx/html
+WORK_DIR=/usr/share/nginx/html/qujata
 
 
 case ${1} in

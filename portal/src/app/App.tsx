@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/alt-text */
-import { ReactNode, useCallback, useState } from 'react';
+import { ReactNode, useCallback, useEffect, useState } from 'react';
 import { BrowserRouter } from 'react-router-dom';
 import MyImage from '../assets/images/define-params.svg';
 import styles from './App.module.scss';
@@ -16,6 +16,8 @@ import { downloadCsvFile } from './utils/download';
 import { mapDashboardDataToCsvDataType } from './components/dashboard/utils/dashboard-data-report.util';
 import { SubHeader } from './components/sub-header';
 import { ExternalLink, LinkRel, LinkSize, LinkStyle, LinkTarget } from './shared/components/att-link';
+import { Environment } from '../environments/environment';
+import { DashBoardPrefixLink } from './shared/constants/dashboard';
 
 
 const App: React.FC = () => (
@@ -43,13 +45,25 @@ const AppContent: React.FC = () => {
     </>
   );
 }
-
+const generateFromTime: number = Date.now();
+const initialLink: string = `${Environment.dashboardLinkHost}/${DashBoardPrefixLink}&from=${generateFromTime}`;
 const AppBody: React.FC = () => {
   //const { handleRunQueryClick, data, algorithms, status } = useDashboardData();
   const { handleRunQueryClick, link, status } = useDashboardData();
+  const [dashBoardLink, setDashBoardLink] = useState<string>(link);
+  console.log('link=== ', link);
+  const [displayLinkButton, setDisplayLinkButton] = useState<boolean>(false);
 
+  useEffect(() => {
+    setDashBoardLink(link);
+  }, [link]);
+  
   const handleRunClick: (params: ITestParams) => void = useCallback((params: ITestParams): void => {
-    handleRunQueryClick(params);
+    if (params.algorithms && params.iterationsCount) {
+      setDisplayLinkButton(true);
+      handleRunQueryClick(params);
+      setDashBoardLink(initialLink);
+    }
   }, [handleRunQueryClick]);
 
   // const handleDownloadDataClicked: () => void = useCallback((): void => {
@@ -60,13 +74,13 @@ const AppBody: React.FC = () => {
 
   return (
     <div className={styles.app_wrapper}>
-      {!link?.length && <div className={styles.protocol_query_title}>{SHARED_EN.TITLE}</div>}
+      {!dashBoardLink?.length && <div className={styles.protocol_query_title}>{SHARED_EN.TITLE}</div>}
       <ProtocolQuery isFetching={status === FetchDataStatus.Fetching} onRunClick={handleRunClick} />
-      {link?.length > 0 &&
+      {(dashBoardLink?.length > 0 && displayLinkButton) &&
         <div className={styles.response_wrapper}>
           <ExternalLink
               className={styles.response_link}
-              link={link}
+              link={dashBoardLink}
               styleType={LinkStyle.TEXT}
               size={LinkSize.NONE}
               target={LinkTarget.BLANK}
@@ -81,7 +95,7 @@ const AppBody: React.FC = () => {
         //   />
         // )
         }
-        {status === FetchDataStatus.Fetching && renderSpinner()}
+        {/* {status === FetchDataStatus.Fetching && renderSpinner()} */}
         {/* {status === FetchDataStatus.Init && renderInitialState()} */}
     </div>
   );

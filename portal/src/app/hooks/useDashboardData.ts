@@ -5,6 +5,8 @@ import { FetchDataStatus, IHttp, useFetch } from '../shared/hooks/useFetch';
 import { useFetchSpinner } from '../shared/hooks/useFetchSpinner';
 import { APIS } from '../apis';
 import { AttSelectOption } from '../shared/components/att-select';
+import { Environment } from '../../environments/environment';
+import { DashBoardPrefixLink } from '../shared/constants/dashboard';
 
 export interface IUseDashboardData {
   link: string;
@@ -20,7 +22,9 @@ export function useDashboardData(): IUseDashboardData {
   const [dashboardData, setDashboardData] = useState<ChartDataMap>(() => new Map<AttSelectOption, ITestResponseData | undefined>());
   const [algorithms, setAlgorithms] = useState<string[] | undefined>([]);
   const [iterationsCount, setIterationsCount] = useState<number>(1);
-  const [link, setLink] = useState<string>('');
+  const generateFromTime: number = Date.now();
+  const initialLink: string = `${Environment.dashboardLinkHost}/${DashBoardPrefixLink}&from=${generateFromTime}`;
+  const [link, setLink] = useState<string>(initialLink);
 
   useFetchSpinner(status);
   useEffect(() => cancelRequest, [cancelRequest]);
@@ -31,7 +35,8 @@ export function useDashboardData(): IUseDashboardData {
 
   useEffect(() => {
     if (status === FetchDataStatus.Success && data) {
-        setLink(data.linkToResult);
+        const dashboardLink: string = `${Environment.dashboardLinkHost}/${DashBoardPrefixLink}&from=${data.from}&to=${data.to}`;
+        setLink(dashboardLink);
         // setAlgorithms((prev: string[] | undefined) => {
         //     prev?.splice(0, 1);
         //     if (prev && prev.length > 0) {
@@ -56,21 +61,24 @@ export function useDashboardData(): IUseDashboardData {
   }, [data, iterationsCount, post, status]);
 
   const handleRunQueryClick: (qeuryData: ITestParams) => void = useCallback((qeuryData: ITestParams): void => {
-    const algos: AttSelectOption[] = qeuryData.algorithms as AttSelectOption[];
-    const map: ChartDataMap = new Map<AttSelectOption, ITestResponseData | undefined>();
-
-    const algoValues: string[] = [];
-    algos.forEach((algo: AttSelectOption) => {
-      map.set(algo, undefined);
-      algoValues.push(algo.value);
-    });
-
-    setAlgorithms(algoValues);
-    setDashboardData(map);
-    setIterationsCount(qeuryData.iterationsCount);
-
-    if (algos?.length > 0) {        
-      post({ data: { algorithm: algos[0].value, iterationsCount: qeuryData.iterationsCount } });
+    if (qeuryData.algorithms) {
+      const algos: AttSelectOption[] = qeuryData.algorithms as AttSelectOption[];
+      const map: ChartDataMap = new Map<AttSelectOption, ITestResponseData | undefined>();
+  
+      const algoValues: string[] = [];
+      algos.forEach((algo: AttSelectOption) => {
+        map.set(algo, undefined);
+        algoValues.push(algo.value);
+      });
+  
+      setAlgorithms(algoValues);
+      setDashboardData(map);
+      setIterationsCount(qeuryData.iterationsCount);
+      console.log('*** ', algos);
+      if (algos?.length > 0) {  
+        const algoValues: string[] = algos.map((item: AttSelectOption) => item.value); 
+        post({ data: { algorithms: algoValues, iterationsCount: qeuryData.iterationsCount } });
+      }
     }
   }, [post]);
 

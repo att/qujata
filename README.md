@@ -56,48 +56,86 @@ As standardization for these algorithms within TLS is not done, all TLS code poi
 
 # Getting Started
 
-We suggest using the docker-compose distribution via the instructions below, but there is also a [Development Installation](#development) procedure if you’d prefer to run the Qujata in development mode.
+We suggest using the [Docker Compose](#docker) distribution, but a [Kubernetes Helm](#kubernetes)  charts procedure is avalable if you’d prefer to run the Qujata in your kubernetes environment.
 
-1. To start, clone the qujata repository:
+also a [Development Installation](#development) procedure to run the Qujata in development mode is provided.
+
+
+To start, clone the qujata repository:
 ```bash
 git clone https://github.com/att/qujata.git
 cd qujata
+```
+
+# Docker
+Prerequisit: Docker, Docker Compose. <br>
+Docker Compose is included in [Docker Desktop installation](https://www.docker.com/products/docker-desktop/) <br>
+
+
+1. cd to the following directory:
+```bash
+cd run/docker
 ```
 2. Start the application using:
 ```bash
 docker compose up
 ```
-3. The application is now available on the below url:
+3. the UI is available on:
 ```bash
-http://localhost:8080/
+http://localhost:2000/qujata
 ``` 
+4. The grafana UI is now available by clicking on the button in the UI or using the below url and selecting 'Qujata Analysis' dashboard:
+```bash
+http://localhost:3000/
+```
 
+The initial username/password for grafana is ```qujata/qujata```.
 
-# Development
+# Kubernetes 
+Prerequisit: [Kubernetes](https://kubernetes.io/releases/download/), [Helm](https://helm.sh/docs/intro/install/) <br>
+If you're using Docker Desktop you can  [Enable Kuberenets in Docker Desktop](https://docs.docker.com/desktop/kubernetes/) <br>
 
-### Server 
+1. cd to the following directory:
+```bash
+cd run/kubernetes
+```
+2. install helm charts:
+```bash
+helm dependency update
+helm install qujata . --create-namespace --namespace qujata
+```
+3. expose ports (creates 3 background processes):
 
-The procedure is available [here](https://github.com/att/qujata/tree/main/api/README.md) 
+```bash
+kubectl port-forward service/qujata-grafana 3000:3000 -n qujata & \
+kubectl port-forward service/qujata-portal 2000:80 -n qujata & \
+kubectl port-forward service/qujata-api 3020:3020 -n qujata &
+```
+**_NOTE:_** Please note port-forward command does not return. It will forward the port(s) until CTRL+C is pressed, see this [page](https://kubernetes.io/docs/tasks/access-application-cluster/port-forward-access-application-cluster/) for more details. If background process was used (& and the end of each bash command, like we suggested above), you will need to use ```fg``` command 3 times to bring the services back to forground and CTRL+C on each to stop forwarding or simply use this command to kill all port forwarding at once:  
 
-### Client
+```bash
+pkill -f "port-forward"
+```  
 
-The procedure is available [here](https://github.com/att/qujata/tree/main/portal/README.md) 
+To check if the right ports are indeed forwarded, open a new bash/terminal window and try the following command:
 
+```bash
+ps -f | grep 'kubectl' | grep 'port-forward' | awk '{print $10 " " $11}'
+```
 
+4. the UI is available on:
+```bash
+http://localhost:2000/qujata
+```
 
+5. The grafana UI is now available by clicking on the button in the UI or using the below url and selecting 'Qujata Analysis' dashboard:
+```bash
+http://localhost:3000/
+```
 
- 
-### Platform limitations 
+The initial username/password for grafana is ```qujata/qujata```.
 
-Pay attention that the Operating System of the machine running this project has an effect on the proper data returned in the results.
-<br/>
-Not all algorithms are equally well-supported on all platforms. In case of questions, it is first advised to review the [documentation files for each algorithm](https://github.com/open-quantum-safe/liboqs/tree/main/docs/algorithms).
-<br/>
-<ul>
-  <li>On Mac, it is expected to work well and was tested with AllowedAlgorithms.</li>
-  <li>On Windows, some Algorithms may not be supported by `Open Quantum Safe` docker images, but the code will work successfully.<br/>(Seeing `downloadSpeed=0` is suspected to be a sign of no-support for selected Algorithm).</li>
-  <li>Other Platforms were not tested yet.</li>
-</ul>
+<!-- # Development -->
 
 # Project Roadmap and Architecture
 Information about our roadmap can be found [here](ROADMAP.md).

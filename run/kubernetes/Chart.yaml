@@ -1,0 +1,30 @@
+apiVersion: v2
+name: qujata-chart
+description: A parent chart for deploying multiple sub-charts
+version: 0.1.0
+dependencies:
+  - name: portal
+    version: 0.1.0
+    repository: "file://./charts/portal"
+  - name: api
+    version: 0.1.0
+    repository: "file://./charts/api"
+  - name: curl
+    version: 0.1.0
+    repository: "file://./charts/curl"
+  - name: nginx
+    version: 0.1.0
+    repository: "file://./charts/nginx"
+  - name: prometheus
+    version: 0.1.0
+    repository: "file://./charts/prometheus"
+  - name: grafana
+    version: 0.1.0
+    repository: "file://./charts/grafana"
+  - name: pushgateway
+    version: 0.1.0
+    repository: "file://./charts/pushgateway"
+  - name: platform-exporter
+    version: 0.1.0
+    repository: "file://./charts/platform-exporter"
+

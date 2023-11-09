@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "grafana.fullname" . }}
+  labels:
+    {{- include "grafana.labels" . | nindent 4 }}
+data:
+  dashboard.json:
+{{ .Files.Get "files/dashboard.json" | toJson | indent 4 }}
+  dashboard.yaml:
+{{ .Files.Get "files/dashboard.yaml" | toYaml | indent 4 }}
+  datasource.yaml:
+{{ .Files.Get "files/datasource.yaml" | toYaml | indent 4 }}

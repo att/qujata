@@ -55,6 +55,7 @@ $largeButtonSize: 48px;
 %disableStyle {
   background-color: $disableBackgroundColor;
   border: solid 1px $disableBorderColor;
+  border-radius: 48px;
   color: $disableTextColor;
   cursor: initial;
   pointer-events: none;

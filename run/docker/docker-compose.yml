@@ -1,0 +1,100 @@
+services:
+  pushgateway:
+    image: prom/pushgateway:latest
+    container_name: qujata-pushgateway
+    ports:
+      - "9091:9091"
+
+  platform-exporter:
+    image: qujata/platform-exporter:1.0.0
+    container_name: qujata-platform-exporter
+    depends_on:
+      - pushgateway
+    environment:
+      - PUSHGATEWAY_URL=http://pushgateway:9091
+    ports:
+      - "5000:5000"
+
+  nginx:
+    image: qujata/nginx:1.0.0
+    container_name: qujata-nginx
+    ports:
+      - 4433:4433
+    environment:
+      - DEFAULT_GROUPS=prime256v1:secp384r1:frodo640aes:frodo640shake:frodo976aes:frodo976shake:frodo1344aes:frodo1344shake:kyber512:p256_kyber512:kyber768:p384_kyber768:x25519_kyber768:kyber1024:bikel1:bikel3:bikel5:hqc128:hqc192:hqc256
+  
+  curl:
+    image: qujata/curl:1.0.0
+    container_name: qujata-curl
+    ports:
+      - 3010:3010
+    environment:
+      - DEFAULT_GROUPS=prime256v1:secp384r1:frodo640aes:frodo640shake:frodo976aes:frodo976shake:frodo1344aes:frodo1344shake:kyber512:p256_kyber512:kyber768:p384_kyber768:x25519_kyber768:kyber1024:bikel1:bikel3:bikel5:hqc128:hqc192:hqc256
+
+  api:
+    image: qujata/api:1.0.0
+    container_name: qujata-api
+    ports:
+      - 3020:3020
+    environment:
+      - CURL_URL=http://qujata-curl:3010
+      - PLATFORM_EXPORTER_URL=http://qujata-platform-exporter:5000
+      - DEFAULT_GROUPS=prime256v1:secp384r1:frodo640aes:frodo640shake:frodo976aes:frodo976shake:frodo1344aes:frodo1344shake:kyber512:p256_kyber512:kyber768:p384_kyber768:x25519_kyber768:kyber1024:bikel1:bikel3:bikel5:hqc128:hqc192:hqc256
+
+  portal:
+    image: qujata/portal:1.0.0
+    container_name: qujata-portal
+    ports:
+      - 2000:80
+    environment:
+      - PQC_PORTAL__BASE_API_URL=http://localhost:3020
+      - PQC_PORTAL__DASHBOARD_LINK_HOST=http://localhost:3000
+
+  cadvisor:
+    image: gcr.io/cadvisor/cadvisor:v0.47.0
+    container_name: qujata-cadvisor
+    restart: unless-stopped
+    privileged: true
+    volumes:
+      - /:/rootfs:ro
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /sys:/sys:ro
+      - /var/lib/docker/:/var/lib/docker:ro
+      - /dev/disk/:/dev/disk:ro
+      - /etc/machine-id:/etc/machine-id:ro
+      - /var/lib/dbus/machine-id:/var/lib/dbus/machine-id:ro
+    ports:
+      - "8080:8080"
+
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: qujata-prometheus
+    volumes:
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+    command:
+      - --config.file=/etc/prometheus/prometheus.yml
+    ports:
+      - "9090:9090"
+
+  grafana:
+    image: grafana/grafana:latest
+    container_name: qujata-grafana
+    ports:
+      - "3000:3000"
+    environment:
+      - GF_SECURITY_ADMIN_USER=qujata
+      - GF_SECURITY_ADMIN_PASSWORD=qujata
+    volumes:
+      - ./grafana/dashboard.yaml:/etc/grafana/provisioning/dashboards/dashboard.yaml
+      - ./grafana/datasource.yaml:/etc/grafana/provisioning/datasources/datasource.yaml
+      - ./grafana/dashboard.json:/var/lib/grafana/dashboards/dashboard.json
+
+
+volumes:
+  grafana_data:
+
+networks:
+  myservices-net:
+    driver: bridge
+  mon-net:
+    driver: bridge
