@@ -84,10 +84,12 @@ docker compose up
 ```bash
 http://localhost:2000/qujata
 ``` 
-<!-- 4. The grafana ui is now available on the below url:
+4. The grafana UI is now available by clicking on the button in the UI or using the below url and selecting 'Qujata Analysis' dashboard:
 ```bash
 http://localhost:3000/
-```  -->
+```
+
+The initial username/password for grafana is ```qujata/qujata```.
 
 # Kubernetes 
 Prerequisit: [Kubernetes](https://kubernetes.io/releases/download/), [Helm](https://helm.sh/docs/intro/install/) <br>
@@ -102,14 +104,18 @@ cd run/kuberenetes
 helm dependency update
 helm install qujata . --create-namespace --namespace qujata
 ```
-3. expose ports:
+3. expose ports (creates 3 background processes):
 
 ```bash
-kubectl port-forward service/qujata-grafana 3000:3000 -n qujata
-kubectl port-forward service/qujata-portal 2000:80 -n qujata
-kubectl port-forward service/qujata-api 3020:3020 -n qujata
+kubectl port-forward service/qujata-grafana 3000:3000 -n qujata & \
+kubectl port-forward service/qujata-portal 2000:80 -n qujata & \
+kubectl port-forward service/qujata-api 3020:3020 -n qujata &
 ```
-**_NOTE:_** Please note port-forward command does not return. it will forward the port(s) until CTRL+C is pressed, so leave this terminal window(s) open until you are done. See this [page](https://kubernetes.io/docs/tasks/access-application-cluster/port-forward-access-application-cluster/) for more details.  
+**_NOTE:_** Please note port-forward command does not return. It will forward the port(s) until CTRL+C is pressed, see this [page](https://kubernetes.io/docs/tasks/access-application-cluster/port-forward-access-application-cluster/) for more details. If background process was used (& and the end of each bash command, like we suggested above), you will need to use ```fg``` command 3 times to bring the services back to forground and CTRL+C on each to stop forwarding or simply use this command to kill all port forwarding at once:  
+
+```bash
+pkill -f "port-forward"
+```  
 
 To check if the right ports are indeed forwarded, open a new bash/terminal window and try the following command:
 
@@ -121,6 +127,13 @@ ps -f | grep 'kubectl' | grep 'port-forward' | awk '{print $10 " " $11}'
 ```bash
 http://localhost:2000/qujata
 ```
+
+5. The grafana UI is now available by clicking on the button in the UI or using the below url and selecting 'Qujata Analysis' dashboard:
+```bash
+http://localhost:3000/
+```
+
+The initial username/password for grafana is ```qujata/qujata```.
 
 <!-- # Development -->
 
