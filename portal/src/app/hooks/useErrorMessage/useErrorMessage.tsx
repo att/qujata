@@ -6,7 +6,7 @@ import { IServerError } from '../../shared/models/server-error.interface';
 export function useErrorMessage(error?: AxiosError<IServerError>): void {
   useEffect(() => {
     if (error) {
-      attToast.error(error.message, 'Error', undefined);
+      attToast.error(error?.response?.data?.message as string, error?.response?.data?.error as string, undefined);
     }
   }, [error]);
 }
