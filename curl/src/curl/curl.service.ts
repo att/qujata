@@ -1,7 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import * as shellJS from 'shelljs';
 import { CurlRequest } from '../dto/curl-request.dto';
-import { CurlResponse } from '../entities/analysis.entity';
 import { ConfigService } from '@nestjs/config';
 import { AllowedAlgorithmsType } from './../dto/allowed-algorithms.type';
 import { HttpException, HttpStatus, NotFoundException } from '@nestjs/common';
@@ -10,13 +9,11 @@ import { HttpException, HttpStatus, NotFoundException } from '@nestjs/common';
 export class CurlService {
   private readonly CURL_SCRIPT_PATH: string;
   private processIsRunning: boolean;
-  private currentProcess: shellJS.ChildProcess;
 
   private configService: ConfigService;
 
   constructor(private _configService: ConfigService) {
     this.configService = _configService;
-    this.currentProcess = undefined;
     this.processIsRunning = false;
     this.CURL_SCRIPT_PATH = "./scripts/run-curl-loop.sh"
   }
@@ -31,14 +28,14 @@ export class CurlService {
     }
   }
 
-  validate(): void {
+  private validate(): void {
     if (this.processIsRunning === true) {
       console.error("[CurlService:run] curl process is running now")
       throw new HttpException('curl process is running', HttpStatus.CONFLICT);
     }
   }
 
-  async runCurls(iterationsCount: number, algorithm: AllowedAlgorithmsType) {
+  private async runCurls(iterationsCount: number, algorithm: AllowedAlgorithmsType) {
       const curlCommand = this.format(`${this.CURL_SCRIPT_PATH} ${this.configService.get('nginx.host')} ${this.configService.get('nginx.port')} ${iterationsCount} ${algorithm}`);
       this.processIsRunning = true;
       await this.execAsync(curlCommand);
@@ -46,7 +43,7 @@ export class CurlService {
       this.processIsRunning = false;
   }
 
-  execAsync(command): Promise<void> {
+  private execAsync(command): Promise<void> {
     return new Promise((resolve, reject) => {
       shellJS.exec(command, { async: true }, (code, stdout, stderr) => {
         if (code === 0) {

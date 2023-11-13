@@ -1,6 +1,6 @@
  #!/bin/bash
 
-# This script expects three arguments
+# This script expects four arguments
 nginx_host="$1"
 nginx_port="$2"
 iteration_count="$3"

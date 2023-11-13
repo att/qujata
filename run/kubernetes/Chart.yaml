@@ -15,6 +15,9 @@ dependencies:
   - name: nginx
     version: 0.1.0
     repository: "file://./charts/nginx"
+  - name: cadvisor
+    version: 0.1.0
+    repository: "file://./charts/cadvisor"
   - name: prometheus
     version: 0.1.0
     repository: "file://./charts/prometheus"

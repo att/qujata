@@ -11,7 +11,7 @@ export class CurlRequest {
 
   @IsNotEmpty()
   @IsNumber()
-  @Min(1000)
+  @Min(500)
   @Max(100000)
   iterationsCount: number;
 }
