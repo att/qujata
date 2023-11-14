@@ -72,7 +72,7 @@ def __validate(data):
         return jsonify({'error': 'Current test is still running', 'message':'The previous test is still running. Please try again in few minutes'}), 409
     for algorithm in data['algorithms']:
         if algorithm not in allowedAlgorithms:
-            return jsonify({'error': 'Invalid data provided', 'message': 'algorithm' + algorithm + 'is not supported'}), 400
+            return jsonify({'error': 'Invalid data provided', 'message': 'algorithm: ' + algorithm + ' is not supported'}), 400
 
 
 def __start_analyze(data):
