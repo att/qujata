@@ -1,13 +1,9 @@
-import { IsEnum, IsNotEmpty, IsNumber, Max, Min } from 'class-validator';
-import {
-  AllowedAlgorithms,
-  AllowedAlgorithmsType,
-} from './allowed-algorithms.type';
+import { IsNotEmpty, IsNumber, Max, Min } from 'class-validator';
 
 export class CurlRequest {
+
   @IsNotEmpty()
-  @IsEnum(AllowedAlgorithms)
-  algorithm: AllowedAlgorithmsType;
+  algorithm: String;
 
   @IsNotEmpty()
   @IsNumber()
