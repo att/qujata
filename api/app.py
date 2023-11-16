@@ -69,7 +69,7 @@ def __validate(data):
     if data['iterationsCount'] < 500 or data['iterationsCount'] > 100000:
         return jsonify({'error': 'Invalid data provided', 'message': 'iterationsCount must be greater then 500 and less then 100000'}), 400
     if test_is_running:
-        return jsonify({'error': 'Current test is still running', 'message':'The previous test is still running. Please try again in few minutes'}), 409
+        return jsonify({'error': 'Current test is still running', 'message':'The previous test is still running. Please try again in few minutes'}), 423
     for algorithm in data['algorithms']:
         if algorithm not in allowedAlgorithms:
             return jsonify({'error': 'Invalid data provided', 'message': 'algorithm: ' + algorithm + ' is not supported'}), 400

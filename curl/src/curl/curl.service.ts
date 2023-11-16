@@ -28,15 +28,13 @@ export class CurlService {
   }
 
   private validate(curlRequest: CurlRequest): void {
-    console.log("this.configService.get('algorithms',[])")
-    console.log(this.configService.get('algorithms',[]))
     if (!this.configService.get('algorithms',[]).includes(curlRequest.algorithm)) {
       console.error("[CurlService:run] algorithm: " + curlRequest.algorithm + ' is not supported')
       throw new HttpException('algorithm: ' + curlRequest.algorithm + ' is not supported', HttpStatus.UNPROCESSABLE_ENTITY);
     }
     if (this.processIsRunning === true) {
       console.error("[CurlService:run] curl process is running now")
-      throw new HttpException('curl process is running', HttpStatus.CONFLICT);
+      throw new HttpException('curl process is running', 423);
     }
   }
 

@@ -82,7 +82,7 @@ describe('CurlService', () => {
         message: 'algorithm: unsupported_algorithm is not supported'
       });
     });
-    it('should throw an HttpException with status CONFLICT when process is already running', async () => {
+    it('should throw an HttpException with status LOCKED when process is already running', async () => {
       const curlRequest: CurlRequest = {
         algorithm: 'kyber512',
         iterationsCount: 1000,
@@ -94,7 +94,7 @@ describe('CurlService', () => {
       await curlService.run(curlRequest);
       await expect(curlService.run(curlRequest)).rejects.toThrow(HttpException);
       await expect(curlService.run(curlRequest)).rejects.toMatchObject({
-        status: HttpStatus.CONFLICT,
+        status: 423,
       });
       // Reset processIsRunning to false
       curlService['processIsRunning'] = false;
