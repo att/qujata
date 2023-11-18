@@ -16,9 +16,9 @@ CORS(app,origin=['*'])
 app.config['CORS_HEADERS'] = 'Content-Type'
 
 # Load configuration
-allowedAlgorithms = os.environ.get('DEFAULT_GROUPS',"kyber512").split(":")
-qujata_platform_exporter_target = os.environ.get('PLATFORM_EXPORTER_URL', "http://localhost:8888")
-qujata_curl_target = os.environ.get('CURL_URL')
+allowedAlgorithms = os.environ.get('DEFAULT_GROUPS',"kyber512:frodo640aes").split(":")
+qujata_platform_exporter_target = os.environ.get('PLATFORM_EXPORTER_URL', "http://localhost:5000")
+qujata_curl_target = os.environ.get('CURL_URL', "http://localhost:3010")
 request_timeout = os.environ.get('REQUEST_TIMEOUT', 900)
 min_iterations = int(os.environ.get('MIN_ITERATIONS', 500))
 max_iterations = int(os.environ.get('MAX_ITERATIONS', 100000))
@@ -101,7 +101,7 @@ def __start_analyze(data):
         # Print response details
         __validate_response(response.status_code)
         
-        
+
 def __validate_response(response_code):
     if(response_code < 200 or response_code > 299):
         return jsonify({'error': 'Analyze test failed to complete', 'message': 'Error occured when running algorithm' + algorithm}), response_code

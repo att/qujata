@@ -28,7 +28,12 @@ python3 app.py
 
 4. Application is available now in: `http://localhost:3020`, curl example:
 ```bash
-curl http://localhost:3020/analyze -H 'Content-Type: application/json'  --data-raw '{"algorithms":["kyber512"], "iterationsCount":200}'
+curl --location 'http://localhost:3020/analyze' \
+--header 'Content-Type: application/json' \
+--data '{
+    "algorithms": ["kyber512"],
+    "iterationsCount": 5
+}'
 ```
 
 
