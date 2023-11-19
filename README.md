@@ -7,7 +7,7 @@
 - [**Algorithms**](#algorithms)
 - [**Getting Started**](#getting-started)
 - [**Development**](#development)
-- [**Project Roadmap**](#project-roadmap)
+- [**Project Roadmap**](#project-roadmap-and-architecture)
 - [**Contributing**](#contributing)
 - [**Releases**](#releases)
 - [**Code of Conduct**](#code-of-conduct)
@@ -135,7 +135,12 @@ http://localhost:3000/
 
 The initial username/password for grafana is ```qujata/qujata```.
 
-<!-- # Development -->
+# Development
+running components in development mode:
+[Portal](https://github.com/att/qujata/tree/main/portal/README.md)
+[Api](https://github.com/att/qujata/tree/main/api/README.md)
+[Curl](https://github.com/att/qujata/tree/main/curl/README.md)
+[Platform Exporter](https://github.com/att/qujata/tree/main/platform-exporter/README.md)
 
 # Project Roadmap and Architecture
 Information about our roadmap can be found [here](ROADMAP.md).
