@@ -25,8 +25,8 @@ max_iterations = int(os.environ.get('MAX_ITERATIONS', 100000))
 process_is_running = False
 
 # constants
-LOCKED = 423
-BAD_REQUEST = 400
+HTTP_STATUS_LOCKED = 423
+HTTP_STATUS_BAD_REQUEST = 400
 
 @app.route('/algorithms', methods=['GET'])
 @cross_origin(origin=['*'], supports_credentials=True)
@@ -72,14 +72,14 @@ def __export_platform_data():
 def __validate(data):
     print(process_is_running)
     if not data or 'algorithms' not in data:
-        return jsonify({'error': 'Invalid data provided', 'message': 'missing algorithms'}), BAD_REQUEST
+        return jsonify({'error': 'Invalid data provided', 'message': 'missing algorithms'}), HTTP_STATUS_BAD_REQUEST
     if data['iterationsCount'] < min_iterations or data['iterationsCount'] > max_iterations:
-        return jsonify({'error': 'Invalid data provided', 'message': 'iterationsCount must be greater then ' + str(min_iterations) + ' and less then ' + str(max_iterations)}), BAD_REQUEST
+        return jsonify({'error': 'Invalid data provided', 'message': 'iterationsCount must be greater then ' + str(min_iterations) + ' and less then ' + str(max_iterations)}), HTTP_STATUS_BAD_REQUEST
     if process_is_running:
-        return jsonify({'error': 'Current test is still running', 'message':'The previous test is still running. Please try again in few minutes'}), LOCKED
+        return jsonify({'error': 'Current test is still running', 'message':'The previous test is still running. Please try again in few minutes'}), HTTP_STATUS_LOCKED
     for algorithm in data['algorithms']:
         if algorithm not in allowedAlgorithms:
-            return jsonify({'error': 'Invalid data provided', 'message': 'algorithm: ' + algorithm + ' is not supported'}), BAD_REQUEST
+            return jsonify({'error': 'Invalid data provided', 'message': 'algorithm: ' + algorithm + ' is not supported'}), HTTP_STATUS_BAD_REQUEST
 
 
 def __start_analyze(data):
