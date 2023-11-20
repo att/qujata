@@ -67,7 +67,13 @@ git clone https://github.com/att/qujata.git
 cd qujata
 ```
 
-## Docker
+There are two ways to install qujata runtime on your machine
+1. Individual Dockers
+2. Within a pre-built Kubernetes setup
+
+These two options are detailed below.
+
+## Option 1: Docker
 Prerequisit: Docker, Docker Compose. <br>
 Docker Compose is included in [Docker Desktop installation](https://www.docker.com/products/docker-desktop/) <br>
 
@@ -91,7 +97,7 @@ http://localhost:3000/
 
 The initial username/password for grafana is ```qujata/qujata```.
 
-## Kubernetes 
+## Option 2: Kubernetes 
 Prerequisit: [Kubernetes](https://kubernetes.io/releases/download/), [Helm](https://helm.sh/docs/intro/install/) <br>
 If you're using Docker Desktop you can  [Enable Kuberenets in Docker Desktop](https://docs.docker.com/desktop/kubernetes/) <br>
 
