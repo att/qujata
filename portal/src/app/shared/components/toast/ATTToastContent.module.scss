@@ -1,0 +1,22 @@
+@import "./../../../../styles/variables-keys";
+
+.toast_wrapper {
+  align-items: flex-start;
+  display: flex;
+}
+
+.toast_content {
+  word-break: break-word;
+  align-self: center;
+  line-height: 22px;
+}
+
+.toast_title {
+  font-family: var($fontBold);
+  font-size: 17px;
+  margin-block-end: 4px;
+}
+
+.toast_message {
+  white-space: pre-line;
+}

@@ -1,0 +1,73 @@
+@import "variables-keys";
+@import "~react-toastify/scss/main";
+
+$toastSuccessColor: #3da930;
+$toastInfoColor: #0568ae;
+$toastErrorColor: #ff4349;
+$toastWarningColor: #FF8500;
+
+%defaultToast {
+  background-color: var($backgroundColorGray);
+  color: var($textBlack);
+  border-radius: 0;
+  padding-inline-start: 16px;
+  padding-inline-end: 16px;
+  padding-block-start: 24px;
+  padding-block-end: 24px;
+  box-shadow: 0 2px 20px 0 rgba(0, 0, 0, 0.2);
+  font-family: inherit;
+  align-items: flex-start;
+  cursor: default;
+}
+
+.att-toasts-container {
+  inline-size: 450px;
+  padding: 0;
+}
+
+.Toastify__toast {
+  .Toastify__close-button {
+    color: var($textBlack);
+  }
+}
+
+.att-toast-container {
+  @extend %defaultToast;
+}
+
+.att-toast-content {
+  flex: 1 1 auto;
+  margin: 0;
+  padding: 0;
+}
+
+.Toastify__toast--success {
+  #{$toastTypeIndicationColor}: $toastSuccessColor;
+}
+
+.Toastify__toast--info {
+  #{$toastTypeIndicationColor}: $toastInfoColor;
+}
+
+.Toastify__toast--error {
+  #{$toastTypeIndicationColor}: $toastErrorColor;
+  border-top: 2px solid var($attBerry);
+}
+
+.Toastify__toast--warning {
+  #{$toastTypeIndicationColor}: $toastWarningColor;
+}
+
+.Toastify__toast--default {
+  #{$toastTypeIndicationColor}: $toastErrorColor;
+}
+
+.Toastify--animate {
+  animation-duration: 0.3s;
+}
+
+.Toastify__close-button {
+  opacity: 1;
+  display: flex;
+  margin-block-start: -1px;
+}

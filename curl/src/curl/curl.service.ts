@@ -1,44 +1,44 @@
 import { Injectable } from '@nestjs/common';
 import * as shellJS from 'shelljs';
 import { CurlRequest } from '../dto/curl-request.dto';
-import { CurlResponse } from '../entities/analysis.entity';
 import { ConfigService } from '@nestjs/config';
-import { AllowedAlgorithmsType } from './../dto/allowed-algorithms.type';
 import { HttpException, HttpStatus, NotFoundException } from '@nestjs/common';
 
 @Injectable()
 export class CurlService {
   private readonly CURL_SCRIPT_PATH: string;
   private processIsRunning: boolean;
-  private currentProcess: shellJS.ChildProcess;
 
   private configService: ConfigService;
 
   constructor(private _configService: ConfigService) {
     this.configService = _configService;
-    this.currentProcess = undefined;
     this.processIsRunning = false;
     this.CURL_SCRIPT_PATH = "./scripts/run-curl-loop.sh"
   }
 
   async run(curlRequest: CurlRequest): Promise<void> {
-    this.validate();
+    this.validate(curlRequest);
     try { 
-      return this.runCurls(curlRequest.iterationsCount, curlRequest.algorithm);
+      await this.runCurls(curlRequest.iterationsCount, curlRequest.algorithm);
     } catch (err) {
       console.error('[CurlService:run] Error occurred: ', err);
       throw new HttpException("error occured when trying to run test with algorithm: " + curlRequest.algorithm, HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
 
-  validate(): void {
+  private validate(curlRequest: CurlRequest): void {
+    if (!this.configService.get('algorithms',[]).includes(curlRequest.algorithm)) {
+      console.error("[CurlService:run] algorithm: " + curlRequest.algorithm + ' is not supported')
+      throw new HttpException('algorithm: ' + curlRequest.algorithm + ' is not supported', HttpStatus.UNPROCESSABLE_ENTITY);
+    }
     if (this.processIsRunning === true) {
       console.error("[CurlService:run] curl process is running now")
-      throw new HttpException('curl process is running', HttpStatus.CONFLICT);
+      throw new HttpException('curl process is running', 423);
     }
   }
 
-  async runCurls(iterationsCount: number, algorithm: AllowedAlgorithmsType) {
+  private async runCurls(iterationsCount: number, algorithm: String) {
       const curlCommand = this.format(`${this.CURL_SCRIPT_PATH} ${this.configService.get('nginx.host')} ${this.configService.get('nginx.port')} ${iterationsCount} ${algorithm}`);
       this.processIsRunning = true;
       await this.execAsync(curlCommand);
@@ -46,7 +46,7 @@ export class CurlService {
       this.processIsRunning = false;
   }
 
-  execAsync(command): Promise<void> {
+  private execAsync(command): Promise<void> {
     return new Promise((resolve, reject) => {
       shellJS.exec(command, { async: true }, (code, stdout, stderr) => {
         if (code === 0) {

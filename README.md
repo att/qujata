@@ -7,7 +7,7 @@
 - [**Algorithms**](#algorithms)
 - [**Getting Started**](#getting-started)
 - [**Development**](#development)
-- [**Project Roadmap**](#project-roadmap)
+- [**Project Roadmap**](#project-roadmap-and-architecture)
 - [**Contributing**](#contributing)
 - [**Releases**](#releases)
 - [**Code of Conduct**](#code-of-conduct)
@@ -67,7 +67,13 @@ git clone https://github.com/att/qujata.git
 cd qujata
 ```
 
-# Docker
+There are two ways to install qujata runtime on your machine
+1. Individual Dockers
+2. Within a pre-built Kubernetes setup
+
+These two options are detailed below.
+
+## Option 1: Docker
 Prerequisit: Docker, Docker Compose. <br>
 Docker Compose is included in [Docker Desktop installation](https://www.docker.com/products/docker-desktop/) <br>
 
@@ -91,7 +97,7 @@ http://localhost:3000/
 
 The initial username/password for grafana is ```qujata/qujata```.
 
-# Kubernetes 
+## Option 2: Kubernetes 
 Prerequisit: [Kubernetes](https://kubernetes.io/releases/download/), [Helm](https://helm.sh/docs/intro/install/) <br>
 If you're using Docker Desktop you can  [Enable Kuberenets in Docker Desktop](https://docs.docker.com/desktop/kubernetes/) <br>
 
@@ -135,7 +141,14 @@ http://localhost:3000/
 
 The initial username/password for grafana is ```qujata/qujata```.
 
-<!-- # Development -->
+# Development
+As opposed to installing qujata runtime, explained in the Getting Started section, developing and/or contributing code to the project requires installation of all the compounders listed below on your machine. 
+
+In order to install and run the various components in development mode, see these individual read me files for each of them.
+1. [Portal](https://github.com/att/qujata/tree/main/portal/README.md)
+2. [Api](https://github.com/att/qujata/tree/main/api/README.md)
+3. [Curl](https://github.com/att/qujata/tree/main/curl/README.md)
+4. [Platform Exporter](https://github.com/att/qujata/tree/main/platform-exporter/README.md)
 
 # Project Roadmap and Architecture
 Information about our roadmap can be found [here](ROADMAP.md).

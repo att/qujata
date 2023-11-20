@@ -51,7 +51,7 @@ services:
       - PQC_PORTAL__DASHBOARD_LINK_HOST=http://localhost:3000
 
   cadvisor:
-    image: gcr.io/cadvisor/cadvisor:v0.47.0
+    image: qujata/cadvisor:1.0.0
     container_name: qujata-cadvisor
     restart: unless-stopped
     privileged: true
