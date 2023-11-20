@@ -67,7 +67,7 @@ git clone https://github.com/att/qujata.git
 cd qujata
 ```
 
-# Docker
+## Docker
 Prerequisit: Docker, Docker Compose. <br>
 Docker Compose is included in [Docker Desktop installation](https://www.docker.com/products/docker-desktop/) <br>
 
@@ -91,7 +91,7 @@ http://localhost:3000/
 
 The initial username/password for grafana is ```qujata/qujata```.
 
-# Kubernetes 
+## Kubernetes 
 Prerequisit: [Kubernetes](https://kubernetes.io/releases/download/), [Helm](https://helm.sh/docs/intro/install/) <br>
 If you're using Docker Desktop you can  [Enable Kuberenets in Docker Desktop](https://docs.docker.com/desktop/kubernetes/) <br>
 
@@ -136,7 +136,7 @@ http://localhost:3000/
 The initial username/password for grafana is ```qujata/qujata```.
 
 # Development
-running components in development mode:
+In order to install and run the various components in development mode, see these individual read me files for each of them.
 1. [Portal](https://github.com/att/qujata/tree/main/portal/README.md)
 2. [Api](https://github.com/att/qujata/tree/main/api/README.md)
 3. [Curl](https://github.com/att/qujata/tree/main/curl/README.md)
