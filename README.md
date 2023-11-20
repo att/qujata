@@ -142,6 +142,8 @@ http://localhost:3000/
 The initial username/password for grafana is ```qujata/qujata```.
 
 # Development
+As opposed to installing qujata runtime, explained in the Getting Started section, developing and/or contributing code to the project requires insulation of all the compounders listed below on your machine. 
+
 In order to install and run the various components in development mode, see these individual read me files for each of them.
 1. [Portal](https://github.com/att/qujata/tree/main/portal/README.md)
 2. [Api](https://github.com/att/qujata/tree/main/api/README.md)
