@@ -20,8 +20,7 @@ allowedAlgorithms = os.environ.get('DEFAULT_GROUPS',"kyber512:frodo640aes").spli
 qujata_platform_exporter_target = os.environ.get('PLATFORM_EXPORTER_URL', "http://localhost:5000")
 qujata_curl_target = os.environ.get('CURL_URL', "http://localhost:3010")
 request_timeout = os.environ.get('REQUEST_TIMEOUT', 900)
-min_iterations = int(os.environ.get('MIN_ITERATIONS', 500))
-max_iterations = int(os.environ.get('MAX_ITERATIONS', 100000))
+iterations_options = list(map(int, os.environ.get('ITERATIONS_OPTIONS', "100:500:1000:2000:5000:10000:50000").split(":")))
 process_is_running = False
 
 # constants
@@ -73,17 +72,16 @@ def __validate(data):
     print(process_is_running)
     if not data or 'algorithms' not in data:
         return jsonify({'error': 'Invalid data provided', 'message': 'missing algorithms'}), HTTP_STATUS_BAD_REQUEST
-    if data['iterationsCount'] < min_iterations or data['iterationsCount'] > max_iterations:
-        return jsonify({'error': 'Invalid data provided', 'message': 'iterationsCount must be greater then ' + str(min_iterations) + ' and less then ' + str(max_iterations)}), HTTP_STATUS_BAD_REQUEST
+    if data['iterationsCount'] not in iterations_options:
+        return jsonify({'error': 'Invalid data provided', 'message': 'iterationsCount should be one of the following options: ' + ', '.join(map(str, iterations_options))}), HTTP_STATUS_BAD_REQUEST
     if process_is_running:
-        return jsonify({'error': 'Current test is still running', 'message':'The previous test is still running. Please try again in few minutes'}), HTTP_STATUS_LOCKED
+        return jsonify({'error': 'Current test is still running', 'message': 'The previous test is still running. Please try again in a few minutes'}), HTTP_STATUS_LOCKED
     for algorithm in data['algorithms']:
         if algorithm not in allowedAlgorithms:
             return jsonify({'error': 'Invalid data provided', 'message': 'algorithm: ' + algorithm + ' is not supported'}), HTTP_STATUS_BAD_REQUEST
 
 
 def __start_analyze(data):
-
     iterations_count = data['iterationsCount']
     headers = { 'Content-Type': 'application/json' }
     first_run = True
@@ -99,10 +97,10 @@ def __start_analyze(data):
         }
         response = requests.post(qujata_curl_target + "/curl", headers=headers, json=payload, timeout=request_timeout)
         # Print response details
-        __validate_response(response.status_code)
+        __validate_response(response.status_code, algorithm)
         
 
-def __validate_response(response_code):
+def __validate_response(response_code, algorithm):
     if(response_code < 200 or response_code > 299):
         return jsonify({'error': 'Analyze test failed to complete', 'message': 'Error occured when running algorithm' + algorithm}), response_code
         
