@@ -23,12 +23,12 @@ pip3 install -r requirements.txt
 
 3. Running the application:
 ```bash
-python3 app.py
+python3 src/main.py
 ```
 
 4. Application is available now in: `http://localhost:3020`, curl example:
 ```bash
-curl --location 'http://localhost:3020/analyze' \
+curl --location 'http://localhost:3020/qujata-api/analyze' \
 --header 'Content-Type: application/json' \
 --data '{
     "algorithms": ["kyber512"],
