@@ -14,7 +14,7 @@ export interface IUseDashboardData {
   // data: ChartDataMap;
   // algorithms: string[];
   status: FetchDataStatus;
-  handleRunQueryClick: (qeuryData: ITestParams) => void;
+  handleRunQueryClick: (queryData: ITestParams) => void;
 }
 
 export function useDashboardData(): IUseDashboardData {
@@ -22,7 +22,7 @@ export function useDashboardData(): IUseDashboardData {
   const { post, data, status, error, cancelRequest }: IHttp<IQueryResponse> = useFetch<IQueryResponse>({ url: APIS.analyze });
   const [dashboardData, setDashboardData] = useState<ChartDataMap>(() => new Map<AttSelectOption, ITestResponseData | undefined>());
   const [algorithms, setAlgorithms] = useState<string[] | undefined>([]);
-  const [iterationsCount, setIterationsCount] = useState<number>(1);
+  const [iterationsCount, setIterationsCount] = useState<number | undefined>();
   const generateFromTime: number = Date.now();
   const initialLink: string = `${Environment.dashboardLinkHost}/${DashBoardPrefixLink}&from=${generateFromTime}`;
   const [link, setLink] = useState<string>(initialLink);
@@ -58,12 +58,14 @@ export function useDashboardData(): IUseDashboardData {
     }
   }, [data, iterationsCount, post, status]);
 
-  const handleRunQueryClick: (qeuryData: ITestParams) => void = useCallback((qeuryData: ITestParams): void => {
-    if (qeuryData.algorithms) {
-      const algos: AttSelectOption[] = qeuryData.algorithms as AttSelectOption[];
+  const handleRunQueryClick: (queryData: ITestParams) => void = useCallback((queryData: ITestParams): void => {
+    const algoValues: string[] = [];
+    let iterationsValues: number;
+
+    if (queryData.algorithms) {
+      const algos: AttSelectOption[] = queryData.algorithms as AttSelectOption[];
       const map: ChartDataMap = new Map<AttSelectOption, ITestResponseData | undefined>();
   
-      const algoValues: string[] = [];
       algos.forEach((algo: AttSelectOption) => {
         map.set(algo, undefined);
         algoValues.push(algo.value);
@@ -71,13 +73,22 @@ export function useDashboardData(): IUseDashboardData {
   
       setAlgorithms(algoValues);
       setDashboardData(map);
-      setIterationsCount(qeuryData.iterationsCount);
-      console.log('*** ', algos);
+      console.log('algorithms:', algos);
       if (algos?.length > 0) {  
         const algoValues: string[] = algos.map((item: AttSelectOption) => item.value); 
-        post({ data: { algorithms: algoValues, iterationsCount: qeuryData.iterationsCount } });
+        post({ data: { algorithms: algoValues, iterationsCount: queryData.iterationsCount } });
       }
     }
+    if (queryData.iterationsCount) {
+      const iterations: AttSelectOption = queryData.iterationsCount as AttSelectOption;
+      const map: ChartDataMap = new Map<AttSelectOption, ITestResponseData | undefined>();
+
+      setIterationsCount(+iterations.value);
+      iterationsValues = +iterations.value;
+      setDashboardData(map);
+      console.log('iterations:', iterations);
+    }
+    post({ data: { algorithms: algoValues, iterationsCount: iterationsValues! } });
   }, [post]);
 
   return {

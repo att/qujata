@@ -1,5 +1,13 @@
 
-export const QueryDefaultIterationsCount: number = 10;
+enum QueryIterationsCount {
+    HUNDRED = 100,
+    FIVE_HUNDRED = 500,
+    THOUSAND = 1000,
+    TWO_THOUSAND = 2000,
+    FIVE_THOUSAND = 5000,
+    TEN_THOUSAND = 10000,
+    FIFTY_THOUSAND = 50000
+}
 
 enum ClassicOrHybridAlgorithms {
     /* Classic Algorithms */
@@ -10,5 +18,3 @@ enum ClassicOrHybridAlgorithms {
     P384_KYBER768 = 'p384_kyber768',
     X25519_KYBER786 = 'x25519_kyber768',
 }
-
-export const QueryDefaultAlgorithms: string = ClassicOrHybridAlgorithms.PRIME256V1;
