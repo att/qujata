@@ -1,4 +1,4 @@
-import { IsIn, IsNotEmpty, IsNumber, Max, Min } from 'class-validator';
+import { IsIn, IsNotEmpty, IsNumber } from 'class-validator';
 
 export class CurlRequest {
 
