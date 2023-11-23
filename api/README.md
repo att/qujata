@@ -23,7 +23,7 @@ pip3 install -r requirements.txt
 
 3. Running the application:
 ```bash
-python3 src/main.py
+python3 -m src.main
 ```
 
 4. Application is available now in: `http://localhost:3020`, curl example:
@@ -34,6 +34,11 @@ curl --location 'http://localhost:3020/qujata-api/analyze' \
     "algorithms": ["kyber512"],
     "iterationsCount": 5
 }'
+```
+
+5. Running unit test:
+```bash
+coverage run -m unittest discover -s tests 
 ```
 
 

@@ -6,14 +6,11 @@ import requests
 import logging
 
 from datetime import datetime, timedelta
-# from flask import Flask, jsonify, request
 from flask import Blueprint, Flask, jsonify, request, current_app
 from flask_cors import cross_origin
-from algorithms import QuantumSafeAlgorithms, ClassicAlgorithms, HybridAlgorithms
+from src.algorithms import QuantumSafeAlgorithms, ClassicAlgorithms, HybridAlgorithms
 
 api = Blueprint('qujata-api', __name__)
-# Configure the logging settings
-# logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %(message)s')
 process_is_running = False
 
 # constants
@@ -22,7 +19,7 @@ HTTP_STATUS_BAD_REQUEST = 400
 HTTP_STATUS_INTERNAL_SERVER_ERROR = 500
 
 @api.route('/algorithms', methods=['GET'])
-@cross_origin(origin=['*'], supports_credentials=True)
+@cross_origin(origins=['*'], supports_credentials=True)
 def get_algorithms():
     return {
         "quantumSafe": [algorithm.value for algorithm in QuantumSafeAlgorithms if algorithm.value in current_app.allowedAlgorithms],
@@ -32,7 +29,7 @@ def get_algorithms():
 
 
 @api.route('/analyze', methods=['POST'])
-@cross_origin(origin=['*'],supports_credentials=True)
+@cross_origin(origins=['*'],supports_credentials=True)
 def analyze():
     global process_is_running
     data = request.get_json()
@@ -47,6 +44,7 @@ def analyze():
         start_time = int(datetime.timestamp(datetime.now() - timedelta(seconds=60)) * 1000)
         error = __start_analyze(data)
         if error != None:
+            process_is_running = False
             return error
         # end time is now + 90 sec, to show the graph after the test for sure finished running 
         end_time = int(datetime.timestamp(datetime.now() + timedelta(seconds=90)) * 1000)
@@ -81,7 +79,6 @@ def __validate(data):
 
 
 def __start_analyze(data):
-
     iterations_count = data['iterationsCount']
     headers = { 'Content-Type': 'application/json' }
     first_run = True
@@ -96,10 +93,12 @@ def __start_analyze(data):
             'iterationsCount': iterations_count
         }
         response = requests.post(current_app.qujata_curl_target + "/curl", headers=headers, json=payload, timeout=current_app.request_timeout)
-        __validate_response(response.status_code)
+        error = __validate_response(response.status_code, algorithm)
+        if error != None:
+            return error
         
 
-def __validate_response(response_code):
+def __validate_response(response_code, algorithm):
     if(response_code < 200 or response_code > 299):
         return jsonify({'error': 'Analyze test failed to complete', 'message': 'Error occured when running algorithm' + algorithm}), response_code
         

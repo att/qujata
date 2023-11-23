@@ -3,3 +3,4 @@ flask==3.0.0
 Flask-Cors==4.0.0
 DateTime==5.2
 python-dotenv==1.0.0
+coverage==7.3.2
