@@ -159,7 +159,7 @@ Information about how to contribute, can be found [here](CONTRIBUTING.md).
 
 # Releases
 
-Please note, for more details about releases, a Changelog file will be available soon.
+See [here](https://github.com/att/qujata/releases).
 
 
 # Acknowledgements
