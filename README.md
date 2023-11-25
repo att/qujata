@@ -172,4 +172,4 @@ Code of conduct can be found [here](https://github.com/att/qujata/blob/main/CODE
 
 # License
 
-License can be found [here](https://github.com/att/qujata/blob/main/LICENSE.md).
+License can be found [here](https://github.com/att/qujata/blob/main/LICENSE).
