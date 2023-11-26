@@ -32,3 +32,7 @@ curl --location 'http://localhost:3010/curl' \
 }'
 ```
 
+5. Running unit test:
+```bash
+npm run test -- --coverage
+```

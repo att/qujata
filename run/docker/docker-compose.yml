@@ -58,7 +58,7 @@ services:
     ports:
       - 2000:80
     environment:
-      - PQC_PORTAL__BASE_API_URL=http://localhost:3020
+      - PQC_PORTAL__BASE_API_URL=http://localhost:3020/qujata-api
       - PQC_PORTAL__DASHBOARD_LINK_HOST=http://localhost:3000
 
   cadvisor:
