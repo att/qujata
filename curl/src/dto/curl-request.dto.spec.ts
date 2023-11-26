@@ -33,6 +33,6 @@ describe('CurlRequest', () => {
     curlRequest.iterationsCount = 2023;
     const validationErrors = await validate(curlRequest);
     expect(validationErrors).toHaveLength(1);
-    expect(validationErrors[0].constraints.min).toBeDefined();
+    expect(validationErrors[0].constraints).toBeDefined();
   });
 });

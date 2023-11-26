@@ -31,8 +31,6 @@ def get_algorithms():
 @cross_origin(origin=['*'], supports_credentials=True)
 def get_iterations_list():
     iterations_list = __convert_iterations_to_list(current_app.iterations_options)
-    if not iterations_list:
-        return jsonify({'error': 'Invalid data provided', 'message': 'Unable to fetch the list of iterations'}), HTTP_STATUS_INTERNAL_SERVER_ERROR
     return { "iterations": iterations_list }
 
 @api.route('/analyze', methods=['POST'])
