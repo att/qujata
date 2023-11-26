@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "mysql.fullname" . }}
+  labels:
+    {{- include "mysql.labels" . | nindent 4 }}
+data:
+  env-info.properties:
+{{ .Files.Get "../../../../configs/env-info.properties" | toJson | indent 4 }}

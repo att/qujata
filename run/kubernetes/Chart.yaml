@@ -30,4 +30,7 @@ dependencies:
   - name: platform-exporter
     version: 0.1.0
     repository: "file://./charts/platform-exporter"
+  - name: mysql
+    version: 0.1.0
+    repository: "file://./charts/mysql"
 

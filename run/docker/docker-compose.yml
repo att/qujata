@@ -15,6 +15,17 @@ services:
     ports:
       - "5000:5000"
 
+  mysql:
+    image: qujata/mysql:1.1.0
+    container_name: qujata-mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: qujata
+      MYSQL_DATABASE: qujata
+    volumes:
+      - ../configs/env-info.properties:/configs/env-info.properties
+    ports:
+      - "3306:3306"
+
   nginx:
     image: qujata/nginx:1.0.0
     container_name: qujata-nginx
@@ -62,7 +73,7 @@ services:
       - /var/lib/docker/:/var/lib/docker:ro
       - /dev/disk/:/dev/disk:ro
       - /etc/machine-id:/etc/machine-id:ro
-      - /var/lib/dbus/machine-id:/var/lib/dbus/machine-id:ro
+      - /var/lib/mysqlus/machine-id:/var/lib/mysqlus/machine-id:ro
     ports:
       - "8080:8080"
 
