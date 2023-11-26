@@ -6,4 +6,4 @@ metadata:
     {{- include "mysql.labels" . | nindent 4 }}
 data:
   env-info.properties:
-{{ .Files.Get "../../../../configs/env-info.properties" | toJson | indent 4 }}
+{{ .Files.Get "configs/env-info.properties" | quote | indent 4 }}

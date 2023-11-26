@@ -22,7 +22,7 @@ services:
       MYSQL_ROOT_PASSWORD: qujata
       MYSQL_DATABASE: qujata
     volumes:
-      - ../configs/env-info.properties:/configs/env-info.properties
+      - ./configs/env-info.properties:/configs/env-info.properties
     ports:
       - "3306:3306"
 
