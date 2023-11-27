@@ -76,6 +76,7 @@
     ]
   },
   "jest": {
+    "transformIgnorePatterns": ["<rootDir>/node_modules/(?!(.*\\.js$))"],
     "coverageThreshold": {
       "global": {
         "statements": 85,
