@@ -76,8 +76,8 @@ def __validate(data):
     iterations_list = __convert_iterations_to_list(current_app.iterations_options)
     if not data or 'algorithms' not in data or 'iterationsCount' not in data:
         return jsonify({'error': 'Invalid data provided', 'message': 'Missing properties'}), HTTP_STATUS_BAD_REQUEST
-    if data['iterationsCount'] not in iterations_list:
-        return jsonify({'error': 'Invalid data provided', 'message': 'The number of iterations should be one of the following options: ' + ', '.join(map(str, iterations_list))}), HTTP_STATUS_BAD_REQUEST
+    if data['iterationsCount'] < 0:
+        return jsonify({'error': 'Invalid data provided', 'message': 'The number of iterations should be greater than 0'}), HTTP_STATUS_BAD_REQUEST
     if process_is_running:
         return jsonify({'error': 'Current test is still running', 'message':'The previous test is still running. Please try again in few minutes'}), HTTP_STATUS_LOCKED
     for algorithm in data['algorithms']:

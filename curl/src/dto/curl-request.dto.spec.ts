@@ -30,7 +30,7 @@ describe('CurlRequest', () => {
   it('should fail validation when iterationsCount is not from the list', async () => {
     const curlRequest = new CurlRequest();
     curlRequest.algorithm = 'ExampleAlgorithm';
-    curlRequest.iterationsCount = 2023;
+    curlRequest.iterationsCount = -3;
     const validationErrors = await validate(curlRequest);
     expect(validationErrors).toHaveLength(1);
     expect(validationErrors[0].constraints).toBeDefined();

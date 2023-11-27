@@ -70,7 +70,7 @@ class TestAPI(unittest.TestCase):
     def test_analyze_with_invalid_iterations_count(self):
         input_data = {
             "algorithms":["kyber512"],
-            "iterationsCount": 1
+            "iterationsCount": -3
         }
         # Mock the requests.post call
         with patch('requests.post') as mock_post:
@@ -82,7 +82,7 @@ class TestAPI(unittest.TestCase):
             self.assertEqual(response.status_code, 400)
             response_json = json.loads(response.data)
             self.assertEqual(response_json["error"], "Invalid data provided")
-            self.assertEqual(response_json["message"], "The number of iterations should be one of the following options: 100, 500, 1000, 2000, 5000, 10000, 50000")
+            self.assertEqual(response_json["message"], "The number of iterations should be greater than 0")
         
     def test_analyze_with_invalid_algorithm(self):
         input_data = {
