@@ -1,17 +1,13 @@
 import unittest
 from datetime import datetime
 import json
+
+import requests
 from flask import Flask
 from unittest.mock import MagicMock, patch
 from src.api import api
 import src.api
 from config.settings import load_config
-
-def mock_requests_post_with_409(url, data=None, **kwargs):
-    if url == "http://localhost:5000/export-platform-info":
-        return MagicMock(status_code=200, json=lambda: {"result": "success"})
-    else:
-        return MagicMock(status_code=423, json=lambda: {"error": "An error occurred"})
 
 class TestAPI(unittest.TestCase):
     def setUp(self):
@@ -53,13 +49,16 @@ class TestAPI(unittest.TestCase):
             "iterationsCount": 1000
         }
 
-        response = self.client.post('/api/analyze',
-                                data=json.dumps(input_data),
-                                content_type='application/json')
-        self.assertEqual(response.status_code, 500)
-        response_json = json.loads(response.data)
-        self.assertEqual(response_json["error"], "An error occured while processing the request")
-        self.assertEqual(response_json["message"], "")
+        # Mock the requests.post call to raise an exception
+        with patch('requests.post', side_effect=requests.exceptions.RequestException("Mocked exception")) as mock_post:
+
+            response = self.client.post('/api/analyze',
+                                    data=json.dumps(input_data),
+                                    content_type='application/json')
+            self.assertEqual(response.status_code, 500)
+            response_json = json.loads(response.data)
+            self.assertEqual(response_json["error"], "An error occured while processing the request")
+            self.assertEqual(response_json["message"], "")
             
 
     def test_analyze_with_invalid_iterations_count(self):
@@ -118,7 +117,9 @@ class TestAPI(unittest.TestCase):
             "iterationsCount": 1000
         }
         # Mock the requests.post call
-        with patch('requests.post', side_effect=mock_requests_post_with_409) as mock_post:
+        with patch('requests.post') as mock_post:
+            mock_post.return_value = MagicMock(status_code=423, json=lambda: {'result': 'failed'})
+
 
             response = self.client.post('/api/analyze',
                                     data=json.dumps(input_data),

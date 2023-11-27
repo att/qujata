@@ -34,7 +34,6 @@ def analyze():
     global process_is_running
     data = request.get_json()
     try:
-        __export_platform_data()
         error = __validate(data)
         if error != None:
             return error
@@ -61,10 +60,6 @@ def analyze():
         process_is_running = False
         logging.error("Failed to run analyze request with error: " + str(e))
         return jsonify({'error': 'An error occured while processing the request', 'message':''}), HTTP_STATUS_INTERNAL_SERVER_ERROR
-
-def __export_platform_data():
-    requests.post(current_app.qujata_platform_exporter_target + "/export-platform-info")
-
 
 def __validate(data):
     if not data or 'algorithms' not in data:
