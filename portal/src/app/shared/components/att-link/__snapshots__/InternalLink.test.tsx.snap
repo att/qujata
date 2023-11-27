@@ -1,0 +1,39 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`InternalLink renders large primary link 1`] = `
+<a
+  class="lg_link primary_link"
+  href="/test-link"
+>
+  large primary link
+</a>
+`;
+
+exports[`InternalLink renders medium secondary link 1`] = `
+<a
+  class="md_link secondary_link"
+  href="/test-link"
+>
+  medium secondary link
+</a>
+`;
+
+exports[`InternalLink renders regular link 1`] = `
+<a
+  class=""
+  href="/test-link?test=2"
+>
+  regular link
+</a>
+`;
+
+exports[`InternalLink renders wrapper link 1`] = `
+<a
+  class="test-class-name wrapper_link"
+  href="/test-link"
+>
+  <span>
+    wrapper link
+  </span>
+</a>
+`;

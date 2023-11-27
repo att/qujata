@@ -1,0 +1,36 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ExternalLink renders external link 1`] = `
+<a
+  class="test-class-name"
+  href="test-link"
+  rel="noopener"
+  target="_self"
+>
+  external link
+</a>
+`;
+
+exports[`ExternalLink renders external link with default target and rel attributes 1`] = `
+<a
+  class="test-class-name"
+  href="test-link"
+  rel=""
+  target="_self"
+>
+  external link
+</a>
+`;
+
+exports[`ExternalLink renders external wrapper link 1`] = `
+<a
+  class="wrapper_link"
+  href="test-link"
+  rel="noopener"
+  target="_self"
+>
+  <span>
+    external wrapper link
+  </span>
+</a>
+`;

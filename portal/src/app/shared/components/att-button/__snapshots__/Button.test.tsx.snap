@@ -1,0 +1,59 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Button renders large primary button 1`] = `
+<button
+  class="button primary_button lg_button"
+  type="button"
+>
+  large primary button
+</button>
+`;
+
+exports[`Button renders medium primary button 1`] = `
+<button
+  class="button primary_button md_button"
+  type="button"
+>
+  <span>
+    medium primary button
+  </span>
+</button>
+`;
+
+exports[`Button renders small primary button 1`] = `
+<button
+  class="button primary_button sm_button"
+  type="button"
+>
+  <span>
+    small primary button
+  </span>
+</button>
+`;
+
+exports[`Button renders small secondary button 1`] = `
+<button
+  class="button secondary_button sm_button"
+  type="button"
+>
+  small secondary button
+</button>
+`;
+
+exports[`Button renders small text button 1`] = `
+<button
+  class="button txt_button"
+  type="button"
+>
+  small text button
+</button>
+`;
+
+exports[`Button renders wrapper button 1`] = `
+<button
+  class="button wrapper_button"
+  type="submit"
+>
+  small wrapper button
+</button>
+`;
