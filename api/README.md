@@ -38,8 +38,10 @@ curl --location 'http://localhost:3020/qujata-api/analyze' \
 
 5. Running unit test:
 ```bash
-coverage run -m unittest discover -s tests 
+coverage run -m unittest discover -s tests
+coverage html
 ```
-
+You can see your coverage on the `api/htmlcov/index.html` file. <br />
+Please make sure you have 100% coverage.
 
 

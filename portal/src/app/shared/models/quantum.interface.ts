@@ -5,7 +5,7 @@ export type ChartDataMap = Map<AttSelectOption, ITestResponseData | undefined>;
 
 export interface ITestParams {
   algorithms: SelectOptionType;
-  iterationsCount: number
+  iterationsCount: SelectOptionType;
 }
 
 export interface ITestResponse {

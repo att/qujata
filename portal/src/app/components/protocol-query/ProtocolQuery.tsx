@@ -7,7 +7,7 @@ import { AttSelect, AttSelectOption } from '../../shared/components/att-select';
 import styles from './ProtocolQuery.module.scss';
 import { PROTOCOL_QUERY_EN } from './translate/en';
 import { Spinner, SpinnerSize } from '../../shared/components/att-spinner';
-import { useGetAlgorithms } from './hooks/useGetAlgorithms';
+import { useGetAlgorithms, useGetIterations } from './hooks';
 
 export type SelectOptionType = AttSelectOption | Options<AttSelectOption> | null;
 type onTextChangedEvent = (e: React.ChangeEvent<HTMLInputElement>) => void;
@@ -23,14 +23,15 @@ export interface ProtocolQueryProps {
 export const ProtocolQuery: React.FC<ProtocolQueryProps> = (props: ProtocolQueryProps) => {
   const { isFetching, canExportFile, onRunClick, onDownloadDataClicked } = props;
   const { options } = useGetAlgorithms();
+  const { iterationsOptions } = useGetIterations();
   const [algorithms, setAlgorithms] = useState<SelectOptionType>();
-  const [iterationsCount, setIterationsCount] = useState<number>();
+  const [iterationsCount, setIterationsCount] = useState<SelectOptionType>();
 
   const algorithmsCount: number = (algorithms as AttSelectOption[])?.length;
 
   const onSubmitHandler = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    onRunClick({ algorithms: algorithms as SelectOptionType, iterationsCount: iterationsCount as number });
+    onRunClick({ algorithms: algorithms as SelectOptionType, iterationsCount: iterationsCount as SelectOptionType });
   };
 
   const onAlgorithmsChanged: OnSelectChanged = useCallback((options: SelectOptionType): void => {
@@ -38,9 +39,9 @@ export const ProtocolQuery: React.FC<ProtocolQueryProps> = (props: ProtocolQuery
     setAlgorithms(selectedAlgorithms);
   }, []);
 
-  const onIterationsNumChanged: onTextChangedEvent = useCallback((e: React.ChangeEvent<HTMLInputElement>): void => {
-    const val: number | string | null = +e.target.value;
-    setIterationsCount(val);
+  const onIterationsNumChanged: OnSelectChanged = useCallback((options: SelectOptionType): void => {
+    const selectedIterationNum: Options<AttSelectOption> = options as Options<AttSelectOption>;
+    setIterationsCount(selectedIterationNum);
   }, []);
 
   return (
@@ -62,15 +63,13 @@ export const ProtocolQuery: React.FC<ProtocolQueryProps> = (props: ProtocolQuery
           </div>
           <div className={styles.form_item}>
               <label className={styles.form_item_label}>{PROTOCOL_QUERY_EN.FIELDS_LABEL.ITERATIONS_NUMBER}</label>
-              <input
-                className={styles.input_form_item}
-                required
-                name='iterationNum'
-                type='number'
-                min='1'
-                max='100000'
-                value={iterationsCount}
+              <AttSelect
+                className={styles.select_form_item}
+                options={iterationsOptions}
+                placeholder=''
+                value={iterationsCount as AttSelectOption}
                 onChange={onIterationsNumChanged}
+                required
               />
           </div>
           <div className={styles.submitButtonWrapper}>
