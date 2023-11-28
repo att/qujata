@@ -7,3 +7,8 @@ def load_config(app):
     app.request_timeout = os.environ.get('REQUEST_TIMEOUT', 900)
     app.min_iterations = int(os.environ.get('MIN_ITERATIONS', 500))
     app.max_iterations = int(os.environ.get('MAX_ITERATIONS', 100000))
+    app.dbHost = os.environ.get('DB_HOST', "localhost")
+    app.dbPort = os.environ.get('DB_PORT', "3306")
+    app.dbUser = os.environ.get('DB_USER', "root")
+    app.dbPass = os.environ.get('DB_PASS', "qujata")
+    app.dbName = os.environ.get('DB_NAME', "qujata")

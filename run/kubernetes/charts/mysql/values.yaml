@@ -44,11 +44,6 @@ service:
   port: 3306
   targetPort: 3306
 
-configMap:
-  enabled: true
-  existingConfigMap: qujata-mysql
-
-
 ingress:
   enabled: false
   className: ""

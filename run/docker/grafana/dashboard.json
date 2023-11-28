@@ -15,7 +15,7 @@
       }
     ]
   },
-  "description": "A simple overview of the most important Docker host and container metrics. (cAdvisor/Node Exporter/Prometheus) updated from ID 893 by Thibaut Mottet",
+  "description": "A simple overview of the most important Docker host and container metrics. (cAdvisor/Prometheus) updated from ID 893 by Thibaut Mottet",
   "editable": true,
   "fiscalYearStartMonth": 0,
   "gnetId": 13496,

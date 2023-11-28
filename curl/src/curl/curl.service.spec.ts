@@ -66,7 +66,7 @@ describe('CurlService', () => {
       await expect(curlService.run(curlRequest)).rejects.toThrow(HttpException);
       await expect(curlService.run(curlRequest)).rejects.toMatchObject({
         status: HttpStatus.INTERNAL_SERVER_ERROR,
-        message: "error occured when trying to run test with algorithm: kyber512"
+        message: "error occurred when trying to run test with algorithm: kyber512"
       });
       
     });

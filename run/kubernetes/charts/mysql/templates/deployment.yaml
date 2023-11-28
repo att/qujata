@@ -44,18 +44,6 @@ spec:
             {{- end }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
-          volumeMounts:
-            - name: env-info
-              mountPath: /configs/env-info.properties
-              subPath: env-info.properties
-              readOnly: true
-      volumes:
-        - name: env-info
-          configMap:
-            name: {{ .Values.configMap.existingConfigMap }}
-            items:
-              - key: env-info.properties
-                path: env-info.properties
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
