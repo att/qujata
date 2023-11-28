@@ -84,7 +84,7 @@ def __start_analyze(data):
     first_run = True
     for algorithm in data['algorithms']:
         if not first_run:
-            time.sleep(30)
+            time.sleep(15)
         else:
             first_run = False
         logging.debug('Running test for algorithm: ', algorithm)
