@@ -16,7 +16,7 @@ services:
       - "5000:5000"
 
   nginx:
-    image: qujata/nginx:1.1.0
+    image: qujata/nginx:1.0.0
     container_name: qujata-nginx
     ports:
       - 4433:4433
@@ -52,7 +52,7 @@ services:
       - PQC_PORTAL__DASHBOARD_LINK_HOST=http://localhost:3000
 
   cadvisor:
-    image: qujata/cadvisor:1.1.0
+    image: qujata/cadvisor:1.0.0
     container_name: qujata-cadvisor
     restart: unless-stopped
     privileged: true
