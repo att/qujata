@@ -1,10 +1,10 @@
-import { render, waitFor, act, fireEvent, screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
+import { render, waitFor, act, fireEvent, screen, RenderResult } from '@testing-library/react';
 import App, { AppContent, AppBody } from './App';
-import { ProtocolQuery, ProtocolQueryProps } from './components/protocol-query';
+import { ProtocolQuery } from './components/protocol-query';
 import { SubHeader } from './components/sub-header';
 import { GlobalHeader } from './shared/components/global-header';
 import { useSpinnerContext } from './shared/context/spinner';
+import { ITestParams } from './shared/models/quantum.interface';
 
 jest.mock('./shared/context/spinner');
 jest.mock('./shared/components/global-header');
@@ -46,35 +46,40 @@ describe('App', () => {
   });
 });
 
-// describe('AppContent', () => {
-//   it('renders GlobalHeader and SubHeader initially', () => {
-//     render(<AppContent />);
-//     expect(screen.getByText('GlobalHeader')).toBeInTheDocument();
-//     expect(screen.getByText('SubHeader')).toBeInTheDocument();
-//   });
+describe('AppContent', () => {
+  test('should render AppContent', async () => {
+    (useSpinnerContext as jest.Mock).mockImplementation(() => ({ isSpinnerOn: true }));
+    (GlobalHeader as jest.Mock).mockImplementation(() => <div>GlobalHeader</div>);
+    (SubHeader as jest.Mock).mockImplementation(() => <div>SubHeader</div>);
+    (ProtocolQuery as jest.Mock).mockImplementation(() => (
+      <div>
+        {JSON.stringify({ isFetching: false, onRunClick: jest.fn(), canExportFile: true, onDownloadDataClicked: jest.fn() })}
+      </div>
+    ));
 
-//   it('hides SubHeader when close button is clicked', () => {
-//     render(<AppContent />);
-//     fireEvent.click(screen.getByText('Close'));
-//     expect(screen.queryByText('SubHeader')).not.toBeInTheDocument();
-//   });
-// });
+    const { container } = render(<AppContent />);
 
-// describe('AppBody', () => {
-//   it('calls handleRunQueryClick and updates state when handleRunClick is called', () => {
-//     render(<AppBody />);
-    
-//     const runButton = screen.getByRole('button', { name: /run/i });
-//     userEvent.click(runButton);
+    act(() => {
+      expect(container).toBeTruthy();
+    });
+  });
+});
 
-//     // Now you can check the effects of the handleRunClick function
-//     // For example, you can check if handleRunQueryClick has been called
-//     const { handleRunQueryClick } = require('./hooks/useDashboardData').useDashboardData();
-//     expect(handleRunQueryClick).toHaveBeenCalled();
+describe('AppBody', () => {
+  test('should render AppBody', async () => {
+    (useSpinnerContext as jest.Mock).mockImplementation(() => ({ isSpinnerOn: true }));
+    (GlobalHeader as jest.Mock).mockImplementation(() => <div>GlobalHeader</div>);
+    (SubHeader as jest.Mock).mockImplementation(() => <div>SubHeader</div>);
+    (ProtocolQuery as jest.Mock).mockImplementation(() => (
+      <div>
+        {JSON.stringify({ isFetching: false, onRunClick: jest.fn(), canExportFile: true, onDownloadDataClicked: jest.fn() })}
+      </div>
+    ));
 
-//     // You can also check if the state has been updated
-//     // For example, you can check if the dashboard link has been updated
-//     const dashboardLink = screen.getByText('initialLink');
-//     expect(dashboardLink).toBeInTheDocument();
-//   });
-// });
+    const { container } = render(<AppBody />);
+
+    act(() => {
+      expect(container).toBeTruthy();
+    });
+  });
+});

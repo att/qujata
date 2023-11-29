@@ -103,21 +103,21 @@ export const AppBody: React.FC = () => {
   );
 };
 
-function renderSpinner(): ReactNode {
-  return (
-    <div className={styles.app_spinner_overlay}>
-      <div className={styles.app_spinner}>
-        <Spinner size={SpinnerSize.MEDIUM} />
-      </div>
-    </div>
-  );
-}
+// function renderSpinner(): ReactNode {
+//   return (
+//     <div className={styles.app_spinner_overlay}>
+//       <div className={styles.app_spinner}>
+//         <Spinner size={SpinnerSize.MEDIUM} />
+//       </div>
+//     </div>
+//   );
+// }
 
-function renderInitialState(): ReactNode {
-  return (
-    <div className={styles.init_state_wrapper}>
-      <img src={MyImage} />
-      <div>{SHARED_EN.INIT_STATE_DESCRIPTION}</div>
-    </div>
-  );
-}
+// function renderInitialState(): ReactNode {
+//   return (
+//     <div className={styles.init_state_wrapper}>
+//       <img src={MyImage} />
+//       <div>{SHARED_EN.INIT_STATE_DESCRIPTION}</div>
+//     </div>
+//   );
+// }
