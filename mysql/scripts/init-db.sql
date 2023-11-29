@@ -5,7 +5,7 @@ CREATE SCHEMA IF NOT EXISTS qujata;
 USE qujata;
 
 -- Create the env_info table
-CREATE TABLE env_info (
+CREATE TABLE IF NOT EXISTS env_info (
                           id INT AUTO_INCREMENT PRIMARY KEY,
                           resource_name VARCHAR(255),
                           operating_system VARCHAR(255),
@@ -17,29 +17,35 @@ CREATE TABLE env_info (
 );
 
 -- Create the test_suites table
-CREATE TABLE test_suites (
+CREATE TABLE IF NOT EXISTS test_suites (
                              id INT AUTO_INCREMENT PRIMARY KEY,
-                             description VARCHAR(255),
+                             name VARCHAR(255),
                              protocol VARCHAR(50),
                              env_info_id INT,
                              code_release VARCHAR(255),
                              created_by VARCHAR(255),
                              created_date TIMESTAMP,
                              updated_by VARCHAR(255),
-                             updated_date TIMESTAMP
+                             updated_date TIMESTAMP,
+                             FOREIGN KEY (env_info_id) REFERENCES env_info(id)
 );
 
 -- Create the test_runs table
-CREATE TABLE test_runs (
+CREATE TABLE IF NOT EXISTS test_runs (
                            id INT AUTO_INCREMENT PRIMARY KEY,
                            test_suite_id INT,
                            start_time TIMESTAMP,
                            end_time TIMESTAMP,
                            algorithm VARCHAR(255),
                            iterations INT,
-                           message_size INT
+                           message_size INT,
+                           FOREIGN KEY (test_suite_id) REFERENCES test_suites(id)
 );
 
--- Add foreign key constraints
-ALTER TABLE test_suites ADD FOREIGN KEY (env_info_id) REFERENCES env_info(id);
-ALTER TABLE test_runs ADD FOREIGN KEY (test_suite_id) REFERENCES test_suites(id);
+CREATE TABLE IF NOT EXISTS test_run_results (
+                                  test_run_id INT,
+                                  metric_name ENUM('Average CPU', 'Average Memory', 'Error rate', 'Bytes Throughput Per Second', 'Messages Throughput Per Second', 'Average TLS Handshake Time'),
+                                  value BIGINT,
+                                  PRIMARY KEY (test_run_id, metric_name),
+                                  FOREIGN KEY (test_run_id) REFERENCES test_runs(id)
+);
