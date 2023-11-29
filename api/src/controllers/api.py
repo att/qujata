@@ -8,7 +8,8 @@ import logging
 from datetime import datetime, timedelta
 from flask import Blueprint, Flask, jsonify, request, current_app
 from flask_cors import cross_origin
-from src.algorithms import QuantumSafeAlgorithms, ClassicAlgorithms, HybridAlgorithms
+from src.enums.algorithms import QuantumSafeAlgorithms, ClassicAlgorithms, HybridAlgorithms
+from src.models.test_suite import TestSuite
 
 api = Blueprint('qujata-api', __name__)
 process_is_running = False
@@ -27,9 +28,13 @@ def get_algorithms():
         "hybrid": [algorithm.value for algorithm in HybridAlgorithms if algorithm.value in current_app.allowedAlgorithms],
     }
 
+@api.route('/iterations', methods=['GET'])
+@cross_origin(origin=['*'], supports_credentials=True)
+def get_iterations_list():
+    return { "iterations": current_app.iterations_options }
 
 @api.route('/analyze', methods=['POST'])
-@cross_origin(origins=['*'],supports_credentials=True)
+@cross_origin(origins=['*'], supports_credentials=True)
 def analyze():
     global process_is_running
     data = request.get_json()
@@ -62,15 +67,15 @@ def analyze():
         return jsonify({'error': 'An error occurred while processing the request', 'message':''}), HTTP_STATUS_INTERNAL_SERVER_ERROR
 
 def __validate(data):
-    if not data or 'algorithms' not in data:
-        return jsonify({'error': 'Invalid data provided', 'message': 'missing algorithms'}), HTTP_STATUS_BAD_REQUEST
-    if data['iterationsCount'] < current_app.min_iterations or data['iterationsCount'] > current_app.max_iterations:
-        return jsonify({'error': 'Invalid data provided', 'message': 'iterationsCount must be greater then ' + str(current_app.min_iterations) + ' and less then ' + str(current_app.max_iterations)}), HTTP_STATUS_BAD_REQUEST
+    if not data or 'algorithms' not in data or 'iterationsCount' not in data:
+        return jsonify({'error': 'Invalid data provided', 'message': 'Missing properties'}), HTTP_STATUS_BAD_REQUEST
+    if data['iterationsCount'] <= 0:
+        return jsonify({'error': 'Invalid data provided', 'message': 'The number of iterations should be greater than 0'}), HTTP_STATUS_BAD_REQUEST
     if process_is_running:
         return jsonify({'error': 'Current test is still running', 'message':'The previous test is still running. Please try again in few minutes'}), HTTP_STATUS_LOCKED
     for algorithm in data['algorithms']:
         if algorithm not in current_app.allowedAlgorithms:
-            return jsonify({'error': 'Invalid data provided', 'message': 'algorithm: ' + algorithm + ' is not supported'}), HTTP_STATUS_BAD_REQUEST
+            return jsonify({'error': 'Invalid data provided', 'message': 'Algorithm "' + algorithm + '" is not supported'}), HTTP_STATUS_BAD_REQUEST
 
 
 def __start_analyze(data):
@@ -79,7 +84,7 @@ def __start_analyze(data):
     first_run = True
     for algorithm in data['algorithms']:
         if not first_run:
-            time.sleep(30)
+            time.sleep(15)
         else:
             first_run = False
         logging.debug('Running test for algorithm: ', algorithm)
@@ -87,7 +92,7 @@ def __start_analyze(data):
             'algorithm': algorithm,
             'iterationsCount': iterations_count
         }
-        response = requests.post(current_app.qujata_curl_target + "/curl", headers=headers, json=payload, timeout=current_app.request_timeout)
+        response = requests.post(current_app.qujata_curl_target + "/curl", headers=headers, json=payload, timeout=int(current_app.request_timeout))
         error = __validate_response(response.status_code, algorithm)
         if error != None:
             return error
@@ -96,3 +101,4 @@ def __start_analyze(data):
 def __validate_response(response_code, algorithm):
     if(response_code < 200 or response_code > 299):
         return jsonify({'error': 'Analyze test failed to complete', 'message': 'Error occurred when running algorithm' + algorithm}), response_code
+
