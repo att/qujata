@@ -9,6 +9,7 @@ from datetime import datetime, timedelta
 from flask import Blueprint, Flask, jsonify, request, current_app
 from flask_cors import cross_origin
 from src.enums.algorithms import QuantumSafeAlgorithms, ClassicAlgorithms, HybridAlgorithms
+from src.models.test_suite import TestSuite
 
 api = Blueprint('qujata-api', __name__)
 process_is_running = False
@@ -38,7 +39,6 @@ def analyze():
     global process_is_running
     data = request.get_json()
     try:
-        __export_platform_data()
         error = __validate(data)
         if error != None:
             return error
@@ -50,12 +50,12 @@ def analyze():
         if error != None:
             process_is_running = False
             return error
-        # end time is now + 90 sec, to show the graph after the test for sure finished running 
+        # end time is now + 90 sec, to show the graph after the test for sure finished running
         end_time = int(datetime.timestamp(datetime.now() + timedelta(seconds=90)) * 1000)
         process_is_running = False
 
         run_id = str(uuid.uuid4())
-        
+
         return jsonify({
             'run_id': run_id,
             'from': start_time,
@@ -64,12 +64,7 @@ def analyze():
     except Exception as e:
         process_is_running = False
         logging.error("Failed to run analyze request with error: " + str(e))
-        return jsonify({'error': 'An error occured while processing the request', 'message':''}), HTTP_STATUS_INTERNAL_SERVER_ERROR
-
-
-def __export_platform_data():
-    requests.post(current_app.qujata_platform_exporter_target + "/export-platform-info")
-
+        return jsonify({'error': 'An error occurred while processing the request', 'message':''}), HTTP_STATUS_INTERNAL_SERVER_ERROR
 
 def __validate(data):
     if not data or 'algorithms' not in data or 'iterationsCount' not in data:
@@ -101,8 +96,9 @@ def __start_analyze(data):
         error = __validate_response(response.status_code, algorithm)
         if error != None:
             return error
-        
+
 
 def __validate_response(response_code, algorithm):
     if(response_code < 200 or response_code > 299):
-        return jsonify({'error': 'Analyze test failed to complete', 'message': 'Error occured when running algorithm ' + algorithm}), response_code
+        return jsonify({'error': 'Analyze test failed to complete', 'message': 'Error occurred when running algorithm' + algorithm}), response_code
+

@@ -148,7 +148,6 @@ In order to install and run the various components in development mode, see thes
 1. [Portal](https://github.com/att/qujata/tree/main/portal/README.md)
 2. [Api](https://github.com/att/qujata/tree/main/api/README.md)
 3. [Curl](https://github.com/att/qujata/tree/main/curl/README.md)
-4. [Platform Exporter](https://github.com/att/qujata/tree/main/platform-exporter/README.md)
 
 # Project Roadmap and Architecture
 Information about our roadmap can be found [here](ROADMAP.md).

@@ -5,15 +5,14 @@ services:
     ports:
       - "9091:9091"
 
-  platform-exporter:
-    image: qujata/platform-exporter:1.0.0
-    container_name: qujata-platform-exporter
-    depends_on:
-      - pushgateway
+  mysql:
+    image: qujata/mysql:1.1.0
+    container_name: qujata-mysql
     environment:
-      - PUSHGATEWAY_URL=http://pushgateway:9091
+      MYSQL_ROOT_PASSWORD: qujata
+      MYSQL_DATABASE: qujata
     ports:
-      - "5000:5000"
+      - "3306:3306"
 
   nginx:
     image: qujata/nginx:1.0.0
@@ -38,7 +37,11 @@ services:
       - 3020:3020
     environment:
       - CURL_URL=http://qujata-curl:3010
-      - PLATFORM_EXPORTER_URL=http://qujata-platform-exporter:5000
+      - DB_HOST=qujata-mysql
+      - DB_PORT=3306
+      - DB_USER=root
+      - DB_PASS=qujata
+      - DB_NAME=qujata
       - DEFAULT_GROUPS=prime256v1:secp384r1:frodo640aes:frodo640shake:frodo976aes:frodo976shake:frodo1344aes:frodo1344shake:kyber512:p256_kyber512:kyber768:p384_kyber768:x25519_kyber768:kyber1024:bikel1:bikel3:bikel5:hqc128:hqc192:hqc256
 
   portal:
@@ -62,7 +65,7 @@ services:
       - /var/lib/docker/:/var/lib/docker:ro
       - /dev/disk/:/dev/disk:ro
       - /etc/machine-id:/etc/machine-id:ro
-      - /var/lib/dbus/machine-id:/var/lib/dbus/machine-id:ro
+      - /var/lib/mysqlus/machine-id:/var/lib/mysqlus/machine-id:ro
     ports:
       - "8080:8080"
 
