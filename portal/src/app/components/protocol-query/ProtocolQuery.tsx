@@ -58,7 +58,9 @@ export const ProtocolQuery: React.FC<ProtocolQueryProps> = (props: ProtocolQuery
       </div>
       <form className={styles.wrapper} data-testid='protocol-query-form' onSubmit={onSubmitHandler}>
           <div className={styles.form_item}>
-              <label className={styles.form_item_label}>{PROTOCOL_QUERY_EN.FIELDS_LABEL.EXPERIMENT_NAME}</label>
+              <label className={styles.form_item_label}>
+                {PROTOCOL_QUERY_EN.FIELDS_LABEL.EXPERIMENT_NAME} <span className={styles.required}>*</span>
+              </label>
               <input
                 type='text'
                 className={styles.input_form_item}
@@ -68,7 +70,7 @@ export const ProtocolQuery: React.FC<ProtocolQueryProps> = (props: ProtocolQuery
           </div>
           <div className={styles.form_item}>
               <label className={styles.form_item_label}>
-                {PROTOCOL_QUERY_EN.FIELDS_LABEL.ALGORITHM}
+                {PROTOCOL_QUERY_EN.FIELDS_LABEL.ALGORITHM} <span className={styles.required}>*</span>
               </label>
               <AttSelect
                 className={styles.select_form_item}
@@ -81,7 +83,9 @@ export const ProtocolQuery: React.FC<ProtocolQueryProps> = (props: ProtocolQuery
               />
           </div>
           <div className={styles.form_item}>
-              <label className={styles.form_item_label}>{PROTOCOL_QUERY_EN.FIELDS_LABEL.ITERATIONS_NUMBER}</label>
+              <label className={styles.form_item_label}>
+                {PROTOCOL_QUERY_EN.FIELDS_LABEL.ITERATIONS_NUMBER} <span className={styles.required}>*</span>
+              </label>
               <AttSelect
                 className={styles.select_form_item}
                 options={iterationsOptions}
@@ -94,7 +98,7 @@ export const ProtocolQuery: React.FC<ProtocolQueryProps> = (props: ProtocolQuery
           </div>
           {/* <div className={styles.form_item}>
               <label className={styles.form_item_label}>
-                {PROTOCOL_QUERY_EN.FIELDS_LABEL.MESSAGE_SIZE}
+                {PROTOCOL_QUERY_EN.FIELDS_LABEL.MESSAGE_SIZE} <span className={styles.required}>*</span>
               </label>
               <AttSelect
                 className={styles.select_form_item}
