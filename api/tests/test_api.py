@@ -24,6 +24,13 @@ class TestAPI(unittest.TestCase):
         self.assertIn('classic', data)
         self.assertIn('hybrid', data)
 
+   
+    def test_get_iterations_list(self):
+        response = self.client.get('/api/iterations')
+        self.assertEqual(response.status_code, 200)
+        data = json.loads(response.data)
+        self.assertIn('iterations', data)
+
     def test_analyze(self):
         input_data = {
             "algorithms":["kyber512"],
@@ -60,6 +67,15 @@ class TestAPI(unittest.TestCase):
             self.assertEqual(response_json["error"], "An error occurred while processing the request")
             self.assertEqual(response_json["message"], "")
 
+# =======
+#         response = self.client.post('/api/analyze',
+#                                 data=json.dumps(input_data),
+#                                 content_type='application/json')
+#         self.assertEqual(response.status_code, 500)
+#         response_json = json.loads(response.data)
+#         self.assertEqual(response_json["error"], "An error occured while processing the request")
+#         self.assertEqual(response_json["message"], "")
+# >>>>>>> a377adf9d73244e6d3b54411b7c068760add0a41
 
     def test_analyze_with_invalid_iterations_count(self):
         input_data = {
@@ -78,6 +94,7 @@ class TestAPI(unittest.TestCase):
             self.assertEqual(response_json["error"], "Invalid data provided")
             self.assertEqual(response_json["message"], "The number of iterations should be greater than 0")
 
+
     def test_analyze_with_invalid_algorithm(self):
         input_data = {
             "algorithms":["invalid_algorithm"],
@@ -95,7 +112,8 @@ class TestAPI(unittest.TestCase):
             self.assertEqual(response_json["error"], "Invalid data provided")
             self.assertEqual(response_json["message"], "Algorithm \"invalid_algorithm\" is not supported")
 
-    def test_analyze_with_invalid_body(self):
+   
+    def test_analyze_with_invalid_body(self):   
         input_data = {
             "iterationsCount": 1000
         }

@@ -15,7 +15,7 @@ services:
       - "3306:3306"
 
   nginx:
-    image: qujata/nginx:1.0.0
+    image: qujata/nginx:1.1.0
     container_name: qujata-nginx
     ports:
       - 4433:4433
@@ -23,7 +23,7 @@ services:
       - DEFAULT_GROUPS=prime256v1:secp384r1:frodo640aes:frodo640shake:frodo976aes:frodo976shake:frodo1344aes:frodo1344shake:kyber512:p256_kyber512:kyber768:p384_kyber768:x25519_kyber768:kyber1024:bikel1:bikel3:bikel5:hqc128:hqc192:hqc256
   
   curl:
-    image: qujata/curl:1.0.0
+    image: qujata/curl:1.1.0
     container_name: qujata-curl
     ports:
       - 3010:3010
@@ -31,21 +31,17 @@ services:
       - DEFAULT_GROUPS=prime256v1:secp384r1:frodo640aes:frodo640shake:frodo976aes:frodo976shake:frodo1344aes:frodo1344shake:kyber512:p256_kyber512:kyber768:p384_kyber768:x25519_kyber768:kyber1024:bikel1:bikel3:bikel5:hqc128:hqc192:hqc256
 
   api:
-    image: qujata/api:1.0.0
+    image: qujata/api:1.1.0
     container_name: qujata-api
     ports:
       - 3020:3020
     environment:
       - CURL_URL=http://qujata-curl:3010
-      - DB_HOST=qujata-mysql
-      - DB_PORT=3306
-      - DB_USER=root
-      - DB_PASS=qujata
-      - DB_NAME=qujata
+      - ITERATIONS_OPTIONS=100:500:1000:2000:5000:10000:50000
       - DEFAULT_GROUPS=prime256v1:secp384r1:frodo640aes:frodo640shake:frodo976aes:frodo976shake:frodo1344aes:frodo1344shake:kyber512:p256_kyber512:kyber768:p384_kyber768:x25519_kyber768:kyber1024:bikel1:bikel3:bikel5:hqc128:hqc192:hqc256
 
   portal:
-    image: qujata/portal:1.0.0
+    image: qujata/portal:1.1.0
     container_name: qujata-portal
     ports:
       - 2000:80
@@ -54,7 +50,7 @@ services:
       - PQC_PORTAL__DASHBOARD_LINK_HOST=http://localhost:3000
 
   cadvisor:
-    image: qujata/cadvisor:1.0.0
+    image: qujata/cadvisor:1.1.0
     container_name: qujata-cadvisor
     restart: unless-stopped
     privileged: true

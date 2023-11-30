@@ -30,10 +30,12 @@ def get_algorithms():
         "hybrid": [algorithm.value for algorithm in HybridAlgorithms if algorithm.value in current_app.allowedAlgorithms],
     }
 
+
 @api.route('/iterations', methods=['GET'])
 @cross_origin(origin=['*'], supports_credentials=True)
 def get_iterations_list():
     return { "iterations": current_app.iterations_options }
+
 
 @api.route('/analyze', methods=['POST'])
 @cross_origin(origins=['*'], supports_credentials=True)

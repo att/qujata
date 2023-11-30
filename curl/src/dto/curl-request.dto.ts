@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsNumber, Max, Min } from 'class-validator';
+import { IsIn, IsNotEmpty, IsNumber, Min } from 'class-validator';
 
 export class CurlRequest {
 
@@ -7,7 +7,6 @@ export class CurlRequest {
 
   @IsNotEmpty()
   @IsNumber()
-  @Min(500)
-  @Max(100000)
+  @Min(1)
   iterationsCount: number;
 }

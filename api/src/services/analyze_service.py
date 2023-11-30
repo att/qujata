@@ -41,7 +41,7 @@ def __start_analyze(data):
             'algorithm': algorithm,
             'iterationsCount': iterations_count
         }
-        response = requests.post(current_app.qujata_curl_target + "/curl", headers=headers, json=payload, timeout=int(current_app.request_timeout))
+        response = requests.post(current_app.curl_url + "/curl", headers=headers, json=payload, timeout=int(current_app.request_timeout))
         __validate_response(response.status_code, algorithm)
         
 
@@ -49,4 +49,3 @@ def __start_analyze(data):
 def __validate_response(response_code, algorithm):
     if(response_code < 200 or response_code > 299):
         raise ApiException('Error occurred while running algorithm ' + algorithm, 'Analyze test failed to complete', response_code)
-
