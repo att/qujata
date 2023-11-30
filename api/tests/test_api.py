@@ -34,7 +34,8 @@ class TestAPI(unittest.TestCase):
     def test_analyze(self):
         input_data = {
             "algorithms":["kyber512"],
-            "iterationsCount": 1000
+            "iterationsCount": [1000],
+            "experimentName": "name"
         }
         # Mock the requests.post call
         with patch('requests.post') as mock_post:
@@ -53,7 +54,9 @@ class TestAPI(unittest.TestCase):
     def test_analyze_return_general_error(self):
         input_data = {
             "algorithms":["kyber512"],
-            "iterationsCount": 1000
+            "iterationsCount": [1000],
+            "experimentName": "name"
+
         }
 
         # Mock the requests.post call to raise an exception
@@ -67,20 +70,11 @@ class TestAPI(unittest.TestCase):
             self.assertEqual(response_json["error"], "An error occurred while processing the request")
             self.assertEqual(response_json["message"], "")
 
-# =======
-#         response = self.client.post('/api/analyze',
-#                                 data=json.dumps(input_data),
-#                                 content_type='application/json')
-#         self.assertEqual(response.status_code, 500)
-#         response_json = json.loads(response.data)
-#         self.assertEqual(response_json["error"], "An error occured while processing the request")
-#         self.assertEqual(response_json["message"], "")
-# >>>>>>> a377adf9d73244e6d3b54411b7c068760add0a41
-
     def test_analyze_with_invalid_iterations_count(self):
         input_data = {
             "algorithms":["kyber512"],
-            "iterationsCount": -1
+            "iterationsCount": [-1],
+            "experimentName": "name"
         }
         # Mock the requests.post call
         with patch('requests.post') as mock_post:
@@ -98,7 +92,8 @@ class TestAPI(unittest.TestCase):
     def test_analyze_with_invalid_algorithm(self):
         input_data = {
             "algorithms":["invalid_algorithm"],
-            "iterationsCount": 1000
+            "iterationsCount": [1000],
+            "experimentName": "name"
         }
         # Mock the requests.post call
         with patch('requests.post') as mock_post:
@@ -115,7 +110,8 @@ class TestAPI(unittest.TestCase):
    
     def test_analyze_with_invalid_body(self):   
         input_data = {
-            "iterationsCount": 1000
+            "iterationsCount": 1000,
+            "experimentName": "name"
         }
         # Mock the requests.post call
         with patch('requests.post') as mock_post:
@@ -127,12 +123,13 @@ class TestAPI(unittest.TestCase):
             self.assertEqual(response.status_code, 400)
             response_json = json.loads(response.data)
             self.assertEqual(response_json["error"], "Invalid data provided")
-            self.assertEqual(response_json["message"], "Missing properties")
+            self.assertEqual(response_json["message"], "Missing properties, required properties: algorithms, iterationsCount, experimentName")
 
     def test_analyze_with_curl_failure(self):
         input_data = {
             "algorithms":["kyber512"],
-            "iterationsCount": 1000
+            "iterationsCount": [1000],
+            "experimentName": "name"
         }
         # Mock the requests.post call
         with patch('requests.post') as mock_post:
@@ -150,7 +147,8 @@ class TestAPI(unittest.TestCase):
         # global process_is_running
         input_data = {
             "algorithms":["kyber512"],
-            "iterationsCount": 1000
+            "iterationsCount": [1000],
+            "experimentName": "name"
         }
         src.controllers.api.process_is_running = True
         # Mock the requests.post call
@@ -169,7 +167,8 @@ class TestAPI(unittest.TestCase):
     def test_analyze_sleep_between_tests(self):
         input_data = {
             "algorithms":["kyber512","frodo640aes"],
-            "iterationsCount": 1000
+            "iterationsCount": [1000],
+            "experimentName": "name"
         }
         # Mock the requests.post call
         with patch('requests.post') as mock_post:
