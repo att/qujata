@@ -22,7 +22,7 @@ export interface ProtocolQueryProps {
 
 export const ProtocolQuery: React.FC<ProtocolQueryProps> = (props: ProtocolQueryProps) => {
   const { isFetching, canExportFile, onRunClick, onDownloadDataClicked } = props;
-  const { options } = useGetAlgorithms();
+  const { algorithmOptions } = useGetAlgorithms();
   const { iterationsOptions } = useGetIterations();
   const [algorithms, setAlgorithms] = useState<SelectOptionType>();
   const [iterationsCount, setIterationsCount] = useState<SelectOptionType>();
@@ -72,7 +72,7 @@ export const ProtocolQuery: React.FC<ProtocolQueryProps> = (props: ProtocolQuery
               </label>
               <AttSelect
                 className={styles.select_form_item}
-                options={options}
+                options={algorithmOptions}
                 placeholder=''
                 value={algorithms as AttSelectOption[]}
                 onChange={onAlgorithmsChanged}
@@ -88,10 +88,11 @@ export const ProtocolQuery: React.FC<ProtocolQueryProps> = (props: ProtocolQuery
                 placeholder={PROTOCOL_QUERY_EN.FIELDS_LABEL.PLACEHOLDER}
                 value={iterationsCount as AttSelectOption}
                 onChange={onIterationsNumChanged}
+                isMulti
                 required
               />
           </div>
-          <div className={styles.form_item}>
+          {/* <div className={styles.form_item}>
               <label className={styles.form_item_label}>
                 {PROTOCOL_QUERY_EN.FIELDS_LABEL.MESSAGE_SIZE}
               </label>
@@ -104,7 +105,7 @@ export const ProtocolQuery: React.FC<ProtocolQueryProps> = (props: ProtocolQuery
                 isMulti
                 required
               />
-          </div>
+          </div> */}
           <div className={styles.submitButtonWrapper}>
               <Button
                 disabled={isFetching}

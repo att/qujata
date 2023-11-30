@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { APIS } from "../../../apis";
 
 export interface IUseGetAlgorithms {
-    options: AttSelectOption[];
+    algorithmOptions: AttSelectOption[];
 }
 
 interface IAlgorithm {
@@ -13,7 +13,7 @@ interface IAlgorithm {
     quantumSafe: string[];
 }
 export function useGetAlgorithms(): IUseGetAlgorithms {
-    const [options, setOptions] = useState<AttSelectOption[]>([]);
+    const [algorithmOptions, setOptions] = useState<AttSelectOption[]>([]);
     const { get, data, cancelRequest }: IHttp<IAlgorithm> = useFetch({ url: APIS.algorithms });
 
     useEffect(() => {
@@ -40,5 +40,5 @@ export function useGetAlgorithms(): IUseGetAlgorithms {
         }
     }, [data]);
 
-    return { options };
+    return { algorithmOptions };
 }

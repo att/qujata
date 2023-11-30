@@ -22,6 +22,6 @@ describe('useGetAlgorithms', () => {
 
     const { result } = renderHook(() => useGetAlgorithms());
     const mockDataNumOfAlgos = mockData.classic.length + mockData.hybrid.length + mockData.quantumSafe.length;
-    expect(result.current.options.length).toEqual(mockDataNumOfAlgos + 3);
+    expect(result.current.algorithmOptions.length).toEqual(mockDataNumOfAlgos + 3);
   });
 });
