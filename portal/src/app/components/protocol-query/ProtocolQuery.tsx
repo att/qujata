@@ -27,8 +27,6 @@ export const ProtocolQuery: React.FC<ProtocolQueryProps> = (props: ProtocolQuery
   const [algorithms, setAlgorithms] = useState<SelectOptionType>();
   const [iterationsCount, setIterationsCount] = useState<SelectOptionType>();
 
-  const algorithmsCount: number = (algorithms as AttSelectOption[])?.length;
-
   const onSubmitHandler = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     onRunClick({ algorithms: algorithms as SelectOptionType, iterationsCount: iterationsCount as SelectOptionType });
@@ -44,12 +42,33 @@ export const ProtocolQuery: React.FC<ProtocolQueryProps> = (props: ProtocolQuery
     setIterationsCount(selectedIterationNum);
   }, []);
 
+  const onMessageSizeChanged: OnSelectChanged = useCallback((options: SelectOptionType): void => {
+    const selectedAlgorithms: Options<AttSelectOption> = options as Options<AttSelectOption>;
+    // setAlgorithms(selectedAlgorithms);
+  }, []);
+
   return (
     <div className={styles.protocol_query_wrapper}>
+      <div>
+        <h2 className={styles.experiment_title}>{PROTOCOL_QUERY_EN.TITLE}</h2>
+        <div className={styles.note}>
+          <p className={styles.note_title}>{PROTOCOL_QUERY_EN.NOTE.TITLE}</p>
+          <p>{PROTOCOL_QUERY_EN.NOTE.TEXT}</p>
+        </div>
+      </div>
       <form className={styles.wrapper} data-testid='protocol-query-form' onSubmit={onSubmitHandler}>
           <div className={styles.form_item}>
+              <label className={styles.form_item_label}>{PROTOCOL_QUERY_EN.FIELDS_LABEL.EXPERIMENT_NAME}</label>
+              <input
+                type='text'
+                className={styles.input_form_item}
+                placeholder=''
+                required
+              />
+          </div>
+          <div className={styles.form_item}>
               <label className={styles.form_item_label}>
-                {PROTOCOL_QUERY_EN.FIELDS_LABEL.ALGORITHM} {algorithmsCount > 3 && <span className={styles.error}> {PROTOCOL_QUERY_EN.ALGORITHM_LABEL_DESCRIPTION}</span>}
+                {PROTOCOL_QUERY_EN.FIELDS_LABEL.ALGORITHM}
               </label>
               <AttSelect
                 className={styles.select_form_item}
@@ -66,15 +85,29 @@ export const ProtocolQuery: React.FC<ProtocolQueryProps> = (props: ProtocolQuery
               <AttSelect
                 className={styles.select_form_item}
                 options={iterationsOptions}
-                placeholder=''
+                placeholder={PROTOCOL_QUERY_EN.FIELDS_LABEL.PLACEHOLDER}
                 value={iterationsCount as AttSelectOption}
                 onChange={onIterationsNumChanged}
                 required
               />
           </div>
+          <div className={styles.form_item}>
+              <label className={styles.form_item_label}>
+                {PROTOCOL_QUERY_EN.FIELDS_LABEL.MESSAGE_SIZE}
+              </label>
+              <AttSelect
+                className={styles.select_form_item}
+                options={[{label: '100', value: '100'}, {label: '200', value: '200'}]}
+                placeholder={PROTOCOL_QUERY_EN.FIELDS_LABEL.PLACEHOLDER}
+                value={[] as AttSelectOption[]}
+                onChange={onMessageSizeChanged}
+                isMulti
+                required
+              />
+          </div>
           <div className={styles.submitButtonWrapper}>
               <Button
-                disabled={isFetching || algorithmsCount === 0 || algorithmsCount > 3}
+                disabled={isFetching}
                 actionType={ButtonActionType.SUBMIT}
                 size={ButtonSize.LARGE}
                 styleType={ButtonStyleType.PRIMARY}
