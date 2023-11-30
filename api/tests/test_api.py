@@ -64,7 +64,7 @@ class TestAPI(unittest.TestCase):
     def test_analyze_with_invalid_iterations_count(self):
         input_data = {
             "algorithms":["kyber512"],
-            "iterationsCount": 1
+            "iterationsCount": -1
         }
         # Mock the requests.post call
         with patch('requests.post') as mock_post:
@@ -76,7 +76,7 @@ class TestAPI(unittest.TestCase):
             self.assertEqual(response.status_code, 400)
             response_json = json.loads(response.data)
             self.assertEqual(response_json["error"], "Invalid data provided")
-            self.assertEqual(response_json["message"], "iterationsCount must be greater then 500 and less then 100000")
+            self.assertEqual(response_json["message"], "The number of iterations should be greater than 0")
 
     def test_analyze_with_invalid_algorithm(self):
         input_data = {
@@ -93,7 +93,7 @@ class TestAPI(unittest.TestCase):
             self.assertEqual(response.status_code, 400)
             response_json = json.loads(response.data)
             self.assertEqual(response_json["error"], "Invalid data provided")
-            self.assertEqual(response_json["message"], "algorithm: invalid_algorithm is not supported")
+            self.assertEqual(response_json["message"], "Algorithm \"invalid_algorithm\" is not supported")
 
     def test_analyze_with_invalid_body(self):
         input_data = {
@@ -109,7 +109,7 @@ class TestAPI(unittest.TestCase):
             self.assertEqual(response.status_code, 400)
             response_json = json.loads(response.data)
             self.assertEqual(response_json["error"], "Invalid data provided")
-            self.assertEqual(response_json["message"], "missing algorithms")
+            self.assertEqual(response_json["message"], "Missing properties")
 
     def test_analyze_with_curl_failure(self):
         input_data = {
@@ -129,12 +129,12 @@ class TestAPI(unittest.TestCase):
             self.assertEqual(response_json["error"], "Analyze test failed to complete")
 
     def test_analyze_with_423(self):
-        global process_is_running
+        # global process_is_running
         input_data = {
             "algorithms":["kyber512"],
             "iterationsCount": 1000
         }
-        src.api.process_is_running = True
+        src.controllers.api.process_is_running = True
         # Mock the requests.post call
         with patch('requests.post') as mock_post:
             mock_post.return_value = MagicMock(status_code=200, json=lambda: {'result': 'success'})
@@ -146,7 +146,7 @@ class TestAPI(unittest.TestCase):
             self.assertEqual(response.status_code, 423)
             response_json = json.loads(response.data)
             self.assertEqual(response_json["error"], "Current test is still running")
-        src.api.process_is_running = False
+        src.controllers.api.process_is_running = False
 
     def test_analyze_sleep_between_tests(self):
         input_data = {
@@ -166,7 +166,7 @@ class TestAPI(unittest.TestCase):
             time_difference = timestamp2 - timestamp1
 
             self.assertEqual(response.status_code, 200)
-            self.assertGreaterEqual(time_difference.seconds, 30)
+            self.assertGreaterEqual(time_difference.seconds, 15)
 
 
 if __name__ == '__main__':

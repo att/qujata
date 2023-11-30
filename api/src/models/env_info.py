@@ -1,6 +1,7 @@
 from sqlalchemy import create_engine, Column, Integer, String
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
+# from src.models.test_suite import TestSuite
 from . import Base
 
 class EnvInfo(Base):
@@ -13,4 +14,4 @@ class EnvInfo(Base):
     cpu_cores = Column(Integer)
     clock_speed = Column(String(255))
     node_size = Column(String(255))
-    test_suites = relationship("TestSuite", back_populates="env_info")
+    test_suites = relationship('TestSuite', back_populates='env_info')
