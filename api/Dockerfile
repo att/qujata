@@ -10,6 +10,6 @@ COPY .env .
 
 RUN pip3 install -r requirements.txt
 
-CMD ["python3", "-m", "src.main"]
+CMD ["python3", "-m", "main"]
 
 EXPOSE 3020

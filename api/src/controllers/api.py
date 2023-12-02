@@ -9,7 +9,6 @@ from datetime import datetime, timedelta
 from flask import Blueprint, Flask, jsonify, request, current_app
 from flask_cors import cross_origin
 from src.enums.algorithms import QuantumSafeAlgorithms, ClassicAlgorithms, HybridAlgorithms
-from src.models.test_suite import TestSuite
 
 api = Blueprint('qujata-api', __name__)
 process_is_running = False

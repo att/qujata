@@ -8,4 +8,3 @@ def load_config(app):
     app.min_iterations = int(os.environ.get('MIN_ITERATIONS', 500))
     app.max_iterations = int(os.environ.get('MAX_ITERATIONS', 100000))
     app.code_release = os.environ.get('CODE_RELEASE')
-    # app.database_uri = os.environ.get('DATABASE_URI','mysql+pymysql://root:qujata@localhost:3306/qujata')
