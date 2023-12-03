@@ -6,6 +6,7 @@ import { IData } from './models/LineChart.model';
 
 export interface LineChartProps {
     data: any;
+    title?: string;
 }
 const data = {
     labels: ['January', 'February', 'March', 'April', 'May', 'June'],
@@ -29,7 +30,7 @@ const data = {
     ],
   };
 export const LineChart: React.FC<LineChartProps> = (props: LineChartProps) => {
-    const { data } = props;
+    const { data, title } = props;
     const [datasets, setDatasets] = useState<IData[]>([]);
     console.log('datasets', datasets);
     useEffect(() => {
@@ -45,6 +46,12 @@ export const LineChart: React.FC<LineChartProps> = (props: LineChartProps) => {
 
     const options: ChartOptions<any> = {
         ...defaultOptions,
+        plugins: {
+            title: {
+              display: true,
+              text: title
+            },
+        }
     };
 
     const tempData: {labels: string[], datasets: IData[]} = {
