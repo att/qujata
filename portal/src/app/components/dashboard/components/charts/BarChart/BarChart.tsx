@@ -1,8 +1,8 @@
 import { Chart, registerables, ChartOptions, TooltipItem } from 'chart.js';
 import { Bar } from 'react-chartjs-2';
 import { useEffect, useState } from 'react';
-import { colors, defaultOptions } from './BarChart.const';
 import { IDatasets } from './models/BarChart.model';
+import { colors, defaultOptions } from './BarChart.const';
 
 export interface BarChartProps {
     labels: string[];
