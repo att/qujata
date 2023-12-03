@@ -1,0 +1,15 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`GlobalHeader renders global header  1`] = `
+<header
+  class="global_header"
+>
+  <div
+    class="header_left_block"
+  >
+    <div>
+      InternalLink
+    </div>
+  </div>
+</header>
+`;

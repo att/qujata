@@ -33,7 +33,7 @@ const App: React.FC = () => (
 
 export default App;
 
-const AppContent: React.FC = () => {
+export const AppContent: React.FC = () => {
   const [isSubHeaderOpen, setIsSubHeaderOpen] = useState<boolean>(true);
 
   const handleSubHeaderCloseClick: () => void = useCallback((): void => {
@@ -50,11 +50,10 @@ const AppContent: React.FC = () => {
 }
 const generateFromTime: number = Date.now();
 const initialLink: string = `${Environment.dashboardLinkHost}/${DashBoardPrefixLink}&from=${generateFromTime}`;
-const AppBody: React.FC = () => {
+export const AppBody: React.FC = () => {
   //const { handleRunQueryClick, data, algorithms, status } = useDashboardData();
   const { handleRunQueryClick, link, status } = useDashboardData();
   const [dashBoardLink, setDashBoardLink] = useState<string>(link);
-  console.log('link=== ', link);
   const [displayLinkButton, setDisplayLinkButton] = useState<boolean>(false);
 
   useEffect(() => {
@@ -104,21 +103,21 @@ const AppBody: React.FC = () => {
   );
 };
 
-function renderSpinner(): ReactNode {
-  return (
-    <div className={styles.app_spinner_overlay}>
-      <div className={styles.app_spinner}>
-        <Spinner size={SpinnerSize.MEDIUM} />
-      </div>
-    </div>
-  );
-}
+// function renderSpinner(): ReactNode {
+//   return (
+//     <div className={styles.app_spinner_overlay}>
+//       <div className={styles.app_spinner}>
+//         <Spinner size={SpinnerSize.MEDIUM} />
+//       </div>
+//     </div>
+//   );
+// }
 
-function renderInitialState(): ReactNode {
-  return (
-    <div className={styles.init_state_wrapper}>
-      <img src={MyImage} />
-      <div>{SHARED_EN.INIT_STATE_DESCRIPTION}</div>
-    </div>
-  );
-}
+// function renderInitialState(): ReactNode {
+//   return (
+//     <div className={styles.init_state_wrapper}>
+//       <img src={MyImage} />
+//       <div>{SHARED_EN.INIT_STATE_DESCRIPTION}</div>
+//     </div>
+//   );
+// }
