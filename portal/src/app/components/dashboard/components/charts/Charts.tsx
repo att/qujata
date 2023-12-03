@@ -6,7 +6,6 @@ import { CategoryScale, Chart, Legend, LinearScale, LineElement, PointElement, T
 import Annotation from 'chartjs-plugin-annotation';
 import { pick } from 'lodash';
 import { ChartDataMap, ITestResponseData } from '../../../../shared/models/quantum.interface';
-import { ChartLine } from './ChartLine';
 
 import styles from './Charts.module.scss';
 
@@ -25,10 +24,10 @@ export const Charts: React.FC<ChartsProps> = (props: ChartsProps) => {
 
   return (
     <div className={styles.wrapper}>
-      <ChartLine title='Server Memory (%)' data={serverMemoryData} />
+      {/* <ChartLine title='Server Memory (%)' data={serverMemoryData} />
       <ChartLine title='Server CPU (%)' data={serverCpuData} />
       <ChartLine title='Client Memory (%)' data={clientMemoryData} />
-      <ChartLine title='Client CPU (%)' data={clientCpuData} />
+      <ChartLine title='Client CPU (%)' data={clientCpuData} /> */}
       {/* <ChartLine
         title='Throughput & Goodput (kB)'
         label='Throughput'

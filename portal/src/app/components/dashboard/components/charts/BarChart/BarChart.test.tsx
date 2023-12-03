@@ -78,7 +78,6 @@ const data = [
 ];
 describe('BarChart', () => {
   test('renders BarChart component', () => {
-    (Chart as unknown as jest.Mock).mockImplementation(() => ({ register: jest.fn() }));
     const { getByTestId }: RenderResult = render(<BarChart labels={['Algorithm1', 'Algorithm1']} data={data} title={'chart'} keyOfData={'averageCPU'} tooltipKeys={tooltipKeys} tooltipLabels={tooltipLabels} />);
     const chartElement: HTMLElement = getByTestId('chart');
     expect(chartElement).toBeTruthy();
