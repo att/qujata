@@ -7,12 +7,13 @@ import { IDatasets } from './models/BarChart.model';
 export interface BarChartProps {
     labels: string[];
     data: any;
+    title: string;
     keyOfData: string;
     tooltipKeys: string[];
     tooltipLabels: string[];   
 }
 export const BarChart: React.FC<BarChartProps> = (props: BarChartProps) => {
-    const { labels, data, tooltipKeys, tooltipLabels, keyOfData } = props;
+    const { labels, data, tooltipKeys, tooltipLabels, keyOfData, title } = props;
     const [dataValues, setDataValues] = useState();
     const [datasets, setDatasets] = useState<IDatasets[]>([]);
     
@@ -39,6 +40,10 @@ export const BarChart: React.FC<BarChartProps> = (props: BarChartProps) => {
         ...defaultOptions,
         plugins: {
           ...defaultOptions.plugins,
+          title: {
+            display: true,
+            text: title,
+          },
           tooltip: {
             displayColors: false,
             callbacks: {

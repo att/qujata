@@ -15,9 +15,5 @@ export let defaultOptions: ChartOptions<any> = {
                 padding: 40,
             },
         },
-        title: {
-            display: true,
-            text: 'Memory (%)',
-        },
     }
 };
