@@ -2,7 +2,7 @@ import { ChartOptions, TooltipItem } from 'chart.js';
 import { Bar } from 'react-chartjs-2';
 import { useEffect, useState } from 'react';
 import { IDatasets } from './models/BarChart.model';
-import { colors, defaultOptions } from './BarChart.const';
+import { colors, defaultOptions } from './barChart.const';
 
 export interface BarChartProps {
     labels: string[];
@@ -47,7 +47,7 @@ export const BarChart: React.FC<BarChartProps> = (props: BarChartProps) => {
             callbacks: {
               title: function (context: TooltipItem<'bar'>[]) {
                 const index = context[0].datasetIndex;
-                return labels[index];
+                return generateTooltipTitle(labels, index);
               },
               label: function (context: TooltipItem<'bar'>) {
                 return renderTooltipLabel(context, dataValues, tooltipKeys, tooltipLabels, data);
@@ -67,12 +67,16 @@ export const BarChart: React.FC<BarChartProps> = (props: BarChartProps) => {
     );
 }
 
-function renderTooltipLabel(context: TooltipItem<'bar'>, dataValues: any, tooltipKeys: string[], tooltipLabels: string[], data: any): string {
-    const index = context.datasetIndex;
+export function renderTooltipLabel(context: { datasetIndex : number }, dataValues: any, tooltipKeys: string[], tooltipLabels: string[], data: any): string {  
+  const index = context.datasetIndex;
     const valByKey = dataValues && dataValues[index];
     const label1: string = tooltipKeys[0];
     const label2: string = tooltipKeys[1];
     const val1 = data[index][label1];
     const val2 = data[index][label2];
     return `${valByKey} (${tooltipLabels[0]}: ${val1}, ${tooltipLabels[1]}: ${val2})`;
+}
+
+export function generateTooltipTitle(labels: string[], index: number): string {
+  return labels[index];
 }
