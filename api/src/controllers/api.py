@@ -9,6 +9,9 @@ from datetime import datetime, timedelta
 from flask import Blueprint, Flask, jsonify, request, current_app
 from flask_cors import cross_origin
 from src.enums.algorithms import QuantumSafeAlgorithms, ClassicAlgorithms, HybridAlgorithms
+from src.models.test_suite import TestSuite
+import src.services.analyze_service as analyze_service
+from src.exceptions.exceptions import ApiException
 
 api = Blueprint('qujata-api', __name__)
 process_is_running = False
@@ -27,10 +30,12 @@ def get_algorithms():
         "hybrid": [algorithm.value for algorithm in HybridAlgorithms if algorithm.value in current_app.allowedAlgorithms],
     }
 
+
 @api.route('/iterations', methods=['GET'])
 @cross_origin(origin=['*'], supports_credentials=True)
 def get_iterations_list():
     return { "iterations": current_app.iterations_options }
+
 
 @api.route('/analyze', methods=['POST'])
 @cross_origin(origins=['*'], supports_credentials=True)
@@ -41,63 +46,37 @@ def analyze():
         error = __validate(data)
         if error != None:
             return error
-
         process_is_running = True
-        # start time is now - 60 sec, to show the graph before the test for sure started running
-        start_time = int(datetime.timestamp(datetime.now() - timedelta(seconds=60)) * 1000)
-        error = __start_analyze(data)
-        if error != None:
-            process_is_running = False
-            return error
-        # end time is now + 90 sec, to show the graph after the test for sure finished running
-        end_time = int(datetime.timestamp(datetime.now() + timedelta(seconds=90)) * 1000)
+        result = analyze_service.analyze(data)
         process_is_running = False
+        return result
 
-        run_id = str(uuid.uuid4())
-
-        return jsonify({
-            'run_id': run_id,
-            'from': start_time,
-            'to': end_time
-        })
+    except ApiException as e:
+        process_is_running = False
+        logging.error("ApiException: Failed to run analyze request with error: " + str(e))
+        return jsonify({'error': e.error, 'message': e.message}), e.status_code
     except Exception as e:
         process_is_running = False
-        logging.error("Failed to run analyze request with error: " + str(e))
+        logging.error("Exception: Failed to run analyze request with error: " + str(e))
         return jsonify({'error': 'An error occurred while processing the request', 'message':''}), HTTP_STATUS_INTERNAL_SERVER_ERROR
 
 def __validate(data):
-    if not data or 'algorithms' not in data or 'iterationsCount' not in data:
-        return jsonify({'error': 'Invalid data provided', 'message': 'Missing properties'}), HTTP_STATUS_BAD_REQUEST
-    if data['iterationsCount'] <= 0:
-        return jsonify({'error': 'Invalid data provided', 'message': 'The number of iterations should be greater than 0'}), HTTP_STATUS_BAD_REQUEST
+    if not data or 'algorithms' not in data or 'iterationsCount' not in data or 'experimentName' not in data:
+        raise ApiException('Missing properties, required properties: algorithms, iterationsCount, experimentName', 'Invalid data provided', HTTP_STATUS_BAD_REQUEST)
+
+        # return jsonify({'error': 'Invalid data provided', 'message': 'Missing properties'}), HTTP_STATUS_BAD_REQUEST
+    for iterations in data['iterationsCount']:
+        if iterations <= 0:
+            raise ApiException('The number of iterations should be greater than 0', 'Invalid data provided', HTTP_STATUS_BAD_REQUEST)
+
+        # return jsonify({'error': 'Invalid data provided', 'message': 'The number of iterations should be greater than 0'}), HTTP_STATUS_BAD_REQUEST
     if process_is_running:
-        return jsonify({'error': 'Current test is still running', 'message':'The previous test is still running. Please try again in few minutes'}), HTTP_STATUS_LOCKED
+        raise ApiException('The previous test is still running. Please try again in few minutes', 'Current test is still running', HTTP_STATUS_LOCKED)
+
+        # return jsonify({'error': 'Current test is still running', 'message':'The previous test is still running. Please try again in few minutes'}), HTTP_STATUS_LOCKED
     for algorithm in data['algorithms']:
         if algorithm not in current_app.allowedAlgorithms:
-            return jsonify({'error': 'Invalid data provided', 'message': 'Algorithm "' + algorithm + '" is not supported'}), HTTP_STATUS_BAD_REQUEST
+            raise ApiException('Algorithm "' + algorithm + '" is not supported', 'Invalid data provided', HTTP_STATUS_BAD_REQUEST)
 
-
-def __start_analyze(data):
-    iterations_count = data['iterationsCount']
-    headers = { 'Content-Type': 'application/json' }
-    first_run = True
-    for algorithm in data['algorithms']:
-        if not first_run:
-            time.sleep(15)
-        else:
-            first_run = False
-        logging.debug('Running test for algorithm: ', algorithm)
-        payload = {
-            'algorithm': algorithm,
-            'iterationsCount': iterations_count
-        }
-        response = requests.post(current_app.qujata_curl_target + "/curl", headers=headers, json=payload, timeout=int(current_app.request_timeout))
-        error = __validate_response(response.status_code, algorithm)
-        if error != None:
-            return error
-
-
-def __validate_response(response_code, algorithm):
-    if(response_code < 200 or response_code > 299):
-        return jsonify({'error': 'Analyze test failed to complete', 'message': 'Error occurred when running algorithm' + algorithm}), response_code
+            # return jsonify({'error': 'Invalid data provided', 'message': 'Algorithm "' + algorithm + '" is not supported'}), HTTP_STATUS_BAD_REQUEST
 

@@ -31,4 +31,12 @@ router.get('/algorithms', async (req: Request, res: Response) => {
   }, 1500);
 });
 
+router.get('/iterations', async (req: Request, res: Response) => {
+  console.log(`-${req.method} ${req.url}`);
+  const data = (await import('./iterations.json')).default;
+  setTimeout(() => {
+    res.json(data);
+  }, 1500);
+});
+
 export default router;
