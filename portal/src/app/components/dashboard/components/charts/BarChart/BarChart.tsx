@@ -1,4 +1,4 @@
-import { Chart, registerables, ChartOptions, TooltipItem } from 'chart.js';
+import { ChartOptions, TooltipItem } from 'chart.js';
 import { Bar } from 'react-chartjs-2';
 import { useEffect, useState } from 'react';
 import { IDatasets } from './models/BarChart.model';
@@ -16,8 +16,6 @@ export const BarChart: React.FC<BarChartProps> = (props: BarChartProps) => {
     const { labels, data, tooltipKeys, tooltipLabels, keyOfData, title } = props;
     const [dataValues, setDataValues] = useState();
     const [datasets, setDatasets] = useState<IDatasets[]>([]);
-    
-    Chart.register(...registerables); // initial chart.js
 
     useEffect(() => {
         const temp = data.map((obj: any) => obj.results[keyOfData]);
