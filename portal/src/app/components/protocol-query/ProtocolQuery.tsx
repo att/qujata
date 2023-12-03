@@ -1,6 +1,6 @@
 import { noop } from 'lodash';
 import { useCallback, useState } from 'react';
-import { Options } from 'react-select';
+import { OptionProps, Options, components } from 'react-select';
 import { ITestParams } from '../../shared/models/quantum.interface';
 import { Button, ButtonActionType, ButtonSize, ButtonStyleType } from '../../shared/components/att-button';
 import { AttSelect, AttSelectOption } from '../../shared/components/att-select';
@@ -42,10 +42,15 @@ export const ProtocolQuery: React.FC<ProtocolQueryProps> = (props: ProtocolQuery
     setIterationsCount(selectedIterationNum);
   }, []);
 
-  const onMessageSizeChanged: OnSelectChanged = useCallback((options: SelectOptionType): void => {
-    const selectedAlgorithms: Options<AttSelectOption> = options as Options<AttSelectOption>;
-    // setAlgorithms(selectedAlgorithms);
-  }, []);
+  const Option: React.FC = (props) => {
+    const optionProps = props as OptionProps<any, any>;
+    return (
+      <components.Option {...optionProps}>
+        <input type="checkbox" className={styles.input_option} checked={optionProps.isSelected} onChange={() => onIterationsNumChanged} />
+        <label>{optionProps.label}</label>
+      </components.Option>
+    );
+  };
 
   return (
     <div className={styles.protocol_query_wrapper}>
@@ -79,6 +84,7 @@ export const ProtocolQuery: React.FC<ProtocolQueryProps> = (props: ProtocolQuery
                 value={algorithms as AttSelectOption[]}
                 onChange={onAlgorithmsChanged}
                 isMulti
+                closeMenuOnSelect={false}
                 required
               />
           </div>
@@ -93,23 +99,12 @@ export const ProtocolQuery: React.FC<ProtocolQueryProps> = (props: ProtocolQuery
                 value={iterationsCount as AttSelectOption}
                 onChange={onIterationsNumChanged}
                 isMulti
+                hideSelectedOptions={false}
+                closeMenuOnSelect={false}
                 required
+                customComponent={{ Option }}
               />
           </div>
-          {/* <div className={styles.form_item}>
-              <label className={styles.form_item_label}>
-                {PROTOCOL_QUERY_EN.FIELDS_LABEL.MESSAGE_SIZE} <span className={styles.required}>*</span>
-              </label>
-              <AttSelect
-                className={styles.select_form_item}
-                options={[{label: '100', value: '100'}, {label: '200', value: '200'}]}
-                placeholder={PROTOCOL_QUERY_EN.FIELDS_LABEL.PLACEHOLDER}
-                value={[] as AttSelectOption[]}
-                onChange={onMessageSizeChanged}
-                isMulti
-                required
-              />
-          </div> */}
           <div className={styles.submitButtonWrapper}>
               <Button
                 disabled={isFetching}

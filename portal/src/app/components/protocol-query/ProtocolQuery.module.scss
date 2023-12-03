@@ -90,3 +90,11 @@ $titlesColor: #1D2329;
 .required {
   color: $required;
 }
+
+.input_option {
+  margin-right: 10px;
+}.input_option:not(:checked) {
+  border: 1px solid purple;
+}.input_option:checked {
+  background-color: purple;
+}
