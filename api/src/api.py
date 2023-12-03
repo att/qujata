@@ -30,8 +30,7 @@ def get_algorithms():
 @api.route('/iterations', methods=['GET'])
 @cross_origin(origin=['*'], supports_credentials=True)
 def get_iterations_list():
-    iterations_list = __convert_iterations_to_list(current_app.iterations_options)
-    return { "iterations": iterations_list }
+    return { "iterations": current_app.iterations_options }
 
 @api.route('/analyze', methods=['POST'])
 @cross_origin(origins=['*'], supports_credentials=True)
@@ -73,10 +72,9 @@ def __export_platform_data():
 
 
 def __validate(data):
-    iterations_list = __convert_iterations_to_list(current_app.iterations_options)
     if not data or 'algorithms' not in data or 'iterationsCount' not in data:
         return jsonify({'error': 'Invalid data provided', 'message': 'Missing properties'}), HTTP_STATUS_BAD_REQUEST
-    if data['iterationsCount'] < 0:
+    if data['iterationsCount'] <= 0:
         return jsonify({'error': 'Invalid data provided', 'message': 'The number of iterations should be greater than 0'}), HTTP_STATUS_BAD_REQUEST
     if process_is_running:
         return jsonify({'error': 'Current test is still running', 'message':'The previous test is still running. Please try again in few minutes'}), HTTP_STATUS_LOCKED
@@ -108,6 +106,3 @@ def __start_analyze(data):
 def __validate_response(response_code, algorithm):
     if(response_code < 200 or response_code > 299):
         return jsonify({'error': 'Analyze test failed to complete', 'message': 'Error occured when running algorithm ' + algorithm}), response_code
-
-def __convert_iterations_to_list(iterations):
-    return list(map(int, iterations.split(':')))

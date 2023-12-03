@@ -7,6 +7,6 @@ export class CurlRequest {
 
   @IsNotEmpty()
   @IsNumber()
-  @Min(0)
+  @Min(1)
   iterationsCount: number;
 }
