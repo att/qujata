@@ -1,45 +1,31 @@
-import { Chart, registerables, ChartOptions } from 'chart.js';
+import { Chart, registerables, ChartOptions, TooltipItem } from 'chart.js';
 import { Bar } from 'react-chartjs-2';
 import { useEffect, useState } from 'react';
-import { colors } from './barChart.const';
+import { colors, defaultOptions } from './BarChart.const';
+import { IDatasets } from './models/BarChart.model';
 
-let options: ChartOptions<any> = {
-    scales: {
-        x: {
-          display: false, // Hide x-axis labels
-        },
-    },
-    plugins: {
-        legend: {
-            position: 'top',
-        },
-        title: {
-            display: true,
-            text: 'Memory (%)',
-        },
-    }
-};
 export interface BarChartProps {
     labels: string[];
     data: any;
+    keyOfData: string;
     tooltipKeys: string[];
-    tooltipLabels: string[];
+    tooltipLabels: string[];   
 }
 export const BarChart: React.FC<BarChartProps> = (props: BarChartProps) => {
-    const { labels, data, tooltipKeys, tooltipLabels } = props;
+    const { labels, data, tooltipKeys, tooltipLabels, keyOfData } = props;
     const [dataValues, setDataValues] = useState();
-    const [datasets, setDatasets] = useState([]);
+    const [datasets, setDatasets] = useState<IDatasets[]>([]);
     
     Chart.register(...registerables); // initial chart.js
 
     useEffect(() => {
-        const temp = data.map((obj: any) => obj.results.averageCPU);
+        const temp = data.map((obj: any) => obj.results[keyOfData]);
         setDataValues(temp);
-    }, [data]);
+    }, [data, keyOfData]);
 
     useEffect(() => {
         if (dataValues) {
-            const tempValues: any = labels.map((label, i) => ({
+            const tempValues: IDatasets[] = labels.map((label, i) => ({
                     label: label,
                     data: [dataValues[i]],
                     backgroundColor: colors[i % colors.length],
@@ -49,36 +35,41 @@ export const BarChart: React.FC<BarChartProps> = (props: BarChartProps) => {
         }
     }, [dataValues, labels]);
 
-    options = {
-        ...options,
+    const options: ChartOptions<any> = {
+        ...defaultOptions,
         plugins: {
+          ...defaultOptions.plugins,
           tooltip: {
             displayColors: false,
             callbacks: {
-              title: function (context: any) {
+              title: function (context: TooltipItem<'bar'>[]) {
                 const index = context[0].datasetIndex;
                 return labels[index];
               },
-              label: function (context: any) {
-                const index = context.datasetIndex;
-                const valByKey = dataValues && dataValues[index];
-                const label1: string = tooltipKeys[0];
-                const label2: string = tooltipKeys[1];
-                const val1 = data[index][label1];
-                const val2 = data[index][label2];
-                return `${valByKey} (${tooltipLabels[0]}: ${val1}, ${tooltipLabels[1]}: ${val2})`;
+              label: function (context: TooltipItem<'bar'>) {
+                return renderTooltipLabel(context, dataValues, tooltipKeys, tooltipLabels, data);
               },
             },
           },
         },
     };
 
-    const temp = {
+    const tempData: {labels: string[], datasets: IDatasets[]} = {
         labels: labels,
         datasets: datasets,
     };
 
     return (
-        <Bar data={temp as any} options={options} />
+        <Bar data={tempData} options={options} />
     );
+}
+
+function renderTooltipLabel(context: TooltipItem<'bar'>, dataValues: any, tooltipKeys: string[], tooltipLabels: string[], data: any): string {
+    const index = context.datasetIndex;
+    const valByKey = dataValues && dataValues[index];
+    const label1: string = tooltipKeys[0];
+    const label2: string = tooltipKeys[1];
+    const val1 = data[index][label1];
+    const val2 = data[index][label2];
+    return `${valByKey} (${tooltipLabels[0]}: ${val1}, ${tooltipLabels[1]}: ${val2})`;
 }
