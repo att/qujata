@@ -1,0 +1,18 @@
+@import "src/styles/variables-keys";
+
+.tabs {
+    display: flex;
+    align-items: center;
+}
+
+.tab {
+    color: var($primaryWhite);
+    margin-inline-end: 20px;
+    text-decoration: none;
+}
+
+.activeTab {
+    text-decoration: underline;
+    text-underline-offset: 5px;
+    text-decoration-thickness: 2px;
+}

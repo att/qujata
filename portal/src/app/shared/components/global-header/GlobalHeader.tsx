@@ -4,14 +4,12 @@ import { NAVIGATION_ROUTES } from '../../../routes-navigation.const';
 import { InternalLink, LinkStyle, LinkSize } from '../att-link';
 import styles from './GlobalHeader.module.scss';
 import QujataLogoSvg from '../../../../assets/images/qujata-logo.svg';
-import AvatarSvg from "../../../../assets/images/user-avatar.svg";
+import { NavigationTab, INavigationTab } from '../navigation-tab';
 
 export interface GlobalHeaderProps {
-  title: string;
+  tabs: INavigationTab[];
   className?: string
-
 }
-
 export const GlobalHeader: React.FC<PropsWithChildren<GlobalHeaderProps>> = (props: PropsWithChildren<GlobalHeaderProps>) => (
   <header className={cn(props.className, styles.global_header)}>
     <div className={styles.header_left_block}>
@@ -24,8 +22,6 @@ export const GlobalHeader: React.FC<PropsWithChildren<GlobalHeaderProps>> = (pro
         <img className={styles.home_icon} src={QujataLogoSvg} alt="globe" />
       </InternalLink>
     </div>
-    {/* <div className={styles.header_right_block}>
-      <img className={styles.avatar_style} src={AvatarSvg} alt="avatar" />
-    </div> */}
+    <NavigationTab tabs={props.tabs} />
   </header>
 );
