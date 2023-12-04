@@ -3,6 +3,7 @@
 $inputBorderColor: #DCDFE3;
 $required: #FF585D;
 $titlesColor: #1D2329;
+$optionsColor: #6D3FFC;
 
 .wrapper {
   display: flex;
@@ -91,10 +92,18 @@ $titlesColor: #1D2329;
   color: $required;
 }
 
-.input_option {
+.iterations_input_option {
   margin-right: 10px;
-}.input_option:not(:checked) {
-  border: 1px solid purple;
-}.input_option:checked {
-  background-color: purple;
+  cursor: pointer;
+}
+
+.algorithms_input_option {
+  margin-right: 10px;
+  margin-left: 25px;
+  cursor: pointer;
+}
+
+.algorithms_input_option_title {
+  margin-right: 10px;
+  cursor: pointer;
 }

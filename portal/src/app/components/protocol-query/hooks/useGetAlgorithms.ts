@@ -12,6 +12,8 @@ interface IAlgorithm {
     hybrid: string[];
     quantumSafe: string[];
 }
+
+export const algorithmSections = ['All', 'Classic', 'Hybrid', 'PQ'];
 export function useGetAlgorithms(): IUseGetAlgorithms {
     const [algorithmOptions, setOptions] = useState<AttSelectOption[]>([]);
     const { get, data, cancelRequest }: IHttp<IAlgorithm> = useFetch({ url: APIS.algorithms });
@@ -24,17 +26,18 @@ export function useGetAlgorithms(): IUseGetAlgorithms {
 
     useEffect(() => {
         if (data) {
+            const algorithmTitles: AttSelectOption[] = algorithmSections.map((algo: string) => ({ label: algo, value: algo, isDisabled: true }));
             const classicOptions: AttSelectOption[] = data.classic.map((algo: string) => ({ label: algo, value: algo }));
             const hybridOptions: AttSelectOption[] = data.hybrid.map((algo: string) => ({ label: algo, value: algo }));
             const quantumSafeOptions: AttSelectOption[] = data.quantumSafe.map((algo: string) => ({ label: algo, value: algo }));
-            const algorithmTitles: AttSelectOption[] = ['─────────── Classic ─────────────', '─────────── Hybrid ─────────────', '─────────── PQ ──────────────']
-                .map((algo: string) => ({ label: algo, value: algo, isDisabled: true }));
+
             setOptions([
                 algorithmTitles[0],
-                ...classicOptions,
                 algorithmTitles[1],
-                ...hybridOptions,
+                ...classicOptions,
                 algorithmTitles[2],
+                ...hybridOptions,
+                algorithmTitles[3],
                 ...quantumSafeOptions
             ]);
         }
