@@ -6,6 +6,7 @@ import logging
 
 from datetime import datetime, timedelta
 from flask import jsonify, current_app
+from src.models.env_info import EnvInfo
 from src.models.test_suite import TestSuite
 from src.models.test_run import TestRun
 from src.exceptions.exceptions import ApiException
@@ -35,10 +36,14 @@ def analyze(data):
     })
 
 def __create_test_suite(data):
+    env_info = current_app.database_manager.get_last_record(EnvInfo)
+    if env_info == None:
+        raise ApiException('Missing env info in database', 'Analyze test failed to complete', 422)
+
     test_suite = TestSuite(
         protocol="TLS 1.3",
         name=data["experimentName"],
-        env_info_id=1,
+        env_info_id=env_info.id,
         code_release=current_app.code_release,
         created_by="",
         created_date=datetime.now(),
@@ -46,7 +51,7 @@ def __create_test_suite(data):
         updated_date=datetime.now(),
     )    
     current_app.database_manager.add_to_db(test_suite)
-    return test_suite;
+    return test_suite
  
 
 def __create_test_run(algorithm, iterations, test_suite_id):
