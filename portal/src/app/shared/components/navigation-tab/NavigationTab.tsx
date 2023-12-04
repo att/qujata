@@ -5,6 +5,7 @@ import cn from 'classnames';
 export interface INavigationTab {
   title: string;
   link: string;
+  disabled?: boolean;
 }
 export interface NavigationTabProps {
   tabs: INavigationTab[];
@@ -19,7 +20,7 @@ export const NavigationTab: React.FC<NavigationTabProps> = (props: NavigationTab
            {tabs.map(((tab: INavigationTab, index: number) => (
             <div key={index}>
                 <NavLink 
-                    className={cn(styles.tab, {[styles.activeTab]: location.pathname === tab.link})} 
+                    className={cn(styles.tab, {[styles.activeTab]: location.pathname === tab.link}, {[styles.disabledTab]: tab.disabled})} 
                     to={tab.link}             
                 >
                     {tab.title}

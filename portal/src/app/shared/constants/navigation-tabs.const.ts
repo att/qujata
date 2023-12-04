@@ -8,5 +8,6 @@ export const tabs = [
     {
       link: '/all-experiments',
       title: SHARED_EN.NAVIGATION_TABS.ALL_EXPERIMENTS,
+      disabled: true,
     }
 ];

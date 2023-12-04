@@ -4,7 +4,7 @@ import { NAVIGATION_ROUTES } from '../../../routes-navigation.const';
 import { InternalLink, LinkStyle, LinkSize } from '../att-link';
 import styles from './GlobalHeader.module.scss';
 import QujataLogoSvg from '../../../../assets/images/qujata-logo.svg';
-import { NavigationTab, INavigationTab } from '../navigation-tab';
+import { INavigationTab, NavigationTab } from '../navigation-tab/NavigationTab';
 
 export interface GlobalHeaderProps {
   tabs: INavigationTab[];
