@@ -11,5 +11,26 @@ exports[`GlobalHeader renders global header  1`] = `
       InternalLink
     </div>
   </div>
+  <div
+    class="tabs"
+  >
+    <div>
+      <a
+        aria-current="page"
+        class="tab activeTab active"
+        href="/"
+      >
+        Home
+      </a>
+    </div>
+    <div>
+      <a
+        class="tab"
+        href="/all-experiments"
+      >
+        All Experiments
+      </a>
+    </div>
+  </div>
 </header>
 `;
