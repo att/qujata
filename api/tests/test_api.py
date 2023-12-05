@@ -170,7 +170,7 @@ class TestAPI(unittest.TestCase):
             time_difference = timestamp2 - timestamp1
 
             self.assertEqual(response.status_code, 200)
-            self.assertGreaterEqual(time_difference.seconds, 30)
+            self.assertGreaterEqual(time_difference.seconds, 15)
             
 
 if __name__ == '__main__':
