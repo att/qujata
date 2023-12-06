@@ -23,8 +23,8 @@ $titlesColor: #1D2329;
 }
 
 .note_title {
-  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
   margin-right: 10px;
+  font-weight: bold;
 }
 
 .form_item { 
@@ -37,7 +37,7 @@ $titlesColor: #1D2329;
 .select_form_item {
   max-inline-size: 709px;
   margin-block-start: 4px;
-  min-block-size: 40px;
+  min-block-size: 50px;
   #{$selectControlHeight}: 48px;
 }
 
@@ -47,9 +47,8 @@ $titlesColor: #1D2329;
   border: 1px solid $inputBorderColor;
   border-radius: 44px;
   inline-size: 100%;
-  outline: none;
   margin-block-start: 4px;
-  block-size: 40px;
+  block-size: 50px;
   padding-inline: 22px;
 }
 
@@ -70,6 +69,17 @@ $titlesColor: #1D2329;
 .form_item_label {
   color: $titlesColor;
   margin-block-end: 8px;
+}
+
+.form_item_text_area {
+  max-inline-size: 709px;
+  margin-block-start: 4px;
+  border-radius: 20px;
+  #{$selectControlHeight}: 48px;
+  border: 1px solid $inputBorderColor;
+  
+  block-size: 150px;
+  padding: 22px;
 }
 
 .submitButtonWrapper {

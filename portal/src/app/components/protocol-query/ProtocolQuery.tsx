@@ -27,6 +27,7 @@ export const ProtocolQuery: React.FC<ProtocolQueryProps> = (props: ProtocolQuery
   const [algorithms, setAlgorithms] = useState<SelectOptionType>();
   const [prevSelectedValues, setPrevSelectedValues] = useState<string[]>([]);
   const [iterationsCount, setIterationsCount] = useState<SelectOptionType>();
+  const [messageSize, setMessageSize] = useState<SelectOptionType>();
 
   const onSubmitHandler = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -76,6 +77,12 @@ export const ProtocolQuery: React.FC<ProtocolQueryProps> = (props: ProtocolQuery
     setIterationsCount(selectedIterationNum);
   }, []);
 
+  const onMessageSizeChanged: OnSelectChanged = useCallback((options: SelectOptionType): void => {
+    const selectedMessageSize: Options<AttSelectOption> = options as Options<AttSelectOption>;
+    setMessageSize(selectedMessageSize);
+  }, []);
+  
+
   const AlgorithmsCheckboxOption: React.FC<OptionProps> = (props: OptionProps) => {
     const isSectionTitle = algorithmSections.includes((props.data as AttSelectOption).value);
     const optionStyle = isSectionTitle ? styles.algorithms_input_option_title : styles.algorithms_input_option;
@@ -114,7 +121,7 @@ export const ProtocolQuery: React.FC<ProtocolQueryProps> = (props: ProtocolQuery
       <div>
         <h2 className={styles.experiment_title}>{PROTOCOL_QUERY_EN.TITLE}</h2>
         <div className={styles.note}>
-          <p className={styles.note_title}>{PROTOCOL_QUERY_EN.NOTE.TITLE}</p>
+          <span className={styles.note_title}>{PROTOCOL_QUERY_EN.NOTE.TITLE}</span>
           <p>{PROTOCOL_QUERY_EN.NOTE.TEXT}</p>
         </div>
       </div>
@@ -124,7 +131,6 @@ export const ProtocolQuery: React.FC<ProtocolQueryProps> = (props: ProtocolQuery
                 {PROTOCOL_QUERY_EN.FIELDS_LABEL.EXPERIMENT_NAME} <span className={styles.required}>*</span>
               </label>
               <input
-                type='text'
                 className={styles.input_form_item}
                 placeholder=''
                 required
@@ -163,6 +169,28 @@ export const ProtocolQuery: React.FC<ProtocolQueryProps> = (props: ProtocolQuery
                 required
                 customComponent={{ Option: IterationsCheckboxOption as React.FC }}
               />
+          </div>
+          <div className={styles.form_item}>
+              <label className={styles.form_item_label}>
+                {PROTOCOL_QUERY_EN.FIELDS_LABEL.MESSAGE_SIZE} <span className={styles.required}>*</span>
+              </label>
+              <AttSelect
+                className={styles.select_form_item}
+                options={[{label: 'test1', value: 'test1'}, {label: 'test2', value: 'test2'}]}
+                placeholder={PROTOCOL_QUERY_EN.FIELDS_LABEL.PLACEHOLDER}
+                value={messageSize as AttSelectOption}
+                onChange={onMessageSizeChanged}
+                isMulti
+                hideSelectedOptions={false}
+                closeMenuOnSelect={false}
+                required
+              />
+          </div>
+          <div className={styles.form_item}>
+              <label className={styles.form_item_label}>
+                {PROTOCOL_QUERY_EN.FIELDS_LABEL.DESCRIPTION}
+              </label>
+              <textarea className={styles.form_item_text_area}></textarea>
           </div>
           <div className={styles.submitButtonWrapper}>
               <Button

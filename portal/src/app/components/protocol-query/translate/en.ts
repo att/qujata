@@ -14,7 +14,8 @@ export const PROTOCOL_QUERY_EN = {
         EXPERIMENT_NAME: 'Experiment name',
         ITERATIONS_NUMBER: 'Number of iterations',
         ALGORITHM: 'Algorithm(s)',
-        MESSAGE_SIZE: 'Message size (KB)',
+        MESSAGE_SIZE: 'Message size',
+        DESCRIPTION: 'Description',
     },
     FETCH_DATA: 'Loading data...',
 };
