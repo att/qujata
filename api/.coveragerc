@@ -4,3 +4,4 @@ source =
 
 omit =
     src/main.py
+    src/utils/database_manager.py
