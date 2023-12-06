@@ -3,17 +3,10 @@ import { ChartOptions } from 'chart.js';
 export const colors: string[] = ['#05BBFF', '#086CE1', '#FF8500', '#36a2eb33'];
 
 export let defaultOptions: ChartOptions<any> = {
+    responsive: true,
     scales: {
-        x: {
-          display: false, // Hide x-axis labels
-        },
+      y: {
+        beginAtZero: true,
+      },
     },
-    plugins: {
-        legend: {
-            position: 'top',
-            labels: {
-                padding: 40,
-            },
-        },
-    }
 };
