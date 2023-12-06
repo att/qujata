@@ -1,0 +1,36 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`GlobalHeader renders global header  1`] = `
+<header
+  class="global_header"
+>
+  <div
+    class="header_left_block"
+  >
+    <div>
+      InternalLink
+    </div>
+  </div>
+  <div
+    class="tabs"
+  >
+    <div>
+      <a
+        aria-current="page"
+        class="tab activeTab active"
+        href="/"
+      >
+        Home
+      </a>
+    </div>
+    <div>
+      <a
+        class="tab"
+        href="/all-experiments"
+      >
+        All Experiments
+      </a>
+    </div>
+  </div>
+</header>
+`;

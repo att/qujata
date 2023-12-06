@@ -3,7 +3,7 @@ import { useFetchSpinner } from './useFetchSpinner';
 import { FetchDataStatus } from '../useFetch';
 import { useSpinnerContext } from '../../context/spinner';
 
-jest.mock('src/app/shared/context/spinner');
+jest.mock('../../context/spinner');
 
 describe('useFetchSpinner', () => {
   let setSpinner: jest.Mock<any, any>;

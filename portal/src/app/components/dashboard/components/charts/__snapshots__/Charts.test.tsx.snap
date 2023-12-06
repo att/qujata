@@ -1,0 +1,7 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Charts should render Charts 1`] = `
+<div
+  class="wrapper"
+/>
+`;

@@ -46,7 +46,7 @@ export const ProtocolQuery: React.FC<ProtocolQueryProps> = (props: ProtocolQuery
 
   return (
     <div className={styles.protocol_query_wrapper}>
-      <form className={styles.wrapper} onSubmit={onSubmitHandler}>
+      <form className={styles.wrapper} data-testid='protocol-query-form' onSubmit={onSubmitHandler}>
           <div className={styles.form_item}>
               <label className={styles.form_item_label}>
                 {PROTOCOL_QUERY_EN.FIELDS_LABEL.ALGORITHM} {algorithmsCount > 3 && <span className={styles.error}> {PROTOCOL_QUERY_EN.ALGORITHM_LABEL_DESCRIPTION}</span>}
@@ -84,7 +84,7 @@ export const ProtocolQuery: React.FC<ProtocolQueryProps> = (props: ProtocolQuery
                 {PROTOCOL_QUERY_EN.ACTION_BUTTONS.RUN}
               </Button>
               {isFetching && 
-              <div className={styles.spinnerWrapper}>
+              <div role='status' className={styles.spinnerWrapper}>
                     <Spinner size={SpinnerSize.EXTRA_SMALL} />
                     <span className={styles.text}>{PROTOCOL_QUERY_EN.FETCH_DATA}</span>
               </div>}

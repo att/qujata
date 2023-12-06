@@ -4,7 +4,7 @@ import { AxiosError } from 'axios';
 import { attToast } from '../../shared/components/toast/att-toast.service';
 import { IServerError } from '../../shared/models/server-error.interface';
 
-jest.mock('src/app/utils/server-error-message');
+jest.mock('../../shared/components/toast/att-toast.service');
 
 describe('useErrorMessage', () => {
   test('should show error message when we receive error from BE', () => {

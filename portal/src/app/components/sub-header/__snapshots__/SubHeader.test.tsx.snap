@@ -1,0 +1,148 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SubHeader renders sub header  1`] = `
+<div
+  class="sub_header_wrapper"
+>
+  <div>
+    Button
+  </div>
+  <div
+    class="sub_header_title"
+  >
+    That’s what are we doing on each iteration:
+  </div>
+  <div
+    class="items_wrapper"
+  >
+    <div
+      class="item"
+    >
+      <div
+        class="item_icon_wrapper"
+      >
+        <div
+          class="item_icon"
+        >
+          <img
+            alt="Handshake"
+            src="handshake.svg"
+          />
+        </div>
+        <div
+          class="sperator"
+        />
+      </div>
+      <div
+        class="item_description"
+      >
+        Initiating handshake
+using the selected
+cryptographic algorithm.
+      </div>
+    </div>
+    <div
+      class="item"
+    >
+      <div
+        class="item_icon_wrapper"
+      >
+        <div
+          class="item_icon"
+        >
+          <img
+            alt="Keys"
+            src="keys.svg"
+          />
+        </div>
+        <div
+          class="sperator"
+        />
+      </div>
+      <div
+        class="item_description"
+      >
+        Exchanging keys using
+the selected algorithm to
+create a shared secret.
+      </div>
+    </div>
+    <div
+      class="item"
+    >
+      <div
+        class="item_icon_wrapper"
+      >
+        <div
+          class="item_icon"
+        >
+          <img
+            alt="Lock"
+            src="lock.svg"
+          />
+        </div>
+        <div
+          class="sperator"
+        />
+      </div>
+      <div
+        class="item_description"
+      >
+        Deriving symmetric keys,
+establishing a secure channel
+for communication.
+      </div>
+    </div>
+    <div
+      class="item"
+    >
+      <div
+        class="item_icon_wrapper"
+      >
+        <div
+          class="item_icon"
+        >
+          <img
+            alt="Download"
+            src="download.svg"
+          />
+        </div>
+        <div
+          class="sperator"
+        />
+      </div>
+      <div
+        class="item_description"
+      >
+        Downloading content
+over the secure channel.
+      </div>
+    </div>
+    <div
+      class="item"
+    >
+      <div
+        class="item_icon_wrapper"
+      >
+        <div
+          class="item_icon"
+        >
+          <img
+            alt="Check"
+            src="check.svg"
+          />
+        </div>
+        <div
+          class=""
+        />
+      </div>
+      <div
+        class="item_description"
+      >
+        Closing
+the session
+      </div>
+    </div>
+  </div>
+</div>
+`;

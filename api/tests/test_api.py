@@ -36,6 +36,6 @@ class TestAPI(unittest.TestCase):
         data = json.loads(response.data)
         self.assertIn('iterations', data)
 
-
+   
 if __name__ == '__main__':
     unittest.main()
