@@ -24,7 +24,7 @@ class TestAPI(unittest.TestCase):
     def test_analyze(self):
         input_data = {
             "algorithms":["kyber512"],
-            "iterationsCount": [1000],
+            "iterationsCount": [1000, 2000],
             "experimentName": "name"
         }
         # Mock the requests.post call
@@ -34,6 +34,10 @@ class TestAPI(unittest.TestCase):
             response = self.client.post('/api/analyze',
                                     data=json.dumps(input_data),
                                     content_type='application/json')
+
+           
+            self.assertEqual(self.app.database_manager.add_to_db.call_count, 3)# 1 for the test suite, and the other for the 2 test runs
+           
             self.assertEqual(response.status_code, 200)
             # Check the response content
             response_data = json.loads(response.data)
