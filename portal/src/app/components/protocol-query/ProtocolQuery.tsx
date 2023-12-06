@@ -1,5 +1,5 @@
 import { noop } from 'lodash';
-import { useCallback, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { OptionProps, Options, components } from 'react-select';
 import { ITestParams } from '../../shared/models/quantum.interface';
 import { Button, ButtonActionType, ButtonSize, ButtonStyleType } from '../../shared/components/att-button';
@@ -22,9 +22,10 @@ export interface ProtocolQueryProps {
 
 export const ProtocolQuery: React.FC<ProtocolQueryProps> = (props: ProtocolQueryProps) => {
   const { isFetching, canExportFile, onRunClick, onDownloadDataClicked } = props;
-  const { algorithmOptions } = useGetAlgorithms();
+  const { algorithmOptions, algosBySection } = useGetAlgorithms();
   const { iterationsOptions } = useGetIterations();
   const [algorithms, setAlgorithms] = useState<SelectOptionType>();
+  const [prevSelectedValues, setPrevSelectedValues] = useState<string[]>([]);
   const [iterationsCount, setIterationsCount] = useState<SelectOptionType>();
 
   const onSubmitHandler = (event: React.FormEvent<HTMLFormElement>) => {
@@ -33,65 +34,77 @@ export const ProtocolQuery: React.FC<ProtocolQueryProps> = (props: ProtocolQuery
   };
 
   const onAlgorithmsChanged: OnSelectChanged = useCallback((options: SelectOptionType): void => {
-    const selectedAlgorithms: Options<AttSelectOption> = options as Options<AttSelectOption>;
-    setAlgorithms(selectedAlgorithms);
-  }, []);
+    let selectedAlgorithms: Options<AttSelectOption> = options as Options<AttSelectOption>;
+    let selectedValues: string[] = selectedAlgorithms.map(option => option.value);
+    
+    let newSelectedSections: string[] = [];
+    let newSelectedOptions: AttSelectOption[] = [];
+    
+    // Handle selection and deselection of sections and individual options
+    for (const section of algorithmSections) {
+      if (selectedValues.includes(section) && !prevSelectedValues.includes(section)) {
+        // New section was checked
+        newSelectedSections.push(section);
+        // Add all options in the section to newSelectedOptions
+        selectedValues = selectedValues.concat(algosBySection[section].map(opt => opt.value));
+        // Remove any existing options from this section in newSelectedOptions
+        newSelectedOptions = newSelectedOptions.filter(option => !algosBySection[section].map(opt => opt.value).includes(option.value));
+      } else if (!selectedValues.includes(section) && prevSelectedValues.includes(section)) {
+        // Section was unchecked
+        newSelectedOptions = selectedAlgorithms.filter(option => !algosBySection[section].map(opt => opt.value).includes(option.value));
+      } else if (selectedValues.includes(section)) {
+        // Section remains checked
+        newSelectedSections.push(section);
+      }
+    }
+
+    for (const option of algorithmOptions) {
+      if (!newSelectedSections.includes(option.value) &&
+          selectedValues.includes(option.value) &&
+          !newSelectedOptions.map(opt => opt.value).includes(option.value)) 
+      {
+        newSelectedOptions.push(option);
+      }
+    }
+
+    setAlgorithms(newSelectedOptions);
+    setPrevSelectedValues(selectedValues);
+  }, [algosBySection, algorithmOptions, prevSelectedValues]);
 
   const onIterationsNumChanged: OnSelectChanged = useCallback((options: SelectOptionType): void => {
     const selectedIterationNum: Options<AttSelectOption> = options as Options<AttSelectOption>;
     setIterationsCount(selectedIterationNum);
   }, []);
 
+  const AlgorithmsCheckboxOption: React.FC<OptionProps> = (props: OptionProps) => {
+    const isSectionTitle = algorithmSections.includes((props.data as AttSelectOption).value);
+    const optionStyle = isSectionTitle ? styles.algorithms_input_option_title : styles.algorithms_input_option;
 
-  // algorithmOptions.map((algorithmOption: AttSelectOption) => {
-  //   const isTitle = algorithmSections.includes(algorithmOption.value);
-
-  //   const AlgorithmsCheckboxOption: React.FC = (props) => {
-  //     const optionProps = props as OptionProps<any, any>;
-
-  //     return (
-  //       <components.Option {...optionProps}>
-  //         <div>
-  //           <input
-  //             type="checkbox"
-  //             className={isTitle ? styles.algorithms_input_option_title : styles.algorithms_input_option}
-  //             checked={optionProps.isSelected}
-  //             onChange={() => onIterationsNumChanged} />
-  //         </div>
-  //         <span>{optionProps.label}</span>
-  //       </components.Option>
-  //     );
-  //   };
-  // });
-
-  const AlgorithmsCheckboxOption: React.FC = (props) => {
-    const optionProps = props as OptionProps<any, any>;
     return (
-      <components.Option {...optionProps}>
+      <components.Option {...props}>
         <div>
           <input
             type="checkbox"
-            className={styles.iterations_input_option}
-            checked={optionProps.isSelected}
-            onChange={() => onIterationsNumChanged} />
+            className={optionStyle}
+            checked={props.isSelected}
+            onChange={() => onAlgorithmsChanged} />
         </div>
-        <span>{optionProps.label}</span>
+        <span>{props.label}</span>
       </components.Option>
     );
   };
 
-  const IterationsCheckboxOption: React.FC = (props) => {
-    const optionProps = props as OptionProps<any, any>;
+  const IterationsCheckboxOption: React.FC<OptionProps> = (props: OptionProps) => {
     return (
-      <components.Option {...optionProps}>
+      <components.Option {...props}>
         <div>
           <input
             type="checkbox"
             className={styles.iterations_input_option}
-            checked={optionProps.isSelected}
+            checked={props.isSelected}
             onChange={() => onIterationsNumChanged} />
         </div>
-        <span>{optionProps.label}</span>
+        <span>{props.label}</span>
       </components.Option>
     );
   };
@@ -131,7 +144,7 @@ export const ProtocolQuery: React.FC<ProtocolQueryProps> = (props: ProtocolQuery
                 hideSelectedOptions={false}
                 closeMenuOnSelect={false}
                 required
-                customComponent={{ Option: AlgorithmsCheckboxOption }}
+                customComponent={{ Option: AlgorithmsCheckboxOption as React.FC }}
               />
           </div>
           <div className={styles.form_item}>
@@ -148,7 +161,7 @@ export const ProtocolQuery: React.FC<ProtocolQueryProps> = (props: ProtocolQuery
                 hideSelectedOptions={false}
                 closeMenuOnSelect={false}
                 required
-                customComponent={{ Option: IterationsCheckboxOption }}
+                customComponent={{ Option: IterationsCheckboxOption as React.FC }}
               />
           </div>
           <div className={styles.submitButtonWrapper}>
