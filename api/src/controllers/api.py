@@ -51,7 +51,7 @@ def analyze():
         process_is_running = False
         return result
 
-    except ApiException as e:  
+    except ApiException as e:
         process_is_running = False
         logging.error("ApiException: Failed to run analyze request with error: " + str(e))
         return jsonify({'error': e.error, 'message': e.message}), e.status_code
