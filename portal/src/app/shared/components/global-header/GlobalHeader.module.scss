@@ -11,7 +11,6 @@ $headerSuperUser: #a4f1c1;
   color: var($primaryWhite);
   display: flex;
   font-size: $headerFontSize;
-  justify-content: space-between;
   line-height: var($headerSize);
   padding-inline-end: var($layoutPadding);
   padding-inline-start: var($layoutPadding);
@@ -21,6 +20,10 @@ $headerSuperUser: #a4f1c1;
 .header_right_block {
   align-items: center;
   display: flex;
+}
+
+.header_left_block {
+  margin-inline-end: 124px;
 }
 
 .home_icon {

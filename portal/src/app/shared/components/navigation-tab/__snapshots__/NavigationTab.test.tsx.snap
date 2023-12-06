@@ -1,0 +1,25 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`NavigationTab renders Navigation Tab 1`] = `
+<div
+  class="tabs"
+>
+  <div>
+    <a
+      aria-current="page"
+      class="tab activeTab active"
+      href="/"
+    >
+      Home
+    </a>
+  </div>
+  <div>
+    <a
+      class="tab"
+      href="/all-experiments"
+    >
+      All Experiments
+    </a>
+  </div>
+</div>
+`;
