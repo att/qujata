@@ -45,9 +45,9 @@ export function useGetAlgorithms(): IUseGetAlgorithms {
             ]);
 
             setAlgosBySection({
-                [algorithmSections[0]]: classicOptions.concat(algorithmTitles[0]),
-                [algorithmSections[1]]: hybridOptions.concat(algorithmTitles[1]),
-                [algorithmSections[2]]: quantumSafeOptions.concat(algorithmTitles[2])
+                [algorithmSections[0]]: classicOptions,
+                [algorithmSections[1]]: hybridOptions,
+                [algorithmSections[2]]: quantumSafeOptions
             })
         }
     }, [data]);

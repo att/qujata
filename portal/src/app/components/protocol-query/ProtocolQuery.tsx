@@ -40,34 +40,45 @@ export const ProtocolQuery: React.FC<ProtocolQueryProps> = (props: ProtocolQuery
     
     let newSelectedSections: string[] = [];
     let newSelectedOptions: AttSelectOption[] = [];
-    
-    // Handle selection and deselection of sections and individual options
+
     for (const section of algorithmSections) {
+      // If no algorithms are selected, enable all the sections
+      if (!selectedAlgorithms.length) {
+        algorithmOptions.map((algo) => algo.value === section && algo.isDisabled ? algo.isDisabled = false : undefined)
+      }
+      // If a new section is selected, add all its options to the selected options
       if (selectedValues.includes(section) && !prevSelectedValues.includes(section)) {
-        // New section was checked
         newSelectedSections.push(section);
-        // Add all options in the section to newSelectedOptions
-        selectedValues = selectedValues.concat(algosBySection[section].map(opt => opt.value));
-        // Remove any existing options from this section in newSelectedOptions
+        selectedValues = selectedValues.filter((algo) => algo !== section).concat(algosBySection[section].map(opt => opt.value));
         newSelectedOptions = newSelectedOptions.filter(option => !algosBySection[section].map(opt => opt.value).includes(option.value));
+        // Disable the section title
+        selectedAlgorithms.map((algo) => algo.value === section ? algo.isDisabled = true : undefined)
       } else if (!selectedValues.includes(section) && prevSelectedValues.includes(section)) {
-        // Section was unchecked
+        // If something inside the section is changed, update the selected options
         newSelectedOptions = selectedAlgorithms.filter(option => !algosBySection[section].map(opt => opt.value).includes(option.value));
-      } else if (selectedValues.includes(section)) {
-        // Section remains checked
-        newSelectedSections.push(section);
       }
     }
 
     for (const option of algorithmOptions) {
+      // If the option is selected and it's not already in the new selected options, add it
       if (!newSelectedSections.includes(option.value) &&
           selectedValues.includes(option.value) &&
           !newSelectedOptions.map(opt => opt.value).includes(option.value)) 
       {
         newSelectedOptions.push(option);
+        // Check if all the options inside a section are selected
+        // If they are, disable the section title, otherwise enable it
+        for (const section of algorithmSections) {
+          const sectionOptions = algosBySection[section].map(opt => opt.value);
+
+          (sectionOptions.every(opt => selectedValues.includes(opt)))
+          ? algorithmOptions.map((algo) => algo.value === section ? algo.isDisabled = true : undefined)
+          : algorithmOptions.map((algo) => algo.value === section ? algo.isDisabled = false : undefined)
+        }
       }
     }
 
+    // Update the selected algorithms and the previous selected values
     setAlgorithms(newSelectedOptions);
     setPrevSelectedValues(selectedValues);
   }, [algosBySection, algorithmOptions, prevSelectedValues]);
