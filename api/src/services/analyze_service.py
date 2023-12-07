@@ -75,10 +75,11 @@ def __start_analyze(test_run):
     }
     headers = { 'Content-Type': 'application/json' }
     response = requests.post(current_app.curl_url + "/curl", headers=headers, json=payload, timeout=int(current_app.request_timeout))
+
     __validate_response(response.status_code, test_run.algorithm, test_run.iterations)
         
 
 
 def __validate_response(response_code, algorithm, iterations):
     if(response_code < 200 or response_code > 299):
-        raise ApiException('Error occurred while running algorithm: ' + algorithm + ' iterations: ' + iterations, 'Analyze test failed to complete', response_code)
+        raise ApiException('Error occurred while running algorithm: ' + algorithm + ' iterations: ' + str(iterations), 'Analyze test failed to complete', response_code)

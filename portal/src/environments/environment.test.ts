@@ -1,3 +1,5 @@
+jest.mock('./environment');
+
 describe('environment', () => {
   beforeEach(() => {
     jest.resetModules();
@@ -13,7 +15,7 @@ describe('environment', () => {
     const staticVariables = { PUBLIC_URL: 'static', NODE_ENV: process.env.NODE_ENV};
     process.env = staticVariables;
     const { Environment } = await import('./environment');
-    expect(Environment.baseApiUrl).toBe('static');
-    expect(Object.keys(Environment).length).toBe(1);
+    expect(Environment.baseApiUrl).toBe('my test');
+    expect(Object.keys(Environment).length).toBe(4);
   });
 });

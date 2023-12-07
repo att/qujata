@@ -6,4 +6,8 @@ export const SHARED_EN = {
   TOAST_DESCRIPTIONS: {
     SUCCESS: 'Success',
   },
+  NAVIGATION_TABS: {
+    HOME: 'Home',
+    ALL_EXPERIMENTS: 'All Experiments',
+  }
 };

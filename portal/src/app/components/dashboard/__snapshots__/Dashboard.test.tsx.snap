@@ -1,0 +1,191 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Dashboard should render Dashboard 1`] = `
+<div
+  class="wrapper"
+>
+  <div>
+    <h3 />
+    <div
+      class="wrapper"
+    >
+      <div
+        class="main_box_wrapper"
+      >
+        <div
+          class="main_box_title"
+        >
+          Session Time - Avg (mSec)
+        </div>
+        <div
+          class="main_box_value"
+        >
+          200
+        </div>
+        <div
+          class="main_box_minmax"
+        >
+           
+          <span>
+             min: 
+            100.00
+              max: 
+            300.00
+          </span>
+           
+        </div>
+      </div>
+      <div
+        class="main_box_wrapper"
+      >
+        <div
+          class="main_box_title"
+        >
+          Session Handshake Time - Avg (mSec)
+        </div>
+        <div
+          class="main_box_value"
+        >
+          500
+        </div>
+        <div
+          class="main_box_minmax"
+        >
+           
+          <span>
+             min: 
+            400.00
+              max: 
+            600.00
+          </span>
+           
+        </div>
+      </div>
+      <div
+        class="main_box_wrapper"
+      >
+        <div
+          class="main_box_title"
+        >
+          Download Speed - Avg (kB/sec)
+        </div>
+        <div
+          class="main_box_value"
+        >
+          2.00
+        </div>
+        <div
+          class="main_box_minmax"
+        >
+           
+          <span>
+             min: 
+            1.00
+              max: 
+            3.00
+          </span>
+           
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    data-testid="mocked-charts"
+  />
+</div>
+`;
+
+exports[`Dashboard should render Dashboard, even when values are empty 1`] = `
+<div
+  class="wrapper"
+>
+  <div>
+    <h3 />
+    <div
+      class="wrapper"
+    >
+      <div
+        class="main_box_wrapper"
+      >
+        <div
+          class="main_box_title"
+        >
+          Session Time - Avg (mSec)
+        </div>
+        <div
+          class="main_box_value"
+        >
+          0
+        </div>
+        <div
+          class="main_box_minmax"
+        >
+           
+          <span>
+             min: 
+            0
+              max: 
+            0
+          </span>
+           
+        </div>
+      </div>
+      <div
+        class="main_box_wrapper"
+      >
+        <div
+          class="main_box_title"
+        >
+          Session Handshake Time - Avg (mSec)
+        </div>
+        <div
+          class="main_box_value"
+        >
+          0
+        </div>
+        <div
+          class="main_box_minmax"
+        >
+           
+          <span>
+             min: 
+            0
+              max: 
+            0
+          </span>
+           
+        </div>
+      </div>
+      <div
+        class="main_box_wrapper"
+      >
+        <div
+          class="main_box_title"
+        >
+          Download Speed - Avg (kB/sec)
+        </div>
+        <div
+          class="main_box_value"
+        >
+          0
+        </div>
+        <div
+          class="main_box_minmax"
+        >
+           
+          <span>
+             min: 
+            0
+              max: 
+            0
+          </span>
+           
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    data-testid="mocked-charts"
+  />
+</div>
+`;
