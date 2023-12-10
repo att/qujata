@@ -2,14 +2,14 @@
 apiVersion: autoscaling/v2beta1
 kind: HorizontalPodAutoscaler
 metadata:
-  name: {{ include "platform-exporter.fullname" . }}
+  name: {{ include "mysql.fullname" . }}
   labels:
-    {{- include "platform-exporter.labels" . | nindent 4 }}
+    {{- include "mysql.labels" . | nindent 4 }}
 spec:
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
-    name: {{ include "platform-exporter.fullname" . }}
+    name: {{ include "mysql.fullname" . }}
   minReplicas: {{ .Values.autoscaling.minReplicas }}
   maxReplicas: {{ .Values.autoscaling.maxReplicas }}
   metrics:

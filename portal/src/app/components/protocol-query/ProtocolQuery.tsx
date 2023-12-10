@@ -29,7 +29,7 @@ export const ProtocolQuery: React.FC<ProtocolQueryProps> = (props: ProtocolQuery
   const [algorithms, setAlgorithms] = useState<SelectOptionType>();
   const [prevSelectedValues, setPrevSelectedValues] = useState<string[]>([]);
   const [iterationsCount, setIterationsCount] = useState<SelectOptionType>();
-  const [messageSize, setMessageSize] = useState<SelectOptionType>();
+  // const [messageSize, setMessageSize] = useState<SelectOptionType>();
 
   const onSubmitHandler = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -94,10 +94,10 @@ export const ProtocolQuery: React.FC<ProtocolQueryProps> = (props: ProtocolQuery
     setIterationsCount(selectedIterationNum);
   }, []);
 
-  const onMessageSizeChanged: OnSelectChanged = useCallback((options: SelectOptionType): void => {
-    const selectedMessageSize: Options<AttSelectOption> = options as Options<AttSelectOption>;
-    setMessageSize(selectedMessageSize);
-  }, []);
+  // const onMessageSizeChanged: OnSelectChanged = useCallback((options: SelectOptionType): void => {
+  //   const selectedMessageSize: Options<AttSelectOption> = options as Options<AttSelectOption>;
+  //   setMessageSize(selectedMessageSize);
+  // }, []);
   
 
   const AlgorithmsCheckboxOption: React.FC<OptionProps> = (props: OptionProps) => {
@@ -149,7 +149,7 @@ export const ProtocolQuery: React.FC<ProtocolQueryProps> = (props: ProtocolQuery
               </label>
               <input
                 className={styles.input_form_item}
-                onChange={() => onExperimentNameChanged}
+                onChange={onExperimentNameChanged}
                 placeholder=''
                 required
               />
@@ -188,7 +188,7 @@ export const ProtocolQuery: React.FC<ProtocolQueryProps> = (props: ProtocolQuery
                 customComponent={{ Option: IterationsCheckboxOption as React.FC }}
               />
           </div>
-          <div className={styles.form_item}>
+          {/* <div className={styles.form_item}>
               <label className={styles.form_item_label}>
                 {PROTOCOL_QUERY_EN.FIELDS_LABEL.MESSAGE_SIZE} <span className={styles.required}>*</span>
               </label>
@@ -203,7 +203,7 @@ export const ProtocolQuery: React.FC<ProtocolQueryProps> = (props: ProtocolQuery
                 closeMenuOnSelect={false}
                 required
               />
-          </div>
+          </div> */}
           <div className={styles.form_item}>
               <label className={styles.form_item_label}>
                 {PROTOCOL_QUERY_EN.FIELDS_LABEL.DESCRIPTION}

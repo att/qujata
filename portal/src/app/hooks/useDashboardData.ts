@@ -73,7 +73,6 @@ export function useDashboardData(): IUseDashboardData {
   
       setAlgorithms(algoValues);
       setDashboardData(map);
-      console.log('algorithms:', algos);
       algoValues = algos.map((item: AttSelectOption) => item.value); 
     }
 
@@ -88,7 +87,6 @@ export function useDashboardData(): IUseDashboardData {
 
       setIterationsCount(iterationsValues);
       setDashboardData(map);
-      console.log('iterations:', iterations);
       iterationsValues = iterations.map((item: AttSelectOption) => +item.value);
     }
     
