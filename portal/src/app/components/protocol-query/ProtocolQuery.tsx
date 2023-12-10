@@ -24,14 +24,21 @@ export const ProtocolQuery: React.FC<ProtocolQueryProps> = (props: ProtocolQuery
   const { isFetching, canExportFile, onRunClick, onDownloadDataClicked } = props;
   const { algorithmOptions, algosBySection } = useGetAlgorithms();
   const { iterationsOptions } = useGetIterations();
+  
+  const [experimentName, setExperimentName] = useState('');
   const [algorithms, setAlgorithms] = useState<SelectOptionType>();
   const [prevSelectedValues, setPrevSelectedValues] = useState<string[]>([]);
   const [iterationsCount, setIterationsCount] = useState<SelectOptionType>();
   const [messageSize, setMessageSize] = useState<SelectOptionType>();
 
+  // Update experimentName when the user inputs a name
+  const onExperimentNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setExperimentName(event.target.value);
+  };
+
   const onSubmitHandler = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    onRunClick({ algorithms: algorithms as SelectOptionType, iterationsCount: iterationsCount as SelectOptionType });
+    onRunClick({ experimentName, algorithms: algorithms as SelectOptionType, iterationsCount: iterationsCount as SelectOptionType });
   };
 
   const onAlgorithmsChanged: OnSelectChanged = useCallback((options: SelectOptionType): void => {
@@ -143,6 +150,7 @@ export const ProtocolQuery: React.FC<ProtocolQueryProps> = (props: ProtocolQuery
               </label>
               <input
                 className={styles.input_form_item}
+                onChange={onExperimentNameChange}
                 placeholder=''
                 required
               />

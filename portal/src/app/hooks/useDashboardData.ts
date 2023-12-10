@@ -93,7 +93,7 @@ export function useDashboardData(): IUseDashboardData {
     }
     
     // Send the post request
-    post({ data: { algorithms: algoValues, iterationsCount: iterationsValues } });
+    post({ data: { experimentName: queryData.experimentName, algorithms: algoValues, iterationsCount: iterationsValues } });
   }, [post]);
 
   return {

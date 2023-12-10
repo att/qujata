@@ -37,7 +37,7 @@ export const HomeContent: React.FC = () => {
   }, [link]);
   
   const handleRunClick: (params: ITestParams) => void = useCallback((params: ITestParams): void => {
-    if (params.algorithms && params.iterationsCount) {
+    if (params.experimentName && params.algorithms && params.iterationsCount) {
       setDisplayLinkButton(true);
       handleRunQueryClick(params);
       setDashBoardLink(initialLink);

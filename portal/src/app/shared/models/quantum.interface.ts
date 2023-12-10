@@ -4,6 +4,7 @@ import { AttSelectOption } from '../components/att-select/AttSelect.model';
 export type ChartDataMap = Map<AttSelectOption, ITestResponseData | undefined>;
 
 export interface ITestParams {
+  experimentName: string;
   algorithms: SelectOptionType;
   iterationsCount: SelectOptionType;
 }
