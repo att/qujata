@@ -10,6 +10,7 @@ from src.models.env_info import EnvInfo
 from src.models.test_suite import TestSuite
 from src.models.test_run import TestRun
 from src.exceptions.exceptions import ApiException
+from src.services.metrics_service import aggregate
 
 def analyze(data):
     # start time is now - 60 sec, to show the graph before the test for sure started running
@@ -54,6 +55,10 @@ def __create_test_suite(data):
     return test_suite
  
 
+def __save_test_run_result(test_run):
+    aggregate(test_run)
+
+
 def __create_test_run(algorithm, iterations, test_suite_id):
     test_run = TestRun(
         start_time=datetime.now(),
@@ -65,6 +70,7 @@ def __create_test_run(algorithm, iterations, test_suite_id):
     __start_analyze(test_run)
     test_run.end_time=datetime.now()
     current_app.database_manager.add_to_db(test_run)
+    __save_test_run_result(test_run)
 
 
 def __start_analyze(test_run):
