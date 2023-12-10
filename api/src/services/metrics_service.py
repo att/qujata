@@ -15,9 +15,12 @@ def __query_prometheus_avg_metric(metric, service, start_time, end_time):
 
     start_timestamp = int(start_time.timestamp())
     end_timestamp = int(end_time.timestamp())
-    time_diff = str(end_timestamp-start_timestamp)
+    time_diff = end_timestamp-start_timestamp
+    if time_diff <= 0:
+        time_diff = 1
+    time_diff_str = str(time_diff)
 
-    metric_query = f'avg_over_time(rate({metric_expr}[30s])[{time_diff}s:1s])'
+    metric_query = f'avg_over_time(rate({metric_expr}[30s])[{time_diff_str}s:1s])'
 
     params = {
         "query": metric_query,

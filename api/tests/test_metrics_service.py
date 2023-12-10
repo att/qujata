@@ -55,6 +55,43 @@ class TestMetricsService(unittest.TestCase):
 
             self.assertEqual(self.app.database_manager.add_to_db.call_count, 4)
 
+    def test_aggregate_equals_start_end_time(self):
+        self.app.environment = 'docker'
+        test_run_id = 1
+        start_time = datetime(2023, 12, 6, 11, 45, 0, tzinfo=timezone.utc)
+        end_time = datetime(2023, 12, 6, 11, 45, 0, tzinfo=timezone.utc)
+        test_run = MagicMock(id=test_run_id, start_time=start_time, end_time=end_time)
+
+        query_responses = {
+            'status': 'success',
+            'data':
+                {
+                    'resultType': 'vector',
+                    'result': [
+                        {
+                            'value': [1701866456, '0.001311722311087755']
+                        }
+                    ]
+                }
+        }
+
+        with self.app.test_request_context():
+            with patch('requests.get') as mock_get:
+                mock_get.return_value.status_code = 200
+                mock_get.return_value.json.return_value = query_responses
+                aggregate(test_run)
+                # Verify that requests.get was called 4 times with the expected parameters
+                expected_calls = [
+                    call(f"{self.app.prometheus_url}/api/v1/query", params={'query': 'avg_over_time(rate(container_cpu_usage_seconds_total{name="qujata-curl"}[30s])[1s:1s])', 'time': 1701863100}),
+                    call(f"{self.app.prometheus_url}/api/v1/query", params={'query': 'avg_over_time(rate(container_memory_usage_bytes{name="qujata-curl"}[30s])[1s:1s])', 'time': 1701863100}),
+                    call(f"{self.app.prometheus_url}/api/v1/query", params={'query': 'avg_over_time(rate(container_cpu_usage_seconds_total{name="qujata-nginx"}[30s])[1s:1s])', 'time': 1701863100}),
+                    call(f"{self.app.prometheus_url}/api/v1/query", params={'query': 'avg_over_time(rate(container_memory_usage_bytes{name="qujata-nginx"}[30s])[1s:1s])', 'time': 1701863100}),
+                ]
+                mock_get.assert_has_calls(expected_calls, any_order=True)
+
+            self.assertEqual(self.app.database_manager.add_to_db.call_count, 4)
+
+
     def test_aggregate_kubernetes(self):
         self.app.environment = 'kubernetes'
         test_run_id = 1
@@ -139,7 +176,6 @@ class TestMetricsService(unittest.TestCase):
                 for call_args in calls_made:
                     _, args, _ = call_args
                     self.assertEqual(args[0].value, 0)
-
 
     def test_aggregate_request_exception(self):
         self.app.environment = 'docker'
