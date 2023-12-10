@@ -16,7 +16,7 @@ interface IAlgorithm {
     quantumSafe: string[];
 }
 
-export const algorithmSections = ['Classic', 'Hybrid', 'PQ'];
+export const algorithmSections = ['All', 'Classic', 'Hybrid', 'PQ'];
 export function useGetAlgorithms(): IUseGetAlgorithms {
     const [algorithmOptions, setOptions] = useState<AttSelectOption[]>([]);
     const [algosBySection, setAlgosBySection] = useState<AlgosBySectionDict>({});
@@ -37,17 +37,19 @@ export function useGetAlgorithms(): IUseGetAlgorithms {
 
             setOptions([
                 algorithmTitles[0],
-                ...classicOptions,
                 algorithmTitles[1],
-                ...hybridOptions,
+                ...classicOptions,
                 algorithmTitles[2],
+                ...hybridOptions,
+                algorithmTitles[3],
                 ...quantumSafeOptions
             ]);
 
             setAlgosBySection({
-                [algorithmSections[0]]: classicOptions,
-                [algorithmSections[1]]: hybridOptions,
-                [algorithmSections[2]]: quantumSafeOptions
+                [algorithmSections[0]]: classicOptions.concat(hybridOptions, quantumSafeOptions),
+                [algorithmSections[1]]: classicOptions,
+                [algorithmSections[2]]: hybridOptions,
+                [algorithmSections[3]]: quantumSafeOptions
             })
         }
     }, [data]);
