@@ -13,7 +13,7 @@ from src.utils.database_manager import DatabaseManager
 import logging
 
 
-class TestAPI(unittest.TestCase):
+class TestAnalyzeAPI(unittest.TestCase):
     def setUp(self):
         self.app = Flask(__name__)
         self.app.register_blueprint(api, url_prefix='/api')
