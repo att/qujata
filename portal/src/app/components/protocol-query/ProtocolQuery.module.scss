@@ -13,13 +13,13 @@ $titlesColor: #1D2329;
 
 .experiment_title {
   size: 18px;
-  margin-bottom: 0;
+  margin-block-end: 0;
 }
 
 .note {
   display: flex;
   align-items: center;
-  margin-bottom: 20px;
+  margin-block-end: 20px;
 }
 
 .note_title {
@@ -102,17 +102,17 @@ $titlesColor: #1D2329;
 }
 
 .iterations_input_option {
-  margin-right: 10px;
+  margin-inline-end: 10px;
   cursor: pointer;
 }
 
 .algorithms_input_option {
-  margin-right: 10px;
-  margin-left: 25px;
+  margin-inline-end: 10px;
+  margin-inline-start: 25px;
   cursor: pointer;
 }
 
 .algorithms_input_option_title {
-  margin-right: 10px;
+  margin-inline-end: 10px;
   cursor: pointer;
 }

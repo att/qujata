@@ -1,6 +1,7 @@
 import { renderHook } from '@testing-library/react';
 import { useFetch } from '../../../shared/hooks/useFetch';
-import { algorithmSections, useGetAlgorithms } from './useGetAlgorithms';
+import { useGetAlgorithms } from './useGetAlgorithms';
+import { algorithmSections } from '../constants';
 
 jest.mock('../../../shared/hooks/useFetch', () => ({
   useFetch: jest.fn(),

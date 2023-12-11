@@ -7,7 +7,9 @@ import { AttSelect, AttSelectOption } from '../../shared/components/att-select';
 import styles from './ProtocolQuery.module.scss';
 import { PROTOCOL_QUERY_EN } from './translate/en';
 import { Spinner, SpinnerSize } from '../../shared/components/att-spinner';
-import { algorithmSections, useGetAlgorithms, useGetIterations } from './hooks';
+import { useGetAlgorithms, useGetIterations } from './hooks';
+import { handleAlgorithmsSelection } from './utils';
+import { algorithmSections } from './constants';
 
 export type SelectOptionType = AttSelectOption | Options<AttSelectOption> | null;
 type onTextChangedEvent = (e: React.ChangeEvent<HTMLInputElement>) => void;
@@ -29,7 +31,6 @@ export const ProtocolQuery: React.FC<ProtocolQueryProps> = (props: ProtocolQuery
   const [algorithms, setAlgorithms] = useState<SelectOptionType>();
   const [prevSelectedValues, setPrevSelectedValues] = useState<string[]>([]);
   const [iterationsCount, setIterationsCount] = useState<SelectOptionType>();
-  // const [messageSize, setMessageSize] = useState<SelectOptionType>();
 
   const onSubmitHandler = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -42,47 +43,9 @@ export const ProtocolQuery: React.FC<ProtocolQueryProps> = (props: ProtocolQuery
 
   const onAlgorithmsChanged: OnSelectChanged = useCallback((options: SelectOptionType): void => {
     let selectedAlgorithms: Options<AttSelectOption> = options as Options<AttSelectOption>;
-    let selectedValues: string[] = selectedAlgorithms.map(option => option.value);
     
-    let newSelectedSections: string[] = [];
-    let newSelectedOptions: AttSelectOption[] = [];
-
-    for (const section of algorithmSections) {
-      // If no algorithms are selected, enable all the sections
-      if (!selectedAlgorithms.length) {
-        algorithmOptions.map((algo) => algo.value === section && algo.isDisabled ? algo.isDisabled = false : undefined)
-      }
-      // If a new section is selected, add all its options to the selected options
-      if (selectedValues.includes(section) && !prevSelectedValues.includes(section)) {
-        newSelectedSections.push(section);
-        selectedValues = selectedValues.filter((algo) => algo !== section).concat(algosBySection[section].map(opt => opt.value));
-        newSelectedOptions = newSelectedOptions.filter(option => !algosBySection[section].map(opt => opt.value).includes(option.value));
-        // Disable the section title
-        selectedAlgorithms.map((algo) => algo.value === section ? algo.isDisabled = true : undefined)
-      } else if (!selectedValues.includes(section) && prevSelectedValues.includes(section)) {
-        // If something inside the section is changed, update the selected options
-        newSelectedOptions = selectedAlgorithms.filter(option => !algosBySection[section].map(opt => opt.value).includes(option.value));
-      }
-    }
-
-    for (const option of algorithmOptions) {
-      // If the option is selected and it's not already in the new selected options, add it
-      if (!newSelectedSections.includes(option.value) &&
-          selectedValues.includes(option.value) &&
-          !newSelectedOptions.map(opt => opt.value).includes(option.value)) 
-      {
-        newSelectedOptions.push(option);
-        // Check if all the options inside a section are selected
-        // If they are, disable the section title, otherwise enable it
-        for (const section of algorithmSections) {
-          const sectionOptions = algosBySection[section].map(opt => opt.value);
-
-          (sectionOptions.every(opt => selectedValues.includes(opt)))
-          ? algorithmOptions.map((algo) => algo.value === section ? algo.isDisabled = true : undefined)
-          : algorithmOptions.map((algo) => algo.value === section ? algo.isDisabled = false : undefined)
-        }
-      }
-    }
+    const { newSelectedOptions, selectedValues } = 
+      handleAlgorithmsSelection(selectedAlgorithms, algorithmOptions, algosBySection, prevSelectedValues);
 
     // Update the selected algorithms and the previous selected values
     setAlgorithms(newSelectedOptions);
@@ -93,11 +56,6 @@ export const ProtocolQuery: React.FC<ProtocolQueryProps> = (props: ProtocolQuery
     const selectedIterationNum: Options<AttSelectOption> = options as Options<AttSelectOption>;
     setIterationsCount(selectedIterationNum);
   }, []);
-
-  // const onMessageSizeChanged: OnSelectChanged = useCallback((options: SelectOptionType): void => {
-  //   const selectedMessageSize: Options<AttSelectOption> = options as Options<AttSelectOption>;
-  //   setMessageSize(selectedMessageSize);
-  // }, []);
   
 
   const AlgorithmsCheckboxOption: React.FC<OptionProps> = (props: OptionProps) => {
@@ -188,22 +146,6 @@ export const ProtocolQuery: React.FC<ProtocolQueryProps> = (props: ProtocolQuery
                 customComponent={{ Option: IterationsCheckboxOption as React.FC }}
               />
           </div>
-          {/* <div className={styles.form_item}>
-              <label className={styles.form_item_label}>
-                {PROTOCOL_QUERY_EN.FIELDS_LABEL.MESSAGE_SIZE} <span className={styles.required}>*</span>
-              </label>
-              <AttSelect
-                className={styles.select_form_item}
-                options={[{label: 'test1', value: 'test1'}, {label: 'test2', value: 'test2'}]}
-                placeholder={PROTOCOL_QUERY_EN.FIELDS_LABEL.PLACEHOLDER}
-                value={messageSize as AttSelectOption}
-                onChange={onMessageSizeChanged}
-                isMulti
-                hideSelectedOptions={false}
-                closeMenuOnSelect={false}
-                required
-              />
-          </div> */}
           <div className={styles.form_item}>
               <label className={styles.form_item_label}>
                 {PROTOCOL_QUERY_EN.FIELDS_LABEL.DESCRIPTION}

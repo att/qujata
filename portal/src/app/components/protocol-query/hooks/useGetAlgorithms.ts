@@ -2,8 +2,9 @@ import { AttSelectOption } from "../../../shared/components/att-select";
 import { IHttp, useFetch } from "../../../shared/hooks/useFetch";
 import { useEffect, useState } from "react";
 import { APIS } from "../../../apis";
+import { algorithmSections } from "../constants";
 
-type AlgosBySectionDict = { [key: string]: AttSelectOption[] };
+export type AlgosBySectionDict = { [key: string]: AttSelectOption[] };
 
 export interface IUseGetAlgorithms {
     algorithmOptions: AttSelectOption[];
@@ -16,7 +17,6 @@ interface IAlgorithm {
     quantumSafe: string[];
 }
 
-export const algorithmSections = ['All', 'Classic', 'Hybrid', 'PQ'];
 export function useGetAlgorithms(): IUseGetAlgorithms {
     const [algorithmOptions, setOptions] = useState<AttSelectOption[]>([]);
     const [algosBySection, setAlgosBySection] = useState<AlgosBySectionDict>({});

@@ -21,8 +21,8 @@ export function useDashboardData(): IUseDashboardData {
   // const { post, data, status, error, cancelRequest }: IHttp<ITestResponse> = useFetch<ITestResponse>({ url: APIS.analyze });
   const { post, data, status, error, cancelRequest }: IHttp<IQueryResponse> = useFetch<IQueryResponse>({ url: APIS.analyze });
   const [dashboardData, setDashboardData] = useState<ChartDataMap>(() => new Map<AttSelectOption, ITestResponseData | undefined>());
-  const [algorithms, setAlgorithms] = useState<string[] | undefined>([]);
-  const [iterationsCount, setIterationsCount] = useState<number[] | undefined>();
+  const [algorithms, setAlgorithms] = useState<string[]>([]);
+  const [iterationsCount, setIterationsCount] = useState<number[]>([]);
   const generateFromTime: number = Date.now();
   const initialLink: string = `${Environment.dashboardLinkHost}/${DashBoardPrefixLink}&from=${generateFromTime}`;
   const [link, setLink] = useState<string>(initialLink);
