@@ -17,17 +17,25 @@ class TestEnvInfoAPI(unittest.TestCase):
 
     def test_insert_env_info_success(self):
         request_data = {
-            'resource_name': 'Test Resource',
-            'operating_system': 'Test OS',
+            'resourceName': 'Test Resource',
+            'operatingSystem': 'Test OS',
             'cpu': 'Test CPU',
-            'cpu_architecture': 'Test Architecture',
-            'cpu_cores': 4,
-            'clock_speed': '2.4 GHz',
-            'node_size': 'Medium'
+            'cpuArchitecture': 'Test Architecture',
+            'cpuCores': 4,
+            'clockSpeed': '2.4 GHz',
+            'nodeSize': 'Medium'
         }
         response = self.client.post('/api/env-info', json=request_data)
 
-        expected_env_info = EnvInfo(**request_data)
+        expected_env_info = EnvInfo(
+            resource_name=request_data.get('resourceName'),
+            operating_system=request_data.get('operatingSystem'),
+            cpu=request_data.get('cpu'),
+            cpu_architecture=request_data.get('cpuArchitecture'),
+            cpu_cores=request_data.get('cpuCores'),
+            clock_speed=request_data.get('clockSpeed'),
+            node_size=request_data.get('nodeSize')
+        )
         self.assertEqual(self.app.database_manager.add_to_db.call_count, 1)
         actual_call_args = self.app.database_manager.add_to_db.call_args.args
         actual_dict = {key: value for key, value in vars(actual_call_args[0]).items() if key != '_sa_instance_state'}
@@ -38,10 +46,10 @@ class TestEnvInfoAPI(unittest.TestCase):
 
     def test_insert_env_info_missing_fields(self):
         request_data = {
-            'resource_name': 'Test Resource',
-            'operating_system': 'Test OS',
+            'resourceName': 'Test Resource',
+            'operatingSystem': 'Test OS',
             'cpu': 'Test CPU',
-            'node_size': 'Medium'
+            'nodeSize': 'Medium'
         }
         response = self.client.post('/api/env-info', json=request_data)
 
@@ -58,7 +66,7 @@ class TestEnvInfoAPI(unittest.TestCase):
 
     def test_insert_env_info_invalid_payload(self):
         request_data = {
-            'invalid_key': 'Invalid Value'
+            'invalidKey': 'Invalid Value'
         }
         response = self.client.post('/api/env-info', json=request_data)
 
@@ -68,10 +76,10 @@ class TestEnvInfoAPI(unittest.TestCase):
 
     def test_insert_env_info_db_throws_error(self):
         request_data = {
-            'resource_name': 'Test Resource',
-            'operating_system': 'Test OS',
+            'resourceName': 'Test Resource',
+            'operatingSystem': 'Test OS',
             'cpu': 'Test CPU',
-            'node_size': 'Medium'
+            'nodeSize': 'Medium'
         }
         self.app.database_manager.add_to_db.side_effect = Exception('Test Exception')
 

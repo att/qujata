@@ -9,7 +9,7 @@ from src.models.test_run_result import TestRunResult
 env_info_api = Blueprint('qujata-api', __name__)
 
 # Define the expected keys
-expected_keys = ['resource_name', 'operating_system', 'cpu', 'cpu_architecture', 'cpu_cores', 'clock_speed', 'node_size']
+expected_keys = ['resourceName', 'operatingSystem', 'cpu', 'cpuArchitecture', 'cpuCores', 'clockSpeed', 'nodeSize']
 
 
 @env_info_api.route('/env-info', methods=['POST'])
@@ -20,15 +20,14 @@ def insert_env_info():
 
     # Check that at least one expected key-value pair exists in the JSON payload
     if data and any(key in data and data[key] is not None for key in expected_keys):
-
         new_env_info = EnvInfo(
-            resource_name=data.get('resource_name'),
-            operating_system=data.get('operating_system'),
+            resource_name=data.get('resourceName'),
+            operating_system=data.get('operatingSystem'),
             cpu=data.get('cpu'),
-            cpu_architecture=data.get('cpu_architecture'),
-            cpu_cores=data.get('cpu_cores'),
-            clock_speed=data.get('clock_speed'),
-            node_size=data.get('node_size')
+            cpu_architecture=data.get('cpuArchitecture'),
+            cpu_cores=data.get('cpuCores'),
+            clock_speed=data.get('clockSpeed'),
+            node_size=data.get('nodeSize')
         )
         try:
             current_app.database_manager.add_to_db(new_env_info)

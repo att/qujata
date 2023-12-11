@@ -38,3 +38,12 @@ def get_test_runs(test_suite_id):
 def get_test_run(test_suite_id, test_run_id):
     return jsonify(tests_service.get_test_run(test_suite_id, test_run_id).to_dict())
 
+@api.route('/test_suites/<int:test_suite_id>/metrics', methods=['GET'])
+@cross_origin(origins=['*'], supports_credentials=True)
+def get_test_run_results(test_suite_id):
+    response = tests_service.get_test_suite_results(test_suite_id)
+    if response is not None:
+        return jsonify(response), 200
+    else:
+        return jsonify({"error": "Failed to retrieve test run results"}), 500
+
