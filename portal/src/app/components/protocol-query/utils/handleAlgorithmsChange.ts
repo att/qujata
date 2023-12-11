@@ -2,13 +2,15 @@ import { Options } from 'react-select';
 import { AttSelectOption } from '../../../shared/components/att-select';
 import { AlgosBySectionDict } from '../hooks';
 import { algorithmSections } from '../constants';
+import { SelectOptionType } from '../ProtocolQuery';
 
 export function handleAlgorithmsSelection(
-  selectedAlgorithms: Options<AttSelectOption>,
+  options: SelectOptionType,
   algorithmOptions: AttSelectOption[],
   algosBySection: AlgosBySectionDict,
   prevSelectedValues: string[]
   ) {
+    let selectedAlgorithms: Options<AttSelectOption> = options as Options<AttSelectOption>;
     let selectedValues: string[] = selectedAlgorithms.map(option => option.value);
     let newSelectedSections: string[] = [];
     let newSelectedOptions: AttSelectOption[] = [];
