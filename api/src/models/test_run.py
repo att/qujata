@@ -16,3 +16,12 @@ class TestRun(Base):
     # test_run_metric_results = relationship('TestRunMetricResult', back_populates='test_run')
 
   
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'start_time': self.start_time,
+            'end_time': self.end_time,
+            'algorithm': self.algorithm,
+            'iterations': self.iterations,
+            'message_size': self.message_size            
+        }

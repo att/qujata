@@ -15,3 +15,15 @@ class EnvInfo(Base):
     clock_speed = Column(String(255))
     node_size = Column(String(255))
     test_suites = relationship('TestSuite', back_populates='env_info')
+
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'resource_name': self.resource_name,
+            'operating_system': self.operating_system,
+            'cpu': self.cpu,
+            'cpu_architecture': self.cpu_architecture,
+            'cpu_cores': self.cpu_cores,          
+            'clock_speed': self.clock_speed,           
+            'node_size': self.node_size
+        }

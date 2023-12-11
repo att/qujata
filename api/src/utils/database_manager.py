@@ -23,6 +23,9 @@ class DatabaseManager:
             
         return query.all()
 
+    def get_record_by_id(self, model, id):
+        return self.__db.session.query(model).get(id)
+
     def get_last_record(self, model):
         last_record = self.__db.session.query(model).order_by(model.id.desc()).first()
         return last_record

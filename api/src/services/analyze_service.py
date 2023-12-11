@@ -12,8 +12,8 @@ from src.models.test_run import TestRun
 from src.exceptions.exceptions import ApiException
 
 def analyze(data):
-    # start time is now - 60 sec, to show the graph before the test for sure started running
     test_suite = __create_test_suite(data)
+    # start time is now - 60 sec, to show the graph before the test for sure started running
     start_time = int(datetime.timestamp(datetime.now() - timedelta(seconds=60)) * 1000)
     iterations_count = data['iterationsCount']
     algorithms = data['algorithms']
