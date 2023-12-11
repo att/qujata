@@ -2,6 +2,8 @@ from flask import Blueprint, jsonify, request, current_app
 from flask_cors import cross_origin
 from src.models.env_info import EnvInfo
 from src.models.test_suite import TestSuite
+from src.models.test_run import TestRun
+from src.models.test_run_result import TestRunResult
 
 
 env_info_api = Blueprint('qujata-api', __name__)

@@ -6,5 +6,4 @@ python-dotenv==1.0.0
 coverage==7.3.2
 flask-sqlalchemy==3.1.1
 pymysql==1.1.0
-mysql-connector-python==8.2.0
 cryptography==41.0.7
