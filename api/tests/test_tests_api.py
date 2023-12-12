@@ -27,6 +27,7 @@ class TestTestsAPI(unittest.TestCase):
         return TestSuite(
             protocol="TLS 1.3",
             name="name",
+            description="description",
             env_info_id=1,
             env_info=self.__env_info(),
             code_release=self.app.code_release,

@@ -11,6 +11,39 @@ from src.models.test_suite import TestSuite
 from src.models.test_run import TestRun
 from src.exceptions.exceptions import ApiException
 
+def create_test_suite(data):
+    env_info = current_app.database_manager.get_last_record(EnvInfo)
+    if env_info == None:
+        raise ApiException('Missing env info in database', 'Analyze test failed to complete', 422)
+
+    test_suite = TestSuite(
+        protocol="TLS 1.3",
+        name=data["experimentName"],
+        description=data["description"],
+        env_info_id=env_info.id,
+        code_release=current_app.code_release,
+        created_by="",
+        created_date=datetime.now(),
+        updated_by="",
+        updated_date=datetime.now(),
+    )    
+    current_app.database_manager.add_to_db(test_suite)
+    return test_suite
+
+def create_test_run(start_time, end_time, algorithm, iterations, test_suite_id):
+    test_run = TestRun(
+        start_time=start_time,
+        end_time=end_time,
+        algorithm=algorithm,
+        iterations=iterations,
+        # message_size=1024,
+        test_suite_id=test_suite_id
+    )    
+    current_app.database_manager.add_to_db(test_run)
+    return test_run
+
+
+
 def get_test_suites():
     return current_app.database_manager.get_records(TestSuite)
 

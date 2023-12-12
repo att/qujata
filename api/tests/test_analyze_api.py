@@ -25,7 +25,8 @@ class TestAnalyzeAPI(unittest.TestCase):
         input_data = {
             "algorithms":["kyber512"],
             "iterationsCount": [1000, 2000],
-            "experimentName": "name"
+            "experimentName": "name",
+            "description": "name"
         }
         # Mock the requests.post call
         with patch('requests.post') as mock_post:
@@ -48,7 +49,8 @@ class TestAnalyzeAPI(unittest.TestCase):
         input_data = {
             "algorithms":["kyber512"],
             "iterationsCount": [1000],
-            "experimentName": "name"
+            "experimentName": "name",
+            "description": "name"
 
         }
         # Mock the requests.post call to raise an exception
@@ -65,7 +67,8 @@ class TestAnalyzeAPI(unittest.TestCase):
         input_data = {
             "algorithms":["kyber512"],
             "iterationsCount": [-1],
-            "experimentName": "name"
+            "experimentName": "name",
+            "description": "name"
         }
         response = self.client.post('/api/analyze',
                                     data=json.dumps(input_data),
@@ -80,7 +83,8 @@ class TestAnalyzeAPI(unittest.TestCase):
         input_data = {
             "algorithms":["invalid_algorithm"],
             "iterationsCount": [1000],
-            "experimentName": "name"
+            "experimentName": "name",
+            "description": "name"
         }        
         response = self.client.post('/api/analyze',
                                     data=json.dumps(input_data),
@@ -94,7 +98,8 @@ class TestAnalyzeAPI(unittest.TestCase):
     def test_analyze_with_invalid_body(self):   
         input_data = {
             "iterationsCount": 1000,
-            "experimentName": "name"
+            "experimentName": "name",
+            "description": "name"
         }
         response = self.client.post('/api/analyze',
                                 data=json.dumps(input_data),
@@ -108,7 +113,8 @@ class TestAnalyzeAPI(unittest.TestCase):
         input_data = {
             "algorithms":["kyber512"],
             "iterationsCount": [1000],
-            "experimentName": "name"
+            "experimentName": "name",
+            "description": "name"
         }
         # Mock the requests.post call
         with patch('requests.post') as mock_post:
@@ -127,7 +133,8 @@ class TestAnalyzeAPI(unittest.TestCase):
         input_data = {
             "algorithms":["kyber512"],
             "iterationsCount": [1000],
-            "experimentName": "name"
+            "experimentName": "name",
+            "description": "name"
         }
         self.app.database_manager.get_last_record.return_value = None
         response = self.client.post('/api/analyze',
@@ -144,7 +151,8 @@ class TestAnalyzeAPI(unittest.TestCase):
         input_data = {
             "algorithms":["kyber512"],
             "iterationsCount": [1000],
-            "experimentName": "name"
+            "experimentName": "name",
+            "description": "name"
         }
         src.controllers.analyze_api.process_is_running = True
         # Mock the requests.post call
@@ -161,7 +169,8 @@ class TestAnalyzeAPI(unittest.TestCase):
         input_data = {
             "algorithms":["kyber512","frodo640aes"],
             "iterationsCount": [1000],
-            "experimentName": "name"
+            "experimentName": "name",
+            "description": "name"
         }
         # Mock the requests.post call
         with patch('requests.post') as mock_post:
