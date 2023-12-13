@@ -1,6 +1,7 @@
 import { createBrowserRouter } from 'react-router-dom';
 import Root from './Root';
 import { Home } from '../app/components/home/Home';
+import { Experiment } from '../app/components/home/components/experiment';
 
 const isAllExperimentTabEnabled = false;
 export const router = createBrowserRouter([
@@ -10,13 +11,12 @@ export const router = createBrowserRouter([
         children: [
           {
             path: '/qujata',
+            index: true,
             element: <Home />,
-            children: [
-                {
-                    path: '',
-                    element: <div>Experiment Name</div>,
-                },
-            ],
+          },
+          {
+            path: '/experiment',
+            element: <Experiment />,
           },
           ...(isAllExperimentTabEnabled ? [{
             path: 'All-Experiments',
