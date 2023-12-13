@@ -1,7 +1,6 @@
 @import "src/styles/variables-keys";
 
 $inputBorderColor: #DCDFE3;
-$required: #FF585D;
 $titlesColor: #1D2329;
 
 .wrapper {
@@ -24,7 +23,7 @@ $titlesColor: #1D2329;
 
 .note_title {
   margin-right: 10px;
-  font-weight: bold;
+  font-family: var($fontMedium);
 }
 
 .form_item { 
@@ -50,6 +49,10 @@ $titlesColor: #1D2329;
   margin-block-start: 4px;
   block-size: 50px;
   padding-inline: 22px;
+
+  &:focus {
+    outline: 1px solid var($attPurple);
+  }
 }
 
 .run_button {
@@ -77,9 +80,12 @@ $titlesColor: #1D2329;
   border-radius: 20px;
   #{$selectControlHeight}: 48px;
   border: 1px solid $inputBorderColor;
-  
   block-size: 150px;
   padding: 22px;
+
+  &:focus {
+    outline: 1px solid var($attPurple);
+  }
 }
 
 .submitButtonWrapper {
@@ -98,5 +104,5 @@ $titlesColor: #1D2329;
 }
 
 .required {
-  color: $required;
+  color: var($attBerry);
 }
