@@ -1,0 +1,58 @@
+{ 
+  "environment_info": { 
+    "resourceName": "gddn-aks", 
+    "operatingSystem": "Linux", 
+    "cpu": "3rd Generation Platinum 8370C",
+    "cpuArchitecture": "Ice Lake", 
+    "cpuCores": "4", 
+    "cpuClockSpeed": "4 MHz", 
+    "nodeSize": "Standard_D4s_v5", 
+    "codeRelease": "1.1.0", 
+    "testSuiteId": 108,
+    "testSuiteName": "my experiment"
+  }, 
+  "testRuns": [ 
+    { 
+      "algorithm": "Algorithm1", 
+      "iterations": 1000, 
+      "messageSizeBytes": 1024, 
+      "results":  
+      { 
+        "averageCPU": 25.5, 
+        "averageMemory": 512, 
+        "errorRate": 0.05, 
+        "bytesThroughput": 2048000, 
+        "messagesThroughput": 500, 
+        "averageTLSHandshakeTime": 10.2 
+	    } 
+    }, 
+    { 
+      "algorithm": "Algorithm2", 
+      "iterations": 1000, 
+      "messageSizeBytes": 1024, 
+      "results":  
+      { 
+        "averageCPU": 25.5, 
+        "averageMemory": 512, 
+        "errorRate": 0.05, 
+        "bytesThroughput": 2048000, 
+        "messagesThroughput": 500, 
+        "averageTLSHandshakeTime": 10.2 
+      } 
+    }, 
+    { 
+      "algorithm": "Algorithm1", 
+      "iterations": 100, 
+      "messageSizeBytes": 104, 
+      "results":  
+      { 
+        "averageCPU": 2, 
+        "averageMemory": 52, 
+        "errorRate": 0.05, 
+        "bytesThroughput": 2000, 
+        "messagesThroughput": 50, 
+        "averageTLSHandshakeTime": 10
+      } 
+    } 
+  ]
+}
