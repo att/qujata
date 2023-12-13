@@ -243,6 +243,7 @@ exports[`ProtocolQuery should render ProtocolQuery 1`] = `
       </label>
       <textarea
         class="form_item_text_area"
+        placeholder=""
       />
     </div>
     <div

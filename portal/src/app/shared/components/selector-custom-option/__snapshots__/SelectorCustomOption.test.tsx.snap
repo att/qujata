@@ -5,13 +5,22 @@ exports[`SelectorCustomOption should render AlgorithmsSelectorCustomOption corre
   aria-disabled="false"
   class="css-0"
 >
-  <div>
+  <div
+    class="option_wrapper"
+  >
     <input
-      class="algorithms_input_option"
+      class="input_option"
       type="checkbox"
     />
+    <img
+      alt="checked"
+      class="algorithms_input_option"
+      src="unchecked.svg"
+    />
   </div>
-  <span>
+  <span
+    class="algorithms_input_option"
+  >
     Option 1
   </span>
 </div>
@@ -22,10 +31,16 @@ exports[`SelectorCustomOption should render IterationsSelectorCustomOption corre
   aria-disabled="false"
   class="css-0"
 >
-  <div>
+  <div
+    class="option_wrapper"
+  >
     <input
-      class="iterations_input_option"
+      class="iterations_input_option input_option"
       type="checkbox"
+    />
+    <img
+      alt="checked"
+      src="unchecked.svg"
     />
   </div>
   <span>

@@ -1,7 +1,7 @@
 import { createBrowserRouter } from 'react-router-dom';
 import Root from './Root';
 import { Home } from '../app/components/home/Home';
-import { Experiment } from '../app/components/home/components/experiment';
+import { Experiment } from '../app/components/home/components/experiment/Experiment';
 
 const isAllExperimentTabEnabled = false;
 export const router = createBrowserRouter([
