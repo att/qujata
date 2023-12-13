@@ -6,8 +6,9 @@ import requests
 from flask import Flask
 from unittest.mock import Mock, MagicMock, patch
 
-from src.controllers.analyze_api import api
-import src.controllers.analyze_api
+from src.api.analyze_api import api
+from src.enums.status import Status
+import src.api.analyze_api
 from config.settings import load_config
 from src.utils.database_manager import DatabaseManager
 import logging
@@ -119,15 +120,14 @@ class TestAnalyzeAPI(unittest.TestCase):
         # Mock the requests.post call
         with patch('requests.post') as mock_post:
             mock_post.return_value = MagicMock(status_code=423, json=lambda: {'result': 'failed'})
-            logging.info("response_json")
-
             response = self.client.post('/api/analyze',
                                     data=json.dumps(input_data),
                                     content_type='application/json')
-            self.assertEqual(response.status_code, 423)
-            response_json = json.loads(response.data)
-            logging.info(response_json)
-            self.assertEqual(response_json["error"], "Analyze test failed to complete")
+            self.assertEqual(response.status_code, 200)
+            actual_test_suite = self.app.database_manager.add_to_db.call_args.args
+            self.assertEqual(actual_test_suite[0].status, Status.FAILED)
+            self.assertEqual(actual_test_suite[0].status_message, '{"result": "failed"}')
+
 
     def test_analyze_with_missing_env_info(self):
         input_data = {
@@ -154,7 +154,7 @@ class TestAnalyzeAPI(unittest.TestCase):
             "experimentName": "name",
             "description": "name"
         }
-        src.controllers.analyze_api.process_is_running = True
+        src.api.analyze_api.process_is_running = True
         # Mock the requests.post call
         response = self.client.post('/api/analyze',
                                     data=json.dumps(input_data),
@@ -163,7 +163,7 @@ class TestAnalyzeAPI(unittest.TestCase):
         self.assertEqual(response.status_code, 423)
         response_json = json.loads(response.data)
         self.assertEqual(response_json["error"], "Current test is still running")
-        src.controllers.analyze_api.process_is_running = False
+        src.api.analyze_api.process_is_running = False
 
     def test_analyze_sleep_between_tests(self):
         input_data = {

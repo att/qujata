@@ -3,6 +3,7 @@ import uuid
 import time
 import requests
 import logging
+import json
 
 from datetime import datetime, timedelta
 from flask import jsonify, current_app
@@ -10,7 +11,11 @@ import src.services.tests_service as tests_service
 from src.models.env_info import EnvInfo
 from src.models.test_suite import TestSuite
 from src.models.test_run import TestRun
+from src.enums.status import Status
 from src.exceptions.exceptions import ApiException
+
+# constants
+WAIT_MS = 15
 
 def analyze(data):
     test_suite = tests_service.create_test_suite(data)
@@ -22,7 +27,7 @@ def analyze(data):
     for algorithm in algorithms:
         for iterations in iterations_count:
             if not first_run:
-                time.sleep(15)
+                time.sleep(WAIT_MS)
             else:
                 first_run = False
             __create_test_run(algorithm, iterations, test_suite.id)
@@ -37,23 +42,25 @@ def analyze(data):
 
 def __create_test_run(algorithm, iterations, test_suite_id):
     start_time=datetime.now()
-    __run_test(algorithm, iterations)
+    status, status_message = __run(algorithm, iterations)
     end_time=datetime.now()
-    tests_service.create_test_run(start_time, end_time, algorithm, iterations, test_suite_id)
+    tests_service.create_test_run(start_time, end_time, algorithm, iterations, test_suite_id, status, status_message)
 
-def __run_test(algorithm, iterations):
+def __run(algorithm, iterations):
     logging.debug('Running test for algorithm: ', algorithm)
     payload = {
         'algorithm': algorithm,
         'iterationsCount': iterations
     }
     headers = { 'Content-Type': 'application/json' }
-    response = requests.post(current_app.curl_url + "/curl", headers=headers, json=payload, timeout=int(current_app.request_timeout))
+    response = requests.post(current_app.configurations.curl_url + "/curl", headers=headers, json=payload, timeout=int(current_app.configurations.request_timeout))
 
-    __validate_response(response.status_code, algorithm, iterations)
+    return __validate_response(response, algorithm, iterations)
         
 
 
-def __validate_response(response_code, algorithm, iterations):
-    if(response_code < 200 or response_code > 299):
-        raise ApiException('Error occurred while running algorithm: ' + algorithm + ' iterations: ' + str(iterations), 'Analyze test failed to complete', response_code)
+def __validate_response(response, algorithm, iterations):
+    if(response.status_code < 200 or response.status_code  > 299):
+        return Status.FAILED, json.dumps(response.json())
+    else:
+        return Status.SUCCESS, ""
