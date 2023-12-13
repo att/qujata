@@ -20,6 +20,7 @@ CREATE TABLE IF NOT EXISTS env_info (
 CREATE TABLE IF NOT EXISTS test_suites (
                              id INT AUTO_INCREMENT PRIMARY KEY,
                              name VARCHAR(255),
+                             description VARCHAR(255),
                              protocol VARCHAR(50),
                              env_info_id INT,
                              code_release VARCHAR(255),
