@@ -23,6 +23,7 @@ describe('Dashboard', () => {
         label: '1000',
         value: '1000',
       },
+      description: 'Sample description',
     };
 
     const sampleData = {

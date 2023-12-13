@@ -37,7 +37,12 @@ describe('Home', () => {
     test('should click on run button', async () => {
       (ProtocolQuery as jest.Mock).mockImplementation((props: ProtocolQueryProps) => {
         function onClick() {
-          props.onRunClick({ experimentName: 'test', algorithms: {label: 'regular', value: 'regular'}, iterationsCount: {label: 'regular', value: 'regular'}});
+          props.onRunClick({ 
+            experimentName: 'test',
+            algorithms: { label: 'regular', value: 'regular' },
+            iterationsCount: { label: 'regular', value: 'regular' },
+            description: 'test'
+          });
         }
         return <div onClick={onClick} data-testid='submit-id'>SubHeader</div>;
       });

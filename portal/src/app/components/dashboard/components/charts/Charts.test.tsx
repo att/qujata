@@ -16,7 +16,8 @@ describe('Charts', () => {
       iterationsCount: {
         label: '1000',
         value: '1000',
-      }
+      },
+      description: 'test'
     };
 
     const sampleData: Partial<ITestResponseData> = {

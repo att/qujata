@@ -61,7 +61,7 @@ export function useDashboardData(): IUseDashboardData {
   const handleRunQueryClick: (queryData: ITestParams) => void = useCallback((queryData: ITestParams): void => {
     let algoValues: string[] = [];
     let iterationsValues: number[] = [];
-
+    
     if (queryData.algorithms) {
       const algos = queryData.algorithms as AttSelectOption[];
       const map: ChartDataMap = new Map<AttSelectOption, ITestResponseData | undefined>();
@@ -91,7 +91,14 @@ export function useDashboardData(): IUseDashboardData {
     }
     
     // Send the post request
-    post({ data: { experimentName: queryData.experimentName, algorithms: algoValues, iterationsCount: iterationsValues } });
+    post({
+      data: {
+        experimentName: queryData.experimentName,
+        algorithms: algoValues,
+        iterationsCount: iterationsValues,
+        description: queryData.description
+      } 
+    });
   }, [post]);
 
   return {

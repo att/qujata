@@ -560,7 +560,8 @@ describe('useDashboardData', () => {
     const testData: ITestParams = {
       experimentName: 'test',
       algorithms: [{ label: 'algo1', value: 'algo1' }, { label: 'algo2', value: 'algo2' }, { label: 'algo3', value: 'algo3' }, { label: 'algo4', value: 'algo4' }],
-      iterationsCount: [{ label: '1000', value: '1000' }]
+      iterationsCount: [{ label: '1000', value: '1000' }],
+      description: 'test'
     };
 
     act(() => {
@@ -571,7 +572,8 @@ describe('useDashboardData', () => {
       data: {
         experimentName: 'test',
         algorithms: ['algo1', 'algo2', 'algo3', 'algo4'],
-        iterationsCount: [1000]
+        iterationsCount: [1000],
+        description: 'test'
       }
     });
   });

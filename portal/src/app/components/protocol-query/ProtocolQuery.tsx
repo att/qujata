@@ -13,6 +13,7 @@ import { AlgorithmsSelectorCustomOption, IterationsSelectorCustomOption } from '
 
 export type SelectOptionType = AttSelectOption | Options<AttSelectOption> | null;
 type onTextChangedEvent = (e: React.ChangeEvent<HTMLInputElement>) => void;
+type onTextAreaChangedEvent = (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
 export type OnSelectChanged = (event: SelectOptionType) => void;
 
 export interface ProtocolQueryProps {
@@ -29,12 +30,18 @@ export const ProtocolQuery: React.FC<ProtocolQueryProps> = (props: ProtocolQuery
   
   const [experimentName, setExperimentName] = useState('');
   const [algorithms, setAlgorithms] = useState<SelectOptionType>();
-  const [iterationsCount, setIterationsCount] = useState<SelectOptionType>();
   const [prevSelectedValues, setPrevSelectedValues] = useState<string[]>([]);
+  const [iterationsCount, setIterationsCount] = useState<SelectOptionType>();
+  const [description, setDescription] = useState('');
 
   const onSubmitHandler = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    onRunClick({ experimentName, algorithms: algorithms as SelectOptionType, iterationsCount: iterationsCount as SelectOptionType });
+    onRunClick({
+      experimentName,
+      algorithms: algorithms as SelectOptionType,
+      iterationsCount: iterationsCount as SelectOptionType,
+      description
+    });
   };
 
   const onExperimentNameChanged: onTextChangedEvent = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -53,6 +60,10 @@ export const ProtocolQuery: React.FC<ProtocolQueryProps> = (props: ProtocolQuery
     const selectedIterationNum: Options<AttSelectOption> = options as Options<AttSelectOption>;
     setIterationsCount(selectedIterationNum);
   }, []);
+
+  const onDescriptionChanged: onTextAreaChangedEvent = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setDescription(event.target.value);
+  };
   
   return (
     <div className={styles.protocol_query_wrapper}>
@@ -113,7 +124,11 @@ export const ProtocolQuery: React.FC<ProtocolQueryProps> = (props: ProtocolQuery
               <label className={styles.form_item_label}>
                 {PROTOCOL_QUERY_EN.FIELDS_LABEL.DESCRIPTION}
               </label>
-              <textarea className={styles.form_item_text_area}></textarea>
+              <textarea
+                className={styles.form_item_text_area}
+                onChange={onDescriptionChanged}
+                placeholder=''
+              />
           </div>
           <div className={styles.submitButtonWrapper}>
               <Button
