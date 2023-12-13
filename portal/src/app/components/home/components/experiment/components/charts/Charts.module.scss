@@ -1,0 +1,16 @@
+@import "src/styles/variables-keys";
+
+.charts_wrapper {
+    margin-block-start: 20px;
+}
+
+.title {
+    font-family: var($fontMedium);
+    font-size: 18px;
+    margin-block-end: 20px;
+}
+
+.chart_wrapper {
+    display: flex;
+    flex-wrap: wrap;
+}
