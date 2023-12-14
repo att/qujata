@@ -87,7 +87,7 @@ $selectTagBackgroundColor: #EAEAEA;
     block-size: 40px;
     display: flex;
     align-items: center;
-
+    
     &.att_select__option--is-selected {
       font-family: var($fontMedium);
     }

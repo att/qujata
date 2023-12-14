@@ -9,7 +9,8 @@ import { DashBoardPrefixLink } from '../shared/constants/dashboard';
 import { useErrorMessage } from './useErrorMessage';
 
 export interface IUseDashboardData {
-  testSuiteId: string;
+  // testSuiteId: string;
+  link: string;
   status: FetchDataStatus;
   handleRunQueryClick: (queryData: ITestParams) => void;
 }
@@ -17,11 +18,11 @@ export interface IUseDashboardData {
 export function useDashboardData(): IUseDashboardData {
   const { post, data, status, error, cancelRequest }: IHttp<IQueryResponse> = useFetch<IQueryResponse>({ url: APIS.analyze });
   const [dashboardData, setDashboardData] = useState<ChartDataMap>(() => new Map<AttSelectOption, ITestResponseData | undefined>());
-  const [algorithms, setAlgorithms] = useState<string[] | undefined>([]);
-  const [iterationsCount, setIterationsCount] = useState<number | undefined>();
+  const [algorithms, setAlgorithms] = useState<string[]>([]);
+  const [iterationsCount, setIterationsCount] = useState<number[]>([]);
   const generateFromTime: number = Date.now();
-  // const initialLink: string = `${Environment.dashboardLinkHost}/${DashBoardPrefixLink}&from=${generateFromTime}`;
-  // const [link, setLink] = useState<string>(initialLink);
+  const initialLink: string = `${Environment.dashboardLinkHost}/${DashBoardPrefixLink}&from=${generateFromTime}`;
+  const [link, setLink] = useState<string>(initialLink);
   const [testSuiteId, setTestSuiteId] = useState<string>('');
 
   useFetchSpinner(status);
@@ -30,9 +31,9 @@ export function useDashboardData(): IUseDashboardData {
 
   useEffect(() => {
     if (status === FetchDataStatus.Success && data) {
-        // const dashboardLink: string = `${Environment.dashboardLinkHost}/${DashBoardPrefixLink}&from=${data.from}&to=${data.to}`;
-        // setLink(dashboardLink);
-        setTestSuiteId(data?.testSuiteId);
+        console.log('data', data);
+        const dashboardLink: string = `${Environment.dashboardLinkHost}/${DashBoardPrefixLink}&from=${data.linkToResult.from}&to=${data.linkToResult.to}`;
+        setLink(dashboardLink);
         // setAlgorithms((prev: string[] | undefined) => {
         //     prev?.splice(0, 1);
         //     if (prev && prev.length > 0) {
@@ -58,10 +59,10 @@ export function useDashboardData(): IUseDashboardData {
 
   const handleRunQueryClick: (queryData: ITestParams) => void = useCallback((queryData: ITestParams): void => {
     let algoValues: string[] = [];
-    let iterationsValues: number;
-
+    let iterationsValues: number[] = [];
+    
     if (queryData.algorithms) {
-      const algos: AttSelectOption[] = queryData.algorithms as AttSelectOption[];
+      const algos = queryData.algorithms as AttSelectOption[];
       const map: ChartDataMap = new Map<AttSelectOption, ITestResponseData | undefined>();
   
       algos.forEach((algo: AttSelectOption) => {
@@ -71,26 +72,37 @@ export function useDashboardData(): IUseDashboardData {
   
       setAlgorithms(algoValues);
       setDashboardData(map);
-      console.log('algorithms:', algos);
       algoValues = algos.map((item: AttSelectOption) => item.value); 
     }
 
     if (queryData.iterationsCount) {
-      const iterations: AttSelectOption = queryData.iterationsCount as AttSelectOption;
+      const iterations = queryData.iterationsCount as AttSelectOption[];
       const map: ChartDataMap = new Map<AttSelectOption, ITestResponseData | undefined>();
 
-      setIterationsCount(+iterations.value);
-      iterationsValues = +iterations.value;
+      iterations.forEach((iteration: AttSelectOption) => {
+        map.set(iteration, undefined);
+        iterationsValues.push(+iteration.value);
+      });
+
+      setIterationsCount(iterationsValues);
       setDashboardData(map);
-      console.log('iterations:', iterations);
+      iterationsValues = iterations.map((item: AttSelectOption) => +item.value);
     }
+    
     // Send the post request
-    post({ data: { algorithms: algoValues, iterationsCount: iterationsValues! } });
+    post({
+      data: {
+        experimentName: queryData.experimentName,
+        algorithms: algoValues,
+        iterationsCount: iterationsValues,
+        description: queryData.description
+      } 
+    });
   }, [post]);
 
   return {
     handleRunQueryClick,
-    testSuiteId,
+    link,
     status,
   } as IUseDashboardData;
 }

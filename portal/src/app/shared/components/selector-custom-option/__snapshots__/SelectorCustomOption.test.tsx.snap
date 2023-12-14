@@ -1,0 +1,50 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SelectorCustomOption should render AlgorithmsSelectorCustomOption correctly 1`] = `
+<div
+  aria-disabled="false"
+  class="css-0"
+>
+  <div
+    class="option_wrapper"
+  >
+    <input
+      class="input_option"
+      type="checkbox"
+    />
+    <img
+      alt="checked"
+      class="algorithms_input_option"
+      src="unchecked.svg"
+    />
+  </div>
+  <span
+    class="algorithms_input_option"
+  >
+    Option 1
+  </span>
+</div>
+`;
+
+exports[`SelectorCustomOption should render IterationsSelectorCustomOption correctly 1`] = `
+<div
+  aria-disabled="false"
+  class="css-0"
+>
+  <div
+    class="option_wrapper"
+  >
+    <input
+      class="iterations_input_option input_option"
+      type="checkbox"
+    />
+    <img
+      alt="checked"
+      src="unchecked.svg"
+    />
+  </div>
+  <span>
+    Option 1
+  </span>
+</div>
+`;

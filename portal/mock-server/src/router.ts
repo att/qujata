@@ -6,7 +6,19 @@ const router: CoreRouter = Router();
 
 router.post('/analyze', async (req: Request, res: Response) => {
   console.log(`-${req.method} ${req.url}`);
-  const data = {testSuiteId: 'testSuiteId-123'};
+  // todo replace with - const data = {testSuiteId: 'testSuiteId-123'};
+  const data = { linkToResult: { from: '1698747472962', to: '1698747480624' } };
+  // if( ['prime256v1', 'secp384r1'].includes(req.body.algorithm)){
+  //   data = (await import('./classic-test.json')).default;
+  // }
+  // else if( ['p256_kyber512', 'p384_kyber768'].includes(req.body.algorithm)){
+  //   data = (await import('./hybrid-test.json')).default;
+  // }
+  // else{
+  //   data = (await import('./quantum-test.json')).default;
+
+  // }
+
   setTimeout(() => {
     res.json(data);
   }, 1500);

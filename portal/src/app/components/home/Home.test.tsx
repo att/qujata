@@ -4,6 +4,7 @@ import { SubHeader, SubHeaderProps } from '../sub-header';
 import { ProtocolQuery, ProtocolQueryProps } from '../protocol-query';
 
 const mockUseNavigate = jest.fn();
+
 jest.mock('../sub-header');
 jest.mock('../protocol-query');
 jest.mock('../../hooks/useDashboardData', () => ({
@@ -42,7 +43,12 @@ describe('Home', () => {
     test('should click on run button', async () => {
       (ProtocolQuery as jest.Mock).mockImplementation((props: ProtocolQueryProps) => {
         function onClick() {
-          props.onRunClick({ algorithms: {label: 'regular', value: 'regular'}, iterationsCount: {label: 'regular', value: 'regular'}});
+          props.onRunClick({ 
+            experimentName: 'test',
+            algorithms: { label: 'regular', value: 'regular' },
+            iterationsCount: { label: 'regular', value: 'regular' },
+            description: 'test'
+          });
         }
         return <div onClick={onClick} data-testid='submit-id'>SubHeader</div>;
       });

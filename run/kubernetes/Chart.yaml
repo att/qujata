@@ -27,7 +27,7 @@ dependencies:
   - name: pushgateway
     version: 0.1.0
     repository: "file://./charts/pushgateway"
-  - name: platform-exporter
+  - name: mysql
     version: 0.1.0
-    repository: "file://./charts/platform-exporter"
+    repository: "file://./charts/mysql"
 

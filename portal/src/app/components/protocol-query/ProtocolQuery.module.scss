@@ -1,40 +1,58 @@
 @import "src/styles/variables-keys";
 
 $inputBorderColor: #DCDFE3;
+$titlesColor: #1D2329;
 
 .wrapper {
   display: flex;
+  flex-direction: column;
   gap: 30px;
-  flex-wrap: wrap;
+  align-items: flex-start;
 }
 
-.error {
-  color: var($attBerry);
+.experiment_title {
+  size: 18px;
+  margin-block-end: 0;
+}
+
+.note {
+  display: flex;
+  align-items: center;
+  margin-block-end: 20px;
+}
+
+.note_title {
+  margin-right: 10px;
+  font-family: var($fontMedium);
 }
 
 .form_item { 
   display: flex;
   flex-direction: column;
-  inline-size: 420px;
+  inline-size: 709px;
   font-size: 14px;
 }
 
 .select_form_item {
-  max-inline-size: 795px;
+  max-inline-size: 709px;
   margin-block-start: 4px;
-  min-block-size: 48px;
+  min-block-size: 50px;
   #{$selectControlHeight}: 48px;
 }
 
 .input_form_item {
+  max-inline-size: 240px;
   block-size: 38px;
   border: 1px solid $inputBorderColor;
   border-radius: 44px;
   inline-size: 100%;
-  outline: none;
   margin-block-start: 4px;
-  block-size: 48px;
+  block-size: 50px;
   padding-inline: 22px;
+
+  &:focus {
+    outline: 1px solid var($attPurple);
+  }
 }
 
 .run_button {
@@ -52,7 +70,22 @@ $inputBorderColor: #DCDFE3;
 }
 
 .form_item_label {
+  color: $titlesColor;
   margin-block-end: 8px;
+}
+
+.form_item_text_area {
+  max-inline-size: 709px;
+  margin-block-start: 4px;
+  border-radius: 20px;
+  #{$selectControlHeight}: 48px;
+  border: 1px solid $inputBorderColor;
+  block-size: 150px;
+  padding: 22px;
+
+  &:focus {
+    outline: 1px solid var($attPurple);
+  }
 }
 
 .submitButtonWrapper {
@@ -68,4 +101,8 @@ $inputBorderColor: #DCDFE3;
 
 .text {
   margin-inline-start: 8px;
+}
+
+.required {
+  color: var($attBerry);
 }

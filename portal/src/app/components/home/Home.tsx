@@ -29,23 +29,24 @@ export const Home: React.FC = () => {
 const generateFromTime: number = Date.now();
 const initialLink: string = `${Environment.dashboardLinkHost}/${DashBoardPrefixLink}&from=${generateFromTime}`;
 export const HomeContent: React.FC = () => {
-  const { handleRunQueryClick, status, testSuiteId }: IUseDashboardData = useDashboardData();
+  const { handleRunQueryClick, status, link }: IUseDashboardData = useDashboardData();
   const [dashBoardLink, setDashBoardLink] = useState<string>('');
   const [displayLinkButton, setDisplayLinkButton] = useState<boolean>(false);
-  const navigate = useNavigate();
-  useEffect(() => {
-    if (status === FetchDataStatus.Success && testSuiteId) {
-      // Navigate to the Experiment page by testSuiteId
-      navigate(`/experiment/${testSuiteId}`);
-    }
-  }, [navigate, status, testSuiteId]);
+  // const navigate = useNavigate();
 
   // useEffect(() => {
-  //   setDashBoardLink(link);
-  // }, [link]);
+  //   if (status === FetchDataStatus.Success) {
+  //     // Navigate to the Experiment page
+  //     navigate('/experiment',  { replace: true });
+  //   }
+  // }, [navigate, status]);
+
+  useEffect(() => {
+    setDashBoardLink(link);
+  }, [link]);
   
   const handleRunClick: (params: ITestParams) => void = useCallback((params: ITestParams): void => {
-    if (params.algorithms && params.iterationsCount) {
+    if (params.experimentName && params.algorithms && params.iterationsCount) {
       setDisplayLinkButton(true);
       handleRunQueryClick(params);
       setDashBoardLink(initialLink);
