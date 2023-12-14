@@ -4,13 +4,13 @@ from src.models.env_info import EnvInfo
 from src.models.test_suite import TestSuite
 
 
-env_info_api = Blueprint('qujata-api', __name__)
+api = Blueprint('qujata-api', __name__)
 
 # Define the expected keys
 expected_keys = ['resource_name', 'operating_system', 'cpu', 'cpu_architecture', 'cpu_cores', 'clock_speed', 'node_size']
 
 
-@env_info_api.route('/env-info', methods=['POST'])
+@api.route('/env-info', methods=['POST'])
 @cross_origin(origins=['*'], supports_credentials=True)
 def insert_env_info():
     # Extract data from the request

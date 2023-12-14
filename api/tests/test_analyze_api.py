@@ -6,14 +6,15 @@ import requests
 from flask import Flask
 from unittest.mock import Mock, MagicMock, patch
 
-from src.controllers.analyze_api import api
-import src.controllers.analyze_api
+from src.api.analyze_api import api
+from src.enums.status import Status
+import src.api.analyze_api
 from config.settings import load_config
 from src.utils.database_manager import DatabaseManager
 import logging
 
 
-class TestAPI(unittest.TestCase):
+class TestAnalyzeAPI(unittest.TestCase):
     def setUp(self):
         self.app = Flask(__name__)
         self.app.register_blueprint(api, url_prefix='/api')
@@ -25,7 +26,8 @@ class TestAPI(unittest.TestCase):
         input_data = {
             "algorithms":["kyber512"],
             "iterationsCount": [1000, 2000],
-            "experimentName": "name"
+            "experimentName": "name",
+            "description": "name"
         }
         # Mock the requests.post call
         with patch('requests.post') as mock_post:
@@ -48,7 +50,8 @@ class TestAPI(unittest.TestCase):
         input_data = {
             "algorithms":["kyber512"],
             "iterationsCount": [1000],
-            "experimentName": "name"
+            "experimentName": "name",
+            "description": "name"
 
         }
         # Mock the requests.post call to raise an exception
@@ -65,7 +68,8 @@ class TestAPI(unittest.TestCase):
         input_data = {
             "algorithms":["kyber512"],
             "iterationsCount": [-1],
-            "experimentName": "name"
+            "experimentName": "name",
+            "description": "name"
         }
         response = self.client.post('/api/analyze',
                                     data=json.dumps(input_data),
@@ -80,7 +84,8 @@ class TestAPI(unittest.TestCase):
         input_data = {
             "algorithms":["invalid_algorithm"],
             "iterationsCount": [1000],
-            "experimentName": "name"
+            "experimentName": "name",
+            "description": "name"
         }        
         response = self.client.post('/api/analyze',
                                     data=json.dumps(input_data),
@@ -94,7 +99,8 @@ class TestAPI(unittest.TestCase):
     def test_analyze_with_invalid_body(self):   
         input_data = {
             "iterationsCount": 1000,
-            "experimentName": "name"
+            "experimentName": "name",
+            "description": "name"
         }
         response = self.client.post('/api/analyze',
                                 data=json.dumps(input_data),
@@ -108,26 +114,27 @@ class TestAPI(unittest.TestCase):
         input_data = {
             "algorithms":["kyber512"],
             "iterationsCount": [1000],
-            "experimentName": "name"
+            "experimentName": "name",
+            "description": "name"
         }
         # Mock the requests.post call
         with patch('requests.post') as mock_post:
             mock_post.return_value = MagicMock(status_code=423, json=lambda: {'result': 'failed'})
-            logging.info("response_json")
-
             response = self.client.post('/api/analyze',
                                     data=json.dumps(input_data),
                                     content_type='application/json')
-            self.assertEqual(response.status_code, 423)
-            response_json = json.loads(response.data)
-            logging.info(response_json)
-            self.assertEqual(response_json["error"], "Analyze test failed to complete")
+            self.assertEqual(response.status_code, 200)
+            actual_test_suite = self.app.database_manager.add_to_db.call_args.args
+            self.assertEqual(actual_test_suite[0].status, Status.FAILED)
+            self.assertEqual(actual_test_suite[0].status_message, '{"result": "failed"}')
+
 
     def test_analyze_with_missing_env_info(self):
         input_data = {
             "algorithms":["kyber512"],
             "iterationsCount": [1000],
-            "experimentName": "name"
+            "experimentName": "name",
+            "description": "name"
         }
         self.app.database_manager.get_last_record.return_value = None
         response = self.client.post('/api/analyze',
@@ -144,9 +151,10 @@ class TestAPI(unittest.TestCase):
         input_data = {
             "algorithms":["kyber512"],
             "iterationsCount": [1000],
-            "experimentName": "name"
+            "experimentName": "name",
+            "description": "name"
         }
-        src.controllers.analyze_api.process_is_running = True
+        src.api.analyze_api.process_is_running = True
         # Mock the requests.post call
         response = self.client.post('/api/analyze',
                                     data=json.dumps(input_data),
@@ -155,13 +163,14 @@ class TestAPI(unittest.TestCase):
         self.assertEqual(response.status_code, 423)
         response_json = json.loads(response.data)
         self.assertEqual(response_json["error"], "Current test is still running")
-        src.controllers.analyze_api.process_is_running = False
+        src.api.analyze_api.process_is_running = False
 
     def test_analyze_sleep_between_tests(self):
         input_data = {
             "algorithms":["kyber512","frodo640aes"],
             "iterationsCount": [1000],
-            "experimentName": "name"
+            "experimentName": "name",
+            "description": "name"
         }
         # Mock the requests.post call
         with patch('requests.post') as mock_post:
