@@ -32,7 +32,7 @@ export function useDashboardData(): IUseDashboardData {
   useEffect(() => {
     if (status === FetchDataStatus.Success && data) {
         console.log('data', data);
-        const dashboardLink: string = `${Environment.dashboardLinkHost}/${DashBoardPrefixLink}&from=${data.linkToResult.from}&to=${data.linkToResult.to}`;
+        const dashboardLink: string = `${Environment.dashboardLinkHost}/${DashBoardPrefixLink}&from=${data.from}&to=${data.to}`;
         setLink(dashboardLink);
         // setAlgorithms((prev: string[] | undefined) => {
         //     prev?.splice(0, 1);

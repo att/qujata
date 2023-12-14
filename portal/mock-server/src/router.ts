@@ -7,7 +7,7 @@ const router: CoreRouter = Router();
 router.post('/analyze', async (req: Request, res: Response) => {
   console.log(`-${req.method} ${req.url}`);
   // todo replace with - const data = {testSuiteId: 'testSuiteId-123'};
-  const data = { linkToResult: { from: '1698747472962', to: '1698747480624' } };
+  const data = { from: '1698747472962', to: '1698747480624' };
   // if( ['prime256v1', 'secp384r1'].includes(req.body.algorithm)){
   //   data = (await import('./classic-test.json')).default;
   // }
