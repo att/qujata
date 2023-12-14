@@ -1,0 +1,1 @@
+export const algorithmSections = ['All', 'Classic', 'Hybrid', 'PQ'];

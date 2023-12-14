@@ -4,6 +4,25 @@ exports[`ProtocolQuery should render ProtocolQuery 1`] = `
 <div
   class="protocol_query_wrapper"
 >
+  <div>
+    <h2
+      class="experiment_title"
+    >
+      Run new experiment
+    </h2>
+    <div
+      class="note"
+    >
+      <span
+        class="note_title"
+      >
+        Note:
+      </span>
+      <p>
+        For each experiment you can select or type in one or more algorithms, number of iterations and message sizes
+      </p>
+    </div>
+  </div>
   <form
     class="wrapper"
     data-testid="protocol-query-form"
@@ -14,8 +33,33 @@ exports[`ProtocolQuery should render ProtocolQuery 1`] = `
       <label
         class="form_item_label"
       >
+        Experiment name
+         
+        <span
+          class="required"
+        >
+          *
+        </span>
+      </label>
+      <input
+        class="input_form_item"
+        placeholder=""
+        required=""
+      />
+    </div>
+    <div
+      class="form_item"
+    >
+      <label
+        class="form_item_label"
+      >
         Algorithm(s)
          
+        <span
+          class="required"
+        >
+          *
+        </span>
       </label>
       <div
         class="att_select_container select_form_item att_select_multi_container css-b62m3t-container"
@@ -102,9 +146,15 @@ exports[`ProtocolQuery should render ProtocolQuery 1`] = `
         class="form_item_label"
       >
         Number of iterations
+         
+        <span
+          class="required"
+        >
+          *
+        </span>
       </label>
       <div
-        class="att_select_container select_form_item css-b62m3t-container"
+        class="att_select_container select_form_item att_select_multi_container css-b62m3t-container"
       >
         <span
           class="css-1f43avz-a11yText-A11yText"
@@ -120,12 +170,14 @@ exports[`ProtocolQuery should render ProtocolQuery 1`] = `
           class="att_select__control css-13cymwt-control"
         >
           <div
-            class="att_select__value-container css-16674sh-Component"
+            class="att_select__value-container att_select__value-container--is-multi css-16674sh-Component"
           >
             <div
               class="att_select__placeholder css-1jqq78o-placeholder"
               id="react-select-3-placeholder"
-            />
+            >
+              + Add new
+            </div>
             <div
               class="att_select__input-container css-d9r47t-Component"
               data-value=""
@@ -180,6 +232,19 @@ exports[`ProtocolQuery should render ProtocolQuery 1`] = `
           value=""
         />
       </div>
+    </div>
+    <div
+      class="form_item"
+    >
+      <label
+        class="form_item_label"
+      >
+        Description
+      </label>
+      <textarea
+        class="form_item_text_area"
+        placeholder=""
+      />
     </div>
     <div
       class="submitButtonWrapper"

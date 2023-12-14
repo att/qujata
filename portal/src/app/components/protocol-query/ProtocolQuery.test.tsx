@@ -1,5 +1,5 @@
 import '@testing-library/jest-dom';
-import { RenderResult, fireEvent, render, screen, waitFor } from '@testing-library/react';
+import { RenderResult, fireEvent, render, screen } from '@testing-library/react';
 import { ProtocolQuery, ProtocolQueryProps } from './ProtocolQuery';
 import { PROTOCOL_QUERY_EN } from './translate/en';
 
