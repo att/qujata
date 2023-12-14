@@ -78,4 +78,32 @@ describe('LineChart', () => {
     
         expect(result).toEqual("chart 12");
       });
+
+      describe('tooltip configuration', () => {
+        test('generateTooltipTitle', () => {
+          const context: any = {
+            chart: jest.fn(),
+            dataIndex: 3,
+            dataset: {
+                label: "label-test",
+            },
+            datasetIndex: 0,
+            element: jest.fn(),
+            formattedValue: "230",
+            label: "label-test",
+            parsed: {x: 3, y: 230},
+            raw: 230,
+          };
+          const result = generateTooltipTitle(context);
+          expect(result).toEqual("label-test");
+        });
+    
+        // test('renderTooltipLabel', () => {
+        //   const context = { datasetIndex: 0, dataIndex: 0 };
+        //   const tooltipLabel = 'Test Label';
+        //   const result = renderTooltipLabel(context, tooltipLabel);
+        //   // replace 'expectedResult' with the expected result
+        //   expect(result).toEqual(expectedResult);
+        // });
+      });
 });
