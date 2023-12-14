@@ -87,11 +87,6 @@ $selectTagBackgroundColor: #EAEAEA;
     block-size: 40px;
     display: flex;
     align-items: center;
-
-    input {
-      outline: 1px solid var($attPurple);
-      outline-style: auto;
-    }
     
     &.att_select__option--is-selected {
       font-family: var($fontMedium);
