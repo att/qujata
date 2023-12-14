@@ -1,6 +1,5 @@
-import { set } from 'lodash';
 import { useCallback, useEffect, useState } from 'react';
-import { ChartDataMap, IQueryResponse, ITestParams, ITestResponse, ITestResponseData } from '../shared/models/quantum.interface';
+import { ChartDataMap, IQueryResponse, ITestParams, ITestResponseData } from '../shared/models/quantum.interface';
 import { FetchDataStatus, IHttp, useFetch } from '../shared/hooks/useFetch';
 import { useFetchSpinner } from '../shared/hooks/useFetchSpinner';
 import { APIS } from '../apis';
@@ -10,22 +9,20 @@ import { DashBoardPrefixLink } from '../shared/constants/dashboard';
 import { useErrorMessage } from './useErrorMessage';
 
 export interface IUseDashboardData {
-  link: string;
-  // data: ChartDataMap;
-  // algorithms: string[];
+  testSuiteId: string;
   status: FetchDataStatus;
   handleRunQueryClick: (queryData: ITestParams) => void;
 }
 
 export function useDashboardData(): IUseDashboardData {
-  // const { post, data, status, error, cancelRequest }: IHttp<ITestResponse> = useFetch<ITestResponse>({ url: APIS.analyze });
   const { post, data, status, error, cancelRequest }: IHttp<IQueryResponse> = useFetch<IQueryResponse>({ url: APIS.analyze });
   const [dashboardData, setDashboardData] = useState<ChartDataMap>(() => new Map<AttSelectOption, ITestResponseData | undefined>());
   const [algorithms, setAlgorithms] = useState<string[] | undefined>([]);
   const [iterationsCount, setIterationsCount] = useState<number | undefined>();
   const generateFromTime: number = Date.now();
-  const initialLink: string = `${Environment.dashboardLinkHost}/${DashBoardPrefixLink}&from=${generateFromTime}`;
-  const [link, setLink] = useState<string>(initialLink);
+  // const initialLink: string = `${Environment.dashboardLinkHost}/${DashBoardPrefixLink}&from=${generateFromTime}`;
+  // const [link, setLink] = useState<string>(initialLink);
+  const [testSuiteId, setTestSuiteId] = useState<string>('');
 
   useFetchSpinner(status);
   useEffect(() => cancelRequest, [cancelRequest]);
@@ -33,8 +30,9 @@ export function useDashboardData(): IUseDashboardData {
 
   useEffect(() => {
     if (status === FetchDataStatus.Success && data) {
-        const dashboardLink: string = `${Environment.dashboardLinkHost}/${DashBoardPrefixLink}&from=${data.from}&to=${data.to}`;
-        setLink(dashboardLink);
+        // const dashboardLink: string = `${Environment.dashboardLinkHost}/${DashBoardPrefixLink}&from=${data.from}&to=${data.to}`;
+        // setLink(dashboardLink);
+        setTestSuiteId(data?.testSuiteId);
         // setAlgorithms((prev: string[] | undefined) => {
         //     prev?.splice(0, 1);
         //     if (prev && prev.length > 0) {
@@ -56,7 +54,7 @@ export function useDashboardData(): IUseDashboardData {
         //     return prev;
         // });
     }
-  }, [data, iterationsCount, post, status]);
+  }, [data, status]);
 
   const handleRunQueryClick: (queryData: ITestParams) => void = useCallback((queryData: ITestParams): void => {
     let algoValues: string[] = [];
@@ -92,9 +90,7 @@ export function useDashboardData(): IUseDashboardData {
 
   return {
     handleRunQueryClick,
-    link,
-    // data: dashboardData,
-    // algorithms,
+    testSuiteId,
     status,
   } as IUseDashboardData;
 }

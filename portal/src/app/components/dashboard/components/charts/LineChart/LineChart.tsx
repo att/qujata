@@ -1,6 +1,7 @@
 import { Line } from 'react-chartjs-2';
 import { ChartOptions, TooltipItem } from 'chart.js';
 import { defaultOptions } from './LineChart.const';
+import styles from './LineChart.module.scss';
 
 export interface LineChartProps {
     data: any;
@@ -32,7 +33,7 @@ export const LineChart: React.FC<LineChartProps> = (props: LineChartProps) => {
       }
     };
 
-    return  <Line data={data} options={options} />;
+    return  <Line data={data} options={options} style={{ width: '500px', height: '400px' }} className={styles.line_chart} />;
 }
 
 export function generateTooltipTitle(tooltipItem: TooltipItem<'line'>) {

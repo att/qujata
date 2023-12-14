@@ -53,6 +53,62 @@
         "messagesThroughput": 50, 
         "averageTLSHandshakeTime": 10
       } 
-    } 
+    },
+    { 
+      "algorithm": "Algorithm2", 
+      "iterations": 100, 
+      "messageSizeBytes": 124, 
+      "results":  
+      { 
+        "averageCPU": 28, 
+        "averageMemory": 52, 
+        "errorRate": 1, 
+        "bytesThroughput": 200, 
+        "messagesThroughput": 50, 
+        "averageTLSHandshakeTime": 12 
+      } 
+    },
+    { 
+      "algorithm": "Algorithm2", 
+      "iterations": 100, 
+      "messageSizeBytes": 24, 
+      "results":  
+      { 
+        "averageCPU": 25, 
+        "averageMemory": 51, 
+        "errorRate": 0.5, 
+        "bytesThroughput": 204, 
+        "messagesThroughput": 5, 
+        "averageTLSHandshakeTime": 2 
+      } 
+    },
+    { 
+      "algorithm": "Algorithm1", 
+      "iterations": 100, 
+      "messageSizeBytes": 122, 
+      "results":  
+      { 
+        "averageCPU": 25, 
+        "averageMemory": 12, 
+        "errorRate": 0.5, 
+        "bytesThroughput": 200, 
+        "messagesThroughput": 50, 
+        "averageTLSHandshakeTime": 1 
+	    } 
+    },
+    { 
+      "algorithm": "Algorithm1", 
+      "iterations": 1000, 
+      "messageSizeBytes": 1024, 
+      "results":  
+      { 
+        "averageCPU": 29, 
+        "averageMemory": 2, 
+        "errorRate": 0.6, 
+        "bytesThroughput": 230, 
+        "messagesThroughput": 52, 
+        "averageTLSHandshakeTime": 11
+	    } 
+    }
   ]
 }
