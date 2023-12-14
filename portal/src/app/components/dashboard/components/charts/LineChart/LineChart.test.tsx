@@ -97,13 +97,5 @@ describe('LineChart', () => {
           const result = generateTooltipTitle(context);
           expect(result).toEqual("label-test");
         });
-    
-        // test('renderTooltipLabel', () => {
-        //   const context = { datasetIndex: 0, dataIndex: 0 };
-        //   const tooltipLabel = 'Test Label';
-        //   const result = renderTooltipLabel(context, tooltipLabel);
-        //   // replace 'expectedResult' with the expected result
-        //   expect(result).toEqual(expectedResult);
-        // });
       });
 });

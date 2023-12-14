@@ -49,7 +49,6 @@ describe('Charts', () => {
       (useChartsData as jest.Mock).mockReturnValue({ barChartData: mockBarChartData, barChartLabels: barChartLabelsMock, barChartKeysOfData: barChartKeysOfDataMock, lineChartData: lineChartDataMock });
 
       const { container } = render(<Charts />);
-      console.log('-----', container);
       expect(container).toBeTruthy();
     });
 });
