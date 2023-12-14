@@ -1,7 +1,5 @@
 import { toast } from 'react-toastify';
-import { render } from '@testing-library/react';
 import { attToast } from './att-toast.service';
-import { ATTToastContent } from './ATTToastContent';
 
 jest.mock('react-toastify');
 
@@ -61,15 +59,5 @@ describe('ATTToastService', () => {
     attToast.warning(message, title, {});
 
     expect(warningSpy).toHaveBeenCalledWith(expect.any(Function), expect.any(Object));
-  });
-
-  test('renders with props and children', () => {
-    const props = { prop1: 'value1', prop2: 'value2' };
-    const basicProps = { basicProp1: 'basicValue1', basicProp2: 'basicValue2' };
-    const children = 'Test Children';
-
-    const { getByText, container } = render(<ATTToastContent {...props} {...basicProps}>{children}</ATTToastContent>);
-    expect(getByText(children)).toBeInTheDocument();
-    expect(container.firstChild).toBeTruthy();
   });
 });

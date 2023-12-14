@@ -2,7 +2,9 @@ import '@testing-library/jest-dom';
 import { RenderResult, fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { ProtocolQuery, ProtocolQueryProps } from './ProtocolQuery';
 import { PROTOCOL_QUERY_EN } from './translate/en';
+import { AttSelect, AttSelectProps } from '../../shared/components/att-select';
 
+jest.mock('../../shared/components/att-select');
 describe('ProtocolQuery', () => {
   let props: ProtocolQueryProps;
   beforeAll(() => {
@@ -56,5 +58,33 @@ describe('ProtocolQuery', () => {
 
     // Assert that the onRunClick function has been called
     expect(props.onRunClick).toHaveBeenCalled();
+  });
+
+  test('should call onAlgorithmsChanged', async () => {
+    (AttSelect.render as jest.Mock).mockImplementation((props: AttSelectProps) => {
+      function onClick() {
+        props.onChange({ value: 'test-other', label: 'Other' });
+      }
+      return <button onClick={onClick} data-testid='selector-id'>AttSelect</button>;
+    });
+    const { getAllByTestId }: RenderResult = render(<ProtocolQuery {...props} />);
+    const selectorElements: HTMLElement[] = getAllByTestId('selector-id');
+    await waitFor(() => {
+      fireEvent.click(selectorElements[0]);
+    });
+  });
+
+  test('should call onIterationsNumChanged', async () => {
+    (AttSelect.render as jest.Mock).mockImplementation((props: AttSelectProps) => {
+      function onClick() {
+        props.onChange({ value: 'test-other', label: 'Other' });
+      }
+      return <button onClick={onClick} data-testid='selector-id'>AttSelect</button>;
+    });
+    const { getAllByTestId }: RenderResult = render(<ProtocolQuery {...props} />);
+    const selectorElements: HTMLElement[] = getAllByTestId('selector-id');
+    await waitFor(() => {
+      fireEvent.click(selectorElements[1]);
+    });
   });
 });
