@@ -22,8 +22,9 @@ export class CurlService {
     try { 
       await this.runCurls(curlRequest.iterationsCount, curlRequest.algorithm);
     } catch (err) {
+      this.processIsRunning = false;
       console.error('[CurlService:run] Error occurred: ', err);
-      throw new HttpException("error occured when trying to run test with algorithm: " + curlRequest.algorithm, HttpStatus.INTERNAL_SERVER_ERROR);
+      throw new HttpException("error occurred when trying to run test with algorithm: " + curlRequest.algorithm, HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
 
