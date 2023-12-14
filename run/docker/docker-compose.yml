@@ -62,7 +62,7 @@ services:
       - /var/lib/docker/:/var/lib/docker:ro
       - /dev/disk/:/dev/disk:ro
       - /etc/machine-id:/etc/machine-id:ro
-      - /var/lib/mysqlus/machine-id:/var/lib/mysqlus/machine-id:ro
+      - /var/lib/dbus/machine-id:/var/lib/dbus/machine-id:ro
     ports:
       - "8080:8080"
 
