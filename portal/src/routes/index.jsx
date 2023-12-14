@@ -15,7 +15,7 @@ export const router = createBrowserRouter([
             element: <Home />,
           },
           {
-            path: '/experiment',
+            path: '/experiment/:testSuiteId',
             element: <Experiment />,
           },
           ...(isAllExperimentTabEnabled ? [{

@@ -102,7 +102,9 @@
       "!**/*.model.ts",
       "!**/*.type.ts",
       "!**/*.interface.ts",
-      "!**/index.ts"
+      "!**/index.ts",
+      "!src/**/en.ts",
+      "!src/**/http.ts"
     ],
     "coveragePathIgnorePatterns": [
       "<rootDir>/src/index.tsx",
