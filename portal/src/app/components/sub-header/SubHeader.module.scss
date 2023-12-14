@@ -5,8 +5,6 @@ $subHeaderColor: #7F848A;
 .sub_header_wrapper {
     background-color: var($primaryWhite);
     block-size: 300px;
-    position: sticky;
-    top: 60px;
     z-index: 1;
     padding: 20px 20px 20px 80px;
 }
