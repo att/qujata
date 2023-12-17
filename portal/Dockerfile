@@ -1,6 +1,6 @@
 FROM nginx:1.25-alpine3.18
 
-RUN apk add --update nodejs npm
+RUN apk --no-cache add --update nodejs npm
 
 ## Replace the default nginx index page with our portal
 RUN rm -rf /usr/share/nginx/html/*
