@@ -2,90 +2,65 @@ import { ExperimentTable } from './components/experiment-table';
 import styles from './Experiment.module.scss';
 import { Charts } from './components/charts';
 import { SubHeader } from './components/sub-header';
-import { ITestResultData } from '../../../../models/test-result.interface';
+import { ITestRunResult } from '../../../../shared/models/test-run-result.interface';
 
 export const Experiment: React.FC = () => {
-  // const { data } = useExperimentData();
-  const experimentData: ITestResultData[] = [
-    {
-      algorithm: 'RSA1',
-      iterations: 500,
-      messageSizeBytes: 1,
-      results: {
-        averageCPU: 0.1,
-        averageMemory: 0.1,
-        errorRate: 0.1,
-        bytesThroughput: 0.1,
-        messagesThroughput: 0.1,
-        averageTLSHandshakeTime: 0.1,
-      }
+  const experimentData: ITestRunResult = {
+    "id": 1,
+    "name": "test1",
+    "description": "test1",
+    "start_time": "Thu, 14 Dec 2023 15:37:31 GMT",
+    "end_time": "Thu, 14 Dec 2023 15:38:39 GMT",
+    "environment_info": {
+      "codeRelease": "1.1.0",
+      "cpu": "RELACE_WITH_CPU",
+      "cpuArchitecture": "RELACE_WITH_CPU_ARCHITECTURE",
+      "cpuClockSpeed": "RELACE_WITH_CLOCK_SPEED",
+      "cpuCores": 0,
+      "nodeSize": "RELACE_WITH_NODE_SIZE",
+      "operatingSystem": "RELACE_WITH_OPERATING_SYSTEM",
+      "resourceName": "RELACE_WITH_RESOURCE_NAME"
     },
-    {
-      algorithm: 'RSA2',
-      iterations: 100,
-      messageSizeBytes: 1,
-      results: {
-        averageCPU: 0.1,
-        averageMemory: 0.1,
-        errorRate: 0.1,
-        bytesThroughput: 0.1,
-        messagesThroughput: 0.1,
-        averageTLSHandshakeTime: 0.1,
+   
+    "testRuns": [
+      {
+        "id":1,
+        "algorithm": "bikel1",
+        "iterations": 1000,
+        "results": {
+          "averageCPU": 3.5,
+          "averageMemory": 3
+        }
+      },
+      {
+        "id":2,
+        "algorithm": "bikel1",
+        "iterations": 2000,
+        "results": {
+          "averageCPU": 7.0,
+          "averageMemory": 6
+        }
+      },
+      {
+       "id":3,
+        "algorithm": "kyber512",
+        "iterations": 1000,
+        "results": {
+          "averageCPU": 1.7,
+          "averageMemory": 2
+        }
+      },
+      {
+        "id":4,
+        "algorithm": "kyber512",
+        "iterations": 2000,
+        "results": {
+          "averageCPU": 2.6,
+          "averageMemory": 2
+        }
       }
-    },
-    {
-      algorithm: 'RSA3',
-      iterations: 700,
-      messageSizeBytes: 1,
-      results: {
-        averageCPU: 0.1,
-        averageMemory: 0.1,
-        errorRate: 0.1,
-        bytesThroughput: 0.1,
-        messagesThroughput: 0.1,
-        averageTLSHandshakeTime: 0.1,
-      }
-    },
-    {
-      algorithm: 'RSA4',
-      iterations: 800,
-      messageSizeBytes: 1,
-      results: {
-        averageCPU: 0.1,
-        averageMemory: 0.1,
-        errorRate: 0.1,
-        bytesThroughput: 0.1,
-        messagesThroughput: 0.1,
-        averageTLSHandshakeTime: 0.1,
-      }
-    },
-    {
-      algorithm: 'RSA5',
-      iterations: 900,
-      messageSizeBytes: 1,
-      results: {
-        averageCPU: 0.1,
-        averageMemory: 0.1,
-        errorRate: 0.1,
-        bytesThroughput: 0.1,
-        messagesThroughput: 0.1,
-        averageTLSHandshakeTime: 0.1,
-      }
-    },
-    {
-      algorithm: 'RSA6',
-      iterations: 1000,
-      messageSizeBytes: 1,
-      results: {
-        averageCPU: 0.1,
-        averageMemory: 0.1,
-        errorRate: 0.1,
-        bytesThroughput: 0.1,
-        messagesThroughput: 0.1,
-        averageTLSHandshakeTime: 0.1,
-      }
-    }
-  ];
+    ]
+  };
 
   return (
       <div className={styles.experiment_wrapper}>
