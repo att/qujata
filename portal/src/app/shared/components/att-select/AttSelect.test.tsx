@@ -24,6 +24,20 @@ describe('AttSelect', () => {
     const { container }: RenderResult = render(<AttSelect {...props} />);
     expect(container.firstChild).toMatchSnapshot();
   });
+
+  test('renders Spinner component', () => {
+    const props: AttSelectProps = {
+      options,
+      placeholder: '',
+      value: item1,
+      onChange: () => expect.anything(),
+      isProcessing: true,
+    };
+    const { container } = render(<AttSelect {...props} />);
+
+    const spinner = container.querySelector('.att_select_spinner');
+    expect(spinner).toBeInTheDocument();
+  });
 });
 
 const item1: AttSelectOption = {

@@ -1,5 +1,5 @@
 import { Environment } from "../../../environments/environment";
-import { useDashboardData } from "../../hooks/useDashboardData";
+import { IUseDashboardData, useDashboardData } from "../../hooks/useDashboardData";
 import { ExternalLink, LinkRel, LinkSize, LinkStyle, LinkTarget } from "../../shared/components/att-link";
 import { DashBoardPrefixLink } from "../../shared/constants/dashboard";
 import { FetchDataStatus } from "../../shared/hooks/useFetch";
@@ -29,15 +29,15 @@ export const Home: React.FC = () => {
 const generateFromTime: number = Date.now();
 const initialLink: string = `${Environment.dashboardLinkHost}/${DashBoardPrefixLink}&from=${generateFromTime}`;
 export const HomeContent: React.FC = () => {
-  const { handleRunQueryClick, link, status } = useDashboardData();
-  const [dashBoardLink, setDashBoardLink] = useState<string>(link);
+  const { handleRunQueryClick, status, link }: IUseDashboardData = useDashboardData();
+  const [dashBoardLink, setDashBoardLink] = useState<string>('');
   const [displayLinkButton, setDisplayLinkButton] = useState<boolean>(false);
   const navigate = useNavigate();
 
   useEffect(() => {
     if (status === FetchDataStatus.Success) {
       // Navigate to the Experiment page
-      navigate('/experiment',  { replace: true });
+      navigate('/experiment/:testSuiteId',  { replace: true });
     }
   }, [navigate, status]);
 
