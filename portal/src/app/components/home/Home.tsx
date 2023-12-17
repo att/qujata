@@ -32,14 +32,14 @@ export const HomeContent: React.FC = () => {
   const { handleRunQueryClick, link, status } = useDashboardData();
   const [dashBoardLink, setDashBoardLink] = useState<string>(link);
   const [displayLinkButton, setDisplayLinkButton] = useState<boolean>(false);
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
 
-  // useEffect(() => {
-  //   if (status === FetchDataStatus.Success) {
-  //     // Navigate to the Experiment page
-  //     navigate('/experiment',  { replace: true });
-  //   }
-  // }, [navigate, status]);
+  useEffect(() => {
+    if (status === FetchDataStatus.Success) {
+      // Navigate to the Experiment page
+      navigate('/experiment',  { replace: true });
+    }
+  }, [navigate, status]);
 
   useEffect(() => {
     setDashBoardLink(link);
