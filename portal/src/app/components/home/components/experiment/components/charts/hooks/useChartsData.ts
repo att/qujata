@@ -1,13 +1,9 @@
 import { useEffect, useState } from "react";
-import { FetchDataStatus, IHttp, useFetch } from "../../../../../../../shared/hooks/useFetch";
-import { getKeysOfData, getLabels, sortDataByAlgorithm } from "../utils/chart.utils";
-import { APIS } from "../../../../../../../apis";
-import { ITestRunResult, ITestRunResultData } from "../../../../../../../shared/models/test-run-result.interface";
-import { replaceParams } from "../../../../../../../shared/utils/replaceParams";
-import { useParams } from "react-router-dom";
-import { TChartUrlParams } from "../../../../../../../shared/models/url-params.interface";
+import { getKeysOfData, getLabels } from "../utils/chart.utils";
+import { ITestRunResultData } from "../../../../../../../shared/models/test-run-result.interface";
 import { ILineChartData } from "../models/line-chart-data.interface";
 import { colors } from "../../../../../../dashboard/components/charts/LineChart/LineChart.const";
+import { useExperimentData } from "../../hooks/useExperimentData";
 
 export interface IUseChartsData {
     barChartLabels: string[];
@@ -59,32 +55,27 @@ function processedLineChartData(data: ITestRunResultData[], keysOfData: string[]
       return chartData;
 }
 
-export function useChartsData(_data?: ITestRunResultData[]): IUseChartsData {
-    const { testSuiteId } = useParams<TChartUrlParams>();
-    const url: string = replaceParams(APIS.testRunResults, { testSuiteId });
-    const { get, data, cancelRequest, status }: IHttp<ITestRunResult> = useFetch({ url });
+export function useChartsData(): IUseChartsData {
+    const { data: testRunData } = useExperimentData();
+
     const [barChartLabels, setBarChartLabels] = useState<string[]>([]);
     const [barChartData, setBarChartData] = useState<ITestRunResultData[]>([]);
     const [barChartKeysOfData, setBarChartKeysOfData] = useState<string[]>([]);
     const [lineChartData, setLineChartData] = useState<ILineChartData>();
     
     useEffect(() => {
-        get();
-        return cancelRequest;
-    }, [get, cancelRequest]);
-
-    useEffect(() => {
-        if (status === FetchDataStatus.Success && data) {
-            const sortedData: ITestRunResultData[] = sortDataByAlgorithm(data.testRuns);
-            setBarChartData(sortedData);
-            const labels: string[] = getLabels(sortedData);
+        if(testRunData.length > 0) {
+            setBarChartData(testRunData);
+            const labels: string[] = getLabels(testRunData);
             setBarChartLabels(labels);
-            const keysOfData: string[] = getKeysOfData(sortedData[0].results);
+            const keysOfData: string[] = getKeysOfData(testRunData[0].results);
             setBarChartKeysOfData(keysOfData);
-            const lineChartData: ILineChartData = processedLineChartData(sortedData, keysOfData);
+            const lineChartData: ILineChartData = processedLineChartData(testRunData, keysOfData);
             setLineChartData(lineChartData);
         }
-    }, [status, data]);
+    }, [testRunData]);
+
+    
 
     return {
         barChartLabels,

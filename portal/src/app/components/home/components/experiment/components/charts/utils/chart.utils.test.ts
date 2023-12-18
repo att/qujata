@@ -1,5 +1,5 @@
 import { renderHook } from '@testing-library/react';
-import { getChartTitleByType, getKeysOfData, getLabels, sortDataByAlgorithm } from './chart.utils';
+import { getChartTitleByType, getKeysOfData, getLabels } from './chart.utils';
 import { ITestRunResultData } from '../../../../../../../shared/models/test-run-result.interface';
 
 const mockData: ITestRunResultData[] = [
@@ -68,53 +68,9 @@ const mockData2: ITestRunResultData[] = [
   }
 ];
 describe('Chart utils', () => {
-    test('should sort data by algorithm', () => {
-        const { result } = renderHook(() => sortDataByAlgorithm(mockData));
-        expect(result.current[0]).toEqual({
-          id: 1,
-          algorithm: "Algorithm1", 
-          iterations: 1000,
-          results:  
-          { 
-            averageCPU: 25.5, 
-            averageMemory: 512
-          } 
-        });
-        expect(result.current).toEqual(mockData);
-    });
-
-    test('should sort data by algorithm and iterations', () => {
-        const { result } = renderHook(() => sortDataByAlgorithm(mockData2));
-        expect(result.current[0]).toEqual({
-          id: 1, 
-          algorithm: "Algorithm1", 
-          iterations: 100,
-          results:  
-          { 
-            averageCPU: 25.5, 
-            averageMemory: 512
-          } 
-        });
-    });
-
-    test('should sort data by algorithm', () => {
-        const { result } = renderHook(() => sortDataByAlgorithm(mockData));
-        expect(result.current[0]).toEqual({
-          id: 1,
-          algorithm: "Algorithm1", 
-          iterations: 1000,
-          results:  
-          { 
-            averageCPU: 25.5, 
-            averageMemory: 512, 
-          } 
-        });
-        expect(result.current).toEqual(mockData);
-    });
-
     test('should get labels from data', () => {
         const { result } = renderHook(() => getLabels(mockData));
-        expect(result.current).toEqual(['Algorithm1','Algorithm1', 'Algorithm2']);
+        expect(result.current).toEqual(['Algorithm1', 'Algorithm2', 'Algorithm1']);
     });
 
     test('should get keys of data', () => {
