@@ -1,4 +1,4 @@
-import { useMemo, useReducer } from 'react';
+import { useMemo } from 'react';
 import styles from './ExperimentTable.module.scss';
 import {
   createColumnHelper,
@@ -8,17 +8,18 @@ import {
 } from '@tanstack/react-table';
 import { EXPERIMENT_TABLE_EN } from './translate/en';
 import { ITestRunResult, ITestRunResultData } from '../../../../../../shared/models/test-run-result.interface';
+import { useExperimentData } from '../hooks/useExperimentData';
 
 export type ExperimentProps = {
   data: ITestRunResult;
 }
 
-export const ExperimentTable: React.FC<ExperimentProps> = (props: ExperimentProps) => {
-  const { data } = props;
+export const ExperimentTable: React.FC = () => {
+  const { data: testRunData } = useExperimentData();
 
   const columnHelper = createColumnHelper<ITestRunResultData>();
   const columns = useMemo(() => {
-    if (data.testRuns.length > 0) {
+    if (testRunData && testRunData.testRuns.length > 0) {
       return [
         columnHelper.accessor(row => row.algorithm, {
           id: 'algorithm',
@@ -40,12 +41,11 @@ export const ExperimentTable: React.FC<ExperimentProps> = (props: ExperimentProp
       ];
     }
     return [];
-  }, [data, columnHelper]);
+  }, [testRunData, columnHelper]);
 
-  // const [data, setData] = useState(() => [...defaultData])
-
+  const data = useMemo(() => (testRunData ? testRunData.testRuns : []), [testRunData]);
   const table = useReactTable({
-    data: data.testRuns,
+    data,
     columns,
     getCoreRowModel: getCoreRowModel(),
   });
@@ -53,15 +53,17 @@ export const ExperimentTable: React.FC<ExperimentProps> = (props: ExperimentProp
   return (
     <div className={styles.experiment_table_wrapper}>
       <table className={styles.experiment_table}>
-        {table.getHeaderGroups().map(headerGroup => (
-          <tr key={headerGroup.id}>
-            {headerGroup.headers.map(header => (
-              <th key={header.id} className={styles.experiment_table_titles}>
-                {flexRender(header.column.columnDef.header,header.getContext())}
-              </th>
-            ))}
-          </tr>
-        ))}
+        <thead>
+          {table.getHeaderGroups().map(headerGroup => (
+            <tr key={headerGroup.id}>
+              {headerGroup.headers.map(header => (
+                <th key={header.id} className={styles.experiment_table_titles}>
+                  {flexRender(header.column.columnDef.header,header.getContext())}
+                </th>
+              ))}
+            </tr>
+          ))}
+        </thead>
         <tbody className={styles.experiment_table_content}>
           {table.getRowModel().rows.map(row => (
             <tr key={row.id}>

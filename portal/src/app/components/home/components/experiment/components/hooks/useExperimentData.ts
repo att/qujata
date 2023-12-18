@@ -8,11 +8,11 @@ import { FetchDataStatus, IHttp, useFetch } from "../../../../../../shared/hooks
 import { sortDataByAlgorithm } from "../charts/utils/test-run.utils";
 
 export interface IUseExperimentData {
-    data: ITestRunResultData[];
+    data: ITestRunResult;
 }
 
 export function useExperimentData(): IUseExperimentData {
-  const [testRunData, setTestRunData] = useState<ITestRunResultData[]>([]);
+  const [testRunData, setTestRunData] = useState<ITestRunResult>();
   const { testSuiteId } = useParams<TestRunUrlParams>();
   const testRunUrl: string = replaceParams(APIS.testRunResults, { testSuiteId });
   const { get, data, cancelRequest, status }: IHttp<ITestRunResult> = useFetch({ url: testRunUrl });
@@ -25,7 +25,7 @@ export function useExperimentData(): IUseExperimentData {
   useEffect(() => {
       if (status === FetchDataStatus.Success && data) {
           const sortedData: ITestRunResultData[] = sortDataByAlgorithm(data.testRuns);
-          setTestRunData(sortedData);
+          setTestRunData({ ...data, testRuns: sortedData });
       }
   }, [status, data]);
 

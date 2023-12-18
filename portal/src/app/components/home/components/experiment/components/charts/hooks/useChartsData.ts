@@ -64,18 +64,17 @@ export function useChartsData(): IUseChartsData {
     const [lineChartData, setLineChartData] = useState<ILineChartData>();
     
     useEffect(() => {
-        if(testRunData.length > 0) {
-            setBarChartData(testRunData);
-            const labels: string[] = getLabels(testRunData);
+        if(testRunData && testRunData.testRuns.length > 0) {
+            const testRuns: ITestRunResultData[] = testRunData.testRuns;
+            setBarChartData(testRuns);
+            const labels: string[] = getLabels(testRuns);
             setBarChartLabels(labels);
-            const keysOfData: string[] = getKeysOfData(testRunData[0].results);
+            const keysOfData: string[] = getKeysOfData(testRuns[0].results);
             setBarChartKeysOfData(keysOfData);
-            const lineChartData: ILineChartData = processedLineChartData(testRunData, keysOfData);
+            const lineChartData: ILineChartData = processedLineChartData(testRuns, keysOfData);
             setLineChartData(lineChartData);
         }
     }, [testRunData]);
-
-    
 
     return {
         barChartLabels,
