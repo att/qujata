@@ -4,6 +4,7 @@ import { ITestRunResultData } from "../../../../../../../shared/models/test-run-
 import { ILineChartData } from "../models/line-chart-data.interface";
 import { colors } from "../../../../../../dashboard/components/charts/LineChart/LineChart.const";
 import { useExperimentData } from "../../hooks/useExperimentData";
+import { IExperimentData } from "../../../Experiment";
 
 export interface IUseChartsData {
     barChartLabels: string[];
@@ -55,8 +56,8 @@ function processedLineChartData(data: ITestRunResultData[], keysOfData: string[]
       return chartData;
 }
 
-export function useChartsData(): IUseChartsData {
-    const { data: testRunData } = useExperimentData();
+export function useChartsData(props: IExperimentData): IUseChartsData {
+    // const { data: testRunData } = useExperimentData();
 
     const [barChartLabels, setBarChartLabels] = useState<string[]>([]);
     const [barChartData, setBarChartData] = useState<ITestRunResultData[]>([]);
@@ -64,8 +65,8 @@ export function useChartsData(): IUseChartsData {
     const [lineChartData, setLineChartData] = useState<ILineChartData>();
     
     useEffect(() => {
-        if(testRunData && testRunData.testRuns.length > 0) {
-            const testRuns: ITestRunResultData[] = testRunData.testRuns;
+        if(props.data && props.data.testRuns.length > 0) {
+            const testRuns: ITestRunResultData[] = props.data.testRuns;
             setBarChartData(testRuns);
             const labels: string[] = getLabels(testRuns);
             setBarChartLabels(labels);
@@ -74,7 +75,7 @@ export function useChartsData(): IUseChartsData {
             const lineChartData: ILineChartData = processedLineChartData(testRuns, keysOfData);
             setLineChartData(lineChartData);
         }
-    }, [testRunData]);
+    }, [props.data]);
 
     return {
         barChartLabels,

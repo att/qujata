@@ -2,6 +2,7 @@ import { renderHook } from '@testing-library/react';
 import { useChartsData } from './useChartsData';
 import { FetchDataStatus, useFetch } from '../../../../../../../shared/hooks/useFetch';
 import { ITestRunResult } from '../../../../../../../shared/models/test-run-result.interface';
+import { IExperimentData } from '../../../Experiment';
 
 jest.mock('../../../../../../../shared/hooks/useFetch');
 jest.mock('react-router-dom', () => ({
@@ -11,7 +12,8 @@ jest.mock('react-router-dom', () => ({
     }),
 }));
 
-const mockData: ITestRunResult = {
+const mockData: IExperimentData = {
+  "data": {
     "id": 1,
     "name": "TestRun1",
     "description": "TestRun1",
@@ -59,25 +61,17 @@ const mockData: ITestRunResult = {
         } 
       }
     ]
+  }
 };
   
 describe('useChartsData', () => {
   test('should return charts data', () => {
-    (useFetch as jest.Mock).mockImplementation(() => ({ get: jest.fn(), status: FetchDataStatus.Success, data: mockData,  cancelRequest: jest.fn()}));
+    (useFetch as jest.Mock).mockImplementation(() => ({ get: jest.fn(), status: FetchDataStatus.Success, data: mockData, cancelRequest: jest.fn()}));
 
-    const { result } = renderHook(() => useChartsData());
+    const { result } = renderHook(() => useChartsData(mockData));
     expect(result.current).toEqual({
-        barChartLabels: [ 'Algorithm1', 'Algorithm1', 'Algorithm2' ],
+        barChartLabels: [ 'Algorithm1', 'Algorithm2', 'Algorithm1' ],
         barChartData: [
-          {
-            id: 3,
-            algorithm: 'Algorithm1',
-            iterations: 104,
-            results: {
-                averageCPU: 2,
-                averageMemory: 52,
-            }
-          },
           {
             id: 1,
             algorithm: 'Algorithm1',
@@ -95,6 +89,15 @@ describe('useChartsData', () => {
               averageCPU: 25.5,
               averageMemory: 512,
             }
+          },
+          {
+            id: 3,
+            algorithm: 'Algorithm1',
+            iterations: 104,
+            results: {
+                averageCPU: 2,
+                averageMemory: 52,
+            }
           }
         ],
         barChartKeysOfData: [
@@ -107,8 +110,8 @@ describe('useChartsData', () => {
             "borderColor": "#05BBFF",
             "borderWidth": 1,
             "data": {
-                "averageCPU": [2, 25.5],
-                "averageMemory": [52, 512],
+                "averageCPU": [25.5, 2],
+                "averageMemory": [512, 52],
             },
             "fill": false,
             "label": "Algorithm1",

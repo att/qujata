@@ -7,19 +7,13 @@ import {
   useReactTable,
 } from '@tanstack/react-table';
 import { EXPERIMENT_TABLE_EN } from './translate/en';
-import { ITestRunResult, ITestRunResultData } from '../../../../../../shared/models/test-run-result.interface';
-import { useExperimentData } from '../hooks/useExperimentData';
+import { ITestRunResultData } from '../../../../../../shared/models/test-run-result.interface';
+import { IExperimentData } from '../../Experiment';
 
-export type ExperimentProps = {
-  data: ITestRunResult;
-}
-
-export const ExperimentTable: React.FC = () => {
-  const { data: testRunData } = useExperimentData();
-
+export const ExperimentTable: React.FC<IExperimentData> = (props: IExperimentData) => {
   const columnHelper = createColumnHelper<ITestRunResultData>();
   const columns = useMemo(() => {
-    if (testRunData && testRunData.testRuns.length > 0) {
+    if (props.data && props.data.testRuns.length > 0) {
       return [
         columnHelper.accessor(row => row.algorithm, {
           id: 'algorithm',
@@ -41,9 +35,9 @@ export const ExperimentTable: React.FC = () => {
       ];
     }
     return [];
-  }, [testRunData, columnHelper]);
+  }, [props.data, columnHelper]);
 
-  const data = useMemo(() => (testRunData ? testRunData.testRuns : []), [testRunData]);
+  const data = useMemo(() => (props.data ? props.data.testRuns : []), [props.data]);
   const table = useReactTable({
     data,
     columns,

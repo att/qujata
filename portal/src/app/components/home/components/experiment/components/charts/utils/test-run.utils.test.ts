@@ -68,39 +68,6 @@ const mockData2: ITestRunResultData[] = [
   }
 ];
 
-const mockDataSorted: ITestRunResultData[] = [
-  {
-    id: 1,
-    algorithm: "Algorithm1", 
-    iterations: 20000,
-    results:  
-    { 
-      averageCPU: 25, 
-      averageMemory: 52, 
-    } 
-  },
-  {
-    id: 2,
-    algorithm: "Algorithm1", 
-    iterations: 20000,
-    results:  
-    { 
-      averageCPU: 25, 
-      averageMemory: 52, 
-    } 
-  },
-  {
-    id: 3,
-    algorithm: "Algorithm1", 
-    iterations: 20000,
-    results:  
-    { 
-      averageCPU: 25, 
-      averageMemory: 52, 
-    } 
-  }
-];
-
 describe('test-run utils', () => {
     test('should sort data by algorithm', () => {
         const { result } = renderHook(() => sortDataByAlgorithm(mockData));
