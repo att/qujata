@@ -23,11 +23,11 @@ export function useExperimentData(): IUseExperimentData {
   }, [get, cancelRequest]);
 
   useEffect(() => {
-      if (status === FetchDataStatus.Success && data) {
+      if (data) {
           const sortedData: ITestRunResultData[] = sortDataByAlgorithm(data.testRuns);
           setTestRunData({ ...data, testRuns: sortedData });
       }
-  }, [status, data]);
+  }, [data]);
 
   return {
       data: testRunData
