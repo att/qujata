@@ -1,0 +1,35 @@
+import { useEffect, useState } from "react";
+import { APIS } from "../../../../../../apis";
+import { replaceParams } from "../../../../../../shared/utils/replaceParams";
+import { useParams } from "react-router-dom";
+import { ITestRunResult, ITestRunResultData } from "../../../../../../shared/models/test-run-result.interface";
+import { TestRunUrlParams } from "../../../../../../shared/models/url-params.interface";
+import { FetchDataStatus, IHttp, useFetch } from "../../../../../../shared/hooks/useFetch";
+import { sortDataByAlgorithm } from "../charts/utils/test-run.utils";
+
+export interface IUseExperimentData {
+    data: ITestRunResult;
+}
+
+export function useExperimentData(): IUseExperimentData {
+  const [testRunData, setTestRunData] = useState<ITestRunResult>();
+  const { testSuiteId } = useParams<TestRunUrlParams>();
+  const testRunUrl: string = replaceParams(APIS.testRunResults, { testSuiteId });
+  const { get, data, cancelRequest, status }: IHttp<ITestRunResult> = useFetch({ url: testRunUrl });
+  
+  useEffect(() => {
+      get();
+      return cancelRequest;
+  }, [get, cancelRequest]);
+
+  useEffect(() => {
+      if (data) {
+          const sortedData: ITestRunResultData[] = sortDataByAlgorithm(data.testRuns);
+          setTestRunData({ ...data, testRuns: sortedData });
+      }
+  }, [data]);
+
+  return {
+      data: testRunData
+  } as IUseExperimentData;
+}

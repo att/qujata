@@ -1,23 +1,19 @@
 import { useEffect, useState } from "react";
-import { ITestResultData } from "../../../../../../../models/test-result.interface";
-import { FetchDataStatus, IHttp, useFetch } from "../../../../../../../shared/hooks/useFetch";
-import { getKeysOfData, getLabels, sortDataByAlgorithm } from "../utils/chart.utils";
-import { APIS } from "../../../../../../../apis";
-import { ITestRunResult } from "../../../../../../../shared/models/test-run-result.interface";
-import { replaceParams } from "../../../../../../../shared/utils/replaceParams";
-import { useParams } from "react-router-dom";
-import { TChartUrlParams } from "../../../../../../../shared/models/url-params.interface";
+import { getKeysOfData, getLabels } from "../utils/chart.utils";
+import { ITestRunResultData } from "../../../../../../../shared/models/test-run-result.interface";
 import { ILineChartData } from "../models/line-chart-data.interface";
 import { colors } from "../../../../../../dashboard/components/charts/LineChart/LineChart.const";
+import { useExperimentData } from "../../hooks/useExperimentData";
+import { IExperimentData } from "../../../Experiment";
 
 export interface IUseChartsData {
     barChartLabels: string[];
-    barChartData: ITestResultData[];
+    barChartData: ITestRunResultData[];
     barChartKeysOfData: string[];
     lineChartData: ILineChartData;
 }
 
-function processedLineChartData(data: ITestResultData[], keysOfData: string[]): ILineChartData {
+function processedLineChartData(data: ITestRunResultData[], keysOfData: string[]): ILineChartData {
     const processedData = data.reduce((acc: {[key1: string]: {[key2: string]: number[]}}, curr: any) => {
         keysOfData.forEach((key: string) => {
           if (curr.results[key] !== undefined) {
@@ -35,12 +31,12 @@ function processedLineChartData(data: ITestResultData[], keysOfData: string[]): 
         return acc;
       }, {});
 
-      const messageSizes: number[] = data.map((run: ITestResultData) => run.messageSizeBytes);
-      messageSizes.sort((a: number, b: number) => a - b);
-      const uniqueMessageSizes: Set<number> = new Set(messageSizes);
+      const iterations: number[] = data.map((run: ITestRunResultData) => run.iterations);
+      iterations.sort((a: number, b: number) => a - b);
+      const uniqueIterations: Set<number> = new Set(iterations);
 
       const chartData = {
-        labels:  Array.from(uniqueMessageSizes),
+        labels:  Array.from(uniqueIterations),
         datasets: Object.keys(processedData).map((algorithm, index) => {
         const data = keysOfData.reduce((acc: {[key: string]: number[]}, key: string) => {
             acc[key] = processedData[algorithm][key];
@@ -60,32 +56,26 @@ function processedLineChartData(data: ITestResultData[], keysOfData: string[]): 
       return chartData;
 }
 
-export function useChartsData(_data?: ITestResultData[]): IUseChartsData {
-    const { testSuiteId } = useParams<TChartUrlParams>();
-    const url: string = replaceParams(APIS.testRunResults, { testSuiteId });
-    const { get, data, cancelRequest, status }: IHttp<ITestRunResult> = useFetch({ url });
+export function useChartsData(props: IExperimentData): IUseChartsData {
+    // const { data: testRunData } = useExperimentData();
+
     const [barChartLabels, setBarChartLabels] = useState<string[]>([]);
-    const [barChartData, setBarChartData] = useState<ITestResultData[]>([]);
+    const [barChartData, setBarChartData] = useState<ITestRunResultData[]>([]);
     const [barChartKeysOfData, setBarChartKeysOfData] = useState<string[]>([]);
     const [lineChartData, setLineChartData] = useState<ILineChartData>();
     
     useEffect(() => {
-        get();
-        return cancelRequest;
-    }, [get, cancelRequest]);
-
-    useEffect(() => {
-        if (status === FetchDataStatus.Success && data) {
-            const sortedData: ITestResultData[] = sortDataByAlgorithm(data.testRuns);
-            setBarChartData(sortedData);
-            const labels: string[] = getLabels(sortedData);
+        if(props.data && props.data.testRuns.length > 0) {
+            const testRuns: ITestRunResultData[] = props.data.testRuns;
+            setBarChartData(testRuns);
+            const labels: string[] = getLabels(testRuns);
             setBarChartLabels(labels);
-            const keysOfData: string[] = getKeysOfData(sortedData[0].results);
+            const keysOfData: string[] = getKeysOfData(testRuns[0].results);
             setBarChartKeysOfData(keysOfData);
-            const lineChartData: ILineChartData = processedLineChartData(sortedData, keysOfData);
+            const lineChartData: ILineChartData = processedLineChartData(testRuns, keysOfData);
             setLineChartData(lineChartData);
         }
-    }, [status, data]);
+    }, [props.data]);
 
     return {
         barChartLabels,

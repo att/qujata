@@ -1,33 +1,32 @@
 export interface IResult {
     averageCPU: number;
     averageMemory: number;
-    errorRate: number;
-    bytesThroughput: number;
-    messagesThroughput: number;
-    averageTLSHandshakeTime: number;
 }
 
-interface ITestRunResultData {
+export interface ITestRunResultData {
+    id: number;
     algorithm: string;
     iterations: number;
-    messageSizeBytes: number;
     results: IResult;
 }
 
-interface IEnvironmentInfo {
-    resourceName: string;
-    operatingSystem: string;
+export interface IEnvironmentInfo {
+    codeRelease: string;
     cpu: string;
     cpuArchitecture: string;
-    cpuCores: string;
     cpuClockSpeed: string;
+    cpuCores: number;
     nodeSize: string;
-    codeRelease: string;
-    testSuiteId: number;
-    testSuiteName: string;
+    operatingSystem: string;
+    resourceName: string;
 }
 
 export interface ITestRunResult {
+    id: number;
+    name: string;
+    description: string;
+    start_time: string;
+    end_time: string;
     environment_info: IEnvironmentInfo;
     testRuns: ITestRunResultData[];
 }

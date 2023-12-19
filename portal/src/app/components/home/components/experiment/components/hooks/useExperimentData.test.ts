@@ -1,4 +1,13 @@
-{
+import { renderHook } from '@testing-library/react';
+import { useFetch } from '../../../../../../shared/hooks/useFetch';
+import { useExperimentData } from './useExperimentData';
+import { ITestRunResult } from '../../../../../../shared/models/test-run-result.interface';
+
+jest.mock('../../../../../../shared/hooks/useFetch', () => ({
+  useFetch: jest.fn(),
+}));
+
+const mockData: ITestRunResult = {
   "id": 1,
   "name": "test1",
   "description": "test1",
@@ -53,4 +62,29 @@
       }
     }
   ]
-}
+};
+
+describe('useExperimentData', () => {
+  test('Should be in Success mode', () => {
+    (useFetch as jest.Mock).mockReturnValue({
+      get: jest.fn(),
+      data: mockData,
+      cancelRequest: jest.fn(),
+    });
+
+    const { result } = renderHook(() => useExperimentData());
+    const mockDataNumOfTestRuns = mockData.testRuns.length;
+    expect(result.current.data.testRuns.length).toEqual(mockDataNumOfTestRuns);
+  });
+
+  test('Should not render data', () => {
+    (useFetch as jest.Mock).mockReturnValue({
+      get: jest.fn(),
+      data: undefined,
+      cancelRequest: jest.fn(),
+    });
+
+    const { result } = renderHook(() => useExperimentData());
+    expect(result.current.data).toEqual(undefined);
+  });
+});
