@@ -30,7 +30,7 @@ router.get('/iterations', async (req: Request, res: Response) => {
   }, 1500);
 });
 
-router.get('/test/:testSuiteId', async (req: Request, res: Response) => {
+router.get('/experiment/:testSuiteId', async (req: Request, res: Response) => {
   console.log(`-${req.method} ${req.url}`);
   const data = (await import('./test.json')).default;
   setTimeout(() => {

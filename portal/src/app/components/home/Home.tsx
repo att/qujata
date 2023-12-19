@@ -37,7 +37,7 @@ export const HomeContent: React.FC = () => {
   useEffect(() => {
     if (status === FetchDataStatus.Success) {
       // Navigate to the Experiment page
-      navigate('/experiment/:testSuiteId',  { replace: true });
+      navigate('experiment/:testSuiteId',  { replace: true });
     }
   }, [navigate, status]);
 
