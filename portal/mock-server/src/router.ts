@@ -6,6 +6,7 @@ const router: CoreRouter = Router();
 
 router.post('/analyze', async (req: Request, res: Response) => {
   console.log(`-${req.method} ${req.url}`);
+  // todo replace with - const data = {testSuiteId: 'testSuiteId-123'};
   const data = { from: '1698747472962', to: '1698747480624' };
   // if( ['prime256v1', 'secp384r1'].includes(req.body.algorithm)){
   //   data = (await import('./classic-test.json')).default;
@@ -19,7 +20,7 @@ router.post('/analyze', async (req: Request, res: Response) => {
   // }
 
   setTimeout(() => {
-    res.json(data)
+    res.json(data);
   }, 1500);
 });
 
@@ -39,7 +40,7 @@ router.get('/iterations', async (req: Request, res: Response) => {
   }, 1500);
 });
 
-router.get('/test', async (req: Request, res: Response) => {
+router.get('/test/:testSuiteId', async (req: Request, res: Response) => {
   console.log(`-${req.method} ${req.url}`);
   const data = (await import('./test.json')).default;
   setTimeout(() => {

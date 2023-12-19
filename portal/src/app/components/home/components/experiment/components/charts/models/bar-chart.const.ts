@@ -1,7 +1,7 @@
 import { CHARTS_EN } from "../translate/en";
 
-export const tooltipKeys = ['messageSizeBytes', 'iterations'];
-export const tooltipLabels = ['Message Size', 'Iterations'];
+export const barChartTooltipKeys = ['messageSizeBytes', 'iterations'];
+export const barChartTooltipLabels = ['Message Size', 'Iterations'];
 
 export enum ChartKey {
     averageCPU = 'averageCPU',
