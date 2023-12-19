@@ -15,6 +15,7 @@ export interface ITestResponse {
 }
 
 export interface IQueryResponse {
+  test_suite_id: string;
   // testSuiteId: string;
   from: string;
   to: string;

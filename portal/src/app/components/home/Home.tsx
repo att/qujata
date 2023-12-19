@@ -29,17 +29,17 @@ export const Home: React.FC = () => {
 const generateFromTime: number = Date.now();
 const initialLink: string = `${Environment.dashboardLinkHost}/${DashBoardPrefixLink}&from=${generateFromTime}`;
 export const HomeContent: React.FC = () => {
-  const { handleRunQueryClick, status, link }: IUseDashboardData = useDashboardData();
+  const { handleRunQueryClick, status, link, testSuiteId }: IUseDashboardData = useDashboardData();
   const [dashBoardLink, setDashBoardLink] = useState<string>('');
   const [displayLinkButton, setDisplayLinkButton] = useState<boolean>(false);
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (status === FetchDataStatus.Success) {
+    if (status === FetchDataStatus.Success && testSuiteId) {
       // Navigate to the Experiment page
-      navigate('experiment/:testSuiteId',  { replace: true });
+      navigate(`experiment/${testSuiteId}`,  { replace: true });
     }
-  }, [navigate, status]);
+  }, [navigate, status, testSuiteId]);
 
   useEffect(() => {
     setDashBoardLink(link);

@@ -7,7 +7,7 @@ const router: CoreRouter = Router();
 router.post('/analyze', async (req: Request, res: Response) => {
   console.log(`-${req.method} ${req.url}`);
   // todo replace with - const data = {testSuiteId: 'testSuiteId-123'};
-  const data = { from: '1698747472962', to: '1698747480624' };
+  const data = { from: '1698747472962', to: '1698747480624', test_suite_id: '1' };
 
   setTimeout(() => {
     res.json(data);
@@ -30,7 +30,7 @@ router.get('/iterations', async (req: Request, res: Response) => {
   }, 1500);
 });
 
-router.get('/experiment/:testSuiteId', async (req: Request, res: Response) => {
+router.get('/qujata-api/test_suites/:testSuiteId', async (req: Request, res: Response) => {
   console.log(`-${req.method} ${req.url}`);
   const data = (await import('./test.json')).default;
   setTimeout(() => {
