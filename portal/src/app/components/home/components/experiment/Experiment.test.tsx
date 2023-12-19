@@ -6,7 +6,9 @@ import { ExperimentTable } from './components/experiment-table';
 
 jest.mock('./components/sub-header');
 jest.mock('./components/experiment-table');
-jest.mock('./components/charts');
+jest.mock('./components/charts', () => ({
+  Charts: jest.fn(),
+}));
 
 describe('Experiment', () => {
     test('should render Experiment', async () => {
