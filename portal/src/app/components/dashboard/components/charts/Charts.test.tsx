@@ -8,6 +8,7 @@ describe('Charts', () => {
   beforeAll(() => {
     // Prepare the props for the Charts component
     const sampleTestParams: ITestParams = {
+      experimentName: 'test',
       algorithms: {
         label: 'Sample label',
         value: 'Sample value',
@@ -15,7 +16,8 @@ describe('Charts', () => {
       iterationsCount: {
         label: '1000',
         value: '1000',
-      }
+      },
+      description: 'test'
     };
 
     const sampleData: Partial<ITestResponseData> = {

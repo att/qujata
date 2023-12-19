@@ -1,6 +1,7 @@
-from sqlalchemy import create_engine, Column, Integer, String, Date, ForeignKey, TIMESTAMP
+from sqlalchemy import create_engine, Column, Integer, String, Date, Enum, ForeignKey, TIMESTAMP
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker, relationship
+from src.enums.status import Status
 from .base import Base
 
 class TestRun(Base):
@@ -11,6 +12,8 @@ class TestRun(Base):
     algorithm = Column(TIMESTAMP)
     iterations = Column(Integer)
     message_size = Column(Integer)
+    status = Column(Enum(Status, values_callable=lambda x: [e.value for e in x]))
+    status_message = Column(String)
     test_suite_id = Column(Integer, ForeignKey('test_suites.id'))
     test_suite = relationship('TestSuite', back_populates='test_runs')
     test_run_results = relationship('TestRunResult', back_populates='test_run')

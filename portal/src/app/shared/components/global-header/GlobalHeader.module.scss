@@ -14,6 +14,9 @@ $headerSuperUser: #a4f1c1;
   line-height: var($headerSize);
   padding-inline-end: var($layoutPadding);
   padding-inline-start: var($layoutPadding);
+  position: sticky;
+  top: 0;
+  width: 100%;
 }
 
 .header_left_block,

@@ -14,6 +14,7 @@ describe('Dashboard', () => {
   beforeAll(() => {
     // Prepare the props for the Dashboard component
     sampleTestParams = {
+      experimentName: 'test',
       algorithms: {
         label: 'Sample label',
         value: 'Sample value',
@@ -22,6 +23,7 @@ describe('Dashboard', () => {
         label: '1000',
         value: '1000',
       },
+      description: 'Sample description',
     };
 
     const sampleData = {

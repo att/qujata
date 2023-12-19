@@ -3,14 +3,15 @@ import { Bar } from 'react-chartjs-2';
 import { useEffect, useState } from 'react';
 import { IDatasets } from './models/BarChart.model';
 import { colors, defaultOptions } from './barChart.const';
+import styles from './BarChart.module.scss';
 
 export interface BarChartProps {
     labels: string[];
     data: any;
-    title: string;
     keyOfData: string;
     tooltipKeys: string[];
     tooltipLabels: string[];   
+    title?: string;
 }
 export const BarChart: React.FC<BarChartProps> = (props: BarChartProps) => {
     const { labels, data, tooltipKeys, tooltipLabels, keyOfData, title } = props;
@@ -63,7 +64,7 @@ export const BarChart: React.FC<BarChartProps> = (props: BarChartProps) => {
     };
 
     return (
-        <Bar data={tempData} options={options} />
+        <Bar data={tempData} options={options} style={{ width: '500px', height: '400px' }} className={styles.bar} />
     );
 }
 

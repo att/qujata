@@ -6,7 +6,7 @@ import requests
 from flask import Flask, jsonify
 from unittest.mock import Mock, MagicMock, patch
 
-from src.controllers.tests_api import api
+from src.api.tests_api import api
 from config.settings import load_config
 from src.utils.database_manager import DatabaseManager
 from src.models.test_suite import TestSuite
@@ -27,9 +27,10 @@ class TestTestsAPI(unittest.TestCase):
         return TestSuite(
             protocol="TLS 1.3",
             name="name",
+            description="description",
             env_info_id=1,
             env_info=self.__env_info(),
-            code_release=self.app.code_release,
+            code_release=self.app.configurations.code_release,
             created_by="",
             created_date=datetime.now(),
             updated_by="",
@@ -45,7 +46,6 @@ class TestTestsAPI(unittest.TestCase):
         return TestRun(
             id=1
         )
-
 
     def test_get_test_suites(self):
         self.app.database_manager.get_records.return_value = [self.__test_suite()]
@@ -63,6 +63,13 @@ class TestTestsAPI(unittest.TestCase):
         expected['updated_date'] = expected['updated_date'].strftime("%a, %d %b %Y %H:%M:%S GMT")
         self.assertEqual(result, expected)
 
+    def test_get_test_suite_return_not_found(self):
+        self.app.database_manager.get_record_by_id.return_value = None
+        response = self.client.get('/api/test_suites/1')
+        result = json.loads(response.data)
+        self.assertEqual(result, {'error': 'Not Found', 'message': 'Test suite with id: 1 not found'})
+        self.assertEqual(response.status_code, 404)
+
     def test_get_test_runs(self):
         self.app.database_manager.get_records.return_value = [self.__test_run()]
         response = self.client.get('/api/test_suites/1/test_runs')
@@ -71,22 +78,17 @@ class TestTestsAPI(unittest.TestCase):
 
     def test_get_test_run(self):
         test_run =  self.__test_run()
-        self.app.database_manager.get_record_by_id.return_value = test_run
+        self.app.database_manager.get_record.return_value = test_run
         response = self.client.get('/api/test_suites/1/test_runs/1')
         result = json.loads(response.data)
         expected = test_run.to_dict()
         self.assertEqual(result, expected)
 
+    def test_get_test_run_return_not_found(self):
+        self.app.database_manager.get_record.return_value = None
+        response = self.client.get('/api/test_suites/1/test_runs/1')
+        result = json.loads(response.data)
+        self.assertEqual(result, {'error': 'Not Found', 'message': 'Test run with id: 1 and test suite id: 1 not found'})
+        self.assertEqual(response.status_code, 404)
 
 
-    # def test_analyze(self):
-    #     response = self.client.get('/api/test_suites')
-
-        
-    #     # self.assertEqual(self.app.database_manager.add_to_db.call_count, 3)# 1 for the test suite, and the other for the 2 test runs
-        
-    #     self.assertEqual(response.status_code, 200)
-    #     # Check the response content
-    #     response_data = json.loads(response.data)
-    #     self.assertIn('from', response_data)
-    #     self.assertIn('to', response_data)

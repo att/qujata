@@ -3,7 +3,7 @@ from unittest.mock import Mock
 from flask import Flask
 
 from src.models.env_info import EnvInfo
-from src.controllers.env_info_api import env_info_api
+from src.api.env_info_api import api
 
 from src.utils.database_manager import DatabaseManager
 
@@ -11,7 +11,7 @@ from src.utils.database_manager import DatabaseManager
 class TestEnvInfoAPI(unittest.TestCase):
     def setUp(self):
         self.app = Flask(__name__)
-        self.app.register_blueprint(env_info_api, url_prefix='/api')
+        self.app.register_blueprint(api, url_prefix='/api')
         self.client = self.app.test_client()
         self.app.database_manager = Mock(spec=DatabaseManager)
 

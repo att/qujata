@@ -23,6 +23,14 @@ class DatabaseManager:
             
         return query.all()
 
+    def get_record(self, model, filter_conditions=None):
+        query = self.__db.session.query(model)
+        
+        if filter_conditions:
+            query = query.filter(*filter_conditions)
+            
+        return query.first()
+
     def get_record_by_id(self, model, id):
         return self.__db.session.query(model).get(id)
 

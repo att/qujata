@@ -49,6 +49,6 @@ def __validate(data):
     if process_is_running:
         raise ApiException('The previous test is still running. Please try again in few minutes', 'Current test is still running', HTTP_STATUS_LOCKED)
     for algorithm in data['algorithms']:
-        if algorithm not in current_app.allowedAlgorithms:
+        if algorithm not in current_app.configurations.allowedAlgorithms:
             raise ApiException('Algorithm "' + algorithm + '" is not supported', 'Invalid data provided', HTTP_STATUS_BAD_REQUEST)
 

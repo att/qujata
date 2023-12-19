@@ -2,9 +2,13 @@ import { AttSelectOption } from "../../../shared/components/att-select";
 import { IHttp, useFetch } from "../../../shared/hooks/useFetch";
 import { useEffect, useState } from "react";
 import { APIS } from "../../../apis";
+import { algorithmSections } from "../constants";
+
+export type AlgosBySectionDict = { [key: string]: AttSelectOption[] };
 
 export interface IUseGetAlgorithms {
-    options: AttSelectOption[];
+    algorithmOptions: AttSelectOption[];
+    algosBySection: AlgosBySectionDict;
 }
 
 interface IAlgorithm {
@@ -12,8 +16,10 @@ interface IAlgorithm {
     hybrid: string[];
     quantumSafe: string[];
 }
+
 export function useGetAlgorithms(): IUseGetAlgorithms {
-    const [options, setOptions] = useState<AttSelectOption[]>([]);
+    const [algorithmOptions, setOptions] = useState<AttSelectOption[]>([]);
+    const [algosBySection, setAlgosBySection] = useState<AlgosBySectionDict>({});
     const { get, data, cancelRequest }: IHttp<IAlgorithm> = useFetch({ url: APIS.algorithms });
 
     useEffect(() => {
@@ -24,21 +30,29 @@ export function useGetAlgorithms(): IUseGetAlgorithms {
 
     useEffect(() => {
         if (data) {
+            const algorithmTitles: AttSelectOption[] = algorithmSections.map((algo: string) => ({ label: algo, value: algo }));
             const classicOptions: AttSelectOption[] = data.classic.map((algo: string) => ({ label: algo, value: algo }));
             const hybridOptions: AttSelectOption[] = data.hybrid.map((algo: string) => ({ label: algo, value: algo }));
             const quantumSafeOptions: AttSelectOption[] = data.quantumSafe.map((algo: string) => ({ label: algo, value: algo }));
-            const algorithmTitles: AttSelectOption[] = ['─────────── Classic ─────────────', '─────────── Hybrid ─────────────', '─────────── PQ ──────────────']
-                .map((algo: string) => ({ label: algo, value: algo, isDisabled: true }));
+
             setOptions([
                 algorithmTitles[0],
-                ...classicOptions,
                 algorithmTitles[1],
-                ...hybridOptions,
+                ...classicOptions,
                 algorithmTitles[2],
+                ...hybridOptions,
+                algorithmTitles[3],
                 ...quantumSafeOptions
             ]);
+
+            setAlgosBySection({
+                [algorithmSections[0]]: classicOptions.concat(hybridOptions, quantumSafeOptions),
+                [algorithmSections[1]]: classicOptions,
+                [algorithmSections[2]]: hybridOptions,
+                [algorithmSections[3]]: quantumSafeOptions
+            })
         }
     }, [data]);
 
-    return { options };
+    return { algorithmOptions, algosBySection };
 }

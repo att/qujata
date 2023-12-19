@@ -9,6 +9,7 @@ class TestSuite(Base):
     id = Column(Integer, primary_key=True, autoincrement=True)
     protocol = Column(String)
     name = Column(String)
+    description = Column(String)
     env_info_id = Column(ForeignKey("env_info.id"))
     env_info = relationship('EnvInfo', back_populates='test_suites')
     code_release = Column(String)
