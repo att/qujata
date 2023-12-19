@@ -2,10 +2,14 @@ import { renderHook } from '@testing-library/react';
 import { useFetch } from '../../../../../../shared/hooks/useFetch';
 import { useExperimentData } from './useExperimentData';
 import { ITestRunResult } from '../../../../../../shared/models/test-run-result.interface';
+import { useFetchSpinner } from '../../../../../../shared/hooks/useFetchSpinner';
+import { useErrorMessage } from '../../../../../../hooks/useErrorMessage';
 
 jest.mock('../../../../../../shared/hooks/useFetch', () => ({
   useFetch: jest.fn(),
 }));
+jest.mock('../../../../../../shared/hooks/useFetchSpinner');
+jest.mock('../../../../../../hooks/useErrorMessage');
 
 const mockData: ITestRunResult = {
   "id": 1,
@@ -71,6 +75,8 @@ describe('useExperimentData', () => {
       data: mockData,
       cancelRequest: jest.fn(),
     });
+    (useFetchSpinner as jest.Mock).mockImplementation(() => undefined);
+    (useErrorMessage as jest.Mock).mockImplementation(() => undefined);
 
     const { result } = renderHook(() => useExperimentData());
     const mockDataNumOfTestRuns = mockData.testRuns.length;
@@ -83,6 +89,8 @@ describe('useExperimentData', () => {
       data: undefined,
       cancelRequest: jest.fn(),
     });
+    (useFetchSpinner as jest.Mock).mockImplementation(() => undefined);
+    (useErrorMessage as jest.Mock).mockImplementation(() => undefined);
 
     const { result } = renderHook(() => useExperimentData());
     expect(result.current.data).toEqual(undefined);

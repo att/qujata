@@ -8,6 +8,8 @@ import { SUB_HEADER_EN } from './translate/en';
 import { Button, ButtonActionType, ButtonSize, ButtonStyleType } from '../../../../../../shared/components/att-button';
 import TrashSvg from '../../../../../../../assets/images/trash.svg';
 import ArrowDownSvg from '../../../../../../../assets/images/arrow-down.svg';
+import { mapExperimentDataToCsvDataType } from './utils/data-to-csv.util';
+import { downloadCsvFile } from '../../../../../../utils/download';
 
 const DeleteAriaLabel: string = 'delete';
 const DownloadAriaLabel: string = 'download';
@@ -24,8 +26,9 @@ export const SubHeader: React.FC<SubHeaderProps> = (props: SubHeaderProps) => {
     }, []);
 
     const handleDownloadClick: () => void = useCallback((): void => {
-        console.log('handleDownloadClick');
-    }, []);
+        const csvFileName: string = `${SUB_HEADER_EN.CSV_REPORT.FILE_NAME}-${name || ''}.csv`;
+        downloadCsvFile(mapExperimentDataToCsvDataType(data.testRuns), csvFileName);
+    }, [data.testRuns, name]);
 
     return (
         <div className={styles.sub_header_wrapper}>
