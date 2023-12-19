@@ -6,16 +6,16 @@ import { Experiment } from '../app/components/home/components/experiment/Experim
 const isAllExperimentTabEnabled = false;
 export const router = createBrowserRouter([
     {
-        path: '/',
+        path: '/qujata',
         element: <Root />,
         children: [
           {
-            path: '/qujata',
+            path: '',
             index: true,
             element: <Home />,
           },
           {
-            path: '/experiment/:testSuiteId',
+            path: 'experiment/:testSuiteId',
             element: <Experiment />,
           },
           ...(isAllExperimentTabEnabled ? [{
