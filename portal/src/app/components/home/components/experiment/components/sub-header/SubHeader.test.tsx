@@ -8,7 +8,25 @@ jest.mock('react-router-dom', () => ({
 
 describe('SubHeader', () => {
     test('should render SubHeader', async () => {
-      const { container } = render(<SubHeader linkTitle='linkTitle' />);
+      const mockData = {
+        id: 1,
+        name: 'name',
+        description: 'name',
+        start_time: 'name',
+        end_time: 'name',
+        environment_info: {
+            codeRelease: 'codeRelease',
+            cpu: 'codeRelease',
+            cpuArchitecture: 'codeRelease',
+            cpuClockSpeed: 'codeRelease',
+            cpuCores: 2,
+            nodeSize: 'codeRelease',
+            operatingSystem: 'codeRelease',
+            resourceName: 'codeRelease',
+        },
+        testRuns: [],
+      };
+      const { container } = render(<SubHeader data={mockData} />);
 
       await waitFor(() => {
         expect(container).toBeTruthy();
