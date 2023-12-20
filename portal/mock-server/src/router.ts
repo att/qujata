@@ -38,4 +38,11 @@ router.get('/qujata-api/test_suites/:testSuiteId', async (req: Request, res: Res
   }, 1500);
 });
 
+router.put('/qujata-api/test_suites/:testSuiteId', async (req: Request, res: Response) => {
+  console.log(`-${req.method} ${req.url}`);
+  setTimeout(() => {
+    res.status(200).send();
+  }, 1500);
+});
+
 export default router;

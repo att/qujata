@@ -5,7 +5,7 @@ import { Button, ButtonActionType, ButtonSize, ButtonStyleType, IButton } from '
 import cn from 'classnames';
 import styles from './BaseModal.module.scss';
 import { Spinner, SpinnerSize } from '../att-spinner';
-import CloseSvg from '../../assets/images/close.svg';
+import CloseSvg from '../../../../assets/images/close.svg';
 
 export interface BaseModalProps {
     title: string;
@@ -14,7 +14,7 @@ export interface BaseModalProps {
     size?: BaseModalSize;
     showSpinner?: boolean;
 }
-
+Modal.setAppElement('#root');
 export const BaseModal: React.FC<PropsWithChildren<BaseModalProps>> = (props: PropsWithChildren<BaseModalProps>) => {
     const { title, showSpinner, onCloseClick } = props;
 
@@ -58,10 +58,12 @@ export const BaseModal: React.FC<PropsWithChildren<BaseModalProps>> = (props: Pr
             className={cn(ReactModalConfig.contentClassName, ModalCssClassBySize.get(props.size as BaseModalSize))}
             contentLabel={title}
         >
-          <div>
+          <div className={cn({ [styles.modal_spinner_overlay]: showSpinner })}>
              {showSpinner && <div className={styles.modal_spinner}><Spinner size={SpinnerSize.MEDIUM} /></div>}
              {renderHeader()}
-             {props.children}
+             <div className={styles.modal_content}>
+                {props.children}
+             </div>
              {props.actionButton?.length && renderFooter()}
           </div>
         </Modal>

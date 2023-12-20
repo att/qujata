@@ -1,5 +1,5 @@
 import styles from './SubHeader.module.scss';
-import { useCallback } from 'react';
+import { useCallback, useState } from 'react';
 import { Link } from "react-router-dom";
 import ArrowLeftSvg from '../../../../../../../../src/assets/images/arrow-left.svg';
 import { ITestRunResult } from '../../../../../../shared/models/test-run-result.interface';
@@ -11,6 +11,7 @@ import ArrowDownSvg from '../../../../../../../assets/images/arrow-down.svg';
 import { mapExperimentDataToCsvDataType } from './utils/data-to-csv.util';
 import { downloadCsvFile } from '../../../../../../utils/download';
 import PencilSvg from '../../../../../../../assets/images/pencil.svg';
+import { EditExperimentModal, EditExperimentModalData } from '../edit-experiment-modal';
 
 const DeleteAriaLabel: string = 'delete';
 const DownloadAriaLabel: string = 'download';
@@ -22,9 +23,12 @@ interface SubHeaderProps {
 export const SubHeader: React.FC<SubHeaderProps> = (props: SubHeaderProps) => {
     const { data } = props;
     const { name, description } = data;
-
+    const [openEditModal, setOpenEditModal] = useState<boolean>(false);
+    const [experimentName, setExperimentName] = useState<string>(name || '');
+    const [experimentDescription, setExperimentDescription] = useState<string>(description || '');
+    
     const handleEditNameClick: () => void = useCallback((): void => {
-        console.log('handleEditNameClick');
+        setOpenEditModal(true);
     }, []);
 
     const handleDeleteClick: () => void = useCallback((): void => {
@@ -35,6 +39,14 @@ export const SubHeader: React.FC<SubHeaderProps> = (props: SubHeaderProps) => {
         const csvFileName: string = `${SUB_HEADER_EN.CSV_REPORT.FILE_NAME}-${name || ''}.csv`;
         downloadCsvFile(mapExperimentDataToCsvDataType(data.testRuns), csvFileName);
     }, [data.testRuns, name]);
+    
+    const handleCloseEditExperimentModal: (editData?: EditExperimentModalData) => void = useCallback((editData?: EditExperimentModalData): void => {
+        if (editData) {
+            setExperimentName(editData.name);
+            setExperimentDescription(editData.description);
+        }
+        setOpenEditModal(false);
+    }, []);
 
     return (
         <>
@@ -44,7 +56,7 @@ export const SubHeader: React.FC<SubHeaderProps> = (props: SubHeaderProps) => {
                     <div className={styles.name_wrapper}>
                         <Link className={styles.back_link} to="/qujata">
                             <img className={styles.arrow_icon} src={ArrowLeftSvg} alt="arrow" />
-                            {name}
+                            {experimentName}
                         </Link>
                         <Button
                             className={styles.action_button_edit}
@@ -66,7 +78,7 @@ export const SubHeader: React.FC<SubHeaderProps> = (props: SubHeaderProps) => {
                         <div className={styles.item_description}>{getIterations(data.testRuns)}</div>
                     </div>
                 </div>
-                <div className={styles.item_description}>{description}</div>
+                <div className={styles.item_description}>{experimentDescription}</div>
             </div>
             <div className={styles.sub_header_right_side}>
                 <Button
@@ -91,6 +103,7 @@ export const SubHeader: React.FC<SubHeaderProps> = (props: SubHeaderProps) => {
                 </Button>
             </div>
           </div>
+          {openEditModal && <EditExperimentModal data={{name: experimentName, description: experimentDescription}} onClose={handleCloseEditExperimentModal} />}
         </>
     );
 }

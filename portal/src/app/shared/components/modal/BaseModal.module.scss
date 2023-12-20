@@ -9,8 +9,8 @@ $modalPaddingBlock: 24px;
     z-index: 1;
     align-items: baseline;
     display: flex;
-    font-family: var($fontBold);
-    font-size: 21px;
+    font-family: var($fontMedium);
+    font-size: 18px;
     justify-content: space-between;
     margin: 0;
     padding-block-start: 32px;
@@ -20,6 +20,10 @@ $modalPaddingBlock: 24px;
 
     .close_icon {
         color: #454b52;
+        background-color: #F5F1FF;
+        border-radius: 50%;
+        display: flex;
+        padding: 12px;
     }
 }
 
@@ -35,9 +39,7 @@ $modalPaddingBlock: 24px;
     bottom: 0;
     display: flex;
     justify-content: flex-end;
-    background-color: var($modalActionBackgroundColor);
-    padding-block-start: $modalPaddingBlock;
-    padding-block-end: $modalPaddingBlock;
+    padding: 24px;
     gap: 16px;
     box-shadow: inset 0 1px 0 0 #dcdfe3;
 }
@@ -54,4 +56,8 @@ $modalPaddingBlock: 24px;
     left: 50%;
     padding: 0;
     z-index: 1;
+}
+
+.modal_content {
+    padding: 24px;
 }
