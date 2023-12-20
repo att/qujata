@@ -123,3 +123,32 @@ export const MOCK_DATA_FOR_EXPERIMENT_WITH_NO_TEST_RUNS: IExperimentData = {
     "testRuns": []
   }
 };
+
+export const MOCK_SUB_HEADER: ITestRunResult = {
+  id: 1,
+  name: 'name',
+  description: 'name',
+  start_time: 'name',
+  end_time: 'name',
+  environment_info: {
+      codeRelease: 'codeRelease',
+      cpu: 'codeRelease',
+      cpuArchitecture: 'codeRelease',
+      cpuClockSpeed: 'codeRelease',
+      cpuCores: 2,
+      nodeSize: 'codeRelease',
+      operatingSystem: 'codeRelease',
+      resourceName: 'codeRelease',
+  },
+  testRuns: [
+      {
+          id:1,
+          algorithm: "bikel1",
+          iterations: 1000,
+          results: {
+            averageCPU: 3.5,
+            averageMemory: 3
+          }
+        },
+  ],
+};

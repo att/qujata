@@ -1,39 +1,13 @@
 import { render, waitFor, act, fireEvent } from '@testing-library/react';
 import { SubHeader } from './SubHeader';
+import { MOCK_SUB_HEADER } from '../__mocks__';
 
 jest.mock('react-router-dom', () => ({
     ...jest.requireActual('react-router-dom'),
     Link: jest.fn(({to, children}) => <div data-testid="mock-link" data-to={to}>{children}</div>),
 }));
 
-const mockData = {
-    id: 1,
-    name: 'name',
-    description: 'name',
-    start_time: 'name',
-    end_time: 'name',
-    environment_info: {
-        codeRelease: 'codeRelease',
-        cpu: 'codeRelease',
-        cpuArchitecture: 'codeRelease',
-        cpuClockSpeed: 'codeRelease',
-        cpuCores: 2,
-        nodeSize: 'codeRelease',
-        operatingSystem: 'codeRelease',
-        resourceName: 'codeRelease',
-    },
-    testRuns: [
-        {
-            id:1,
-            algorithm: "bikel1",
-            iterations: 1000,
-            results: {
-              averageCPU: 3.5,
-              averageMemory: 3
-            }
-          },
-    ],
-};
+const mockData = MOCK_SUB_HEADER;
 describe('SubHeader', () => {
     test('should render SubHeader', async () => {
       const { container } = render(<SubHeader data={mockData} />);
