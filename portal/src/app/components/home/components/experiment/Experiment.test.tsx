@@ -8,8 +8,9 @@ import { FetchDataStatus } from '../../../../shared/hooks/useFetch';
 
 jest.mock('./components/sub-header');
 jest.mock('./components/experiment-table');
-jest.mock('./components/charts');
-jest.mock('./components/hooks/useExperimentData');
+jest.mock('./components/charts', () => ({
+  Charts: jest.fn(),
+}));
 
 const mockData = {
     "id": 1,

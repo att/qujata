@@ -9,7 +9,7 @@ import { DashBoardPrefixLink } from '../shared/constants/dashboard';
 import { useErrorMessage } from './useErrorMessage';
 
 export interface IUseDashboardData {
-  // testSuiteId: string;
+  testSuiteId: string;
   link: string;
   status: FetchDataStatus;
   handleRunQueryClick: (queryData: ITestParams) => void;
@@ -32,6 +32,8 @@ export function useDashboardData(): IUseDashboardData {
   useEffect(() => {
     if (status === FetchDataStatus.Success && data) {
         console.log('data', data);
+        setTestSuiteId(data.test_suite_id);
+
         const dashboardLink: string = `${Environment.dashboardLinkHost}/${DashBoardPrefixLink}&from=${data.from}&to=${data.to}`;
         setLink(dashboardLink);
         // setAlgorithms((prev: string[] | undefined) => {
@@ -103,6 +105,7 @@ export function useDashboardData(): IUseDashboardData {
   return {
     handleRunQueryClick,
     link,
+    testSuiteId,
     status,
   } as IUseDashboardData;
 }

@@ -4,7 +4,7 @@ import { replaceParams } from "../../../../../../shared/utils/replaceParams";
 import { useParams } from "react-router-dom";
 import { ITestRunResult, ITestRunResultData } from "../../../../../../shared/models/test-run-result.interface";
 import { TestRunUrlParams } from "../../../../../../shared/models/url-params.interface";
-import { FetchDataStatus, IHttp, useFetch } from "../../../../../../shared/hooks/useFetch";
+import { IHttp, useFetch } from "../../../../../../shared/hooks/useFetch";
 import { sortDataByAlgorithm } from "../charts/utils/test-run.utils";
 import { useFetchSpinner } from "../../../../../../shared/hooks/useFetchSpinner";
 import { useErrorMessage } from "../../../../../../hooks/useErrorMessage";
@@ -29,7 +29,7 @@ export function useExperimentData(): IUseExperimentData {
   }, [get, cancelRequest]);
 
   useEffect(() => {
-      if (data) {
+      if (data && data.testRuns) {
           const sortedData: ITestRunResultData[] = sortDataByAlgorithm(data.testRuns);
           setTestRunData({ ...data, testRuns: sortedData });
       }
