@@ -38,7 +38,7 @@ class TestAnalyzeAPI(unittest.TestCase):
                                     content_type='application/json')
 
            
-            self.assertEqual(self.app.database_manager.add_to_db.call_count, 3)# 1 for the test suite, and the other for the 2 test runs
+            self.assertEqual(self.app.database_manager.create.call_count, 3)# 1 for the test suite, and the other for the 2 test runs
            
             self.assertEqual(response.status_code, 200)
             # Check the response content
@@ -124,9 +124,11 @@ class TestAnalyzeAPI(unittest.TestCase):
                                     data=json.dumps(input_data),
                                     content_type='application/json')
             self.assertEqual(response.status_code, 200)
-            actual_test_suite = self.app.database_manager.add_to_db.call_args.args
-            self.assertEqual(actual_test_suite[0].status, Status.FAILED)
-            self.assertEqual(actual_test_suite[0].status_message, '{"result": "failed"}')
+            actual_test_run = self.app.database_manager.create.call_args.args
+            logging.error(len(actual_test_run))
+            logging.error(self.app.database_manager.create.call_args)
+            self.assertEqual(actual_test_run[0].status, Status.FAILED)
+            self.assertEqual(actual_test_run[0].status_message, '{"result": "failed"}')
 
 
     def test_analyze_with_missing_env_info(self):

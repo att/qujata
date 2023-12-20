@@ -30,7 +30,7 @@ def insert_env_info():
             node_size=data.get('nodeSize')
         )
         try:
-            current_app.database_manager.add_to_db(new_env_info)
+            current_app.database_manager.create(new_env_info)
         except Exception as e:
             return jsonify({'error': str(e)}), 500
         return jsonify({'message': 'Inserted env info successfully'}), 200

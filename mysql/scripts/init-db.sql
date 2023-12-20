@@ -21,6 +21,8 @@ CREATE TABLE IF NOT EXISTS test_suites (
                              id INT AUTO_INCREMENT PRIMARY KEY,
                              name VARCHAR(255),
                              description VARCHAR(255),
+                             start_time BIGINT,
+                             end_time BIGINT,
                              protocol VARCHAR(50),
                              env_info_id INT,
                              code_release VARCHAR(255),
@@ -30,6 +32,7 @@ CREATE TABLE IF NOT EXISTS test_suites (
                              updated_date TIMESTAMP,
                              FOREIGN KEY (env_info_id) REFERENCES env_info(id)
 );
+
 -- Create the test_runs table
 CREATE TABLE IF NOT EXISTS test_runs (
                            id INT AUTO_INCREMENT PRIMARY KEY,
@@ -41,7 +44,7 @@ CREATE TABLE IF NOT EXISTS test_runs (
                            message_size INT,
                            status ENUM('SUCCESS', 'FAILED'),
                            status_message VARCHAR(255),
-                           FOREIGN KEY (test_suite_id) REFERENCES test_suites(id)
+                           FOREIGN KEY (test_suite_id) REFERENCES test_suites(id) ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS test_run_results (
@@ -49,7 +52,7 @@ CREATE TABLE IF NOT EXISTS test_run_results (
                                   metric_name ENUM('server_avg_cpu', 'server_avg_memory', 'client_avg_cpu', 'client_avg_memory', 'error_rate', 'bytes_throughput_per_sec', 'msg_throughput_per_sec', 'avg_tls_handshake_time'),
                                   value DOUBLE,
                                   PRIMARY KEY (test_run_id, metric_name),
-                                  FOREIGN KEY (test_run_id) REFERENCES test_runs(id)
+                                  FOREIGN KEY (test_run_id) REFERENCES test_runs(id) ON DELETE CASCADE
 );
 
 INSERT INTO env_info (resource_name, operating_system, cpu, cpu_architecture, cpu_cores, clock_speed, node_size) VALUES ('RELACE_WITH_RESOURCE_NAME', 'RELACE_WITH_OPERATING_SYSTEM', 'RELACE_WITH_CPU', 'RELACE_WITH_CPU_ARCHITECTURE', 0, 'RELACE_WITH_CLOCK_SPEED', 'RELACE_WITH_NODE_SIZE');

@@ -4,6 +4,7 @@ from unittest.mock import patch, MagicMock, Mock, call, ANY
 
 import requests
 from flask import Flask
+from config.settings import load_config
 from src.services.metrics_service import aggregate, __query_prometheus_avg_metric, __save_metric_to_db
 from src.models.test_run_result import TestRunResult
 from src.enums.metric import Metric
@@ -16,6 +17,7 @@ class TestMetricsService(unittest.TestCase):
         self.app = Flask(__name__)
         self.app.prometheus_url = 'http://example.com/prometheus'
         self.client = self.app.test_client()
+        load_config(self.app)
         self.app.database_manager = Mock(spec=DatabaseManager)
 
     def test_aggregate_docker(self):
@@ -53,7 +55,7 @@ class TestMetricsService(unittest.TestCase):
                 ]
                 mock_get.assert_has_calls(expected_calls, any_order=True)
 
-            self.assertEqual(self.app.database_manager.add_to_db.call_count, 4)
+            self.assertEqual(self.app.database_manager.create.call_count, 4)
 
     def test_aggregate_equals_start_end_time(self):
         self.app.environment = 'docker'
@@ -89,7 +91,7 @@ class TestMetricsService(unittest.TestCase):
                 ]
                 mock_get.assert_has_calls(expected_calls, any_order=True)
 
-            self.assertEqual(self.app.database_manager.add_to_db.call_count, 4)
+            self.assertEqual(self.app.database_manager.create.call_count, 4)
 
 
     def test_aggregate_kubernetes(self):
@@ -123,9 +125,9 @@ class TestMetricsService(unittest.TestCase):
                 ]
                 mock_get.assert_has_calls(expected_calls, any_order=True)
 
-                self.assertEqual(self.app.database_manager.add_to_db.call_count, 4)
+                self.assertEqual(self.app.database_manager.create.call_count, 4)
 
-                calls = self.app.database_manager.add_to_db.mock_calls
+                calls = self.app.database_manager.create.mock_calls
 
                 expected_metrics = {
                     Metric.CLIENT_AVERAGE_CPU: 0.01,
@@ -152,7 +154,7 @@ class TestMetricsService(unittest.TestCase):
         with self.app.test_request_context():
             with patch('requests.get') as mock_get:
                 aggregate(test_run)
-                self.assertEqual(self.app.database_manager.add_to_db.call_count, 0)
+                self.assertEqual(self.app.database_manager.create.call_count, 0)
                 self.assertEqual(mock_get.call_count, 0)
 
     def test_aggregate_invalid_response(self):
@@ -169,7 +171,7 @@ class TestMetricsService(unittest.TestCase):
                 mock_get.return_value.json.return_value = invalid_response
                 aggregate(test_run)
 
-                calls_made = self.app.database_manager.add_to_db.mock_calls
+                calls_made = self.app.database_manager.create.mock_calls
 
                 self.assertEqual(len(calls_made), 4)
 
@@ -189,8 +191,8 @@ class TestMetricsService(unittest.TestCase):
                 mock_get.side_effect = requests.exceptions.RequestException('Request failed')
                 aggregate(test_run)
 
-                # Assert that add_to_db was not called due to a request exception
-                self.assertEqual(self.app.database_manager.add_to_db.call_count, 0)
+                # Assert that create was not called due to a request exception
+                self.assertEqual(self.app.database_manager.create.call_count, 0)
 
 if __name__ == '__main__':
     unittest.main()

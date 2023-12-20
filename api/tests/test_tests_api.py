@@ -35,6 +35,7 @@ class TestTestsAPI(unittest.TestCase):
             created_date=datetime.now(),
             updated_by="",
             updated_date=datetime.now(),
+            test_runs=[self.__test_run()]
         )
 
     def __env_info(self):
@@ -47,6 +48,9 @@ class TestTestsAPI(unittest.TestCase):
             id=1
         )
 
+    def __test_run_results(self):
+        return [TestRunResult(id=1),TestRunResult(id=1)]
+
     def test_get_test_suites(self):
         self.app.database_manager.get_records.return_value = [self.__test_suite()]
         response = self.client.get('/api/test_suites')
@@ -55,7 +59,9 @@ class TestTestsAPI(unittest.TestCase):
 
     def test_get_test_suite(self):
         test_suite =  self.__test_suite()
+        test_run_results =  self.__test_run_result()
         self.app.database_manager.get_record_by_id.return_value = test_suite
+        self.app.database_manager.get_records.return_value = test_run_result
         response = self.client.get('/api/test_suites/1')
         result = json.loads(response.data)
         expected = test_suite.to_dict()

@@ -7,12 +7,16 @@ class DatabaseManager:
         db = SQLAlchemy(app)
         self.__db = db
 
-    def add_to_db(self, instance):
+    def create(self, instance):
         self.__db.session.add(instance)
         self.__db.session.commit()
 
-    def delete_from_db(self, instance):
+    def delete(self, instance):
         self.__db.session.delete(instance)
+        self.__db.session.commit()
+
+    def update(self, instance):
+        # self.__db.session.update(instance)
         self.__db.session.commit()
 
     def get_records(self, model, filter_conditions=None):
@@ -37,6 +41,3 @@ class DatabaseManager:
     def get_last_record(self, model):
         last_record = self.__db.session.query(model).order_by(model.id.desc()).first()
         return last_record
-
-    def update_db(self):
-        self.__db.session.commit()

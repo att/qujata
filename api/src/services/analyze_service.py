@@ -35,11 +35,12 @@ def analyze(data):
 
     # end time is now + 90 sec, to show the graph after the test for sure finished running
     end_time = int(datetime.timestamp(datetime.now() + timedelta(seconds=90)) * 1000)
+    
+    test_suite.start_time = start_time
+    test_suite.end_time = end_time
+    tests_service.update_test_suite(test_suite)
 
-    return jsonify({
-        'from': start_time,
-        'to': end_time
-    })
+    return jsonify({'test_suite_id': test_suite.id})
 
 
 def __create_test_run(algorithm, iterations, test_suite_id):

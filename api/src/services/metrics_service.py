@@ -5,9 +5,9 @@ from src.enums.metric import Metric
 
 
 def __query_prometheus_avg_metric(metric, service, start_time, end_time):
-    if current_app.environment == 'docker':
+    if current_app.configurations.environment == 'docker':
         metric_expr = f'{metric}{{name="{service}"}}'
-    elif current_app.environment == 'kubernetes':
+    elif current_app.configurations.environment == 'kubernetes':
         metric_expr = f'{metric}{{pod=~"{service}.*"}}'
     else:
         print("Unsupported environment")
@@ -30,7 +30,7 @@ def __query_prometheus_avg_metric(metric, service, start_time, end_time):
     try:
         # request_url = f"{current_app.prometheus_url}/api/v1/query"
         # print(f"Prometheus Request URL: {request_url}?{params}")
-        response = requests.get(f"{current_app.prometheus_url}/api/v1/query", params=params)
+        response = requests.get(f"{current_app.configurations.prometheus_url}/api/v1/query", params=params)
         response.raise_for_status()
 
         data = response.json()
@@ -68,11 +68,10 @@ def __save_metric_to_db(test_run_id, metric_name, metric_value, metric_type):
         metric_name=metric_name,
         value=metric_value
     )
-    current_app.database_manager.add_to_db(test_run_result)
+    current_app.database_manager.create(test_run_result)
 
 
 def aggregate(test_run):
-
     metrics_to_query = {
         Metric.CLIENT_AVERAGE_CPU: ('container_cpu_usage_seconds_total', 'qujata-curl', 'cpu'),
         Metric.CLIENT_AVERAGE_MEMORY: ('container_memory_usage_bytes', 'qujata-curl', 'memory'),
