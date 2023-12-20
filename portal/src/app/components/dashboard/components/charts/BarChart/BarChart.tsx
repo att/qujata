@@ -74,7 +74,7 @@ export const BarChart: React.FC<BarChartProps> = (props: BarChartProps) => {
     };
 
     return (
-        <Bar data={tempData} options={options} style={{ width: '500px', height: '400px' }} className={styles.bar} />
+        <Bar data={tempData} options={options} style={{ height: '450px' }} className={styles.bar} />
     );
 }
 

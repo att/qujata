@@ -38,10 +38,6 @@
     margin-block-end: 8px;
 }
 
-.item_description {
-    font-size: 16px;
-}
-
 .sub_header_left_side {
     display: flex;
     flex-direction: column;
@@ -53,7 +49,8 @@
 }
 
 .item_description {
-    max-inline-size: 800px;
+    font-size: 16px;
+    max-inline-size: 1020px;
 }
 
 .action_button {

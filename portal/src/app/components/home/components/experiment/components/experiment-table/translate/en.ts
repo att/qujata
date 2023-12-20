@@ -10,4 +10,7 @@ export const EXPERIMENT_TABLE_EN = {
     MESSAGES_THROUGHPUT: 'Throughput (message/sec)',
     AVERAGE_TLS_HANDSHAKE_TIME: 'Average TLS Handshake Time',
   },
+  TABLE_PLACEHOLDERS: {
+    NOT_APPLICABLE: 'N/A',
+  },
 }
