@@ -33,7 +33,7 @@ export const LineChart: React.FC<LineChartProps> = (props: LineChartProps) => {
       }
     };
 
-    return  <Line data={data} options={options} style={{ width: '500px', height: '400px' }} className={styles.line_chart} />;
+    return  <Line data={data} options={options} style={{ height: '450px' }} className={styles.line_chart} />;
 }
 
 export function generateTooltipTitle(tooltipItem: TooltipItem<'line'>) {

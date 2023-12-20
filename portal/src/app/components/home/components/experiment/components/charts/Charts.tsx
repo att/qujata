@@ -16,7 +16,9 @@ export const Charts: React.FC<IExperimentData> = (props: IExperimentData) => {
           <div className={styles.title}>{CHARTS_EN.TITLE}</div>
           <div className={styles.chart_wrapper}>
             {barChartKeysOfData.map((key) => (
-                <BarChart key={key} title={getChartTitleByType(key)} labels={barChartLabels} data={barChartData} tooltipKeys={tooltipKeys} tooltipLabels={tooltipLabels} keyOfData={key} />
+                <div className={styles.chart_item}>
+                    <BarChart key={key} title={getChartTitleByType(key)} labels={barChartLabels} data={barChartData} tooltipKeys={tooltipKeys} tooltipLabels={tooltipLabels} keyOfData={key} />
+                </div>
             ))}
 
             {barChartKeysOfData.map((key) => {
@@ -35,7 +37,9 @@ export const Charts: React.FC<IExperimentData> = (props: IExperimentData) => {
                     };
 
                     return (
-                        <LineChart key={key} data={data} title={getChartTitleByType(key)} tooltipLabel={getChartTitleByType(key)} />
+                        <div className={styles.chart_item}>
+                            <LineChart key={key} data={data} title={getChartTitleByType(key)} tooltipLabel={getChartTitleByType(key)} />
+                        </div>
                     );
                 })}
           </div>
