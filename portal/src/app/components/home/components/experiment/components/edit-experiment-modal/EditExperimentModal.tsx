@@ -74,7 +74,11 @@ export const EditExperimentModal: React.FC<EditExperimentModalProps> = (props: E
 
   const onSubmitHandler: React.FormEventHandler<HTMLFormElement> = (event) => {
     event.preventDefault();
-    put({data: {name, description}})
+    if (name !== data.name || description !== data.description) {
+        put({data: {name, description}})
+    } else {
+        onClose();
+    }
   };
 
   return (
