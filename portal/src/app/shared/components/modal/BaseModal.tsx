@@ -23,7 +23,7 @@ export const BaseModal: React.FC<PropsWithChildren<BaseModalProps>> = (props: Pr
     }, [onCloseClick]);
 
 
-  function renderHeader(): ReactNode {
+    function renderHeader(): ReactNode {
         return (
         <h1 className={styles.title}>
             <div className={styles.modal_title_left}>
