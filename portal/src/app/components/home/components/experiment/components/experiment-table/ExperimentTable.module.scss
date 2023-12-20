@@ -3,14 +3,15 @@
 
 .experiment_table_wrapper {
   font-size: 14px;
-  margin-block-start: 60px;
-  margin-block-end: 60px;
+  margin-block-start: 30px;
+  margin-block-end: 50px;
   display: flex;
   flex-wrap: wrap;
 
   table {
     border-spacing: 0;
     border: 1px solid var($backgroundColorGray);
+    width: 100%;
   }
 }
 
