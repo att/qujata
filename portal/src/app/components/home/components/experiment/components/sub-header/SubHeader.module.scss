@@ -6,7 +6,7 @@
     color: #1D2329;
     font-size: 18px;
     text-decoration: none;
-    margin-inline-end: 100px;
+    margin-inline-end: 20px;
 }
 
 .sub_header_wrapper {
@@ -80,4 +80,10 @@
 .sub_header_right_side {
     display: flex;
     align-items: flex-start;
+}
+
+.name_wrapper {
+    display: flex;
+    align-items: flex-start;
+    margin-inline-end: 100px;
 }
