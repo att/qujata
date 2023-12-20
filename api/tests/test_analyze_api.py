@@ -13,6 +13,8 @@ from config.settings import load_config
 from src.utils.database_manager import DatabaseManager
 import logging
 
+PATH = '/api/analyze'
+CONTENT_TYPE = 'application/json'
 
 class TestAnalyzeAPI(unittest.TestCase):
     def setUp(self):
@@ -33,9 +35,9 @@ class TestAnalyzeAPI(unittest.TestCase):
         with patch('requests.post') as mock_post:
             mock_post.return_value = MagicMock(status_code=200, json=lambda: {'result': 'success'})
 
-            response = self.client.post('/api/analyze',
+            response = self.client.post(PATH,
                                     data=json.dumps(input_data),
-                                    content_type='application/json')
+                                    content_type=CONTENT_TYPE)
 
            
             self.assertEqual(self.app.database_manager.add_to_db.call_count, 3)# 1 for the test suite, and the other for the 2 test runs
@@ -56,9 +58,9 @@ class TestAnalyzeAPI(unittest.TestCase):
         }
         # Mock the requests.post call to raise an exception
         with patch('requests.post', side_effect=requests.exceptions.RequestException("Mocked exception")) as mock_post:
-            response = self.client.post('/api/analyze',
+            response = self.client.post(PATH,
                                     data=json.dumps(input_data),
-                                    content_type='application/json')
+                                    content_type=CONTENT_TYPE)
             self.assertEqual(response.status_code, 500)
             response_json = json.loads(response.data)
             self.assertEqual(response_json["error"], "An error occurred while processing the request")
@@ -71,9 +73,9 @@ class TestAnalyzeAPI(unittest.TestCase):
             "experimentName": "name",
             "description": "name"
         }
-        response = self.client.post('/api/analyze',
+        response = self.client.post(PATH,
                                     data=json.dumps(input_data),
-                                    content_type='application/json')
+                                    content_type=CONTENT_TYPE)
         self.assertEqual(response.status_code, 400)
         response_json = json.loads(response.data)
         self.assertEqual(response_json["error"], "Invalid data provided")
@@ -87,9 +89,9 @@ class TestAnalyzeAPI(unittest.TestCase):
             "experimentName": "name",
             "description": "name"
         }        
-        response = self.client.post('/api/analyze',
+        response = self.client.post(PATH,
                                     data=json.dumps(input_data),
-                                    content_type='application/json')
+                                    content_type=CONTENT_TYPE)
         self.assertEqual(response.status_code, 400)
         response_json = json.loads(response.data)
         self.assertEqual(response_json["error"], "Invalid data provided")
@@ -102,9 +104,9 @@ class TestAnalyzeAPI(unittest.TestCase):
             "experimentName": "name",
             "description": "name"
         }
-        response = self.client.post('/api/analyze',
+        response = self.client.post(PATH,
                                 data=json.dumps(input_data),
-                                content_type='application/json')
+                                content_type=CONTENT_TYPE)
         self.assertEqual(response.status_code, 400)
         response_json = json.loads(response.data)
         self.assertEqual(response_json["error"], "Invalid data provided")
@@ -120,9 +122,9 @@ class TestAnalyzeAPI(unittest.TestCase):
         # Mock the requests.post call
         with patch('requests.post') as mock_post:
             mock_post.return_value = MagicMock(status_code=423, json=lambda: {'result': 'failed'})
-            response = self.client.post('/api/analyze',
+            response = self.client.post(PATH,
                                     data=json.dumps(input_data),
-                                    content_type='application/json')
+                                    content_type=CONTENT_TYPE)
             self.assertEqual(response.status_code, 200)
             actual_test_suite = self.app.database_manager.add_to_db.call_args.args
             self.assertEqual(actual_test_suite[0].status, Status.FAILED)
@@ -137,9 +139,9 @@ class TestAnalyzeAPI(unittest.TestCase):
             "description": "name"
         }
         self.app.database_manager.get_last_record.return_value = None
-        response = self.client.post('/api/analyze',
+        response = self.client.post(PATH,
                                 data=json.dumps(input_data),
-                                content_type='application/json')
+                                content_type=CONTENT_TYPE)
         self.assertEqual(response.status_code, 422)
         response_json = json.loads(response.data)
         self.assertEqual(response_json["error"], "Analyze test failed to complete")
@@ -156,9 +158,9 @@ class TestAnalyzeAPI(unittest.TestCase):
         }
         src.api.analyze_api.process_is_running = True
         # Mock the requests.post call
-        response = self.client.post('/api/analyze',
+        response = self.client.post(PATH,
                                     data=json.dumps(input_data),
-                                    content_type='application/json')
+                                    content_type=CONTENT_TYPE)
 
         self.assertEqual(response.status_code, 423)
         response_json = json.loads(response.data)
@@ -177,9 +179,9 @@ class TestAnalyzeAPI(unittest.TestCase):
             mock_post.return_value = MagicMock(status_code=200, json=lambda: {'result': 'success'})
             timestamp1 = datetime.now()
 
-            response = self.client.post('/api/analyze',
+            response = self.client.post(PATH,
                                     data=json.dumps(input_data),
-                                    content_type='application/json')
+                                    content_type=CONTENT_TYPE)
 
             timestamp2 = datetime.now()
             time_difference = timestamp2 - timestamp1

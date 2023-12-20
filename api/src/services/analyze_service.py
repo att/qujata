@@ -47,7 +47,7 @@ def __create_test_run(algorithm, iterations, test_suite_id):
     tests_service.create_test_run(start_time, end_time, algorithm, iterations, test_suite_id, status, status_message)
 
 def __run(algorithm, iterations):
-    logging.debug('Running test for algorithm: ', algorithm)
+    logging.debug('Running test for algorithm: %s ', algorithm)
     payload = {
         'algorithm': algorithm,
         'iterationsCount': iterations
@@ -55,12 +55,12 @@ def __run(algorithm, iterations):
     headers = { 'Content-Type': 'application/json' }
     response = requests.post(current_app.configurations.curl_url + "/curl", headers=headers, json=payload, timeout=int(current_app.configurations.request_timeout))
 
-    return __validate_response(response, algorithm, iterations)
+    return __validate_response(response)
         
 
 
-def __validate_response(response, algorithm, iterations):
-    if(response.status_code < 200 or response.status_code  > 299):
+def __validate_response(response):
+    if response.status_code < 200 or response.status_code  > 299:
         return Status.FAILED, json.dumps(response.json())
     else:
         return Status.SUCCESS, ""
