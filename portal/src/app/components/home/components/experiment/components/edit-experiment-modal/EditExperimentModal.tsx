@@ -36,7 +36,6 @@ export const EditExperimentModal: React.FC<EditExperimentModalProps> = (props: E
   
   useErrorMessage(editError);
   
-
   useEffect(() => () => {
     editCancelRequest();
     setShowSpinner(false);
@@ -51,25 +50,17 @@ export const EditExperimentModal: React.FC<EditExperimentModalProps> = (props: E
   }, [description, editStatus, name, onClose]);
 
   useLayoutEffect(() => {
-    const cancelButton: IButton = {
-      styleType: ButtonStyleType.TEXT,
-      actionType: ButtonActionType.BUTTON,
-      size: ButtonSize.LARGE,
-      text: EDIT_EXPERIMENT_MODAL_EN.CANCEL_ACTION,
-      ariaLabel: EDIT_EXPERIMENT_MODAL_EN.CANCEL_ACTION,
-      onClick: () => { onClose(); },
-    };
-
     const submitButton: IButton = {
       styleType: ButtonStyleType.PRIMARY,
       actionType: ButtonActionType.SUBMIT,
       size: ButtonSize.LARGE,
       text: EDIT_EXPERIMENT_MODAL_EN.SUBMIT_ACTION,
       ariaLabel: EDIT_EXPERIMENT_MODAL_EN.SUBMIT_ACTION,
+      className: styles.submit_button,
       form: formID,
       onClick: (): void => undefined,
     };
-    setActionButtons([cancelButton, submitButton]);
+    setActionButtons([submitButton]);
   }, [onClose]);
 
   const onSubmitHandler: React.FormEventHandler<HTMLFormElement> = (event) => {
@@ -96,7 +87,7 @@ export const EditExperimentModal: React.FC<EditExperimentModalProps> = (props: E
         </label>
         <label>
             <div className={styles.label}>{EDIT_EXPERIMENT_MODAL_EN.FORM.LABELS.DESCRIPTION}</div>
-            <textarea className={cn(styles.form_input, styles.form_input_description)} rows={7} id="description" value={description} name="description" onChange={e => setDescription(e.target.value)} />
+            <textarea className={cn(styles.form_input, styles.form_input_description)} rows={4} id="description" value={description} name="description" onChange={e => setDescription(e.target.value)} />
         </label>
       </form>
     </BaseModal>
