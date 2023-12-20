@@ -1,4 +1,4 @@
-import { ITestRunResult } from "../../../../../../shared/models/test-run-result.interface";
+import { ITestRunResult, ITestRunResultData } from "../../../../../../shared/models/test-run-result.interface";
 import { IExperimentData } from "../../Experiment";
 
 export const MOCK_DATA_FOR_EXPERIMENT: ITestRunResult = {
@@ -152,3 +152,24 @@ export const MOCK_SUB_HEADER: ITestRunResult = {
         },
   ],
 };
+
+export const CSV_MOCK: ITestRunResultData[] = [
+  {
+    id: 1,
+    algorithm: 'App1',
+    iterations: 1000,
+    results: {
+      averageCPU: 2000,
+      averageMemory: 3000,
+    },
+  },
+  {
+    id: 2,
+    algorithm: 'App2',
+    iterations: 4000,
+    results: {
+      averageCPU: 5000,
+      averageMemory: 6000,
+    },
+  },
+];
