@@ -21,10 +21,7 @@ export const Experiment: React.FC = () => {
   );
 }
 
-interface ExperimentContentProps {
-    data: ITestRunResult;
-}
-const ExperimentContent: React.FC<ExperimentContentProps> = (props: ExperimentContentProps) => {
+const ExperimentContent: React.FC<IExperimentData> = (props: IExperimentData) => {
     const { data } = props;
     return (
         <>
