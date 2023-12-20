@@ -4,20 +4,40 @@ import { Charts } from './components/charts';
 import { SubHeader } from './components/sub-header';
 import { useExperimentData } from './components/hooks/useExperimentData';
 import { ITestRunResult } from '../../../../shared/models/test-run-result.interface';
+import { FetchDataStatus } from '../../../../shared/hooks/useFetch';
+import { Spinner, SpinnerSize } from '../../../../shared/components/att-spinner';
 
 export type IExperimentData = {
   data: ITestRunResult;
 }
 
 export const Experiment: React.FC = () => {
-  const { data: testRunData } = useExperimentData();
+  const { data: testRunData, status } = useExperimentData();
 
   return (
       <div className={styles.experiment_wrapper}>
-        <SubHeader linkTitle='Experiment Name' />
-        <ExperimentTable data={testRunData} />
-        <Charts data={testRunData} />
+        {status === FetchDataStatus.Fetching ? renderSpinner() : testRunData && <ExperimentContent data={testRunData} />}
       </div>
   );
 }
 
+const ExperimentContent: React.FC<IExperimentData> = (props: IExperimentData) => {
+    const { data } = props;
+    return (
+        <>
+            <SubHeader data={data} />
+            <ExperimentTable data={data} />
+            <Charts data={data} />
+        </>
+    );
+}
+
+function renderSpinner() {
+    return (
+        <div className={styles.spinner_overlay}>
+            <div className={styles.spinner_wrapper}>
+            <Spinner size={SpinnerSize.MEDIUM} />
+            </div>
+        </div>
+    );
+}

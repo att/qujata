@@ -1,4 +1,4 @@
-import { ITestRunResult } from "../../../../../../shared/models/test-run-result.interface";
+import { ITestRunResult, ITestRunResultData } from "../../../../../../shared/models/test-run-result.interface";
 import { IExperimentData } from "../../Experiment";
 
 export const MOCK_DATA_FOR_EXPERIMENT: ITestRunResult = {
@@ -123,3 +123,53 @@ export const MOCK_DATA_FOR_EXPERIMENT_WITH_NO_TEST_RUNS: IExperimentData = {
     "testRuns": []
   }
 };
+
+export const MOCK_SUB_HEADER: ITestRunResult = {
+  id: 1,
+  name: 'name',
+  description: 'name',
+  start_time: 'name',
+  end_time: 'name',
+  environment_info: {
+      codeRelease: 'codeRelease',
+      cpu: 'codeRelease',
+      cpuArchitecture: 'codeRelease',
+      cpuClockSpeed: 'codeRelease',
+      cpuCores: 2,
+      nodeSize: 'codeRelease',
+      operatingSystem: 'codeRelease',
+      resourceName: 'codeRelease',
+  },
+  testRuns: [
+      {
+          id:1,
+          algorithm: "bikel1",
+          iterations: 1000,
+          results: {
+            averageCPU: 3.5,
+            averageMemory: 3
+          }
+        },
+  ],
+};
+
+export const CSV_MOCK: ITestRunResultData[] = [
+  {
+    id: 1,
+    algorithm: 'App1',
+    iterations: 1000,
+    results: {
+      averageCPU: 2000,
+      averageMemory: 3000,
+    },
+  },
+  {
+    id: 2,
+    algorithm: 'App2',
+    iterations: 4000,
+    results: {
+      averageCPU: 5000,
+      averageMemory: 6000,
+    },
+  },
+];

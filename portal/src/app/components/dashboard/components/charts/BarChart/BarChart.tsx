@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { IDatasets } from './models/BarChart.model';
 import { colors, defaultOptions } from './barChart.const';
 import styles from './BarChart.module.scss';
+import { uniq } from 'lodash';
 
 export interface BarChartProps {
     labels: string[];
@@ -13,14 +14,23 @@ export interface BarChartProps {
     tooltipLabels: string[];   
     title?: string;
 }
+
 export const BarChart: React.FC<BarChartProps> = (props: BarChartProps) => {
     const { labels, data, tooltipKeys, tooltipLabels, keyOfData, title } = props;
     const [dataValues, setDataValues] = useState();
     const [datasets, setDatasets] = useState<IDatasets[]>([]);
+    const [algorithmsColors, setAlgorithmsColors] = useState<{[key: string]: string}>();
 
     useEffect(() => {
         const temp = data.map((obj: any) => obj.results[keyOfData]);
         setDataValues(temp);
+
+        const algorithms: string[] = uniq(data.map((item: any) => item.algorithm));
+        const algorithmColors: {[key: string]: string} = {};
+        algorithms.forEach((algorithm, index) => {
+          algorithmColors[algorithm] = colors[index % colors.length];
+        });
+        setAlgorithmsColors(algorithmColors);
     }, [data, keyOfData]);
 
     useEffect(() => {
@@ -28,12 +38,12 @@ export const BarChart: React.FC<BarChartProps> = (props: BarChartProps) => {
             const tempValues: IDatasets[] = labels.map((label, i) => ({
                     label: label,
                     data: [dataValues[i]],
-                    backgroundColor: colors[i % colors.length],
+                    backgroundColor: getBackgroundColorByAlgorithm(data[i].algorithm, algorithmsColors),
                     borderWidth: 0,
                 }));
             setDatasets(tempValues);
         }
-    }, [dataValues, labels]);
+    }, [algorithmsColors, data, dataValues, labels]);
 
     const options: ChartOptions<any> = {
         ...defaultOptions,
@@ -80,4 +90,8 @@ export function renderTooltipLabel(context: { datasetIndex : number }, dataValue
 
 export function generateTooltipTitle(labels: string[], index: number): string {
   return labels[index];
+}
+
+function getBackgroundColorByAlgorithm(algorithm: string, algorithmColors: any): string {
+  return algorithmColors[algorithm];
 }
