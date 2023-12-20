@@ -14,7 +14,7 @@ export interface BaseModalProps {
     size?: BaseModalSize;
     showSpinner?: boolean;
 }
-Modal.setAppElement('#root');
+
 export const BaseModal: React.FC<PropsWithChildren<BaseModalProps>> = (props: PropsWithChildren<BaseModalProps>) => {
     const { title, showSpinner, onCloseClick } = props;
 
@@ -27,7 +27,7 @@ export const BaseModal: React.FC<PropsWithChildren<BaseModalProps>> = (props: Pr
         return (
         <h1 className={styles.title}>
             <div className={styles.modal_title_left}>
-                <span data-cy='base-modal-title'>{title}</span>
+                <span>{title}</span>
             </div>
             <Button
                 ariaLabel={CloseAriaLabel}
@@ -44,7 +44,7 @@ export const BaseModal: React.FC<PropsWithChildren<BaseModalProps>> = (props: Pr
 
     function renderFooter(): ReactNode {
         return (
-          <div className={styles.footer_container} data-cy='base-modal-footer-buttons'>
+          <div className={styles.footer_container}>
             {props.actionButton?.map((action: IButton) => (renderButtonAction(action)))}
           </div>
         );
@@ -53,6 +53,7 @@ export const BaseModal: React.FC<PropsWithChildren<BaseModalProps>> = (props: Pr
     return (
         <Modal
             isOpen
+            appElement={document.getElementById('root') as HTMLElement}
             overlayClassName={cn(ReactModalConfig.overlayClassName)}
             onRequestClose={handleCloseClick}
             className={cn(ReactModalConfig.contentClassName, ModalCssClassBySize.get(props.size as BaseModalSize))}
