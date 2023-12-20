@@ -6,6 +6,7 @@ import { ExperimentTable } from './components/experiment-table';
 import { useExperimentData } from './components/hooks/useExperimentData';
 import { FetchDataStatus } from '../../../../shared/hooks/useFetch';
 
+jest.mock('./components/hooks/useExperimentData');
 jest.mock('./components/sub-header');
 jest.mock('./components/experiment-table');
 jest.mock('./components/charts', () => ({

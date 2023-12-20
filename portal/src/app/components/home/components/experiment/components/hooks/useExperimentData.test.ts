@@ -2,6 +2,8 @@ import { renderHook } from '@testing-library/react';
 import { useFetch } from '../../../../../../shared/hooks/useFetch';
 import { useExperimentData } from './useExperimentData';
 import { MOCK_DATA_FOR_EXPERIMENT } from '../__mocks__';
+import { useFetchSpinner } from '../../../../../../shared/hooks/useFetchSpinner';
+import { useErrorMessage } from '../../../../../../hooks/useErrorMessage';
 
 jest.mock('../../../../../../shared/hooks/useFetch', () => ({
   useFetch: jest.fn(),
