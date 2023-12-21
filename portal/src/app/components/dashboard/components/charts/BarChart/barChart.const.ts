@@ -7,12 +7,22 @@ export let defaultOptions: ChartOptions<any> = {
         x: {
           display: false, // Hide x-axis labels
         },
+        y: {
+            ticks: {
+              font: {
+                size: 14,
+              },
+            },
+        },
     },
     plugins: {
         legend: {
             position: 'top',
             labels: {
-                padding: 16,
+                padding: 40,
+                font: {
+                    size: 16,
+                },
             },
         },
     }

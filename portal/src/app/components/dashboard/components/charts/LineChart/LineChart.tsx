@@ -17,7 +17,20 @@ export const LineChart: React.FC<LineChartProps> = (props: LineChartProps) => {
       plugins: {
         title: {
           display: true,
-          text: title
+          text: title,
+          font: {
+            size: 16,
+            weight: '500',
+          },
+        },
+        legend: {
+          position: 'top',
+          labels: {
+              padding: 40,
+              font: {
+                size: 16,
+              },
+          },
         },
         tooltip: {
           displayColors: false,
