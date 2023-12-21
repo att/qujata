@@ -14,35 +14,38 @@ export const Charts: React.FC<IExperimentData> = (props: IExperimentData) => {
     return (
         <div className={styles.charts_wrapper}>
           <div className={styles.title}>{CHARTS_EN.TITLE}</div>
-          <div className={styles.chart_wrapper}>
-            {barChartKeysOfData.map((key, index) => (
-                <div className={styles.chart_item}>
-                    <BarChart key={index} title={getChartTitleByType(key)} labels={barChartLabels} data={barChartData} tooltipKeys={tooltipKeys} tooltipLabels={tooltipLabels} keyOfData={key} />
-                </div>
-            ))}
+          <>
+            <div className={styles.row}>
+                {barChartKeysOfData.map((key, index) => (
+                    <div className={styles.chart_item}>
+                        <BarChart key={index} title={getChartTitleByType(key)} labels={barChartLabels} data={barChartData} tooltipKeys={tooltipKeys} tooltipLabels={tooltipLabels} keyOfData={key} />
+                    </div>
+                ))}
+            </div>
+            <div className={styles.row}>
+                {barChartKeysOfData.map((key, index) => {
+                        const datasets = lineChartData.datasets
+                        .filter(dataset => dataset.data[key])
+                        .map(dataset => ({
+                            ...dataset,
+                            data: dataset.data[key]
+                        }));
 
-            {barChartKeysOfData.map((key, index) => {
-                    const datasets = lineChartData.datasets
-                    .filter(dataset => dataset.data[key])
-                    .map(dataset => ({
-                        ...dataset,
-                        data: dataset.data[key]
-                    }));
+                        if (datasets.length === 0) return null;
 
-                    if (datasets.length === 0) return null;
+                        const data = {
+                        labels: lineChartData.labels,
+                        datasets: datasets
+                        };
 
-                    const data = {
-                    labels: lineChartData.labels,
-                    datasets: datasets
-                    };
-
-                    return (
-                        <div className={styles.chart_item}>
-                            <LineChart key={index} data={data} title={getChartTitleByType(key)} tooltipLabel={getChartTitleByType(key)} />
-                        </div>
-                    );
-                })}
-          </div>
+                        return (
+                            <div className={styles.chart_item}>
+                                <LineChart key={index} data={data} title={getChartTitleByType(key)} tooltipLabel={getChartTitleByType(key)} />
+                            </div>
+                        );
+                    })}
+              </div>
+          </>
         </div>
     );
 }

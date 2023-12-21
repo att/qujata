@@ -10,6 +10,7 @@ import { useEffect, useRef, useState } from 'react';
 import { EXPERIMENT_EN } from './translate/en';
 import { Toggles } from './components/toggles';
 import { handleSectionScrolling } from './utils';
+import { ISpinner, useSpinnerContext } from '../../../../shared/context/spinner';
 
 export type IExperimentData = {
   data: ITestRunResult;
@@ -27,9 +28,10 @@ export const Experiment: React.FC = () => {
 
 const ExperimentContent: React.FC<IExperimentData> = (props: IExperimentData) => {
     const [currentSection, setCurrentSection] = useState(EXPERIMENT_EN.TITLES.RESULTS_DATA);
-    const { data } = props;
+    const { isSpinnerOn }: ISpinner = useSpinnerContext();
     const resultsDataRef = useRef<HTMLDivElement>(null);
     const visualizationRef = useRef<HTMLDivElement>(null);
+    const { data } = props;
 
     useEffect(() => {
         handleSectionScrolling(resultsDataRef, visualizationRef, setCurrentSection);
@@ -47,6 +49,7 @@ const ExperimentContent: React.FC<IExperimentData> = (props: IExperimentData) =>
 
     return (
         <>
+            {isSpinnerOn && renderSpinner()}
             <SubHeader data={data} />
             <Toggles currentSection={currentSection} handleButtonClick={handleButtonClick} />
             <div id={EXPERIMENT_EN.TITLES.RESULTS_DATA} ref={resultsDataRef}>
