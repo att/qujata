@@ -2,20 +2,23 @@ import { useState } from "react";
 import { ToggleButton } from "../../../../../../shared/components/toggle-button";
 import { EXPERIMENT_EN } from "../../translate/en";
 
-export const Toggles: React.FC = () => {
-  const [currentSection, setCurrentSection] = useState(EXPERIMENT_EN.TITLES.RESULTS_DATA);
-  
+export interface TogglesProps {
+  currentSection: string;
+  handleButtonClick: (section: string) => void;
+}
+
+export const Toggles: React.FC<TogglesProps> = (props: TogglesProps) => {
   return (
     <div>
       <ToggleButton 
-          onClick={() => setCurrentSection(EXPERIMENT_EN.TITLES.RESULTS_DATA)}
-          isSelected={currentSection === EXPERIMENT_EN.TITLES.RESULTS_DATA}
+          onClick={() => props.handleButtonClick(EXPERIMENT_EN.TITLES.RESULTS_DATA)}
+          isSelected={props.currentSection === EXPERIMENT_EN.TITLES.RESULTS_DATA}
       >
           {EXPERIMENT_EN.TITLES.RESULTS_DATA}
       </ToggleButton>
       <ToggleButton 
-          onClick={() => setCurrentSection(EXPERIMENT_EN.TITLES.VISUALIZATION)}
-          isSelected={currentSection === EXPERIMENT_EN.TITLES.VISUALIZATION}
+          onClick={() => props.handleButtonClick(EXPERIMENT_EN.TITLES.VISUALIZATION)}
+          isSelected={props.currentSection === EXPERIMENT_EN.TITLES.VISUALIZATION}
       >
           {EXPERIMENT_EN.TITLES.VISUALIZATION}
       </ToggleButton>

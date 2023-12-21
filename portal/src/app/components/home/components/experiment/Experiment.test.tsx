@@ -16,7 +16,6 @@ jest.mock('./components/charts', () => ({
   Charts: jest.fn(),
 }));
 
-const mockData = MOCK_DATA_FOR_EXPERIMENT;
 describe('Experiment', () => {
     test('should render Experiment', async () => {
       (SubHeader as jest.Mock).mockImplementation(() => <div>SubHeader</div>);
@@ -24,7 +23,7 @@ describe('Experiment', () => {
       (ExperimentTable as jest.Mock).mockImplementation(() => <div>ExperimentTable</div>);
       (Charts as jest.Mock).mockImplementation(() => <div>Charts</div>);
       (useExperimentData as jest.Mock).mockReturnValue({
-        data: mockData,
+        data: MOCK_DATA_FOR_EXPERIMENT,
         status: FetchDataStatus.Success,
       });
       const { container } = render(<Experiment />);
@@ -40,7 +39,7 @@ describe('Experiment', () => {
       (ExperimentTable as jest.Mock).mockImplementation(() => <div>ExperimentTable</div>);
       (Charts as jest.Mock).mockImplementation(() => <div>Charts</div>);
       (useExperimentData as jest.Mock).mockReturnValue({
-        data: mockData,
+        data: MOCK_DATA_FOR_EXPERIMENT,
         status: FetchDataStatus.Fetching,
       });
       const { container } = render(<Experiment />);
