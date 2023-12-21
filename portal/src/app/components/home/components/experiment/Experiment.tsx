@@ -26,7 +26,7 @@ export const Experiment: React.FC = () => {
   );
 }
 
-const ExperimentContent: React.FC<IExperimentData> = (props: IExperimentData) => {
+export const ExperimentContent: React.FC<IExperimentData> = (props: IExperimentData) => {
     const [currentSection, setCurrentSection] = useState(EXPERIMENT_EN.TITLES.RESULTS_DATA);
     const { isSpinnerOn }: ISpinner = useSpinnerContext();
     const resultsDataRef = useRef<HTMLDivElement>(null);

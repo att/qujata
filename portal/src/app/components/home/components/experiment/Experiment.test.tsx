@@ -1,7 +1,7 @@
-import { render, waitFor } from '@testing-library/react';
+import { fireEvent, render, waitFor } from '@testing-library/react';
 import { SubHeader } from './components/sub-header';
 import { Charts } from './components/charts';
-import { Experiment } from './Experiment';
+import { Experiment, ExperimentContent } from './Experiment';
 import { ExperimentTable } from './components/experiment-table';
 import { useExperimentData } from './components/hooks/useExperimentData';
 import { FetchDataStatus } from '../../../../shared/hooks/useFetch';
@@ -17,35 +17,62 @@ jest.mock('./components/charts', () => ({
 }));
 
 describe('Experiment', () => {
-    test('should render Experiment', async () => {
-      (SubHeader as jest.Mock).mockImplementation(() => <div>SubHeader</div>);
-      (Toggles as jest.Mock).mockImplementation(() => <div>Toggles</div>);
-      (ExperimentTable as jest.Mock).mockImplementation(() => <div>ExperimentTable</div>);
-      (Charts as jest.Mock).mockImplementation(() => <div>Charts</div>);
-      (useExperimentData as jest.Mock).mockReturnValue({
-        data: MOCK_DATA_FOR_EXPERIMENT,
-        status: FetchDataStatus.Success,
-      });
-      const { container } = render(<Experiment />);
-
-      await waitFor(() => {
-        expect(container).toBeTruthy();
-      });
+  beforeEach(() => {
+    (SubHeader as jest.Mock).mockImplementation(() => <div>SubHeader</div>);
+    (Toggles as jest.Mock).mockImplementation(() => <div>Toggles</div>);
+    (ExperimentTable as jest.Mock).mockImplementation(() => <div>ExperimentTable</div>);
+    (Charts as jest.Mock).mockImplementation(() => <div>Charts</div>);
+    (useExperimentData as jest.Mock).mockReturnValue({
+      data: MOCK_DATA_FOR_EXPERIMENT,
+      status: FetchDataStatus.Fetching,
     });
 
-    test('should show spinner on render data', async () => {
-      (SubHeader as jest.Mock).mockImplementation(() => <div>SubHeader</div>);
-      (Toggles as jest.Mock).mockImplementation(() => <div>Toggles</div>);
-      (ExperimentTable as jest.Mock).mockImplementation(() => <div>ExperimentTable</div>);
-      (Charts as jest.Mock).mockImplementation(() => <div>Charts</div>);
-      (useExperimentData as jest.Mock).mockReturnValue({
-        data: MOCK_DATA_FOR_EXPERIMENT,
-        status: FetchDataStatus.Fetching,
-      });
-      const { container } = render(<Experiment />);
+    global.IntersectionObserver = class IntersectionObserver implements IntersectionObserver {
+      readonly root: Element | null = null;
+      readonly rootMargin: string = '';
+      readonly thresholds: ReadonlyArray<number> = [];
+      disconnect: () => void = jest.fn();
+      observe: (target: Element) => void = jest.fn();
+      unobserve: (target: Element) => void = jest.fn();
+      takeRecords: () => IntersectionObserverEntry[] = jest.fn();
+    };
+  });
 
-      await waitFor(() => {
-        expect(container).toBeTruthy();
-      });
+  test('should render Experiment', async () => {
+    const { container } = render(<Experiment />);
+
+    await waitFor(() => {
+      expect(container).toBeTruthy();
     });
+  });
+
+  test('should show spinner on render data', async () => {
+    const { container } = render(<Experiment />);
+
+    await waitFor(() => {
+      expect(container).toBeTruthy();
+    });
+  });
+});
+
+describe('ExperimentContent', () => {
+  let handleButtonClickMock: jest.Mock;
+  let scrollIntoViewMock: jest.Mock;
+
+  beforeEach(() => {
+    handleButtonClickMock = jest.fn();
+    scrollIntoViewMock = jest.fn();
+    window.HTMLElement.prototype.scrollIntoView = scrollIntoViewMock;
+  });
+
+  afterEach(() => {
+    scrollIntoViewMock.mockRestore();
+  });
+
+  it('should render without crashing', async () => {
+    const { container } = render(<ExperimentContent data={MOCK_DATA_FOR_EXPERIMENT} />);
+    await waitFor(() => {
+      expect(container).toBeTruthy();
+    });
+  });
 });
