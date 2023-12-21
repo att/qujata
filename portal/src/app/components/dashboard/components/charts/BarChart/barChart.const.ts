@@ -19,7 +19,7 @@ export let defaultOptions: ChartOptions<any> = {
         legend: {
             position: 'top',
             labels: {
-                padding: 40,
+                padding: 60,
                 font: {
                     size: 16,
                 },

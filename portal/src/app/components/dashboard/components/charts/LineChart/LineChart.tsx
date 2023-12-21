@@ -26,7 +26,7 @@ export const LineChart: React.FC<LineChartProps> = (props: LineChartProps) => {
         legend: {
           position: 'top',
           labels: {
-              padding: 40,
+              padding: 60,
               font: {
                 size: 16,
               },
