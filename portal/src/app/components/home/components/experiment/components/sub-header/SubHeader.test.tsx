@@ -21,7 +21,7 @@ describe('SubHeader', () => {
         const { container, getAllByRole } = render(<SubHeader data={mockData} />);
         const trashButton = container.querySelector('.action_button_delete');
         act(() => {
-            expect(getAllByRole('button')).toHaveLength(2);
+            expect(getAllByRole('button')).toHaveLength(3);
             if (trashButton) {
                 fireEvent.click(trashButton);
             }

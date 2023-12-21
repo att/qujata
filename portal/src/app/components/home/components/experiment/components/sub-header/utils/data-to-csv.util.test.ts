@@ -13,7 +13,6 @@ describe('mapExperimentDataToCsvDataType', () => {
     ];
 
     const result = mapExperimentDataToCsvDataType(mockList);
-    console.log('result ', result);
     expect(result).toEqual(expectedOutput);
   });
 });

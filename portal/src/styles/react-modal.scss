@@ -1,0 +1,51 @@
+@import "./variables-keys";
+@import "./z-index";
+
+$extraSmallModalSize: 540px;
+$smallModalSize: 738px;
+$mediumModalSize: 1140px;
+$largeModalSize: 1376px;
+
+.react-modal-overlay {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 10;
+
+    &.no-bg {
+      background-color: unset;
+    }
+}
+
+.react-modal-content {
+    padding: 0;
+    border-radius: 2px;
+    background-color: var($backgroundColorWhite);
+    inline-size: 75%;
+
+    &:focus {
+      outline: none;
+    }
+
+    &.extra-small-modal {
+      max-inline-size: $extraSmallModalSize
+    }
+
+    &.small-modal {
+      max-inline-size: $smallModalSize;
+    }
+
+    &.medium-modal {
+      max-inline-size: $mediumModalSize;
+    }
+
+    &.large-modal {
+      max-inline-size: $largeModalSize;
+    }
+}

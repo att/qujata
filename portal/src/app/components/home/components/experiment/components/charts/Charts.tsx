@@ -15,13 +15,13 @@ export const Charts: React.FC<IExperimentData> = (props: IExperimentData) => {
         <div className={styles.charts_wrapper}>
           <div className={styles.title}>{CHARTS_EN.TITLE}</div>
           <div className={styles.chart_wrapper}>
-            {barChartKeysOfData.map((key) => (
+            {barChartKeysOfData.map((key, index) => (
                 <div className={styles.chart_item}>
-                    <BarChart key={key} title={getChartTitleByType(key)} labels={barChartLabels} data={barChartData} tooltipKeys={tooltipKeys} tooltipLabels={tooltipLabels} keyOfData={key} />
+                    <BarChart key={index} title={getChartTitleByType(key)} labels={barChartLabels} data={barChartData} tooltipKeys={tooltipKeys} tooltipLabels={tooltipLabels} keyOfData={key} />
                 </div>
             ))}
 
-            {barChartKeysOfData.map((key) => {
+            {barChartKeysOfData.map((key, index) => {
                     const datasets = lineChartData.datasets
                     .filter(dataset => dataset.data[key])
                     .map(dataset => ({
@@ -38,7 +38,7 @@ export const Charts: React.FC<IExperimentData> = (props: IExperimentData) => {
 
                     return (
                         <div className={styles.chart_item}>
-                            <LineChart key={key} data={data} title={getChartTitleByType(key)} tooltipLabel={getChartTitleByType(key)} />
+                            <LineChart key={index} data={data} title={getChartTitleByType(key)} tooltipLabel={getChartTitleByType(key)} />
                         </div>
                     );
                 })}
