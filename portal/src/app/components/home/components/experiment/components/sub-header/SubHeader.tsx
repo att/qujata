@@ -1,6 +1,6 @@
 import styles from './SubHeader.module.scss';
-import { useCallback, useState } from 'react';
-import { Link } from "react-router-dom";
+import { useCallback, useEffect, useState } from 'react';
+import { Link, useNavigate, useParams } from "react-router-dom";
 import ArrowLeftSvg from '../../../../../../../../src/assets/images/arrow-left.svg';
 import { ITestRunResult } from '../../../../../../shared/models/test-run-result.interface';
 import { getAlgorithmsName, getIterations } from './utils/sub-header.utils';
@@ -12,6 +12,13 @@ import { mapExperimentDataToCsvDataType } from './utils/data-to-csv.util';
 import { downloadCsvFile } from '../../../../../../utils/download';
 import PencilSvg from '../../../../../../../assets/images/pencil.svg';
 import { EditExperimentModal, EditExperimentModalData } from '../edit-experiment-modal';
+import { DeleteExperimentModal } from '../delete-experiment-modal';
+import { FetchDataStatus, IHttp, useFetch } from '../../../../../../shared/hooks/useFetch';
+import { TestRunUrlParams } from '../../../../../../shared/models/url-params.interface';
+import { replaceParams } from '../../../../../../shared/utils/replaceParams';
+import { APIS } from '../../../../../../apis';
+import { useFetchSpinner } from '../../../../../../shared/hooks/useFetchSpinner';
+import { useErrorMessage } from '../../../../../../hooks/useErrorMessage';
 
 const DeleteAriaLabel: string = 'delete';
 const DownloadAriaLabel: string = 'download';
@@ -26,13 +33,31 @@ export const SubHeader: React.FC<SubHeaderProps> = (props: SubHeaderProps) => {
     const [openEditModal, setOpenEditModal] = useState<boolean>(false);
     const [experimentName, setExperimentName] = useState<string>(name || '');
     const [experimentDescription, setExperimentDescription] = useState<string>(description || '');
-    
+    const [openDeleteModal, setOpenDeleteModal] = useState<boolean>(false);
+    const { testSuiteId } = useParams<TestRunUrlParams>();
+    const url: string = replaceParams(APIS.deleteExperiment, { testSuiteId });
+    const { error: deleteError, delete_, status: deleteStatus, cancelRequest: cancelRequestDelete }: IHttp<unknown> = useFetch<unknown>({ url });
+    const navigate = useNavigate();
+
+    useFetchSpinner(deleteStatus);
+    useErrorMessage(deleteError);
+
+    useEffect(() => {
+        return cancelRequestDelete;
+    }, [cancelRequestDelete]);
+
+    useEffect(() => {
+        if (deleteStatus === FetchDataStatus.Success) {
+            navigate('/qujata');
+        }
+    }, [deleteStatus, navigate]);
+
     const handleEditNameClick: () => void = useCallback((): void => {
         setOpenEditModal(true);
     }, []);
 
     const handleDeleteClick: () => void = useCallback((): void => {
-        console.log('handleDeleteClick');
+        setOpenDeleteModal(true);
     }, []);
 
     const handleDownloadClick: () => void = useCallback((): void => {
@@ -47,6 +72,13 @@ export const SubHeader: React.FC<SubHeaderProps> = (props: SubHeaderProps) => {
         }
         setOpenEditModal(false);
     }, []);
+
+    const handleCloseDeleteExperimentModal: (confirm?: boolean) => void = useCallback((confirm?: boolean): void => {
+        if (confirm) {
+            delete_();
+        }
+        setOpenDeleteModal(false);
+    }, [delete_]);
 
     return (
         <>
@@ -104,6 +136,7 @@ export const SubHeader: React.FC<SubHeaderProps> = (props: SubHeaderProps) => {
             </div>
           </div>
           {openEditModal && <EditExperimentModal data={{name: experimentName, description: experimentDescription}} onClose={handleCloseEditExperimentModal} />}
+          {openDeleteModal && <DeleteExperimentModal name={experimentName} onClose={handleCloseDeleteExperimentModal} />}
         </>
     );
 }
