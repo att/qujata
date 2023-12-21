@@ -52,6 +52,10 @@ export const BarChart: React.FC<BarChartProps> = (props: BarChartProps) => {
           title: {
             display: true,
             text: title,
+            font: {
+              size: 16,
+              weight: '500',
+            },
           },
           tooltip: {
             displayColors: false,

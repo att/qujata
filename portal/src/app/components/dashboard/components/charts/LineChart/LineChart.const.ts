@@ -7,6 +7,11 @@ export let defaultOptions: ChartOptions<any> = {
     scales: {
       y: {
         beginAtZero: true,
+        ticks: {
+          font: {
+            size: 14,
+          },
+        },
       },
     },
 };
