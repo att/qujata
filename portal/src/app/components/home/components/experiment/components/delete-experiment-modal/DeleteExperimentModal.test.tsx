@@ -20,7 +20,7 @@ describe('EditExperimentModal', () => {
     };
     const { getByRole }: RenderResult = render(<DeleteExperimentModal {...props}>TestMe</DeleteExperimentModal>);
     act(() => {
-      fireEvent.submit(getByRole('button', { name: /Ok/i }));
+      fireEvent.submit(getByRole('button', { name: /Confirm/i }));
     });
   });
 });
