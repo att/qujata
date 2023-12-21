@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { useEffect, useLayoutEffect, useState } from 'react';
 import styles from './EditExperimentModal.module.scss';
-import { ITestRunResult } from '../../../../../../shared/models/test-run-result.interface';
 import { BaseModal } from '../../../../../../shared/components/modal';
 import { ButtonActionType, ButtonSize, ButtonStyleType, IButton } from '../../../../../../shared/components/att-button';
 import { EDIT_EXPERIMENT_MODAL_EN } from './translate/en';

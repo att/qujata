@@ -1,5 +1,4 @@
 export const EDIT_EXPERIMENT_MODAL_EN = {
-    CANCEL_ACTION: 'Cancel',
     SUBMIT_ACTION: 'Save',
     TITLE: 'Edit Experiment Details',
     FORM: {
