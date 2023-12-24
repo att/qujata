@@ -18,9 +18,7 @@ export const ExperimentTable: React.FC<IExperimentData> = (props: IExperimentDat
         columnHelper.accessor(() => '#', {
           id: `${EXPERIMENT_TABLE_EN.TABLE_TITLES.HASHTAG}`,
           header: () => <span>{EXPERIMENT_TABLE_EN.TABLE_TITLES.HASHTAG}</span>,
-          cell: cellInfo => <span>{cellInfo.row.index + 1}</span>,
-          minSize: 3,
-          maxSize: 300,
+          cell: cellInfo => <span>{cellInfo.row.index + 1}</span>
         }),
         columnHelper.accessor(row => row.algorithm, {
           id: 'algorithm',
