@@ -5,11 +5,10 @@ from src.models.test_suite import TestSuite
 from src.models.test_run import TestRun
 from src.models.test_run_result import TestRunResult
 
-
 api = Blueprint('qujata-api', __name__)
 
 # Define the expected keys
-expected_keys = ['resourceName', 'operatingSystem', 'cpu', 'cpuArchitecture', 'cpuCores', 'clockSpeed', 'nodeSize']
+expected_keys = ['resource_name', 'operating_system', 'cpu', 'cpu_architecture', 'cpu_cores', 'clock_speed', 'node_size']
 
 
 @api.route('/env-info', methods=['POST'])
@@ -17,17 +16,16 @@ expected_keys = ['resourceName', 'operatingSystem', 'cpu', 'cpuArchitecture', 'c
 def insert_env_info():
     # Extract data from the request
     data = request.get_json()
-
     # Check that at least one expected key-value pair exists in the JSON payload
     if data and any(key in data and data[key] is not None for key in expected_keys):
         new_env_info = EnvInfo(
-            resource_name=data.get('resourceName'),
-            operating_system=data.get('operatingSystem'),
+            resource_name=data.get('resource_name'),
+            operating_system=data.get('operating_system'),
             cpu=data.get('cpu'),
-            cpu_architecture=data.get('cpuArchitecture'),
-            cpu_cores=data.get('cpuCores'),
-            clock_speed=data.get('clockSpeed'),
-            node_size=data.get('nodeSize')
+            cpu_architecture=data.get('cpu_architecture'),
+            cpu_cores=data.get('cpu_cores'),
+            clock_speed=data.get('clock_speed'),
+            node_size=data.get('node_size')
         )
         try:
             current_app.database_manager.create(new_env_info)

@@ -4,6 +4,7 @@ from src.models.test_run_result import TestRunResult
 from src.enums.metric import Metric
 
 
+
 def __query_prometheus_avg_metric(metric, service, start_time, end_time):
     if current_app.configurations.environment == 'docker':
         metric_expr = f'{metric}{{name="{service}"}}'

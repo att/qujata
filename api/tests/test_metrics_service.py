@@ -15,13 +15,13 @@ class TestMetricsService(unittest.TestCase):
 
     def setUp(self):
         self.app = Flask(__name__)
-        self.app.prometheus_url = 'http://example.com/prometheus'
         self.client = self.app.test_client()
         load_config(self.app)
+        self.app.configurations.prometheus_url = 'http://example.com/prometheus'
         self.app.database_manager = Mock(spec=DatabaseManager)
 
     def test_aggregate_docker(self):
-        self.app.environment = 'docker'
+        self.app.configurations.environment = 'docker'
         test_run_id = 1
         start_time = datetime(2023, 12, 6, 11, 45, 0, tzinfo=timezone.utc)
         end_time = datetime(2023, 12, 6, 11, 45, 30, tzinfo=timezone.utc)
@@ -48,17 +48,17 @@ class TestMetricsService(unittest.TestCase):
 
                 # Verify that requests.get was called 4 times with the expected parameters
                 expected_calls = [
-                    call(f"{self.app.prometheus_url}/api/v1/query", params={'query': 'avg_over_time(rate(container_cpu_usage_seconds_total{name="qujata-curl"}[30s])[30s:1s])', 'time': 1701863130}),
-                    call(f"{self.app.prometheus_url}/api/v1/query", params={'query': 'avg_over_time(rate(container_memory_usage_bytes{name="qujata-curl"}[30s])[30s:1s])', 'time': 1701863130}),
-                    call(f"{self.app.prometheus_url}/api/v1/query", params={'query': 'avg_over_time(rate(container_cpu_usage_seconds_total{name="qujata-nginx"}[30s])[30s:1s])', 'time': 1701863130}),
-                    call(f"{self.app.prometheus_url}/api/v1/query", params={'query': 'avg_over_time(rate(container_memory_usage_bytes{name="qujata-nginx"}[30s])[30s:1s])', 'time': 1701863130}),
+                    call(f"{self.app.configurations.prometheus_url}/api/v1/query", params={'query': 'avg_over_time(rate(container_cpu_usage_seconds_total{name="qujata-curl"}[30s])[30s:1s])', 'time': 1701863130}),
+                    call(f"{self.app.configurations.prometheus_url}/api/v1/query", params={'query': 'avg_over_time(rate(container_memory_usage_bytes{name="qujata-curl"}[30s])[30s:1s])', 'time': 1701863130}),
+                    call(f"{self.app.configurations.prometheus_url}/api/v1/query", params={'query': 'avg_over_time(rate(container_cpu_usage_seconds_total{name="qujata-nginx"}[30s])[30s:1s])', 'time': 1701863130}),
+                    call(f"{self.app.configurations.prometheus_url}/api/v1/query", params={'query': 'avg_over_time(rate(container_memory_usage_bytes{name="qujata-nginx"}[30s])[30s:1s])', 'time': 1701863130}),
                 ]
                 mock_get.assert_has_calls(expected_calls, any_order=True)
 
             self.assertEqual(self.app.database_manager.create.call_count, 4)
 
     def test_aggregate_equals_start_end_time(self):
-        self.app.environment = 'docker'
+        self.app.configurations.environment = 'docker'
         test_run_id = 1
         start_time = datetime(2023, 12, 6, 11, 45, 0, tzinfo=timezone.utc)
         end_time = datetime(2023, 12, 6, 11, 45, 0, tzinfo=timezone.utc)
@@ -84,10 +84,10 @@ class TestMetricsService(unittest.TestCase):
                 aggregate(test_run)
                 # Verify that requests.get was called 4 times with the expected parameters
                 expected_calls = [
-                    call(f"{self.app.prometheus_url}/api/v1/query", params={'query': 'avg_over_time(rate(container_cpu_usage_seconds_total{name="qujata-curl"}[30s])[1s:1s])', 'time': 1701863100}),
-                    call(f"{self.app.prometheus_url}/api/v1/query", params={'query': 'avg_over_time(rate(container_memory_usage_bytes{name="qujata-curl"}[30s])[1s:1s])', 'time': 1701863100}),
-                    call(f"{self.app.prometheus_url}/api/v1/query", params={'query': 'avg_over_time(rate(container_cpu_usage_seconds_total{name="qujata-nginx"}[30s])[1s:1s])', 'time': 1701863100}),
-                    call(f"{self.app.prometheus_url}/api/v1/query", params={'query': 'avg_over_time(rate(container_memory_usage_bytes{name="qujata-nginx"}[30s])[1s:1s])', 'time': 1701863100}),
+                    call(f"{self.app.configurations.prometheus_url}/api/v1/query", params={'query': 'avg_over_time(rate(container_cpu_usage_seconds_total{name="qujata-curl"}[30s])[1s:1s])', 'time': 1701863100}),
+                    call(f"{self.app.configurations.prometheus_url}/api/v1/query", params={'query': 'avg_over_time(rate(container_memory_usage_bytes{name="qujata-curl"}[30s])[1s:1s])', 'time': 1701863100}),
+                    call(f"{self.app.configurations.prometheus_url}/api/v1/query", params={'query': 'avg_over_time(rate(container_cpu_usage_seconds_total{name="qujata-nginx"}[30s])[1s:1s])', 'time': 1701863100}),
+                    call(f"{self.app.configurations.prometheus_url}/api/v1/query", params={'query': 'avg_over_time(rate(container_memory_usage_bytes{name="qujata-nginx"}[30s])[1s:1s])', 'time': 1701863100}),
                 ]
                 mock_get.assert_has_calls(expected_calls, any_order=True)
 
@@ -95,7 +95,7 @@ class TestMetricsService(unittest.TestCase):
 
 
     def test_aggregate_kubernetes(self):
-        self.app.environment = 'kubernetes'
+        self.app.configurations.environment = 'kubernetes'
         test_run_id = 1
         start_time = datetime(2023, 12, 6, 11, 45, 0, tzinfo=timezone.utc)
         end_time = datetime(2023, 12, 6, 11, 45, 30, tzinfo=timezone.utc)
@@ -118,10 +118,10 @@ class TestMetricsService(unittest.TestCase):
                 aggregate(test_run)
 
                 expected_calls = [
-                    call(f"{self.app.prometheus_url}/api/v1/query", params={'query': 'avg_over_time(rate(container_cpu_usage_seconds_total{pod=~"qujata-curl.*"}[30s])[30s:1s])', 'time': 1701863130}),
-                    call(f"{self.app.prometheus_url}/api/v1/query", params={'query': 'avg_over_time(rate(container_memory_usage_bytes{pod=~"qujata-curl.*"}[30s])[30s:1s])', 'time': 1701863130}),
-                    call(f"{self.app.prometheus_url}/api/v1/query", params={'query': 'avg_over_time(rate(container_cpu_usage_seconds_total{pod=~"qujata-nginx.*"}[30s])[30s:1s])', 'time': 1701863130}),
-                    call(f"{self.app.prometheus_url}/api/v1/query", params={'query': 'avg_over_time(rate(container_memory_usage_bytes{pod=~"qujata-nginx.*"}[30s])[30s:1s])', 'time': 1701863130}),
+                    call(f"{self.app.configurations.prometheus_url}/api/v1/query", params={'query': 'avg_over_time(rate(container_cpu_usage_seconds_total{pod=~"qujata-curl.*"}[30s])[30s:1s])', 'time': 1701863130}),
+                    call(f"{self.app.configurations.prometheus_url}/api/v1/query", params={'query': 'avg_over_time(rate(container_memory_usage_bytes{pod=~"qujata-curl.*"}[30s])[30s:1s])', 'time': 1701863130}),
+                    call(f"{self.app.configurations.prometheus_url}/api/v1/query", params={'query': 'avg_over_time(rate(container_cpu_usage_seconds_total{pod=~"qujata-nginx.*"}[30s])[30s:1s])', 'time': 1701863130}),
+                    call(f"{self.app.configurations.prometheus_url}/api/v1/query", params={'query': 'avg_over_time(rate(container_memory_usage_bytes{pod=~"qujata-nginx.*"}[30s])[30s:1s])', 'time': 1701863130}),
                 ]
                 mock_get.assert_has_calls(expected_calls, any_order=True)
 
@@ -145,7 +145,7 @@ class TestMetricsService(unittest.TestCase):
                     self.assertEqual(value, expected_value, f"Mismatch in call {i + 1}: {metric_name} - expected {expected_value}, got {value}")
 
     def test_aggregate_non_supported_env(self):
-        self.app.environment = 'environment'
+        self.app.configurations.environment= 'environment'
         test_run_id = 1
         start_time = datetime(2023, 12, 6, 11, 45, 0, tzinfo=timezone.utc)
         end_time = datetime(2023, 12, 6, 11, 45, 30, tzinfo=timezone.utc)
@@ -158,7 +158,7 @@ class TestMetricsService(unittest.TestCase):
                 self.assertEqual(mock_get.call_count, 0)
 
     def test_aggregate_invalid_response(self):
-        self.app.environment = 'docker'
+        self.app.configurations.environment = 'docker'
         test_run_id = 1
         start_time = datetime(2023, 12, 6, 11, 45, 0, tzinfo=timezone.utc)
         end_time = datetime(2023, 12, 6, 11, 45, 30, tzinfo=timezone.utc)
@@ -180,7 +180,7 @@ class TestMetricsService(unittest.TestCase):
                     self.assertEqual(args[0].value, 0)
 
     def test_aggregate_request_exception(self):
-        self.app.environment = 'docker'
+        self.app.configurations.environment = 'docker'
         test_run_id = 1
         start_time = datetime(2023, 12, 6, 11, 45, 0, tzinfo=timezone.utc)
         end_time = datetime(2023, 12, 6, 11, 45, 30, tzinfo=timezone.utc)

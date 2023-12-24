@@ -38,13 +38,12 @@ class TestAnalyzeAPI(unittest.TestCase):
                                     content_type='application/json')
 
            
-            self.assertEqual(self.app.database_manager.create.call_count, 3)# 1 for the test suite, and the other for the 2 test runs
+            self.assertEqual(self.app.database_manager.create.call_count, 11)# 1 for the test suite, and 2 for test runs and 4*2(8) for test run results
            
             self.assertEqual(response.status_code, 200)
             # Check the response content
             response_data = json.loads(response.data)
-            self.assertIn('from', response_data)
-            self.assertIn('to', response_data)
+            self.assertIn('test_suite_id', response_data)
 
     def test_analyze_return_general_error(self):
         input_data = {
@@ -124,9 +123,7 @@ class TestAnalyzeAPI(unittest.TestCase):
                                     data=json.dumps(input_data),
                                     content_type='application/json')
             self.assertEqual(response.status_code, 200)
-            actual_test_run = self.app.database_manager.create.call_args.args
-            logging.error(len(actual_test_run))
-            logging.error(self.app.database_manager.create.call_args)
+            actual_test_run = self.app.database_manager.create.call_args_list[1].args
             self.assertEqual(actual_test_run[0].status, Status.FAILED)
             self.assertEqual(actual_test_run[0].status_message, '{"result": "failed"}')
 
