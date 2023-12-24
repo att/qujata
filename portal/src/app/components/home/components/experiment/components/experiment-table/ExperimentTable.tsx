@@ -15,6 +15,13 @@ export const ExperimentTable: React.FC<IExperimentData> = (props: IExperimentDat
   const columns = useMemo(() => {
     if (props.data && props.data.testRuns.length > 0) {
       return [
+        columnHelper.accessor(() => '#', {
+          id: `${EXPERIMENT_TABLE_EN.TABLE_TITLES.HASHTAG}`,
+          header: () => <span>{EXPERIMENT_TABLE_EN.TABLE_TITLES.HASHTAG}</span>,
+          cell: cellInfo => <span>{cellInfo.row.index + 1}</span>,
+          minSize: 3,
+          maxSize: 300,
+        }),
         columnHelper.accessor(row => row.algorithm, {
           id: 'algorithm',
           header: () => <span>{EXPERIMENT_TABLE_EN.TABLE_TITLES.ALGORITHM}</span>,
@@ -24,10 +31,6 @@ export const ExperimentTable: React.FC<IExperimentData> = (props: IExperimentDat
           header: () => <span>{EXPERIMENT_TABLE_EN.TABLE_TITLES.ITERATIONS}</span>,
           cell: info => <span>{info.getValue()}</span>
         }),
-        columnHelper.accessor('messageSizeBytes', {
-          header: () => <span>{EXPERIMENT_TABLE_EN.TABLE_TITLES.MESSAGE_SIZE}</span>,
-          cell: () => <span>N/A</span>
-        }),
         columnHelper.accessor('results.averageCPU', {
           header: () => <span>{EXPERIMENT_TABLE_EN.TABLE_TITLES.AVERAGE_CPU}</span>,
           cell: info => <span>{info.getValue()}</span>
@@ -35,22 +38,6 @@ export const ExperimentTable: React.FC<IExperimentData> = (props: IExperimentDat
         columnHelper.accessor('results.averageMemory', {
           header: () => <span>{EXPERIMENT_TABLE_EN.TABLE_TITLES.AVERAGE_MEMORY}</span>,
           cell: info => <span>{info.getValue()}</span>
-        }),
-        columnHelper.accessor('results.errorRate', {
-          header: () => <span>{EXPERIMENT_TABLE_EN.TABLE_TITLES.ERROR_RATE}</span>,
-          cell: () => <span>{EXPERIMENT_TABLE_EN.TABLE_PLACEHOLDERS.NOT_APPLICABLE}</span>
-        }),
-        columnHelper.accessor('results.bytesThroughput', {
-          header: () => <span>{EXPERIMENT_TABLE_EN.TABLE_TITLES.BYTES_THROUGHPUT}</span>,
-          cell: () => <span>{EXPERIMENT_TABLE_EN.TABLE_PLACEHOLDERS.NOT_APPLICABLE}</span>
-        }),
-        columnHelper.accessor('results.messagesThroughput', {
-          header: () => <span>{EXPERIMENT_TABLE_EN.TABLE_TITLES.MESSAGES_THROUGHPUT}</span>,
-          cell: () => <span>{EXPERIMENT_TABLE_EN.TABLE_PLACEHOLDERS.NOT_APPLICABLE}</span>
-        }),
-        columnHelper.accessor('results.averageTLSHandshakeTime', {
-          header: () => <span>{EXPERIMENT_TABLE_EN.TABLE_TITLES.AVERAGE_TLS_HANDSHAKE_TIME}</span>,
-          cell: () => <span>{EXPERIMENT_TABLE_EN.TABLE_PLACEHOLDERS.NOT_APPLICABLE}</span>
         }),
       ];
     }

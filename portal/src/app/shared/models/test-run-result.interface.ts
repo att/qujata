@@ -1,4 +1,4 @@
-export interface IResult extends Partial<ITestRunPlaceholders> {
+export interface IResult {
     averageCPU: number;
     averageMemory: number;
 }
@@ -10,15 +10,6 @@ export interface ITestRunResultData {
     messageSizeBytes?: number;
     results: IResult;
 }
-
-// This interface is a placeholder for the table columns which are not implemented yet (N/A)
-export interface ITestRunPlaceholders {
-    errorRate?: number;
-    bytesThroughput?: number;
-    messagesThroughput?: number;
-    averageTLSHandshakeTime?: number;
-}
-
 export interface IEnvironmentInfo {
     codeRelease: string;
     cpu: string;

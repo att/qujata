@@ -12,6 +12,12 @@
     border-spacing: 0;
     border: 1px solid var($backgroundColorGray);
     width: 100%;
+    table-layout: fixed;
+  }
+
+  th:first-child,
+  td:first-child {
+    width: 80px;
   }
 }
 
@@ -19,12 +25,11 @@
   padding: 16px;
   background-color: var($attPurple);
   color: var($backgroundColorWhite);
-  width: fit-content;
 }
 
 .experiment_table_content {
   background-color: var($backgroundColorWhite);
-
+  
   td {
     padding: 16px;
     border-bottom: 1px solid var($backgroundColorGray);
