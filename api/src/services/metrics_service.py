@@ -29,8 +29,6 @@ def __query_prometheus_avg_metric(metric, service, start_time, end_time):
     }
 
     try:
-        # request_url = f"{current_app.prometheus_url}/api/v1/query"
-        # print(f"Prometheus Request URL: {request_url}?{params}")
         response = requests.get(f"{current_app.configurations.prometheus_url}/api/v1/query", params=params)
         response.raise_for_status()
 
