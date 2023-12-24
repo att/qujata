@@ -10,7 +10,7 @@ from src.models.env_info import EnvInfo
 from src.models.test_suite import TestSuite
 from src.models.test_run import TestRun
 from src.exceptions.exceptions import ApiException, NotFoundException
-from src.services.metrics_service import calculate_cpu_memory_avg
+import src.services.metrics_service as metrics_service
 
 def create_test_suite(data):
     env_info = current_app.database_manager.get_last_record(EnvInfo)
@@ -109,7 +109,7 @@ def __get_environment_info(test_suite):
 def __get_test_runs_results(test_runs):
     test_runs_list = []
     for test_run in test_runs:
-        cpu_avg, memory_avg = calculate_cpu_memory_avg(test_run.id)
+        cpu_avg, memory_avg = metrics_service.get_cpu_memory_avg(test_run.id)
         results = {
             "id": test_run.id,
             "algorithm": test_run.algorithm,

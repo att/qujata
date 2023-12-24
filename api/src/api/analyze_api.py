@@ -41,8 +41,8 @@ def analyze():
         return jsonify({'error': 'An error occurred while processing the request', 'message':''}), HTTP_STATUS_INTERNAL_SERVER_ERROR
 
 def __validate(data):
-    if not data or 'algorithms' not in data or 'iterationsCount' not in data or 'experimentName' not in data:
-        raise ApiException('Missing properties, required properties: algorithms, iterationsCount, experimentName', 'Invalid data provided', HTTP_STATUS_BAD_REQUEST)
+    if not data or 'algorithms' not in data or 'iterationsCount' not in data or 'experimentName' not in data or 'description' not in data:
+        raise ApiException('Missing properties, required properties: algorithms, iterationsCount, experimentName, description', 'Invalid data provided', HTTP_STATUS_BAD_REQUEST)
     for iterations in data['iterationsCount']:
         if iterations <= 0:
             raise ApiException('The number of iterations should be greater than 0', 'Invalid data provided', HTTP_STATUS_BAD_REQUEST)

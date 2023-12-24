@@ -13,10 +13,26 @@ import src.services.tests_service as tests_service
 from src.exceptions.exceptions import ApiException, NotFoundException
 import json
 
+# from src.utils.metrics_calculator import MetricsCalculator
+
+
 api = Blueprint('qujata-api', __name__)
 # constants
 HTTP_STATUS_NOT_FOUND = 404
 HTTP_STATUS_BAD_REQUEST = 400
+
+# @api.route('/test_cadvisor', methods=['GET'])
+# @cross_origin(origins=['*'], supports_credentials=True)
+# def get_cadvisor():
+#     try:
+#         calculator = MetricsCalculator()
+#         calculator.start()
+#         time.sleep(10)
+#         calculator.stop()
+#         data = calculator.get_data()
+#         return data
+#     except (ApiException, NotFoundException) as e:
+#         return jsonify({'error': e.error, 'message': e.message}), e.status_code
 
 @api.route('/test_suites', methods=['GET'])
 @cross_origin(origins=['*'], supports_credentials=True)

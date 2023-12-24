@@ -8,12 +8,14 @@ import json
 from datetime import datetime, timedelta
 from flask import jsonify, current_app
 import src.services.tests_service as tests_service
+import src.services.metrics_service as metrics_service
 from src.models.env_info import EnvInfo
 from src.models.test_suite import TestSuite
 from src.models.test_run import TestRun
 from src.enums.status import Status
 from src.exceptions.exceptions import ApiException
-from src.services.metrics_service import aggregate
+
+
 
 # constants
 WAIT_MS = 15
@@ -45,10 +47,12 @@ def analyze(data):
 
 def __create_test_run(algorithm, iterations, test_suite_id):
     start_time=datetime.now()
+    metrics_service.start_collecting()
     status, status_message = __run(algorithm, iterations)
+    metrics_service.stop_collecting()
     end_time=datetime.now()
     test_run = tests_service.create_test_run(start_time, end_time, algorithm, iterations, test_suite_id, status, status_message)
-    __save_test_run_result(test_run)
+    metrics_service.save(test_run)
 
 
 def __run(algorithm, iterations):
@@ -62,9 +66,6 @@ def __run(algorithm, iterations):
 
     return __validate_response(response, algorithm, iterations)
         
-
-def __save_test_run_result(test_run):
-    aggregate(test_run)
 
 
 def __validate_response(response, algorithm, iterations):
