@@ -66,3 +66,7 @@ def get_test_run(test_suite_id, test_run_id):
         return jsonify(test_run.to_dict())
     else:
         return jsonify({'error': 'Not Found', 'message':'Test run with id: ' + str(test_run_id) +' and test suite id: '+ str(test_suite_id) +' not found'}), HTTP_STATUS_NOT_FOUND
+
+def __validate_update_test_suite(data):
+    if not data or 'name' not in data or 'description' not in data:
+        raise ApiException('Missing properties, required properties: name, description', 'Invalid data provided', HTTP_STATUS_BAD_REQUEST)
