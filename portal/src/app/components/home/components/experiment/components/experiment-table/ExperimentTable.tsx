@@ -15,6 +15,11 @@ export const ExperimentTable: React.FC<IExperimentData> = (props: IExperimentDat
   const columns = useMemo(() => {
     if (props.data && props.data.testRuns.length > 0) {
       return [
+        columnHelper.accessor(() => '#', {
+          id: `${EXPERIMENT_TABLE_EN.TABLE_TITLES.HASHTAG}`,
+          header: () => <span>{EXPERIMENT_TABLE_EN.TABLE_TITLES.HASHTAG}</span>,
+          cell: cellInfo => <span>{cellInfo.row.index + 1}</span>
+        }),
         columnHelper.accessor(row => row.algorithm, {
           id: 'algorithm',
           header: () => <span>{EXPERIMENT_TABLE_EN.TABLE_TITLES.ALGORITHM}</span>,
