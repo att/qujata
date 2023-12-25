@@ -1,4 +1,4 @@
-import { useState } from "react";
+import styles from "./Toggles.module.scss";
 import { ToggleButton } from "../../../../../../shared/components/toggle-button";
 import { EXPERIMENT_EN } from "../../translate/en";
 
@@ -9,7 +9,7 @@ export interface TogglesProps {
 
 export const Toggles: React.FC<TogglesProps> = (props: TogglesProps) => {
   return (
-    <div>
+    <div className={styles.toggle_buttons_wrapper}>
       <ToggleButton 
           onClick={() => props.handleButtonClick(EXPERIMENT_EN.TITLES.RESULTS_DATA)}
           isSelected={props.currentSection === EXPERIMENT_EN.TITLES.RESULTS_DATA}

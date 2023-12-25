@@ -1,0 +1,50 @@
+@import "src/styles/variables-keys";
+@import "src/styles/z-index";
+
+$inputBorderColor: #DCDFE3;
+
+.select_columns_wrapper {
+  background-color: var($backgroundColorWhite);
+  position: absolute;
+  top: 140%;
+  left: -168%;
+  width: 400px;
+  z-index: 1;
+  padding: 20px;
+  border: 1px solid var($attPurple);
+}
+
+.popup_header {
+  display: flex;
+  justify-content: space-between;
+  margin-block-end: 20px;
+}
+
+.form_title {
+  display: flex;
+  align-items: flex-end;
+  font-size: 17px;
+  font-family: var($fontMedium);
+}
+
+.close_icon {
+  color: #454b52;
+  cursor: pointer;
+  background-color: #F5F1FF;
+  border-radius: 50%;
+  display: flex;
+  padding: 7px;
+}
+
+.input_form_item {
+  display: none;
+}
+
+.input_option img {
+  margin-inline-end: 10px;
+}
+
+.input_option {
+  margin-block-end: 10px;
+  cursor: pointer;
+}

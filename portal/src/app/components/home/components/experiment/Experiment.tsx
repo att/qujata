@@ -11,6 +11,10 @@ import { EXPERIMENT_EN } from './translate/en';
 import { Toggles } from './components/toggles';
 import { handleSectionScrolling } from './utils';
 import { ISpinner, useSpinnerContext } from '../../../../shared/context/spinner';
+import { TableOptions } from './components/table-options';
+import { SelectColumnsPopup } from './components/table-options/components/select-columns-popup';
+import { TableOptionsData } from './components/table-options/constants/table-options.const';
+import { convertDataToOptions } from './components/table-options/components/select-columns-popup/utils/convert-data-to-options.utils';
 
 export type IExperimentData = {
   data: ITestRunResult;
@@ -28,6 +32,7 @@ export const Experiment: React.FC = () => {
 
 export const ExperimentContent: React.FC<IExperimentData> = (props: IExperimentData) => {
     const [currentSection, setCurrentSection] = useState(EXPERIMENT_EN.TITLES.RESULTS_DATA);
+    const [isSelectColumnsPopupOpen, setSelectColumnsPopupOpen] = useState(false);
     const { isSpinnerOn }: ISpinner = useSpinnerContext();
     const resultsDataRef = useRef<HTMLDivElement>(null);
     const visualizationRef = useRef<HTMLDivElement>(null);
@@ -47,11 +52,26 @@ export const ExperimentContent: React.FC<IExperimentData> = (props: IExperimentD
         }
     };
 
+    const handleSelectColumnsClick = () => {
+        setSelectColumnsPopupOpen(!isSelectColumnsPopupOpen);
+    };
+
     return (
         <>
             {isSpinnerOn && renderSpinner()}
             <SubHeader data={data} />
-            <Toggles currentSection={currentSection} handleButtonClick={handleButtonClick} />
+            <div className={styles.toggles_and_options_wrapper}>
+                <Toggles currentSection={currentSection} handleButtonClick={handleButtonClick} />
+                <div className={styles.table_options_wrapper}>
+                <TableOptions handleSelectColumnsClick={handleSelectColumnsClick} isPopupOpen={isSelectColumnsPopupOpen} />
+                    {isSelectColumnsPopupOpen &&
+                        <SelectColumnsPopup
+                            data={convertDataToOptions(TableOptionsData)}
+                            isSelected={true}
+                            onPopupClose={() => setSelectColumnsPopupOpen(false)}
+                        />}
+                </div>
+            </div>
             <div id={EXPERIMENT_EN.TITLES.RESULTS_DATA} ref={resultsDataRef}>
                 <ExperimentTable data={data} />
             </div>

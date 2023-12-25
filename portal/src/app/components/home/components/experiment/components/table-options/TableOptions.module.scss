@@ -1,0 +1,41 @@
+@import "src/styles/variables-keys";
+@import "src/styles/z-index";
+
+.table_options_wrapper {
+  display: flex;
+  align-items: flex-end;
+}
+
+.option_wrapper {
+  display: flex;
+  align-items: center;
+}
+
+.option_text {
+  color: var($attPurple);
+}
+
+.option_image {
+  margin-inline-start: auto;
+  margin-inline-end: 5px;
+  background-color: #F5F1FF;
+  inline-size: 34px;
+  block-size: 34px;
+  border-radius: 50%;
+}
+
+.default_image {
+  display: block;
+}
+
+.hover_image {
+  display: none;
+}
+
+.option_wrapper:hover .default_image {
+  display: none;
+}
+
+.option_wrapper:hover .hover_image {
+  display: block;
+}
