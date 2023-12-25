@@ -18,22 +18,22 @@ export const SelectColumnsPopup: React.FC<SelectColumnsPopupProps> = (props: Sel
   const [selectedColumns, setSelectedColumns] = useState<AttSelectOption>();
 
   return (
-    <div className={styles.select_columns_wrapper}>
+    <form className={styles.select_columns_wrapper} onSubmit={() => {}}>
       <div className={styles.popup_header}>
-        <label className={styles.form_title}>{SELECT_COLUMNS_EN.TITLE}</label>
+        <label htmlFor={props.data[0].label} className={styles.form_title}>{SELECT_COLUMNS_EN.TITLE}</label>
         <img className={styles.close_icon} src={CloseSvg} alt={CloseAriaLabel} onClick={props.onPopupClose} />
       </div>
       {props.data.map(item => (
         <div className={styles.input_option} key={item.label}>
+          <img src={props.isSelected ? CheckedSvg : UnCheckedSvg} />
           <input
             type='checkbox'
             id={item.value}
             className={styles.input_form_item}
             value={item.value} />
-          <img src={props.isSelected ? CheckedSvg : UnCheckedSvg} />
-          <label htmlFor={item.value}>{item.value}</label>
+          <label htmlFor={item.label}>{item.value}</label>
         </div>
       ))}
-    </div>
+    </form>
   );
 };

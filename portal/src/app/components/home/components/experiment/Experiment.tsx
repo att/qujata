@@ -36,8 +36,22 @@ export const ExperimentContent: React.FC<IExperimentData> = (props: IExperimentD
     const { isSpinnerOn }: ISpinner = useSpinnerContext();
     const resultsDataRef = useRef<HTMLDivElement>(null);
     const visualizationRef = useRef<HTMLDivElement>(null);
+    const tableOptionsRef = useRef<HTMLDivElement>(null);
     const { data } = props;
 
+    useEffect(() => {
+        function handleClickOutside(event: any) {
+          if (tableOptionsRef.current && !tableOptionsRef.current.contains(event.target)) {
+            setSelectColumnsPopupOpen(false);
+          }
+        }
+    
+        document.addEventListener("mousedown", handleClickOutside);
+        return () => {
+          document.removeEventListener("mousedown", handleClickOutside);
+        };
+      }, [tableOptionsRef]);
+    
     useEffect(() => {
         handleSectionScrolling(resultsDataRef, visualizationRef, setCurrentSection);
     }, []);
@@ -62,7 +76,7 @@ export const ExperimentContent: React.FC<IExperimentData> = (props: IExperimentD
             <SubHeader data={data} />
             <div className={styles.toggles_and_options_wrapper}>
                 <Toggles currentSection={currentSection} handleButtonClick={handleButtonClick} />
-                <div className={styles.table_options_wrapper}>
+                <div className={styles.table_options_wrapper} ref={tableOptionsRef}>
                 <TableOptions handleSelectColumnsClick={handleSelectColumnsClick} isPopupOpen={isSelectColumnsPopupOpen} />
                     {isSelectColumnsPopupOpen &&
                         <SelectColumnsPopup
