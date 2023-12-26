@@ -6,7 +6,7 @@ import requests
 from flask import Flask
 from config.settings import load_config
 from src.services.metrics_service import aggregate, __query_prometheus_avg_metric, __save_metric_to_db
-from src.models.test_run_result import TestRunResult
+from src.models.test_run_metric import TestRunMetric
 from src.enums.metric import Metric
 
 from src.utils.database_manager import DatabaseManager

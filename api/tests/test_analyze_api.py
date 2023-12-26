@@ -135,7 +135,7 @@ class TestAnalyzeAPI(unittest.TestCase):
             "experimentName": "name",
             "description": "name"
         }
-        self.app.database_manager.get_last_record.return_value = None
+        self.app.database_manager.get_latest.return_value = None
         response = self.client.post('/api/analyze',
                                 data=json.dumps(input_data),
                                 content_type='application/json')

@@ -1,6 +1,6 @@
 import requests
 from flask import current_app
-from src.models.test_run_result import TestRunResult
+from src.models.test_run_metric import TestRunMetric
 from src.enums.metric import Metric
 
 
@@ -62,12 +62,12 @@ def __save_metric_to_db(test_run_id, metric_name, metric_value, metric_type):
     elif metric_type == 'memory':
         metric_value = round(metric_value, 0)
 
-    test_run_result = TestRunResult(
+    test_run_metric = TestRunMetric(
         test_run_id=test_run_id,
         metric_name=metric_name,
         value=metric_value
     )
-    current_app.database_manager.create(test_run_result)
+    current_app.database_manager.create(test_run_metric)
 
 
 def aggregate(test_run):
@@ -82,18 +82,3 @@ def aggregate(test_run):
         avg_value = __query_prometheus_avg_metric(metric, service, test_run.start_time, test_run.end_time)
         if avg_value is not None:
             __save_metric_to_db(test_run.id, metric_name, avg_value, metric_type)
-
-
-def calculate_cpu_memory_avg(test_run_id):
-    test_run_results = current_app.database_manager.get_records(TestRunResult, [TestRunResult.test_run_id == test_run_id])
-
-    cpu_avg = 0.00
-    memory_avg = 0
-
-    for result in test_run_results:
-        if result.metric_name in (Metric.CLIENT_AVERAGE_CPU, Metric.SERVER_AVERAGE_CPU):
-            cpu_avg += result.value
-        elif result.metric_name in (Metric.CLIENT_AVERAGE_MEMORY, Metric.SERVER_AVERAGE_MEMORY):
-            memory_avg += result.value
-
-    return cpu_avg, memory_avg

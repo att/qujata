@@ -47,7 +47,7 @@ CREATE TABLE IF NOT EXISTS test_runs (
                            FOREIGN KEY (test_suite_id) REFERENCES test_suites(id) ON DELETE CASCADE
 );
 
-CREATE TABLE IF NOT EXISTS test_run_results (
+CREATE TABLE IF NOT EXISTS test_run_metrics (
                                   test_run_id INT,
                                   metric_name ENUM('server_avg_cpu', 'server_avg_memory', 'client_avg_cpu', 'client_avg_memory', 'error_rate', 'bytes_throughput_per_sec', 'msg_throughput_per_sec', 'avg_tls_handshake_time'),
                                   value DOUBLE,
@@ -55,4 +55,4 @@ CREATE TABLE IF NOT EXISTS test_run_results (
                                   FOREIGN KEY (test_run_id) REFERENCES test_runs(id) ON DELETE CASCADE
 );
 
-INSERT INTO env_info (resource_name, operating_system, cpu, cpu_architecture, cpu_cores, clock_speed, node_size) VALUES ('RELACE_WITH_RESOURCE_NAME', 'RELACE_WITH_OPERATING_SYSTEM', 'RELACE_WITH_CPU', 'RELACE_WITH_CPU_ARCHITECTURE', 0, 'RELACE_WITH_CLOCK_SPEED', 'RELACE_WITH_NODE_SIZE');
+INSERT INTO env_info (resource_name, operating_system, cpu, cpu_architecture, cpu_cores, clock_speed, node_size) VALUES ('REPLACE_WITH_RESOURCE_NAME', 'REPLACE_WITH_OPERATING_SYSTEM', 'REPLACE_WITH_CPU', 'REPLACE_WITH_CPU_ARCHITECTURE', 0, 'REPLACE_WITH_CLOCK_SPEED', 'REPLACE_WITH_NODE_SIZE');

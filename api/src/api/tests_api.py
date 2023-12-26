@@ -27,9 +27,9 @@ def get_test_suites():
 @api.route('/test_suites/<int:test_suite_id>', methods=['GET'])
 @cross_origin(origins=['*'], supports_credentials=True)
 def get_test_suite(test_suite_id):
-    response = tests_service.get_test_suite_results(test_suite_id)
-    if response is not None:
-        return jsonify(response), 200
+    test_suite_results = tests_service.get_test_suite_results(test_suite_id)
+    if test_suite_results is not None:
+        return jsonify(test_suite_results), 200
     else:
         return jsonify({'error': 'Not Found', 'message':'Test suite with id: ' + str(test_suite_id) +' not found'}), HTTP_STATUS_NOT_FOUND
         

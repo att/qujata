@@ -48,7 +48,7 @@ def __create_test_run(algorithm, iterations, test_suite_id):
     status, status_message = __run(algorithm, iterations)
     end_time=datetime.now()
     test_run = tests_service.create_test_run(start_time, end_time, algorithm, iterations, test_suite_id, status, status_message)
-    __save_test_run_result(test_run)
+    __save_test_run_metric(test_run)
 
 
 def __run(algorithm, iterations):
@@ -63,7 +63,7 @@ def __run(algorithm, iterations):
     return __validate_response(response, algorithm, iterations)
         
 
-def __save_test_run_result(test_run):
+def __save_test_run_metric(test_run):
     aggregate(test_run)
 
 
