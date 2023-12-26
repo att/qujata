@@ -55,7 +55,7 @@ describe('sections-scrolling utils', () => {
     const setCurrentSection = jest.fn();
     renderHook(() => handleSectionScrolling(mockRef, mockRef, setCurrentSection));
     if (callback)
-      callback([{ isIntersecting: true, target: { id: EXPERIMENT_EN.TITLES.RESULTS_DATA } } as any], {} as IntersectionObserver);
-    expect(setCurrentSection).toHaveBeenCalledWith(EXPERIMENT_EN.TITLES.RESULTS_DATA);
+      callback([{ isIntersecting: true, target: { id: EXPERIMENT_EN.TABS.RESULTS_DATA } } as any], {} as IntersectionObserver);
+    expect(setCurrentSection).toHaveBeenCalledWith(EXPERIMENT_EN.TABS.RESULTS_DATA);
   });
 });

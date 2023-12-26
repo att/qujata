@@ -8,7 +8,7 @@ import { FetchDataStatus } from '../../../../shared/hooks/useFetch';
 import { Spinner, SpinnerSize } from '../../../../shared/components/att-spinner';
 import { useEffect, useRef, useState } from 'react';
 import { EXPERIMENT_EN } from './translate/en';
-import { Toggles } from './components/toggles';
+import { ExperimentTabs } from './components/experiment-tabs';
 import { handleSectionScrolling } from './utils';
 import { ISpinner, useSpinnerContext } from '../../../../shared/context/spinner';
 
@@ -27,7 +27,7 @@ export const Experiment: React.FC = () => {
 }
 
 export const ExperimentContent: React.FC<IExperimentData> = (props: IExperimentData) => {
-    const [currentSection, setCurrentSection] = useState(EXPERIMENT_EN.TITLES.RESULTS_DATA);
+    const [currentSection, setCurrentSection] = useState(EXPERIMENT_EN.TABS.RESULTS_DATA);
     const { isSpinnerOn }: ISpinner = useSpinnerContext();
     const resultsDataRef = useRef<HTMLDivElement>(null);
     const visualizationRef = useRef<HTMLDivElement>(null);
@@ -40,9 +40,9 @@ export const ExperimentContent: React.FC<IExperimentData> = (props: IExperimentD
     const handleButtonClick = (section: string) => {
         setCurrentSection(section);
 
-        if (section === EXPERIMENT_EN.TITLES.RESULTS_DATA && resultsDataRef.current) {
+        if (section === EXPERIMENT_EN.TABS.RESULTS_DATA && resultsDataRef.current) {
             resultsDataRef.current.scrollIntoView({ behavior: 'smooth' });
-        } else if (section === EXPERIMENT_EN.TITLES.VISUALIZATION && visualizationRef.current) {
+        } else if (section === EXPERIMENT_EN.TABS.VISUALIZATION && visualizationRef.current) {
             visualizationRef.current.scrollIntoView({ behavior: 'smooth' });
         }
     };
@@ -51,11 +51,11 @@ export const ExperimentContent: React.FC<IExperimentData> = (props: IExperimentD
         <>
             {isSpinnerOn && renderSpinner()}
             <SubHeader data={data} />
-            <Toggles currentSection={currentSection} handleButtonClick={handleButtonClick} />
-            <div id={EXPERIMENT_EN.TITLES.RESULTS_DATA} ref={resultsDataRef}>
+            <ExperimentTabs currentSection={currentSection} handleButtonClick={handleButtonClick} />
+            <div id={EXPERIMENT_EN.TABS.RESULTS_DATA} ref={resultsDataRef}>
                 <ExperimentTable data={data} />
             </div>
-            <div id={EXPERIMENT_EN.TITLES.VISUALIZATION} ref={visualizationRef}>
+            <div id={EXPERIMENT_EN.TABS.VISUALIZATION} ref={visualizationRef}>
                 <Charts data={data} />
             </div>
         </>
