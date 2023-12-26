@@ -9,12 +9,10 @@ import UnCheckedSvg from '../../../../../../../../../assets/images/unchecked.svg
 import { Button, ButtonActionType, ButtonSize, ButtonStyleType } from '../../../../../../../../shared/components/att-button';
 
 const CloseAriaLabel: string = 'Close';
-const ResetAriaLabel: string = 'Reset to default';
 
 export interface SelectColumnsPopupProps {
   data: AttSelectOption[];
   onPopupClose: () => void;
-  isSelected: boolean;
 }
 
 export const SelectColumnsPopup: React.FC<SelectColumnsPopupProps> = (props: SelectColumnsPopupProps) => {
@@ -29,6 +27,12 @@ export const SelectColumnsPopup: React.FC<SelectColumnsPopupProps> = (props: Sel
       }
     });
   }, []);
+
+  const onSubmitSelectedColumns = useCallback((selectedColumns: AttSelectOption[]): void => {
+    props.onPopupClose();
+    // TODO: update the table with the selected columns
+
+  }, [props]);
 
   useEffect(() => {
     console.log('selectedColumns', selectedColumns);
@@ -61,20 +65,19 @@ export const SelectColumnsPopup: React.FC<SelectColumnsPopupProps> = (props: Sel
       <div className={styles.popup_footer}>
         <Button
           className={styles.reset_button}
-          ariaLabel={ResetAriaLabel}
+          actionType={ButtonActionType.RESET}
           size={ButtonSize.NONE}
           styleType={ButtonStyleType.WRAPPER}
-          actionType={ButtonActionType.RESET}
-          onButtonClick={() => {}}
+          onButtonClick={() => setSelectedColumns(props.data)}
         >
           {SELECT_COLUMNS_EN.RESET_TO_DEFAULT}
         </Button>
         <Button
           className={styles.run_button}
-          actionType={ButtonActionType.SUBMIT}
+          actionType={ButtonActionType.BUTTON}
           size={ButtonSize.SMALL}
           styleType={ButtonStyleType.PRIMARY}
-          onButtonClick={noop}
+          onButtonClick={() => onSubmitSelectedColumns(selectedColumns)}
         >
           {SELECT_COLUMNS_EN.SAVE}
         </Button>

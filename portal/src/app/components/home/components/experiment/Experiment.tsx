@@ -84,7 +84,6 @@ export const ExperimentContent: React.FC<IExperimentData> = (props: IExperimentD
                         {isSelectColumnsPopupOpen &&
                             <SelectColumnsPopup
                                 data={convertDataToOptions(TableOptionsData)}
-                                isSelected={true} // TODO: make this work with the actual selected columns
                                 onPopupClose={() => setSelectColumnsPopupOpen(false)}
                             />}
                 </div>
