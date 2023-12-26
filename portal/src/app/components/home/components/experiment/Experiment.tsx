@@ -40,17 +40,17 @@ export const ExperimentContent: React.FC<IExperimentData> = (props: IExperimentD
     const { data } = props;
 
     useEffect(() => {
-        function handleClickOutside(event: any) {
-          if (tableOptionsRef.current && !tableOptionsRef.current.contains(event.target)) {
+        const handleClickOutside = (event: Event) => {
+          if (tableOptionsRef.current && !tableOptionsRef.current.contains((event.target as Node))) {
             setSelectColumnsPopupOpen(false);
           }
         }
     
-        document.addEventListener("mousedown", handleClickOutside);
+        document.addEventListener('mousedown', handleClickOutside);
         return () => {
-          document.removeEventListener("mousedown", handleClickOutside);
+          document.removeEventListener('mousedown', handleClickOutside);
         };
-      }, [tableOptionsRef]);
+    }, [tableOptionsRef]);
     
     useEffect(() => {
         handleSectionScrolling(resultsDataRef, visualizationRef, setCurrentSection);
@@ -77,13 +77,16 @@ export const ExperimentContent: React.FC<IExperimentData> = (props: IExperimentD
             <div className={styles.toggles_and_options_wrapper}>
                 <ExperimentTabs currentSection={currentSection} handleButtonClick={handleButtonClick} />
                 <div className={styles.table_options_wrapper} ref={tableOptionsRef}>
-                <TableOptions handleSelectColumnsClick={handleSelectColumnsClick} isPopupOpen={isSelectColumnsPopupOpen} />
-                    {isSelectColumnsPopupOpen &&
-                        <SelectColumnsPopup
-                            data={convertDataToOptions(TableOptionsData)}
-                            isSelected={true}
-                            onPopupClose={() => setSelectColumnsPopupOpen(false)}
-                        />}
+                    <TableOptions
+                        handleSelectColumnsClick={handleSelectColumnsClick}
+                        isPopupOpen={isSelectColumnsPopupOpen}
+                    />
+                        {isSelectColumnsPopupOpen &&
+                            <SelectColumnsPopup
+                                data={convertDataToOptions(TableOptionsData)}
+                                isSelected={true} // TODO: make this work with the actual selected columns
+                                onPopupClose={() => setSelectColumnsPopupOpen(false)}
+                            />}
                 </div>
             </div>
             <div id={EXPERIMENT_EN.TABS.RESULTS_DATA} ref={resultsDataRef}>
