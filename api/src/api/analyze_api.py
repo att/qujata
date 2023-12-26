@@ -2,7 +2,6 @@ import os
 import uuid
 import json
 import time
-import requests
 import logging
 
 from datetime import datetime, timedelta
