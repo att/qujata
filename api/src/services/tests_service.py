@@ -74,6 +74,8 @@ def get_test_run(test_suite_id, test_run_id):
 
 def get_test_suite_results(test_suite_id):
     test_suite = get_test_suite(test_suite_id)
+    if test_suite is None:
+        return None
     return test_suite_serializer.serialize(test_suite)
 
 def delete_test_suite(test_suite_id):

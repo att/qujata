@@ -3,21 +3,18 @@ import logging
 from src.enums.metric import Metric
 
 def serialize(test_suite):
-    try:
-        response_data = {
-            "id": test_suite.id,
-            "name": test_suite.name,
-            "description": test_suite.description,
-            "codeRelease": test_suite.code_release,
-            "start_time": test_suite.start_time,
-            "end_time": test_suite.end_time,
-            "environment_info": __get_environment_info(test_suite.env_info),
-            "testRuns": __get_test_runs_metrics(test_suite.test_runs)
-        }
-        return response_data
-    except Exception as e:
-        logging.error(f"Error serializing test suite: {e}")
-        return None
+    response_data = {
+        "id": test_suite.id,
+        "name": test_suite.name,
+        "description": test_suite.description,
+        "codeRelease": test_suite.code_release,
+        "start_time": test_suite.start_time,
+        "end_time": test_suite.end_time,
+        "environment_info": __get_environment_info(test_suite.env_info),
+        "testRuns": __get_test_runs_metrics(test_suite.test_runs)
+    }
+    return response_data
+
 
 def __get_environment_info(env_info):
     return {
