@@ -1,6 +1,6 @@
 import { render, waitFor, act, fireEvent } from '@testing-library/react';
 import { SubHeader } from './SubHeader';
-import { MOCK_SUB_HEADER } from '../__mocks__';
+import { MOCK_SUB_HEADER } from '../__mocks__/mocks';
 import { FetchDataStatus, useFetch } from '../../../../../../shared/hooks/useFetch';
 import { Button } from '../../../../../../shared/components/att-button';
 import { EditExperimentModal } from '../edit-experiment-modal';

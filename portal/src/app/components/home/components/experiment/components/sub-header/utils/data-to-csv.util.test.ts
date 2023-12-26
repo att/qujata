@@ -1,5 +1,5 @@
 import { CsvDataType } from '../../../../../../../utils/download';
-import { CSV_MOCK } from '../../__mocks__';
+import { CSV_MOCK } from '../../__mocks__/mocks';
 import { mapExperimentDataToCsvDataType } from './data-to-csv.util';
 
 describe('mapExperimentDataToCsvDataType', () => {
