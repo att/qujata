@@ -2,7 +2,6 @@ import unittest
 from datetime import datetime
 import json
 
-import requests
 from flask import Flask, jsonify
 from unittest.mock import Mock, MagicMock, patch
 
@@ -14,9 +13,6 @@ from src.models.test_run import TestRun
 from src.models.test_run_metric import TestRunMetric
 from src.models.env_info import EnvInfo
 from src.enums.metric import Metric
-
-import logging
-
 
 class TestTestsAPI(unittest.TestCase):
     def setUp(self):
@@ -64,9 +60,7 @@ class TestTestsAPI(unittest.TestCase):
         self.assertEqual(len(result), 1)
 
     def test_get_test_suite(self):
-        env_info =  self.__env_info()
         test_suite =  self.__test_suite()
-        test_run_metrics =  self.__test_run_metrics()
         self.app.database_manager.get_by_id.return_value = test_suite
         response = self.client.get('/api/test_suites/1')
         result = json.loads(response.data)
@@ -81,9 +75,7 @@ class TestTestsAPI(unittest.TestCase):
         self.assertEqual(response.status_code, 404)
 
     def test_update_test_suite(self):
-        env_info =  self.__env_info()
         test_suite =  self.__test_suite()
-        test_run_metrics =  self.__test_run_metrics()
         self.app.database_manager.get_by_id.return_value = test_suite
         input_data = {"name": "new name", "description": "new description"}
         response = self.client.put('/api/test_suites/1', data=json.dumps(input_data), content_type='application/json')
@@ -92,22 +84,15 @@ class TestTestsAPI(unittest.TestCase):
         self.assertEqual(result['description'], 'new description')
         self.assertEqual(self.app.database_manager.update.call_count, 1)
 
-    def test_update_test_suite_bad_request(self):
-        env_info =  self.__env_info()
-        test_suite =  self.__test_suite()
-        test_run_metrics =  self.__test_run_metrics()
-        self.app.database_manager.get_by_id.return_value = test_suite
-        input_data = {"name": "new name", "description": "new description"}
+    def test_update_test_suite_request_missing_properties(self):
+        input_data = {"name": "new name"}
         response = self.client.put('/api/test_suites/1', data=json.dumps(input_data), content_type='application/json')
         result = json.loads(response.data)
-        self.assertEqual(result['name'], 'new name')
-        self.assertEqual(result['description'], 'new description')
-        self.assertEqual(self.app.database_manager.update.call_count, 1)
+        self.assertEqual(response.status_code, 400)
+        self.assertEqual(result, {'error': 'Invalid data provided', 'message': 'Missing properties, required properties: name, description'})
+        self.assertEqual(self.app.database_manager.update.call_count, 0)
 
     def test_update_test_suite_return_not_found(self):
-        env_info =  self.__env_info()
-        test_suite =  self.__test_suite()
-        test_run_metrics =  self.__test_run_metrics()
         self.app.database_manager.get_by_id.return_value = None
         input_data = {"name": "new name", "description": "new description"}
         response = self.client.put('/api/test_suites/1', data=json.dumps(input_data), content_type='application/json')
@@ -117,18 +102,13 @@ class TestTestsAPI(unittest.TestCase):
         self.assertEqual(self.app.database_manager.update.call_count, 0)
     
     def test_delete_test_suite(self):
-        env_info =  self.__env_info()
         test_suite =  self.__test_suite()
-        test_run_metrics =  self.__test_run_metrics()
         self.app.database_manager.get_by_id.return_value = test_suite
         response = self.client.delete('/api/test_suites/1')
         self.assertEqual(response.status_code, 204)
         self.assertEqual(self.app.database_manager.delete.call_count, 1)
 
     def test_delete_test_suite_return_not_found(self):
-        env_info =  self.__env_info()
-        test_suite =  self.__test_suite()
-        test_run_metrics =  self.__test_run_metrics()
         self.app.database_manager.get_by_id.return_value = None
         response = self.client.delete('/api/test_suites/1')
         result = json.loads(response.data)
