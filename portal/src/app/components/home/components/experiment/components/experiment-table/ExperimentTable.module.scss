@@ -11,13 +11,13 @@
   table {
     border-spacing: 0;
     border: 1px solid var($backgroundColorGray);
-    width: 100%;
+    inline-size: 100%;
     table-layout: fixed;
   }
 
   th:first-child,
   td:first-child {
-    width: 80px;
+    inline-size: 80px;
   }
 }
 
@@ -32,7 +32,7 @@
   
   td {
     padding: 16px;
-    border-bottom: 1px solid var($backgroundColorGray);
+    margin-block-end: 1px solid var($backgroundColorGray);
     text-align: center;
     vertical-align: middle;
   }

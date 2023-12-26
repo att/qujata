@@ -1,6 +1,10 @@
 import { useMemo } from 'react';
 import styles from './ExperimentTable.module.scss';
 import {
+  Cell,
+  Header,
+  HeaderGroup,
+  Row,
   createColumnHelper,
   flexRender,
   getCoreRowModel,
@@ -53,9 +57,9 @@ export const ExperimentTable: React.FC<IExperimentData> = (props: IExperimentDat
     <div className={styles.experiment_table_wrapper}>
       <table className={styles.experiment_table}>
         <thead>
-          {table.getHeaderGroups().map(headerGroup => (
+          {table.getHeaderGroups().map((headerGroup: HeaderGroup<ITestRunResultData>) => (
             <tr key={headerGroup.id}>
-              {headerGroup.headers.map(header => (
+              {headerGroup.headers.map((header: Header<ITestRunResultData, unknown>) => (
                 <th key={header.id} className={styles.experiment_table_titles}>
                   {flexRender(header.column.columnDef.header,header.getContext())}
                 </th>
@@ -64,9 +68,9 @@ export const ExperimentTable: React.FC<IExperimentData> = (props: IExperimentDat
           ))}
         </thead>
         <tbody className={styles.experiment_table_content}>
-          {table.getRowModel().rows.map(row => (
+          {table.getRowModel().rows.map((row: Row<ITestRunResultData>) => (
             <tr key={row.id}>
-              {row.getVisibleCells().map(cell => (
+              {row.getVisibleCells().map((cell: Cell<ITestRunResultData, unknown>) => (
                 <td key={cell.id} className={styles.experiment_table_cell}>
                   {flexRender(cell.column.columnDef.cell, cell.getContext())}
                 </td>

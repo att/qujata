@@ -1,10 +1,10 @@
 @import "src/styles/variables-keys";
 
-.toggle_button_wrapper {
+.experiment_tab_button_wrapper {
   display: contents;
 }
 
-.toggle_button {
+.experiment_tab_button {
   color: var($attPurple);
   font-size: 16px;
   margin-block-start: 30px;
@@ -18,7 +18,7 @@
   &:after {
     content: "";
     display: block;
-    height: 3px;
+    block-size: 3px;
     background-color: var($attPurple);
     transform: scaleX(0);
     transition: transform 0.3s ease-in-out;
