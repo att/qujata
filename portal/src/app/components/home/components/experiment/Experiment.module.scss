@@ -1,3 +1,21 @@
 .experiment_wrapper {
     padding: 40px;
 }
+
+.spinner_wrapper {
+    position: sticky;
+    top: 50%;
+    left: 50%;
+    text-align: center;   
+}
+
+.spinner_overlay {
+    inline-size: 100%;
+    block-size: 100%;
+    position: absolute;
+    background-color: #fff;
+    opacity: 0.6;
+    top: 0;
+    left: 0;
+    z-index: 4;
+}

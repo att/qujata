@@ -1,0 +1,39 @@
+@import "src/styles/variables-keys";
+@import "src/styles/z-index";
+
+.experiment_table_wrapper {
+  font-size: 14px;
+  margin-block-start: 30px;
+  margin-block-end: 50px;
+  display: flex;
+  flex-wrap: wrap;
+
+  table {
+    border-spacing: 0;
+    border: 1px solid var($backgroundColorGray);
+    inline-size: 100%;
+    table-layout: fixed;
+  }
+
+  th:first-child,
+  td:first-child {
+    inline-size: 80px;
+  }
+}
+
+.experiment_table_titles {
+  padding: 16px;
+  background-color: var($attPurple);
+  color: var($backgroundColorWhite);
+}
+
+.experiment_table_content {
+  background-color: var($backgroundColorWhite);
+  
+  td {
+    padding: 16px;
+    margin-block-end: 1px solid var($backgroundColorGray);
+    text-align: center;
+    vertical-align: middle;
+  }
+}

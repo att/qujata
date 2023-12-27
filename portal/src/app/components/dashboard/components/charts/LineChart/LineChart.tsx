@@ -17,7 +17,20 @@ export const LineChart: React.FC<LineChartProps> = (props: LineChartProps) => {
       plugins: {
         title: {
           display: true,
-          text: title
+          text: title,
+          font: {
+            size: 16,
+            weight: '500',
+          },
+        },
+        legend: {
+          position: 'top',
+          labels: {
+              padding: 60,
+              font: {
+                size: 16,
+              },
+          },
         },
         tooltip: {
           displayColors: false,
@@ -33,7 +46,7 @@ export const LineChart: React.FC<LineChartProps> = (props: LineChartProps) => {
       }
     };
 
-    return  <Line data={data} options={options} style={{ width: '500px', height: '400px' }} className={styles.line_chart} />;
+    return  <Line data={data} options={options} style={{ height: '450px' }} className={styles.line_chart} />;
 }
 
 export function generateTooltipTitle(tooltipItem: TooltipItem<'line'>) {

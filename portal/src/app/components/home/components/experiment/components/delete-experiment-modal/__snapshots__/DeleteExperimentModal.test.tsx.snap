@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`EditExperimentModal renders edit Experiment modal correctly 1`] = `
+<div
+  data-react-modal-body-trap=""
+  style="position: absolute; opacity: 0;"
+  tabindex="0"
+/>
+`;

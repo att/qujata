@@ -1,0 +1,47 @@
+.form_wrapper {
+    display: flex;
+    flex-direction: column;
+}
+
+.required_input {
+    &:after {
+        content: "*";
+        color: red;
+    }
+}
+
+.label {
+    font-size: 16px;
+    margin-block-end: 8px;
+}
+
+.name_input {
+    margin-block-end: 20px;
+}
+
+.form_input {
+    border-radius: 20px;
+    border: 1px solid #DCDFE3;
+    color: #1D2329;
+
+    &:focus {
+        outline: none;
+    }
+}
+
+.form_input_name {
+    padding: 1px 6px 1px 22px;
+    block-size: 40px;
+    inline-size: 240px;
+}
+
+.form_input_description {
+    inline-size: 600px;
+    resize: none;
+    padding: 12px 6px 12px 22px;
+}
+
+.submit_button {
+    inline-size: 150px;
+    block-size: 50px;
+}
