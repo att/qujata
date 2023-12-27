@@ -19,7 +19,7 @@ exports[`ProtocolQuery should render ProtocolQuery 1`] = `
         Note:
       </span>
       <p>
-        For each experiment you can select or type in one or more algorithms, number of iterations and message sizes
+        For each experiment you can select or type in one or more algorithms and number of iterations
       </p>
     </div>
   </div>

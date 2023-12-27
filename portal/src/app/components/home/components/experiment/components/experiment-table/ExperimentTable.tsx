@@ -24,13 +24,13 @@ const headers: TableColumn[] = [
     cell: info => <span>{info.getValue() as ReactNode}</span>
   },
   {
-    id: 'results.averageCPU',
+    id: 'averageCPU',
     header: () => <span>{EXPERIMENT_TABLE_EN.TABLE_TITLES.AVERAGE_CPU}</span>,
     accessor: row => row.results.averageCPU,
     cell: info => <span>{info.getValue() as ReactNode}</span>
   },
   {
-    id: 'results.averageMemory',
+    id: 'averageMemory',
     header: () => <span>{EXPERIMENT_TABLE_EN.TABLE_TITLES.AVERAGE_MEMORY}</span>,
     accessor: row => row.results.averageMemory,
     cell: info => <span>{info.getValue() as ReactNode}</span>
