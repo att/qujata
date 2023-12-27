@@ -1,7 +1,7 @@
 # Choose a Node.js base image
 ARG NODE_VERSION=18.17.1
 
-FROM node:${NODE_VERSION}-alpine as node
+FROM node:${NODE_VERSION}-alpine AS node
 
 # Set working directory
 WORKDIR /user/src/app

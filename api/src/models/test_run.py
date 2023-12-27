@@ -1,4 +1,4 @@
-from sqlalchemy import create_engine, Column, Integer, String, Date, Enum, ForeignKey
+from sqlalchemy import create_engine, Column, Integer, String, Date, Enum, ForeignKey, TIMESTAMP
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker, relationship
 from src.enums.status import Status
@@ -7,8 +7,8 @@ from .base import Base
 class TestRun(Base):
     __tablename__ = 'test_runs'
     id = Column(Integer, primary_key=True, autoincrement=True)
-    start_time = Column(String)
-    end_time = Column(String)
+    start_time = Column(TIMESTAMP)
+    end_time = Column(TIMESTAMP)
     algorithm = Column(String)
     iterations = Column(Integer)
     message_size = Column(Integer)
@@ -16,6 +16,7 @@ class TestRun(Base):
     status_message = Column(String)
     test_suite_id = Column(Integer, ForeignKey('test_suites.id'))
     test_suite = relationship('TestSuite', back_populates='test_runs')
+    test_run_metrics = relationship('TestRunMetric', back_populates='test_run', cascade="all, delete-orphan")
 
   
     def to_dict(self):
