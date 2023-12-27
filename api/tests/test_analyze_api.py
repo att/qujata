@@ -31,19 +31,22 @@ class TestAnalyzeAPI(unittest.TestCase):
         }
         # Mock the requests.post call
         with patch('requests.post') as mock_post:
-            mock_post.return_value = MagicMock(status_code=200, json=lambda: {'result': 'success'})
+            with patch('requests.get') as mock_get:
+                mock_get.return_value.status_code = 200
+                mock_get.return_value.json.return_value = {}
+                mock_post.return_value = MagicMock(status_code=200, json=lambda: {'result': 'success'})
 
-            response = self.client.post('/api/analyze',
-                                    data=json.dumps(input_data),
-                                    content_type='application/json')
+                response = self.client.post('/api/analyze',
+                                        data=json.dumps(input_data),
+                                        content_type='application/json')
 
-           
-            self.assertEqual(self.app.database_manager.create.call_count, 11)# 1 for the test suite, and 2 for test runs and 4*2(8) for test run results
-           
-            self.assertEqual(response.status_code, 200)
-            # Check the response content
-            response_data = json.loads(response.data)
-            self.assertIn('test_suite_id', response_data)
+            
+                self.assertEqual(self.app.database_manager.create.call_count, 11)# 1 for the test suite, and 2 for test runs and 4*2(8) for test run results
+            
+                self.assertEqual(response.status_code, 200)
+                # Check the response content
+                response_data = json.loads(response.data)
+                self.assertIn('test_suite_id', response_data)
 
     def test_analyze_return_general_error(self):
         input_data = {
@@ -54,14 +57,16 @@ class TestAnalyzeAPI(unittest.TestCase):
 
         }
         # Mock the requests.post call to raise an exception
-        with patch('requests.post', side_effect=requests.exceptions.RequestException("Mocked exception")) as mock_post:
-            response = self.client.post('/api/analyze',
-                                    data=json.dumps(input_data),
-                                    content_type='application/json')
-            self.assertEqual(response.status_code, 500)
-            response_json = json.loads(response.data)
-            self.assertEqual(response_json["error"], "An error occurred while processing the request")
-            self.assertEqual(response_json["message"], "")
+        with patch('requests.get') as mock_get:
+            mock_get.return_value.status_code = 200
+            with patch('requests.post', side_effect=requests.exceptions.RequestException("Mocked exception")) as mock_post:
+                response = self.client.post('/api/analyze',
+                                        data=json.dumps(input_data),
+                                        content_type='application/json')
+                self.assertEqual(response.status_code, 500)
+                response_json = json.loads(response.data)
+                self.assertEqual(response_json["error"], "An error occurred while processing the request")
+                self.assertEqual(response_json["message"], "")
 
     def test_analyze_with_invalid_iterations_count(self):
         input_data = {
@@ -95,7 +100,7 @@ class TestAnalyzeAPI(unittest.TestCase):
         self.assertEqual(response_json["message"], "Algorithm \"invalid_algorithm\" is not supported")
 
    
-    def test_analyze_with_invalid_body(self):   
+    def test_analyze_with_invalid_body(self):  
         input_data = {
             "iterationsCount": 1000,
             "experimentName": "name",
@@ -118,14 +123,16 @@ class TestAnalyzeAPI(unittest.TestCase):
         }
         # Mock the requests.post call
         with patch('requests.post') as mock_post:
-            mock_post.return_value = MagicMock(status_code=423, json=lambda: {'result': 'failed'})
-            response = self.client.post('/api/analyze',
-                                    data=json.dumps(input_data),
-                                    content_type='application/json')
-            self.assertEqual(response.status_code, 200)
-            actual_test_run = self.app.database_manager.create.call_args_list[1].args
-            self.assertEqual(actual_test_run[0].status, Status.FAILED)
-            self.assertEqual(actual_test_run[0].status_message, '{"result": "failed"}')
+            with patch('requests.get') as mock_get:
+                mock_get.return_value.status_code = 200
+                mock_post.return_value = MagicMock(status_code=423, json=lambda: {'result': 'failed'})
+                response = self.client.post('/api/analyze',
+                                        data=json.dumps(input_data),
+                                        content_type='application/json')
+                self.assertEqual(response.status_code, 200)
+                actual_test_run = self.app.database_manager.create.call_args_list[1].args
+                self.assertEqual(actual_test_run[0].status, Status.FAILED)
+                self.assertEqual(actual_test_run[0].status_message, '{"result": "failed"}')
 
 
     def test_analyze_with_missing_env_info(self):
@@ -146,23 +153,25 @@ class TestAnalyzeAPI(unittest.TestCase):
 
 
     def test_analyze_with_423(self):
-        # global process_is_running
-        input_data = {
-            "algorithms":["kyber512"],
-            "iterationsCount": [1000],
-            "experimentName": "name",
-            "description": "name"
-        }
-        src.api.analyze_api.process_is_running = True
-        # Mock the requests.post call
-        response = self.client.post('/api/analyze',
-                                    data=json.dumps(input_data),
-                                    content_type='application/json')
+        with patch('requests.get') as mock_get:
+            mock_get.return_value.status_code = 200
+            # global process_is_running
+            input_data = {
+                "algorithms":["kyber512"],
+                "iterationsCount": [1000],
+                "experimentName": "name",
+                "description": "name"
+            }
+            src.api.analyze_api.process_is_running = True
+            # Mock the requests.post call
+            response = self.client.post('/api/analyze',
+                                        data=json.dumps(input_data),
+                                        content_type='application/json')
 
-        self.assertEqual(response.status_code, 423)
-        response_json = json.loads(response.data)
-        self.assertEqual(response_json["error"], "Current test is still running")
-        src.api.analyze_api.process_is_running = False
+            self.assertEqual(response.status_code, 423)
+            response_json = json.loads(response.data)
+            self.assertEqual(response_json["error"], "Current test is still running")
+            src.api.analyze_api.process_is_running = False
 
     def test_analyze_sleep_between_tests(self):
         input_data = {
@@ -171,20 +180,21 @@ class TestAnalyzeAPI(unittest.TestCase):
             "experimentName": "name",
             "description": "name"
         }
-        # Mock the requests.post call
-        with patch('requests.post') as mock_post:
-            mock_post.return_value = MagicMock(status_code=200, json=lambda: {'result': 'success'})
-            timestamp1 = datetime.now()
+        with patch('requests.get') as mock_get:
+            mock_get.return_value.status_code = 200
+            with patch('requests.post') as mock_post:
+                mock_post.return_value = MagicMock(status_code=200, json=lambda: {'result': 'success'})
+                timestamp1 = datetime.now()
 
-            response = self.client.post('/api/analyze',
-                                    data=json.dumps(input_data),
-                                    content_type='application/json')
+                response = self.client.post('/api/analyze',
+                                        data=json.dumps(input_data),
+                                        content_type='application/json')
 
-            timestamp2 = datetime.now()
-            time_difference = timestamp2 - timestamp1
+                timestamp2 = datetime.now()
+                time_difference = timestamp2 - timestamp1
 
-            self.assertEqual(response.status_code, 200)
-            self.assertGreaterEqual(time_difference.seconds, 15)
+                self.assertEqual(response.status_code, 200)
+                self.assertGreaterEqual(time_difference.seconds, 15)
 
 
 if __name__ == '__main__':
