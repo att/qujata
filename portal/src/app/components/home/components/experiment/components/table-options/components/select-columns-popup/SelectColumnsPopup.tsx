@@ -1,5 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
-import { noop } from 'lodash';
+import { useCallback, useState } from 'react';
 import { AttSelectOption } from '../../../../../../../../shared/components/att-select';
 import styles from './SelectColumnsPopup.module.scss';
 import { SELECT_COLUMNS_EN } from './translate/en';
@@ -13,6 +12,7 @@ const CloseAriaLabel: string = 'Close';
 export interface SelectColumnsPopupProps {
   data: AttSelectOption[];
   onPopupClose: () => void;
+  onColumnsSelected: (selectedColumns: AttSelectOption[]) => void;
 }
 
 export const SelectColumnsPopup: React.FC<SelectColumnsPopupProps> = (props: SelectColumnsPopupProps) => {
@@ -28,15 +28,10 @@ export const SelectColumnsPopup: React.FC<SelectColumnsPopupProps> = (props: Sel
     });
   }, []);
 
-  const onSubmitSelectedColumns = useCallback((selectedColumns: AttSelectOption[]): void => {
+  const handleSaveClick = useCallback((): void => {
     props.onPopupClose();
-    // TODO: update the table with the selected columns
-
-  }, [props]);
-
-  useEffect(() => {
-    console.log('selectedColumns', selectedColumns);
-  }, [selectedColumns]);
+    props.onColumnsSelected(selectedColumns);
+  }, [props, selectedColumns]);
 
   return (
     <form className={styles.select_columns_wrapper} onSubmit={() => {}}>
@@ -77,7 +72,7 @@ export const SelectColumnsPopup: React.FC<SelectColumnsPopupProps> = (props: Sel
           actionType={ButtonActionType.BUTTON}
           size={ButtonSize.SMALL}
           styleType={ButtonStyleType.PRIMARY}
-          onButtonClick={() => onSubmitSelectedColumns(selectedColumns)}
+          onButtonClick={handleSaveClick}
         >
           {SELECT_COLUMNS_EN.SAVE}
         </Button>

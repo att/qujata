@@ -7,3 +7,9 @@ export const TableOptionsData = {
     EXPERIMENT_TABLE_EN.TABLE_TITLES.AVERAGE_MEMORY,
   ]
 };
+
+export const SelectedColumnsDefaultData = [
+  { value: 'iterations', label: EXPERIMENT_TABLE_EN.TABLE_TITLES.ITERATIONS },
+  { value: 'results.averageCPU', label: EXPERIMENT_TABLE_EN.TABLE_TITLES.AVERAGE_CPU },
+  { value: 'results.averageMemory', label: EXPERIMENT_TABLE_EN.TABLE_TITLES.AVERAGE_MEMORY }
+];
