@@ -3,13 +3,11 @@ from flask import current_app
 from src.models.test_run_metric import TestRunMetric
 from src.enums.metric import Metric
 
-
-
 def __query_prometheus_avg_metric(metric, service, start_time, end_time):
     if current_app.configurations.environment == 'docker':
         metric_expr = f'{metric}{{name="{service}"}}'
     elif current_app.configurations.environment == 'kubernetes':
-        metric_expr = f'{metric}{{pod=~"{service}.*"}}'
+        metric_expr = f'{metric}{{container_label_io_kubernetes_pod_name=~"{service}.*"}}'
     else:
         print("Unsupported environment")
         return None
