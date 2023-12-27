@@ -9,12 +9,16 @@ from flask import jsonify, current_app
 from src.models.env_info import EnvInfo
 from src.models.test_suite import TestSuite
 from src.models.test_run import TestRun
-from src.exceptions.exceptions import ApiException
+from src.exceptions.exceptions import ApiException, NotFoundException
+import src.utils.test_suite_serializer as test_suite_serializer
+
+# constants
+HTTP_STATUS_UNPROCESSABLE_ENTITY = 422
 
 def create_test_suite(data):
-    env_info = current_app.database_manager.get_last_record(EnvInfo)
-    if env_info == None:
-        raise ApiException('Missing env info in database', 'Analyze test failed to complete', 422)
+    env_info = current_app.database_manager.get_latest(EnvInfo)
+    if env_info is None:
+        raise ApiException('Missing env info in database', 'Analyze test failed to complete', HTTP_STATUS_UNPROCESSABLE_ENTITY)
 
     test_suite = TestSuite(
         protocol=current_app.configurations.protocol,
@@ -27,7 +31,7 @@ def create_test_suite(data):
         updated_by="",
         updated_date=datetime.now(),
     )    
-    current_app.database_manager.add_to_db(test_suite)
+    current_app.database_manager.create(test_suite)
     return test_suite
 
 def create_test_run(start_time, end_time, algorithm, iterations, test_suite_id, status, status_message):
@@ -41,21 +45,41 @@ def create_test_run(start_time, end_time, algorithm, iterations, test_suite_id, 
         # message_size=1024,
         test_suite_id=test_suite_id
     )    
-    current_app.database_manager.add_to_db(test_run)
+    current_app.database_manager.create(test_run)
     return test_run
 
+def update_test_suite(test_suite):
+    return current_app.database_manager.update(test_suite)
 
+def update_test_suite_name_and_description(test_suite_id, name, description):
+    test_suite = get_test_suite(test_suite_id)
+    if test_suite is None:
+        raise NotFoundException('Test suite with id: ' + str(test_suite_id) +' not found', 'Not Found')
+    test_suite.name = name
+    test_suite.description = description
+    current_app.database_manager.update(test_suite)
+    return test_suite
 
 def get_test_suites():
-    return current_app.database_manager.get_records(TestSuite)
+    return current_app.database_manager.list(TestSuite)
 
 def get_test_suite(test_suite_id):
-    return current_app.database_manager.get_record_by_id(TestSuite, test_suite_id)
+    return current_app.database_manager.get_by_id(TestSuite, test_suite_id)
 
 def get_test_runs(test_suite_id):
-    return current_app.database_manager.get_records(TestRun, [TestRun.test_suite_id == test_suite_id])
+    return current_app.database_manager.list(TestRun, [TestRun.test_suite_id == test_suite_id])
 
 def get_test_run(test_suite_id, test_run_id):
-    return current_app.database_manager.get_record(TestRun, [TestRun.id == test_run_id, TestRun.test_suite_id == test_suite_id])
-    
+    return current_app.database_manager.get(TestRun, [TestRun.id == test_run_id, TestRun.test_suite_id == test_suite_id])
 
+def get_test_suite_results(test_suite_id):
+    test_suite = get_test_suite(test_suite_id)
+    if test_suite is None:
+        return None
+    return test_suite_serializer.serialize(test_suite)
+
+def delete_test_suite(test_suite_id):
+    test_suite = get_test_suite(test_suite_id)
+    if test_suite is None:
+        raise NotFoundException('Test suite with id: ' + str(test_suite_id) +' not found', 'Not Found')
+    current_app.database_manager.delete(test_suite)

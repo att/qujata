@@ -5,9 +5,9 @@ export const APIS: { [key in keyof typeof API_URLS]: string } = {
   analyze: 'analyze',
   algorithms: 'algorithms',
   iterations: 'iterations',
-  testRunResults: `${prefix}/${testSuites}/:testSuiteId`,
-  editExperiment: `${prefix}/${testSuites}/:testSuiteId`,
-  deleteExperiment: `${prefix}/${testSuites}/:testSuiteId`,
+  testRunResults: `${testSuites}/:testSuiteId`,
+  editExperiment: `${testSuites}/:testSuiteId`,
+  deleteExperiment: `${testSuites}/:testSuiteId`,
 };
 
 enum API_URLS {

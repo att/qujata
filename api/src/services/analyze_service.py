@@ -13,6 +13,7 @@ from src.models.test_suite import TestSuite
 from src.models.test_run import TestRun
 from src.enums.status import Status
 from src.exceptions.exceptions import ApiException
+from src.services.metrics_service import aggregate
 
 # constants
 WAIT_MS = 15
@@ -34,17 +35,21 @@ def analyze(data):
 
     # end time is now + 90 sec, to show the graph after the test for sure finished running
     end_time = int(datetime.timestamp(datetime.now() + timedelta(seconds=90)) * 1000)
+    
+    test_suite.start_time = start_time
+    test_suite.end_time = end_time
+    tests_service.update_test_suite(test_suite)
 
-    return jsonify({
-        'from': start_time,
-        'to': end_time
-    })
+    return jsonify({'test_suite_id': test_suite.id})
+
 
 def __create_test_run(algorithm, iterations, test_suite_id):
     start_time=datetime.now()
     status, status_message = __run(algorithm, iterations)
     end_time=datetime.now()
-    tests_service.create_test_run(start_time, end_time, algorithm, iterations, test_suite_id, status, status_message)
+    test_run = tests_service.create_test_run(start_time, end_time, algorithm, iterations, test_suite_id, status, status_message)
+    __save_test_run_metric(test_run)
+
 
 def __run(algorithm, iterations):
     logging.debug('Running test for algorithm: %s ', algorithm)
@@ -57,6 +62,9 @@ def __run(algorithm, iterations):
 
     return __validate_response(response)
         
+
+def __save_test_run_metric(test_run):
+    aggregate(test_run)
 
 
 def __validate_response(response):
