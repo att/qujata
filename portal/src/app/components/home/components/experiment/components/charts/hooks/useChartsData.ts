@@ -42,7 +42,7 @@ function processedLineChartData(data: ITestRunResultData[], keysOfData: string[]
             return acc;
         }, {});
             return {
-                label: algorithm,
+                label: `${algorithm}       `,
                 data: data,
                 fill: false,
                 backgroundColor: colors[index % colors.length],

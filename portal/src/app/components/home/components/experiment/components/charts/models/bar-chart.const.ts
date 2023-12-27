@@ -10,6 +10,6 @@ export enum ChartKey {
 
 export type ChartTitleDisplayMappingType = { [key in keyof typeof ChartKey]: string; }
 export const ChartTitleDisplayMapping: ChartTitleDisplayMappingType = {
-  [ChartKey.averageCPU]: CHARTS_EN.CHART_TITLES.AVERAGE_CPU,
-  [ChartKey.averageMemory]: CHARTS_EN.CHART_TITLES.AVERAGE_MEMORY,
+  [ChartKey.averageCPU]: `${CHARTS_EN.CHART_TITLES.PREFIX}  ${CHARTS_EN.CHART_TITLES.AVERAGE_CPU}`,
+  [ChartKey.averageMemory]: `${CHARTS_EN.CHART_TITLES.PREFIX}  ${CHARTS_EN.CHART_TITLES.AVERAGE_MEMORY}`,
 } as unknown as ChartTitleDisplayMappingType;
