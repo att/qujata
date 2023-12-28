@@ -34,7 +34,7 @@ export const SelectColumnsPopup: React.FC<SelectColumnsPopupProps> = (props: Sel
   }, [props, selectedColumns]);
 
   return (
-    <form className={styles.select_columns_wrapper} onSubmit={() => {}}>
+    <form className={styles.select_columns_wrapper}>
       <div className={styles.popup_header}>
         <label htmlFor={props.data[0].label} className={styles.form_title}>{SELECT_COLUMNS_EN.TITLE}</label>
         <img className={styles.close_icon} src={CloseSvg} alt={CloseAriaLabel} onClick={props.onPopupClose} />
@@ -42,12 +42,14 @@ export const SelectColumnsPopup: React.FC<SelectColumnsPopupProps> = (props: Sel
       {props.data.map((item: AttSelectOption) => (
         <div className={styles.input_option} key={item.label}>
           <img
+            data-testid={`${item.value}-checkbox-image`}
             className={styles.input_option_checkbox_icon}
             src={selectedColumns.find((selected: AttSelectOption) => selected.value === item.value) ? CheckedSvg : UnCheckedSvg}
             alt='checked-unchecked'
             onClick={() => onSelectedColumnsChanged(item)}
           />
           <input
+            data-testid={`${item.value}-checkbox`}
             type='checkbox'
             id={item.value}
             className={styles.input_form_item}

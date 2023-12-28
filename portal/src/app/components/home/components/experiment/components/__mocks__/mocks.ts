@@ -1,5 +1,4 @@
 import { ITestRunResult, ITestRunResultData } from "../../../../../../shared/models/test-run-result.interface";
-import { IExperimentData } from "../../Experiment";
 import { ExperimentTableProps } from "../experiment-table";
 
 export const MOCK_DATA_FOR_EXPERIMENT: ITestRunResult = {

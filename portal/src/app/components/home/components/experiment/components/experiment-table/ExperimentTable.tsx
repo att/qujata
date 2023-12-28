@@ -25,9 +25,9 @@ export const ExperimentTable: React.FC<ExperimentTableProps> = (props: Experimen
       id: 'algorithm',
       header: () => <span>{EXPERIMENT_TABLE_EN.TABLE_TITLES.ALGORITHM}</span>,
       accessor: (row: ITestRunResultData) => row.algorithm,
-      cell: cellInfo => <span>{(cellInfo.getValue() as ReactNode)}</span>
+      cell: cellInfo => <span>{cellInfo.getValue() as ReactNode}</span>
     },
-    ...props.selectedColumns.map(column => ({
+    ...props.selectedColumns.map((column: AttSelectOption) => ({
       id: column.label,
       header: () => <span>{column.label}</span>,
       accessor: (row: ITestRunResultData) => {
@@ -38,9 +38,7 @@ export const ExperimentTable: React.FC<ExperimentTableProps> = (props: Experimen
         }
         return value;
       },
-      cell: (cellInfo: CellContext<ITestRunResultData, unknown>) => {
-        return <span>{(cellInfo.getValue() as ReactNode)}</span>;
-      }
+      cell: (cellInfo: CellContext<ITestRunResultData, unknown>) => <span>{cellInfo.getValue() as ReactNode}</span>
     }))
   ];
 

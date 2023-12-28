@@ -69,10 +69,6 @@ export const ExperimentContent: React.FC<IExperimentData> = (props: IExperimentD
         }
     };
 
-    const handleSelectColumnsClick = () => {
-        setSelectColumnsPopupOpen(!isSelectColumnsPopupOpen);
-    };
-
     return (
         <>
             {isSpinnerOn && renderSpinner()}
@@ -81,7 +77,7 @@ export const ExperimentContent: React.FC<IExperimentData> = (props: IExperimentD
                 <ExperimentTabs currentSection={currentSection} handleButtonClick={handleButtonClick} />
                 <div className={styles.table_options_wrapper} ref={tableOptionsRef}>
                     <TableOptions
-                        handleSelectColumnsClick={handleSelectColumnsClick}
+                        handleSelectColumnsClick={() => setSelectColumnsPopupOpen(!isSelectColumnsPopupOpen)}
                         isPopupOpen={isSelectColumnsPopupOpen}
                     />
                         {isSelectColumnsPopupOpen &&
