@@ -18,20 +18,24 @@ class MetricsCollector:
         self.__metrics_url = None
 
     def start(self):
-        self.__metrics_url = cadvisor_service.get_metrics_url(service_name)
-        if self.__is_running is True:
-            raise ApiException('calculator already is running', '', 409)
-        self.__data = {}
-        self.__is_running = True
-        thread = threading.Thread(target=self.__run_collector)
-        thread.start()
+        try: 
+            if self.__is_running is True:
+                raise Exception('[MetricCollector] calculator already is running')
+            self.__data = {}
+            self.__is_running = True
+            self.__metrics_url = cadvisor_service.get_metrics_url(service_name)
+            thread = threading.Thread(target=self.__run_collector)
+            thread.start()
+        except Exception as e:
+            self.__is_running = False
+            logging.error("Failed to collect metrics with error: " + e)
         
     def stop(self):
         self.__is_running = False
 
     def get_data(self):
         if self.__is_running is True:
-            raise ApiException('calculator is running', '', 409)
+            raise Exception('[MetricCollector] calculator is running')
         return self.__data
 
     def __run_collector(self):
@@ -62,7 +66,6 @@ class MetricsCollector:
     def __get_interval(self, current, previous):
         cur = pd.Timestamp(current)
         prev = pd.Timestamp(previous)
-        # ms -> ns.
         return (int(cur.value/1000000) - int(prev.value/1000000)) * 1000000
 
 

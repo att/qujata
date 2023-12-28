@@ -10,14 +10,10 @@ from src.models.env_info import EnvInfo
 from src.models.test_suite import TestSuite
 from src.models.test_run import TestRun
 from src.exceptions.exceptions import ApiException, NotFoundException
-<<<<<<< HEAD
-import src.services.metrics_service as metrics_service
-=======
 import src.utils.test_suite_serializer as test_suite_serializer
 
 # constants
 HTTP_STATUS_UNPROCESSABLE_ENTITY = 422
->>>>>>> 35f830cc5a40dc4ec9b73b299e34098659567c96
 
 def create_test_suite(data):
     env_info = current_app.database_manager.get_latest(EnvInfo)
