@@ -12,9 +12,7 @@ import logging
 client_collector = MetricsCollector("qujata-curl")
 server_collector = MetricsCollector("qujata-nginx")
 
-# 1. container name for k8s
-# 2. cadvisor url from config
-# 3. unit tests
+# 1. unit tests
 
 def start_collecting():
     client_collector.start()

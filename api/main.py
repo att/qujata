@@ -3,18 +3,22 @@ from src.api.configurations_api import api as configurations_api_blueprint
 from src.api.analyze_api import api as analyze_api_blueprint
 from src.api.env_info_api import api as env_api_blueprint
 from src.api.tests_api import api as tests_blueprint
+import src.services.k8s_service as k8s_service
+import src.services.cadvisor_service as cadvisor_service
 from config.settings import load_config
 from flask_cors import CORS
 from src.utils.database_manager import DatabaseManager
-from src.utils.metrics_collector import MetricsCollector
 
 app = Flask(__name__)
 # load config
 load_config(app)
 # create db manager
 app.database_manager = DatabaseManager(app)
-# set cadvisor url for MetricsCollector class
-MetricsCollector.set_cadvisor_url(app.configurations.cadvisor_url)
+# init k8s
+if app.configurations.environment == "kuberenetes":
+    k8s_service.init_cluster()
+# init cadvisor_service    
+cadvisor_service.init(app.configurations.environment, app.configurations.cadvisor_url)
 # init routes
 app.register_blueprint(configurations_api_blueprint, url_prefix='/qujata-api', name='configurations_api')
 app.register_blueprint(analyze_api_blueprint, url_prefix='/qujata-api', name='analyze_api')
