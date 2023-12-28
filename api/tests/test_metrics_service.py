@@ -6,18 +6,19 @@ import requests
 from flask import Flask
 from config.settings import load_config
 from src.services.metrics_service import aggregate, __query_prometheus_avg_metric, __save_metric_to_db
-from src.models.test_run_result import TestRunResult
+from src.models.test_run_metric import TestRunMetric
 from src.enums.metric import Metric
-
+import logging
 from src.utils.database_manager import DatabaseManager
 
 class TestMetricsService(unittest.TestCase):
+
 
     def setUp(self):
         self.app = Flask(__name__)
         self.client = self.app.test_client()
         load_config(self.app)
-        self.app.configurations.prometheus_url = 'http://example.com/prometheus'
+        self.app.configurations.prometheus_url = 'http://localhost:9090'
         self.app.database_manager = Mock(spec=DatabaseManager)
 
     def test_aggregate_docker(self):
@@ -45,7 +46,6 @@ class TestMetricsService(unittest.TestCase):
                 mock_get.return_value.status_code = 200
                 mock_get.return_value.json.return_value = query_responses
                 aggregate(test_run)
-
                 # Verify that requests.get was called 4 times with the expected parameters
                 expected_calls = [
                     call(f"{self.app.configurations.prometheus_url}/api/v1/query", params={'query': 'avg_over_time(rate(container_cpu_usage_seconds_total{name="qujata-curl"}[30s])[30s:1s])', 'time': 1701863130}),
@@ -118,10 +118,10 @@ class TestMetricsService(unittest.TestCase):
                 aggregate(test_run)
 
                 expected_calls = [
-                    call(f"{self.app.configurations.prometheus_url}/api/v1/query", params={'query': 'avg_over_time(rate(container_cpu_usage_seconds_total{pod=~"qujata-curl.*"}[30s])[30s:1s])', 'time': 1701863130}),
-                    call(f"{self.app.configurations.prometheus_url}/api/v1/query", params={'query': 'avg_over_time(rate(container_memory_usage_bytes{pod=~"qujata-curl.*"}[30s])[30s:1s])', 'time': 1701863130}),
-                    call(f"{self.app.configurations.prometheus_url}/api/v1/query", params={'query': 'avg_over_time(rate(container_cpu_usage_seconds_total{pod=~"qujata-nginx.*"}[30s])[30s:1s])', 'time': 1701863130}),
-                    call(f"{self.app.configurations.prometheus_url}/api/v1/query", params={'query': 'avg_over_time(rate(container_memory_usage_bytes{pod=~"qujata-nginx.*"}[30s])[30s:1s])', 'time': 1701863130}),
+                    call(f"{self.app.configurations.prometheus_url}/api/v1/query", params={'query': 'avg_over_time(rate(container_cpu_usage_seconds_total{container_label_io_kubernetes_pod_name=~"qujata-curl.*"}[30s])[30s:1s])', 'time': 1701863130}),
+                    call(f"{self.app.configurations.prometheus_url}/api/v1/query", params={'query': 'avg_over_time(rate(container_memory_usage_bytes{container_label_io_kubernetes_pod_name=~"qujata-curl.*"}[30s])[30s:1s])', 'time': 1701863130}),
+                    call(f"{self.app.configurations.prometheus_url}/api/v1/query", params={'query': 'avg_over_time(rate(container_cpu_usage_seconds_total{container_label_io_kubernetes_pod_name=~"qujata-nginx.*"}[30s])[30s:1s])', 'time': 1701863130}),
+                    call(f"{self.app.configurations.prometheus_url}/api/v1/query", params={'query': 'avg_over_time(rate(container_memory_usage_bytes{container_label_io_kubernetes_pod_name=~"qujata-nginx.*"}[30s])[30s:1s])', 'time': 1701863130}),
                 ]
                 mock_get.assert_has_calls(expected_calls, any_order=True)
 

@@ -3,10 +3,9 @@ from flask import current_app
 from datetime import datetime
 from dateutil import parser
 import pytz
-from src.models.test_run_result import TestRunResult
+from src.models.test_run_metric import TestRunMetric
 from src.enums.metric import Metric
 from src.utils.metrics_collector import MetricsCollector
-
 import logging
 
 client_collector = MetricsCollector("qujata-curl")
@@ -27,7 +26,6 @@ def save(test_run):
     server_data = server_collector.get_data()
     __save_metrics(Metric.CLIENT_AVERAGE_CPU, Metric.CLIENT_AVERAGE_MEMORY, client_data, test_run)
     __save_metrics(Metric.SERVER_AVERAGE_CPU, Metric.SERVER_AVERAGE_MEMORY, server_data, test_run)
-
 
 def __save_metrics(cpu_metric_name, memory_metric_name, data, test_run):
     cpu, memory = __calculate_average(data, test_run.start_time)
@@ -52,25 +50,9 @@ def __save_metric_to_db(test_run, metric_name, metric_value, metric_type):
     elif metric_type == 'memory':
         metric_value = round(metric_value, 0)
 
-    test_run_result = TestRunResult(
+    test_run_metric = TestRunMetric(
         test_run_id=test_run.id,
         metric_name=metric_name,
         value=metric_value
     )
-    current_app.database_manager.create(test_run_result)
-
-
-def get_cpu_memory_avg(test_run_id):
-    test_run_results = current_app.database_manager.get_records(TestRunResult, [TestRunResult.test_run_id == test_run_id])
-
-    cpu_avg = 0.00
-    memory_avg = 0
-
-    for result in test_run_results:
-        if result.metric_name in (Metric.CLIENT_AVERAGE_CPU, Metric.SERVER_AVERAGE_CPU):
-            cpu_avg += result.value
-        elif result.metric_name in (Metric.CLIENT_AVERAGE_MEMORY, Metric.SERVER_AVERAGE_MEMORY):
-            memory_avg += result.value
-
-    return cpu_avg, memory_avg
-
+    current_app.database_manager.create(test_run_metric)

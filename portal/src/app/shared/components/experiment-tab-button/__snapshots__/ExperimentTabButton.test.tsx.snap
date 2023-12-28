@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ExperimentTabButton renders ExperimentTabButton 1`] = `
+<div
+  class="experiment_tab_button_wrapper"
+>
+  <button
+    class="experiment_tab_button selected"
+  />
+</div>
+`;

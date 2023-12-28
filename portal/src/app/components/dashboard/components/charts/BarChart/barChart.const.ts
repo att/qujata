@@ -1,19 +1,38 @@
 import { ChartOptions } from 'chart.js';
+import { CHARTS_EN } from '../../../../home/components/experiment/components/charts/translate/en';
 
-export const colors: string[] = ['#05BBFF', '#086CE1', '#FF8500', '#36a2eb33'];
+export const colors: string[] = ['#086CE1', '#FF8500', '#05BBFF', '#6D3FFC'];
 
 export let defaultOptions: ChartOptions<any> = {
     scales: {
-        x: {
-          display: false, // Hide x-axis labels
+        y: {
+            title: {
+                display: true,
+                text: CHARTS_EN.Y_AXIS_TITLE,
+                font: {
+                    size: 14,
+                },
+                padding: { bottom: 10 },
+            },
+            ticks: {
+              stepSize: 2,
+              font: {
+                size: 14,
+              },
+            },
         },
     },
     plugins: {
         legend: {
-            position: 'top',
+            align: 'start',
+            position: 'bottom',
             labels: {
-                padding: 40,
+                font: {
+                    size: 16,
+                },
             },
         },
     }
 };
+
+export const TITLE_PREFIX = 'Server Memory (%) vs.';

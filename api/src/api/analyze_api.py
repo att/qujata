@@ -19,6 +19,7 @@ HTTP_STATUS_LOCKED = 423
 HTTP_STATUS_BAD_REQUEST = 400
 HTTP_STATUS_INTERNAL_SERVER_ERROR = 500
 
+INVALID_DATA_MESSAGE = 'Invalid data provided'
 
 @api.route('/analyze', methods=['POST'])
 @cross_origin(origins=['*'], supports_credentials=True)
@@ -41,13 +42,13 @@ def analyze():
 
 def __validate(data):
     if not data or 'algorithms' not in data or 'iterationsCount' not in data or 'experimentName' not in data or 'description' not in data:
-        raise ApiException('Missing properties, required properties: algorithms, iterationsCount, experimentName, description', 'Invalid data provided', HTTP_STATUS_BAD_REQUEST)
+        raise ApiException('Missing properties, required properties: algorithms, iterationsCount, experimentName, description', INVALID_DATA_MESSAGE, HTTP_STATUS_BAD_REQUEST)
     for iterations in data['iterationsCount']:
         if iterations <= 0:
-            raise ApiException('The number of iterations should be greater than 0', 'Invalid data provided', HTTP_STATUS_BAD_REQUEST)
+            raise ApiException('The number of iterations should be greater than 0', INVALID_DATA_MESSAGE, HTTP_STATUS_BAD_REQUEST)
     if process_is_running:
         raise ApiException('The previous test is still running. Please try again in few minutes', 'Current test is still running', HTTP_STATUS_LOCKED)
     for algorithm in data['algorithms']:
         if algorithm not in current_app.configurations.allowedAlgorithms:
-            raise ApiException('Algorithm "' + algorithm + '" is not supported', 'Invalid data provided', HTTP_STATUS_BAD_REQUEST)
+            raise ApiException('Algorithm "' + algorithm + '" is not supported', INVALID_DATA_MESSAGE, HTTP_STATUS_BAD_REQUEST)
 

@@ -1,0 +1,60 @@
+@import "src/styles/variables-keys";
+
+$modalPaddingBlock: 24px;
+
+.title {
+    position: sticky;
+    top: 0;
+    background-color: var($backgroundColorWhite);
+    z-index: 1;
+    align-items: baseline;
+    display: flex;
+    font-family: var($fontMedium);
+    font-size: 18px;
+    justify-content: space-between;
+    margin: 0;
+    padding-block-start: 32px;
+    padding-block-end: 24px;
+    padding-inline-start: 32px;
+    padding-inline-end: 32px;
+
+    .close_icon {
+        color: #454b52;
+        background-color: #F5F1FF;
+        border-radius: 50%;
+        display: flex;
+        padding: 12px;
+    }
+}
+
+.modal_title_left {
+    display: flex;
+    align-items: center;
+    word-break: break-word;
+    margin-inline-end: 16px;
+}
+
+.footer_container {
+    position: sticky;
+    bottom: 0;
+    padding: 24px;
+    gap: 16px;
+}
+
+.modal_spinner_overlay {
+    position: relative;
+    opacity: 0.6;
+    pointer-events: none;
+}
+
+.modal_spinner {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    padding: 0;
+    z-index: 1;
+}
+
+.modal_content {
+    padding: 24px;
+}

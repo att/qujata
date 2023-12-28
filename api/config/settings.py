@@ -6,7 +6,7 @@ def load_config(app):
         'allowedAlgorithms': os.environ.get('DEFAULT_GROUPS',"kyber512:frodo640aes").split(":"),
         'curl_url': os.environ.get('CURL_URL', "http://localhost:3010"),
         'cadvisor_url': os.environ.get('CADVISOR_URL', "http://localhost:8080"),
-        'request_timeout': os.environ.get('REQUEST_TIMEOUT', 900),
+        'request_timeout': os.environ.get('REQUEST_TIMEOUT', 3600),
         'code_release': os.environ.get('CODE_RELEASE'),
         'protocol': os.environ.get('PROTOCOL'),
         'iterations_options': list(map(int, os.environ.get('ITERATIONS_OPTIONS', "100:500:1000:2000:5000:10000:50000").split(':'))),

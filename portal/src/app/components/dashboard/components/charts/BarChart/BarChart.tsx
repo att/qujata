@@ -1,9 +1,10 @@
-import { ChartOptions, TooltipItem } from 'chart.js';
+import { ChartData, ChartOptions, ChartType, TooltipItem, Chart } from 'chart.js';
 import { Bar } from 'react-chartjs-2';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { IDatasets } from './models/BarChart.model';
-import { colors, defaultOptions } from './barChart.const';
+import { TITLE_PREFIX, colors, defaultOptions } from './barChart.const';
 import styles from './BarChart.module.scss';
+import { uniq } from 'lodash';
 
 export interface BarChartProps {
     labels: string[];
@@ -13,14 +14,24 @@ export interface BarChartProps {
     tooltipLabels: string[];   
     title?: string;
 }
+
 export const BarChart: React.FC<BarChartProps> = (props: BarChartProps) => {
     const { labels, data, tooltipKeys, tooltipLabels, keyOfData, title } = props;
     const [dataValues, setDataValues] = useState();
     const [datasets, setDatasets] = useState<IDatasets[]>([]);
+    const [algorithmsColors, setAlgorithmsColors] = useState<{[key: string]: string}>();
+    const chartRef = useRef<Chart<ChartType, ChartData<ChartType>, unknown>>(null);
 
     useEffect(() => {
         const temp = data.map((obj: any) => obj.results[keyOfData]);
         setDataValues(temp);
+
+        const algorithms: string[] = uniq(data.map((item: any) => item.algorithm));
+        const algorithmColors: {[key: string]: string} = {};
+        algorithms.forEach((algorithm, index) => {
+          algorithmColors[algorithm] = colors[index % colors.length];
+        });
+        setAlgorithmsColors(algorithmColors);
     }, [data, keyOfData]);
 
     useEffect(() => {
@@ -28,22 +39,48 @@ export const BarChart: React.FC<BarChartProps> = (props: BarChartProps) => {
             const tempValues: IDatasets[] = labels.map((label, i) => ({
                     label: label,
                     data: [dataValues[i]],
-                    backgroundColor: colors[i % colors.length],
+                    backgroundColor: getBackgroundColorByAlgorithm(data[i].algorithm, algorithmsColors),
                     borderWidth: 0,
                 }));
             setDatasets(tempValues);
         }
-    }, [dataValues, labels]);
+    }, [algorithmsColors, data, dataValues, labels]);
 
     const options: ChartOptions<any> = {
         ...defaultOptions,
+        scales: {
+          ...defaultOptions.scales,
+          x: {
+            display: true,
+            title: {
+              display: true,
+              text: title ? title.replace(TITLE_PREFIX, '').trim() : '',
+              padding: { bottom: 30, top: 10 },
+            },
+            ticks: {
+              display: false,
+            },
+          },
+        },
         plugins: {
           ...defaultOptions.plugins,
           title: {
             display: true,
             text: title,
+            align: 'start',
+            font: {
+              size: 18,
+              weight: '500',
+            },
+            padding: {
+              bottom: 30,
+            },
           },
           tooltip: {
+            backgroundColor: 'rgba(243, 244, 246, 1)',
+            titleColor: '#1D2329',
+            padding: 10,
+            bodyColor: '#1D2329',
             displayColors: false,
             callbacks: {
               title: function (context: TooltipItem<'bar'>[]) {
@@ -64,7 +101,27 @@ export const BarChart: React.FC<BarChartProps> = (props: BarChartProps) => {
     };
 
     return (
-        <Bar data={tempData} options={options} style={{ width: '500px', height: '400px' }} className={styles.bar} />
+      <div
+        onMouseMove={(event) => {
+          const elements = chartRef.current?.getElementsAtEventForMode(
+            event.nativeEvent,
+            'nearest',
+            { intersect: true },
+            false
+          );
+      
+          if (elements && elements.length) {
+            event.currentTarget.style.cursor = 'pointer';
+          } else {
+            event.currentTarget.style.cursor = 'default';
+          }
+        }}
+        onMouseOut={(event: React.MouseEvent) => {
+          (event.currentTarget as HTMLElement).style.cursor = 'default';
+        }}
+      >
+        <Bar ref={chartRef as any} data={tempData} options={options} style={{ height: '450px' }} className={styles.bar} />
+      </div>
     );
 }
 
@@ -80,4 +137,8 @@ export function renderTooltipLabel(context: { datasetIndex : number }, dataValue
 
 export function generateTooltipTitle(labels: string[], index: number): string {
   return labels[index];
+}
+
+function getBackgroundColorByAlgorithm(algorithm: string, algorithmColors: any): string {
+  return algorithmColors[algorithm];
 }

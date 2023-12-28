@@ -7,9 +7,9 @@ export interface ITestRunResultData {
     id: number;
     algorithm: string;
     iterations: number;
+    messageSizeBytes?: number;
     results: IResult;
 }
-
 export interface IEnvironmentInfo {
     codeRelease: string;
     cpu: string;

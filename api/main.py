@@ -9,6 +9,8 @@ from config.settings import load_config
 from flask_cors import CORS
 from src.utils.database_manager import DatabaseManager
 
+PATH = '/qujata-api'
+
 app = Flask(__name__)
 # load config
 load_config(app)
@@ -20,10 +22,10 @@ if app.configurations.environment == "kuberenetes":
 # init cadvisor_service    
 cadvisor_service.init(app.configurations.environment, app.configurations.cadvisor_url)
 # init routes
-app.register_blueprint(configurations_api_blueprint, url_prefix='/qujata-api', name='configurations_api')
-app.register_blueprint(analyze_api_blueprint, url_prefix='/qujata-api', name='analyze_api')
-app.register_blueprint(env_api_blueprint, url_prefix='/qujata-api', name='env_info_api')
-app.register_blueprint(tests_blueprint, url_prefix='/qujata-api', name='tests_api')
+app.register_blueprint(configurations_api_blueprint, url_prefix=PATH, name='configurations_api')
+app.register_blueprint(analyze_api_blueprint, url_prefix=PATH, name='analyze_api')
+app.register_blueprint(env_api_blueprint, url_prefix=PATH, name='env_info_api')
+app.register_blueprint(tests_blueprint, url_prefix=PATH, name='tests_api')
 # enable cors
 CORS(app, origins=['*'])
 app.config['CORS_HEADERS'] = 'Content-Type'

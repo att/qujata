@@ -3,7 +3,6 @@ import { getKeysOfData, getLabels } from "../utils/chart.utils";
 import { ITestRunResultData } from "../../../../../../../shared/models/test-run-result.interface";
 import { ILineChartData } from "../models/line-chart-data.interface";
 import { colors } from "../../../../../../dashboard/components/charts/LineChart/LineChart.const";
-import { useExperimentData } from "../../hooks/useExperimentData";
 import { IExperimentData } from "../../../Experiment";
 
 export interface IUseChartsData {
@@ -43,7 +42,7 @@ function processedLineChartData(data: ITestRunResultData[], keysOfData: string[]
             return acc;
         }, {});
             return {
-                label: algorithm,
+                label: `${algorithm}       `,
                 data: data,
                 fill: false,
                 backgroundColor: colors[index % colors.length],
@@ -57,8 +56,6 @@ function processedLineChartData(data: ITestRunResultData[], keysOfData: string[]
 }
 
 export function useChartsData(props: IExperimentData): IUseChartsData {
-    // const { data: testRunData } = useExperimentData();
-
     const [barChartLabels, setBarChartLabels] = useState<string[]>([]);
     const [barChartData, setBarChartData] = useState<ITestRunResultData[]>([]);
     const [barChartKeysOfData, setBarChartKeysOfData] = useState<string[]>([]);

@@ -26,7 +26,6 @@
     "react-hooks/exhaustive-deps": "error", // Checks effect dependencies,
     "react/prop-types": [
       "off"
-    ],
-    "no-null/no-null": 2
+    ]
   }
 }

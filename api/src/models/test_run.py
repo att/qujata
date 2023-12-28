@@ -16,7 +16,7 @@ class TestRun(Base):
     status_message = Column(String)
     test_suite_id = Column(Integer, ForeignKey('test_suites.id'))
     test_suite = relationship('TestSuite', back_populates='test_runs')
-    test_run_results = relationship('TestRunResult', back_populates='test_run', cascade="all, delete-orphan")
+    test_run_metrics = relationship('TestRunMetric', back_populates='test_run', cascade="all, delete-orphan")
 
   
     def to_dict(self):
