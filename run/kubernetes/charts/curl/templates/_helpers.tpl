@@ -48,6 +48,7 @@ Selector labels
 {{- define "curl.selectorLabels" -}}
 app.kubernetes.io/name: {{ include "curl.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
+app: {{ include "curl.fullname" . }}
 {{- end }}
 
 {{/*

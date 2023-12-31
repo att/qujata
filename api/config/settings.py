@@ -4,8 +4,8 @@ def load_config(app):
     load_dotenv()
     app.configurations = Configuration({
         'allowedAlgorithms': os.environ.get('DEFAULT_GROUPS',"kyber512:frodo640aes").split(":"),
-        'curl_url': os.environ.get('CURL_URL', "http://localhost:3010"),
-        'cadvisor_url': os.environ.get('CADVISOR_URL', "http://localhost:8080"),
+        'curl_url': os.environ.get('CURL_URL'),
+        'cadvisor_url': os.environ.get('CADVISOR_URL'),
         'request_timeout': os.environ.get('REQUEST_TIMEOUT', 3600),
         'code_release': os.environ.get('CODE_RELEASE'),
         'protocol': os.environ.get('PROTOCOL'),

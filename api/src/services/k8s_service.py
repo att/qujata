@@ -2,30 +2,27 @@ from kubernetes import client, config
 
 NAMESPACE = 'qujata'
 
-__kuberenetes_client = None
+__kubernetes_client = None
 
 def init_cluster():
+    global __kubernetes_client
     config.load_incluster_config()
-    __kuberenetes_client = client.CoreV1Api()
+    __kubernetes_client = client.CoreV1Api()
 
-def get_pod_by_prefix(pod_prefix):
-    pod = get_pod_by_condition(lambda pod: pod.metadata.name.startswith(service_name))
-    if pod is None:
-        raise Exception(pod_prefix + " pod not found")
-    return pod
-
-def get_pod_by_prefix_and_host(pod_prefix, host):
-    pod = get_pod_by_condition(lambda pod: pod.metadata.name.startswith("qujata-cadvisor") and pod.status.host_ip == host)
-    if pod is None:
-        raise Exception(pod_prefix + " pod not found with host_ip: " + host)
-    return pod
+def get_pod_by_label(label_name, label_value):
+    pods = __get_pods_by_label("=".join([label_name, label_value]))
+    if pods.items is False:
+        raise Exception(label_value + " pod not found")
+    return pods.items[0] # for now, we handle only one running pod. in the future, we should handle multiple pods.
 
 
-def get_pod_by_condition(condition):
-    pods = __kuberenetes_client.list_namespaced_pod(NAMESPACE)
-    pod = None
-    for p in pods.items:
-        if condition(p):
-            pod = p
-            break
-    return pod
+def get_pod_by_label_and_host(label_name, label_value, host):
+    pods = __get_pods_by_label("=".join([label_name, label_value]))
+    for pod in pods.items:
+        if pod.status.host_ip == host:
+            return pod
+    raise Exception(label_value + " pod not found with host_ip: " + host)
+
+
+def __get_pods_by_label(label):
+    return __kubernetes_client.list_namespaced_pod(NAMESPACE, label_selector=label)

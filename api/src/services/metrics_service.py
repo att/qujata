@@ -20,6 +20,10 @@ def start_collecting():
 def stop_collecting():
     client_collector.stop()
     server_collector.stop()
+    # print collectors results
+    logging.info(client_collector.to_pretty_table())
+    logging.info(server_collector.to_pretty_table())
+    
 
 def save(test_run):
     client_data = client_collector.get_data()

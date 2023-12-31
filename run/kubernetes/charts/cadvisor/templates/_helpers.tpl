@@ -48,6 +48,7 @@ Selector labels
 {{- define "cadvisor.selectorLabels" -}}
 app.kubernetes.io/name: {{ include "cadvisor.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
+app: {{ include "cadvisor.fullname" . }}
 {{- end }}
 
 {{/*

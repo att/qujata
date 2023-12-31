@@ -48,6 +48,7 @@ Selector labels
 {{- define "mysql.selectorLabels" -}}
 app.kubernetes.io/name: {{ include "mysql.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
+app: {{ include "mysql.fullname" . }}
 {{- end }}
 
 {{/*

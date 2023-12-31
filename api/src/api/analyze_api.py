@@ -37,7 +37,7 @@ def analyze():
         return jsonify({'error': e.error, 'message': e.message}), e.status_code
     except Exception as e:
         process_is_running = False
-        logging.error("Exception: Failed to run analyze request with error: " + str(e))
+        logging.exception("Exception: Failed to run analyze request with error: %s", e)
         return jsonify({'error': 'An error occurred while processing the request', 'message':''}), HTTP_STATUS_INTERNAL_SERVER_ERROR
 
 def __validate(data):

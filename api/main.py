@@ -17,7 +17,7 @@ load_config(app)
 # create db manager
 app.database_manager = DatabaseManager(app)
 # init k8s
-if app.configurations.environment == "kuberenetes":
+if app.configurations.environment == "kubernetes":
     k8s_service.init_cluster()
 # init cadvisor_service    
 cadvisor_service.init(app.configurations.environment, app.configurations.cadvisor_url)
