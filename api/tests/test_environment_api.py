@@ -4,11 +4,11 @@ from unittest.mock import Mock
 from flask import Flask
 
 from src.models.env_info import EnvInfo
-from src.api.env_info_api import api
+from src.api.environment_api import api
 
 from src.utils.database_manager import DatabaseManager
 
-RESSORUCE_NAME = "Test Resource"
+RESOURCE_NAME = "Test Resource"
 OS = 'Test OS'
 CPU = 'Test CPU'
 PATH_ENV_INFO = '/api/env-info'
@@ -22,7 +22,7 @@ class TestEnvInfoAPI(unittest.TestCase):
 
     def test_insert_env_info_success(self):
         request_data = {
-            'resource_name': RESSORUCE_NAME,
+            'resource_name': RESOURCE_NAME,
             'operating_system': OS,
             'cpu': CPU,
             'cpu_architecture': 'Test Architecture',
@@ -43,7 +43,7 @@ class TestEnvInfoAPI(unittest.TestCase):
 
     def test_insert_env_info_missing_fields(self):
         request_data = {
-            'resource_name': RESSORUCE_NAME,
+            'resource_name': RESOURCE_NAME,
             'operating_system': OS,
             'cpu': CPU,
             'node_size': 'Medium'
@@ -73,7 +73,7 @@ class TestEnvInfoAPI(unittest.TestCase):
 
     def test_insert_env_info_db_throws_error(self):
         request_data = {
-            'resource_name': RESSORUCE_NAME,
+            'resource_name': RESOURCE_NAME,
             'operating_system': OS,
             'cpu': CPU,
             'node_size': 'Medium'

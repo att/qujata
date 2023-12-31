@@ -36,6 +36,7 @@ services:
     ports:
       - 3020:3020
     environment:
+      - LOG_LEVEL=INFO
       - ENVIRONMENT=docker
       - CURL_URL=http://qujata-curl:3010
       - CADVISOR_URL=http://qujata-cadvisor:8080
