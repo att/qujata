@@ -4,13 +4,10 @@ import { FetchDataStatus, IHttp, useFetch } from '../shared/hooks/useFetch';
 import { useFetchSpinner } from '../shared/hooks/useFetchSpinner';
 import { APIS } from '../apis';
 import { AttSelectOption } from '../shared/components/att-select';
-import { Environment } from '../../environments/environment';
-import { DashBoardPrefixLink } from '../shared/constants/dashboard';
 import { useErrorMessage } from './useErrorMessage';
 
 export interface IUseDashboardData {
   testSuiteId: string;
-  link: string;
   status: FetchDataStatus;
   handleRunQueryClick: (queryData: ITestParams) => void;
 }
@@ -20,9 +17,6 @@ export function useDashboardData(): IUseDashboardData {
   const [dashboardData, setDashboardData] = useState<ChartDataMap>(() => new Map<AttSelectOption, ITestResponseData | undefined>());
   const [algorithms, setAlgorithms] = useState<string[]>([]);
   const [iterationsCount, setIterationsCount] = useState<number[]>([]);
-  const generateFromTime: number = Date.now();
-  const initialLink: string = `${Environment.dashboardLinkHost}/${DashBoardPrefixLink}&from=${generateFromTime}`;
-  const [link, setLink] = useState<string>(initialLink);
   const [testSuiteId, setTestSuiteId] = useState<string>('');
 
   useFetchSpinner(status);
@@ -31,31 +25,7 @@ export function useDashboardData(): IUseDashboardData {
 
   useEffect(() => {
     if (status === FetchDataStatus.Success && data) {
-        console.log('data', data);
         setTestSuiteId(data.test_suite_id);
-
-        const dashboardLink: string = `${Environment.dashboardLinkHost}/${DashBoardPrefixLink}&from=${data.from}&to=${data.to}`;
-        setLink(dashboardLink);
-        // setAlgorithms((prev: string[] | undefined) => {
-        //     prev?.splice(0, 1);
-        //     if (prev && prev.length > 0) {
-        //       post({ data: { algorithm: prev[0], iterationsCount } });
-        //       return prev;
-        //     }
-        //     return undefined;
-        // });
-
-        // setDashboardData((prev: ChartDataMap) => {
-        //     let shouldSkip: boolean = false;
-        //     prev.forEach((value: ITestResponseData | undefined, key: AttSelectOption) => {
-        //       if (!shouldSkip && value === undefined) {
-        //         shouldSkip = true;
-        //         prev.set(key, data.data);
-        //       }
-        //     });
-
-        //     return prev;
-        // });
     }
   }, [data, status]);
 
@@ -91,7 +61,6 @@ export function useDashboardData(): IUseDashboardData {
       iterationsValues = iterations.map((item: AttSelectOption) => +item.value);
     }
     
-    // Send the post request
     post({
       data: {
         experimentName: queryData.experimentName,
@@ -104,7 +73,6 @@ export function useDashboardData(): IUseDashboardData {
 
   return {
     handleRunQueryClick,
-    link,
     testSuiteId,
     status,
   } as IUseDashboardData;
