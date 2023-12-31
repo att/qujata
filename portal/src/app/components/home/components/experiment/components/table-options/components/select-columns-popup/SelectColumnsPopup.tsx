@@ -45,7 +45,7 @@ export const SelectColumnsPopup: React.FC<SelectColumnsPopupProps> = (props: Sel
             data-testid={`${item.value}-checkbox-image`}
             className={styles.input_option_checkbox_icon}
             src={selectedColumns.find((selected: AttSelectOption) => selected.value === item.value) ? CheckedSvg : UnCheckedSvg}
-            alt='checked-unchecked'
+            alt='column-option'
             onClick={() => onSelectedColumnsChanged(item)}
           />
           <input
