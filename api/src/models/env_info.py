@@ -1,7 +1,6 @@
 from sqlalchemy import create_engine, Column, Integer, String
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
-# from src.models.test_suite import TestSuite
 from .base import Base
 
 class EnvInfo(Base):
