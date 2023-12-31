@@ -40,7 +40,7 @@ class MetricsCollector:
             raise Exception('[MetricCollector] calculator is running')
         return self.__data
 
-    def to_pretty_table():
+    def to_pretty_table(self):
         table = PrettyTable()
         table.title = self.__service_name
         table.field_names = ["Timestamp", "CPU", "Memory"]
