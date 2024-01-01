@@ -8,7 +8,8 @@ from unittest.mock import Mock, MagicMock, patch
 
 from src.api.analyze_api import api
 from src.enums.status import Status
-import src.api.analyze_api
+import src.api.analyze_api as analyze_api
+import src.services.metrics_service as metrics_service
 from config.settings import load_config
 from src.utils.database_manager import DatabaseManager
 import logging
@@ -16,6 +17,9 @@ import logging
 PATH = '/api/analyze'
 CONTENT_TYPE = 'application/json'
 
+
+@patch('src.services.metrics_service.start_collecting', return_value=None)
+@patch('src.services.metrics_service.stop_collecting', return_value=None)
 class TestAnalyzeAPI(unittest.TestCase):
     def setUp(self):
         self.app = Flask(__name__)
@@ -24,7 +28,8 @@ class TestAnalyzeAPI(unittest.TestCase):
         load_config(self.app)
         self.app.database_manager = Mock(spec=DatabaseManager)
 
-    def test_analyze(self):
+
+    def test_analyze(self, mock_start_collecting, mock_stop_collecting):
         input_data = {
             "algorithms":["kyber512"],
             "iterationsCount": [1000, 2000],
@@ -49,9 +54,12 @@ class TestAnalyzeAPI(unittest.TestCase):
                 # Check the response content
                 response_data = json.loads(response.data)
                 self.assertIn('test_suite_id', response_data)
+                self.assertEqual(mock_start_collecting.call_count, 2)
+                self.assertEqual(mock_stop_collecting.call_count, 2)
 
 
-    def test_analyze_return_general_error(self):
+
+    def test_analyze_return_general_error(self, mock_start_collecting, mock_stop_collecting):
         input_data = {
             "algorithms":["kyber512"],
             "iterationsCount": [1000],
@@ -62,7 +70,7 @@ class TestAnalyzeAPI(unittest.TestCase):
         # Mock the requests.post call to raise an exception
         with patch('requests.get') as mock_get:
             mock_get.return_value.status_code = 200
-            with patch('requests.post', side_effect=requests.exceptions.RequestException("Mocked exception")) as mock_post:
+            with patch('requests.post', side_effect=requests.exceptions.RequestException("Test exception")) as mock_post:
                 response = self.client.post(PATH,
                                         data=json.dumps(input_data),
                                         content_type=CONTENT_TYPE)
@@ -71,7 +79,7 @@ class TestAnalyzeAPI(unittest.TestCase):
                 self.assertEqual(response_json["error"], "An error occurred while processing the request")
                 self.assertEqual(response_json["message"], "")
 
-    def test_analyze_with_invalid_iterations_count(self):
+    def test_analyze_with_invalid_iterations_count(self, mock_start_collecting, mock_stop_collecting):
         input_data = {
             "algorithms":["kyber512"],
             "iterationsCount": [-1],
@@ -87,7 +95,7 @@ class TestAnalyzeAPI(unittest.TestCase):
         self.assertEqual(response_json["message"], "The number of iterations should be greater than 0")
 
 
-    def test_analyze_with_invalid_algorithm(self):
+    def test_analyze_with_invalid_algorithm(self, mock_start_collecting, mock_stop_collecting):
         input_data = {
             "algorithms":["invalid_algorithm"],
             "iterationsCount": [1000],
@@ -103,7 +111,7 @@ class TestAnalyzeAPI(unittest.TestCase):
         self.assertEqual(response_json["message"], "Algorithm \"invalid_algorithm\" is not supported")
 
    
-    def test_analyze_with_invalid_body(self):  
+    def test_analyze_with_invalid_body(self, mock_start_collecting, mock_stop_collecting):  
         input_data = {
             "iterationsCount": 1000,
             "experimentName": "name",
@@ -115,9 +123,9 @@ class TestAnalyzeAPI(unittest.TestCase):
         self.assertEqual(response.status_code, 400)
         response_json = json.loads(response.data)
         self.assertEqual(response_json["error"], "Invalid data provided")
-        self.assertEqual(response_json["message"], "Missing properties, required properties: algorithms, iterationsCount, experimentName")
+        self.assertEqual(response_json["message"], "Missing properties, required properties: algorithms, iterationsCount, experimentName, description")
 
-    def test_analyze_with_curl_failure(self):
+    def test_analyze_with_curl_failure(self, mock_start_collecting, mock_stop_collecting):
         input_data = {
             "algorithms":["kyber512"],
             "iterationsCount": [1000],
@@ -139,7 +147,7 @@ class TestAnalyzeAPI(unittest.TestCase):
 
 
 
-    def test_analyze_with_missing_env_info(self):
+    def test_analyze_with_missing_env_info(self, mock_start_collecting, mock_stop_collecting):
         input_data = {
             "algorithms":["kyber512"],
             "iterationsCount": [1000],
@@ -156,7 +164,7 @@ class TestAnalyzeAPI(unittest.TestCase):
         self.assertEqual(response_json["message"], "Missing env info in database")
 
 
-    def test_analyze_with_423(self):
+    def test_analyze_with_423(self, mock_start_collecting, mock_stop_collecting):
         with patch('requests.get') as mock_get:
             mock_get.return_value.status_code = 200
             # global process_is_running
@@ -166,7 +174,7 @@ class TestAnalyzeAPI(unittest.TestCase):
                 "experimentName": "name",
                 "description": "name"
             }
-            src.api.analyze_api.process_is_running = True
+            analyze_api.process_is_running = True
             # Mock the requests.post call
             response = self.client.post(PATH,
                                         data=json.dumps(input_data),
@@ -175,9 +183,9 @@ class TestAnalyzeAPI(unittest.TestCase):
             self.assertEqual(response.status_code, 423)
             response_json = json.loads(response.data)
             self.assertEqual(response_json["error"], "Current test is still running")
-            src.api.analyze_api.process_is_running = False
+            analyze_api.process_is_running = False
 
-    def test_analyze_sleep_between_tests(self):
+    def test_analyze_sleep_between_tests(self, mock_start_collecting, mock_stop_collecting):
         input_data = {
             "algorithms":["kyber512","frodo640aes"],
             "iterationsCount": [1000],
