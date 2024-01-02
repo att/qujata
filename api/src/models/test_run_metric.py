@@ -10,4 +10,3 @@ class TestRunMetric(Base):
     value = Column(Double)
     test_run_id = Column(Integer, ForeignKey('test_runs.id'), primary_key=True)
     test_run = relationship('TestRun', back_populates='test_run_metrics')
-
