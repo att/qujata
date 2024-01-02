@@ -1,4 +1,4 @@
-import { ChartData, ChartOptions, ChartType, TooltipItem, Chart } from 'chart.js';
+import { ChartData, ChartOptions, ChartType, TooltipItem, Chart, LegendItem, ChartDataset } from 'chart.js';
 import { Bar } from 'react-chartjs-2';
 import { useEffect, useRef, useState } from 'react';
 import { IDatasets } from './models/BarChart.model';
@@ -64,6 +64,20 @@ export const BarChart: React.FC<BarChartProps> = (props: BarChartProps) => {
         },
         plugins: {
           ...defaultOptions.plugins,
+          legend: {
+            ...defaultOptions.plugins?.legend,
+            labels: {
+              ...defaultOptions.plugins?.legend?.labels,
+              filter: function(item: LegendItem, chart: ChartData) {
+                const firstIndex = chart?.datasets.findIndex((dataset: ChartDataset) => dataset.label === item.text);
+                if (item.datasetIndex !== firstIndex) {
+                  return false;
+                }
+
+                return true;
+              },
+            }
+          },
           title: {
             display: true,
             text: title,
