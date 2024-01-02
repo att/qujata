@@ -5,36 +5,53 @@
   align-items: flex-end;
 }
 
-.option_wrapper {
+.options_wrapper {
   display: flex;
   align-items: center;
+
+  &:hover .select_columns_icon {
+    background-color: var($attPurple);
+    content: url('../../../../../../../assets/images/select-columns-checked.svg');
+  }
+
+  .select_columns_icon {
+    margin-inline-start: auto;
+    margin-inline-end: 5px;
+    background-color: #F5F1FF;
+    inline-size: 34px;
+    block-size: 34px;
+    border-radius: 50%;
+    display: block;
+  }
+
+  .select_columns_text {
+    color: var($attPurple);
+  }
 }
 
-.option_text {
-  color: var($attPurple);
-}
-
-.option_image {
+.link_wrapper {
   margin-inline-start: auto;
-  margin-inline-end: 5px;
-  background-color: #F5F1FF;
-  inline-size: 34px;
-  block-size: 34px;
-  border-radius: 50%;
+  margin-inline-end: 25px;
 }
 
-.default_image {
-  display: block;
-}
+.grafana_link {
+  display: flex;
+  align-items: center;
+  color: var($attPurple);
+  font-size: 16px;
 
-.hover_image {
-  display: none;
-}
 
-.option_wrapper:hover .default_image {
-  display: none;
-}
+  &:hover .eye_icon {
+      background-color: var($attPurple);
+      content: url('../../../../../../../assets/images/eye-hover.svg');
+  }
 
-.option_wrapper:hover .hover_image {
-  display: block;
+  .eye_icon {
+      margin-inline-end: 5px;
+      background-color: #F5F1FF;
+      inline-size: 34px;
+      block-size: 34px;
+      border-radius: 50%;
+      padding: 7px;
+  }
 }

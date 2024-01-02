@@ -13,6 +13,7 @@ describe('SelectColumnsPopup', () => {
       data: SelectedColumnsDefaultData,
       onPopupClose: mockOnPopupClose,
       onColumnsSelected: mockOnColumnsSelected,
+      selectedColumns: SelectedColumnsDefaultData
     };
   });
 

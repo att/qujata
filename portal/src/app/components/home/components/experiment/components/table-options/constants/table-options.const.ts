@@ -1,4 +1,9 @@
 import { EXPERIMENT_TABLE_EN } from '../../experiment-table/translate/en';
+import { Environment } from "../../../../../../../../environments/environment";
+import { DashBoardPrefixLink } from "../../../../../../../shared/constants/dashboard";
+
+const generateFromTime: number = Date.now();
+export const initialLink: string = `${Environment.dashboardLinkHost}/${DashBoardPrefixLink}&from=${generateFromTime}`;
 
 export const TableOptionsData = {
   options: [
@@ -9,7 +14,7 @@ export const TableOptionsData = {
 };
 
 export const SelectedColumnsDefaultData = [
-  { value: 'iterations', label: EXPERIMENT_TABLE_EN.TABLE_TITLES.ITERATIONS },
-  { value: 'results.averageCPU', label: EXPERIMENT_TABLE_EN.TABLE_TITLES.AVERAGE_CPU },
-  { value: 'results.averageMemory', label: EXPERIMENT_TABLE_EN.TABLE_TITLES.AVERAGE_MEMORY }
+  { label: 'iterations', value: EXPERIMENT_TABLE_EN.TABLE_TITLES.ITERATIONS },
+  { label: 'results.averageCPU', value: EXPERIMENT_TABLE_EN.TABLE_TITLES.AVERAGE_CPU },
+  { label: 'results.averageMemory', value: EXPERIMENT_TABLE_EN.TABLE_TITLES.AVERAGE_MEMORY }
 ];

@@ -16,11 +16,6 @@ import { SelectColumnsPopup } from './components/table-options/components/select
 import { SelectedColumnsDefaultData, TableOptionsData } from './components/table-options/constants/table-options.const';
 import { convertDataToOptions } from './components/table-options/components/select-columns-popup/utils/convert-data-to-options.utils';
 import { AttSelectOption } from '../../../../shared/components/att-select';
-import { ExternalLink, LinkRel, LinkSize, LinkStyle, LinkTarget } from '../../../../shared/components/att-link';
-import { Environment } from '../../../../../environments/environment';
-import { DashBoardPrefixLink } from '../../../../shared/constants/dashboard';
-import { initialLink } from './constant/experiment.const';
-import EyeSvg from '../../../../../assets/images/eye.svg';
 
 export type IExperimentData = {
   data: ITestRunResult;
@@ -40,20 +35,12 @@ export const ExperimentContent: React.FC<IExperimentData> = (props: IExperimentD
     const [isSelectColumnsPopupOpen, setSelectColumnsPopupOpen] = useState(false);
     const [currentSection, setCurrentSection] = useState(EXPERIMENT_EN.TABS.RESULTS_DATA);
     const [selectedColumns, setSelectedColumns] = useState<AttSelectOption[]>(SelectedColumnsDefaultData);
-    const [grafanaLink, setGrafanaLink] = useState<string>(initialLink);
 
     const { isSpinnerOn }: ISpinner = useSpinnerContext();
     const resultsDataRef = useRef<HTMLDivElement>(null);
     const visualizationRef = useRef<HTMLDivElement>(null);
     const tableOptionsRef = useRef<HTMLDivElement>(null);
     const { data } = props;
-
-    useEffect(() => {
-        if (data) {
-            const dashboardLink: string = `${Environment.dashboardLinkHost}/${DashBoardPrefixLink}&from=${data.start_time}&to=${data.end_time}`;
-            setGrafanaLink(dashboardLink);
-        }
-    }, [data]);
 
     useEffect(() => {
         const handleClickOutside = (event: Event) => {
@@ -86,23 +73,11 @@ export const ExperimentContent: React.FC<IExperimentData> = (props: IExperimentD
         <>
             {isSpinnerOn && renderSpinner()}
             <SubHeader data={data} />
-            <div className={styles.toggles_and_options_wrapper}>
+            <div className={styles.tabs_and_options_wrapper}>
                 <ExperimentTabs currentSection={currentSection} handleButtonClick={handleButtonClick} />
-                <ExternalLink
-                    className={styles.link_wrapper}
-                    link={grafanaLink}
-                    styleType={LinkStyle.TEXT}
-                    size={LinkSize.NONE}
-                    target={LinkTarget.BLANK}
-                    rel={LinkRel.NO_OPENER}
-                >
-                    <div className={styles.grafana_link}>
-                        <img className={styles.eye_icon} src={EyeSvg} alt="eye" />
-                        {EXPERIMENT_EN.LINK_TO_GRAFANA}
-                    </div>
-                </ExternalLink>
                 <div className={styles.table_options_wrapper} ref={tableOptionsRef}>
                     <TableOptions
+                        data={data}
                         handleSelectColumnsClick={() => setSelectColumnsPopupOpen(!isSelectColumnsPopupOpen)}
                         isPopupOpen={isSelectColumnsPopupOpen}
                     />
@@ -111,6 +86,7 @@ export const ExperimentContent: React.FC<IExperimentData> = (props: IExperimentD
                                 data={convertDataToOptions(TableOptionsData)}
                                 onPopupClose={() => setSelectColumnsPopupOpen(false)}
                                 onColumnsSelected={setSelectedColumns}
+                                selectedColumns={selectedColumns}
                             />}
                 </div>
             </div>

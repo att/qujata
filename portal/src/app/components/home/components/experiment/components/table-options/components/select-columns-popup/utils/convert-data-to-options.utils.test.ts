@@ -5,11 +5,19 @@ describe('convertDataToOptions', () => {
   it('should convert data to options', () => {
     const result = convertDataToOptions(TableOptionsData);
 
-    expect(result).toEqual(
-      TableOptionsData.options.map((option) => ({
-        label: option,
-        value: option,
-      }))
-    );
+    expect(result).toEqual([
+      {
+        label: 'iterations',
+        value: TableOptionsData.options[0]
+      },
+      {
+        label: 'results.averageCPU',
+        value: TableOptionsData.options[1]
+      },
+      {
+        label: 'results.averageMemory',
+        value: TableOptionsData.options[2]
+      }
+    ]);
   });
 });

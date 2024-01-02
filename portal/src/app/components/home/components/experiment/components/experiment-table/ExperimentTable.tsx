@@ -29,9 +29,9 @@ export const ExperimentTable: React.FC<ExperimentTableProps> = (props: Experimen
     },
     ...props.selectedColumns.map((column: AttSelectOption) => ({
       id: column.label,
-      header: () => <span>{column.label}</span>,
+      header: () => <span>{column.value}</span>,
       accessor: (row: ITestRunResultData) => {
-        const parts = column.value.split('.');
+        const parts = column.label.split('.');
         let value: any = row;
         for (const part of parts) {
           value = value[part as keyof typeof value];

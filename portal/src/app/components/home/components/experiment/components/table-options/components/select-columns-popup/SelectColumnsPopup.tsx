@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { AttSelectOption } from '../../../../../../../../shared/components/att-select';
 import styles from './SelectColumnsPopup.module.scss';
 import { SELECT_COLUMNS_EN } from './translate/en';
@@ -13,15 +13,16 @@ export interface SelectColumnsPopupProps {
   data: AttSelectOption[];
   onPopupClose: () => void;
   onColumnsSelected: (selectedColumns: AttSelectOption[]) => void;
+  selectedColumns: AttSelectOption[];
 }
 
 export const SelectColumnsPopup: React.FC<SelectColumnsPopupProps> = (props: SelectColumnsPopupProps) => {
-  const [selectedColumns, setSelectedColumns] = useState<AttSelectOption[]>(props.data);
+  const [selectedColumns, setSelectedColumns] = useState<AttSelectOption[]>(props.selectedColumns);
 
   const onSelectedColumnsChanged = useCallback((selected: AttSelectOption): void => {
     setSelectedColumns((prevState: AttSelectOption[]) => {
-      if (prevState.find((item: AttSelectOption) => item.value === selected.value)) {
-        return prevState.filter(item => item.value !== selected.value);
+      if (prevState.find((item: AttSelectOption) => item.label === selected.label)) {
+        return prevState.filter(item => item.label !== selected.label);
       } else {
         return [...prevState, selected];
       }
@@ -34,24 +35,24 @@ export const SelectColumnsPopup: React.FC<SelectColumnsPopupProps> = (props: Sel
   }, [props, selectedColumns]);
 
   return (
-    <form className={styles.select_columns_wrapper}>
+    <div className={styles.select_columns_wrapper}>
       <div className={styles.popup_header}>
-        <label htmlFor={props.data[0].label} className={styles.form_title}>{SELECT_COLUMNS_EN.TITLE}</label>
+        <label className={styles.form_title}>{SELECT_COLUMNS_EN.TITLE}</label>
         <img className={styles.close_icon} src={CloseSvg} alt={CloseAriaLabel} onClick={props.onPopupClose} />
       </div>
       {props.data.map((item: AttSelectOption) => (
         <div className={styles.input_option} key={item.label}>
           <img
-            data-testid={`${item.value}-checkbox-image`}
+            data-testid={`${item.label}-checkbox-image`}
             className={styles.input_option_checkbox_icon}
-            src={selectedColumns.find((selected: AttSelectOption) => selected.value === item.value) ? CheckedSvg : UnCheckedSvg}
+            src={selectedColumns.find((selected: AttSelectOption) => selected.label === item.label) ? CheckedSvg : UnCheckedSvg}
             alt='column-option'
             onClick={() => onSelectedColumnsChanged(item)}
           />
           <input
-            data-testid={`${item.value}-checkbox`}
+            data-testid={`${item.label}-checkbox`}
             type='checkbox'
-            id={item.value}
+            id={item.label}
             className={styles.input_form_item}
             onChange={() => onSelectedColumnsChanged(item)}
             value={item.value}
@@ -79,6 +80,6 @@ export const SelectColumnsPopup: React.FC<SelectColumnsPopupProps> = (props: Sel
           {SELECT_COLUMNS_EN.SAVE}
         </Button>
       </div>
-    </form>
+    </div>
   );
 };

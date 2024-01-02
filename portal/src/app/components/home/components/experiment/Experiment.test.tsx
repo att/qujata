@@ -10,7 +10,6 @@ import { ExperimentTabs } from './components/experiment-tabs';
 import { TableOptions } from './components/table-options';
 import { SelectColumnsPopup } from './components/table-options/components/select-columns-popup';
 import { TABLE_OPTIONS_EN } from './components/table-options/translate/en';
-import { EXPERIMENT_TABLE_EN } from './components/experiment-table/translate/en';
 
 jest.mock('./components/hooks/useExperimentData');
 jest.mock('./components/sub-header');
