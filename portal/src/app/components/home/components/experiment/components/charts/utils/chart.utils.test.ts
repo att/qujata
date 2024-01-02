@@ -5,7 +5,7 @@ import { MOCK_DATA_FOR_CHART_UTILS } from './__mocks__';
 describe('Chart utils', () => {
     test('should get labels from data', () => {
         const { result } = renderHook(() => getLabels(MOCK_DATA_FOR_CHART_UTILS));
-        expect(result.current).toEqual(['Algorithm1 (iteration 1)       ', 'Algorithm2 (iteration 2)       ', 'Algorithm1 (iteration 3)       ']);
+        expect(result.current).toEqual(['Algorithm1       ', 'Algorithm2       ', 'Algorithm1       ']);
     });
 
     test('should get keys of data', () => {
