@@ -1,4 +1,5 @@
 import styles from './Table.module.scss';
+import { useMemo, useState } from 'react';
 import {
   Cell,
   CellContext,
@@ -8,11 +9,17 @@ import {
   HeaderGroup,
   Row,
   flexRender,
+  SortingState,
+  getSortedRowModel,
   getCoreRowModel,
   useReactTable,
 } from '@tanstack/react-table';
-import { useMemo } from 'react';
 import { ITestRunResultData } from '../../models/test-run-result.interface';
+import SortascendingSvg from '../../../../assets/images/sort-ascending.svg';
+import SortDescendingSvg from '../../../../assets/images/sort-descending.svg';
+
+const SortAscendingLabel: string = 'ascending';
+const SortDescendingLabel: string = 'descending';
 
 export interface TableColumn {
   id: string;
@@ -27,6 +34,7 @@ export interface TableProps {
 }
 
 export const Table: React.FC<TableProps> = ({ headers, data }) => {
+  const [sorting, setSorting] = useState<SortingState>([])
   const columns: ColumnDef<ITestRunResultData>[] = useMemo(() => {
     return headers.map(header => ({
       id: header.id,
@@ -39,7 +47,12 @@ export const Table: React.FC<TableProps> = ({ headers, data }) => {
   const table = useReactTable({
     data,
     columns,
+    state: {
+      sorting,
+    },
+    onSortingChange: setSorting,
     getCoreRowModel: getCoreRowModel(),
+    getSortedRowModel: getSortedRowModel(),
   });
 
   return (
@@ -49,7 +62,20 @@ export const Table: React.FC<TableProps> = ({ headers, data }) => {
           <tr key={headerGroup.id}>
             {headerGroup.headers.map((header: Header<ITestRunResultData, unknown>) => (
               <th key={header.id} className={styles.table_titles}>
-                {flexRender(header.column.columnDef.header, header.getContext())}
+                <div
+                {...{
+                  className: header.column.getCanSort()
+                    ? styles.sort_style
+                    : '',
+                  onClick: header.column.getToggleSortingHandler(),
+                }}
+                >
+                  { flexRender(header.column.columnDef.header, header.getContext()) }
+                  { {
+                    asc: <label>{' '}<img src={SortascendingSvg} alt={SortAscendingLabel} /></label>,
+                    desc: <label>{' '}<img src={SortDescendingSvg} alt={SortDescendingLabel} /></label>,
+                  }[header.column.getIsSorted() as string] ?? null }
+                </div>
               </th>
             ))}
           </tr>
@@ -58,7 +84,7 @@ export const Table: React.FC<TableProps> = ({ headers, data }) => {
       <tbody className={styles.table_content}>
         {table.getRowModel().rows.map((row: Row<ITestRunResultData>) => (
           <tr key={row.id}>
-            {row.getVisibleCells().map((cell: Cell<any, unknown>) => (
+            {row.getVisibleCells().map((cell: Cell<ITestRunResultData, unknown>) => (
               <td key={cell.id}>
                 {flexRender(cell.column.columnDef.cell, cell.getContext())}
               </td>

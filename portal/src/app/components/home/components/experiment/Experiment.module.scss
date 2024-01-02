@@ -5,9 +5,14 @@
 }
 
 .toggles_and_options_wrapper {
+    position: sticky;
+    top: 6%;
     display: flex;
     justify-content: space-between;
     align-items: flex-end;
+    z-index: 1;
+    background-color: rgba(var($applicationContentBackgroundColor), 1);
+    padding-block-end: 1%;
 }
 
 .table_options_wrapper {

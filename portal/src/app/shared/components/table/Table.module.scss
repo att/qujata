@@ -17,6 +17,10 @@ td:first-child {
   padding: 16px;
   background-color: var($attPurple);
   color: var($backgroundColorWhite);
+
+  .sort_style {
+    cursor: pointer;
+  }
 }
 
 .table_content {
