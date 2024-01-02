@@ -1,14 +1,13 @@
 @import "src/styles/variables-keys";
-@import "src/styles/z-index";
 
 $inputBorderColor: #DCDFE3;
 
 .select_columns_wrapper {
   background-color: var($backgroundColorWhite);
   position: absolute;
-  top: 140%;
-  left: -168%;
-  width: 400px;
+  inset-block-start: 140%;
+  inset-inline-start: -168%;
+  inline-size: 400px;
   z-index: 1;
   padding: 20px;
   border: 1px solid var($attPurple);

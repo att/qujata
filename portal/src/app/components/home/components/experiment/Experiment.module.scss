@@ -6,7 +6,7 @@
 
 .toggles_and_options_wrapper {
     position: sticky;
-    top: 6%;
+    inset-block-start: 6%;
     display: flex;
     justify-content: space-between;
     align-items: flex-end;
@@ -21,8 +21,8 @@
 
 .spinner_wrapper {
     position: sticky;
-    top: 50%;
-    left: 50%;
+    inset-block-start: 50%;
+    inset-inline-start: 50%;
     text-align: center;   
 }
 
@@ -32,8 +32,8 @@
     position: absolute;
     background-color: #fff;
     opacity: 0.6;
-    top: 0;
-    left: 0;
+    inset-block-start: 0;
+    inset-inline-start: 0;
     z-index: 4;
 }
 
