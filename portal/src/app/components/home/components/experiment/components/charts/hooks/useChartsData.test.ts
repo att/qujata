@@ -17,7 +17,7 @@ describe('useChartsData', () => {
 
     const { result } = renderHook(() => useChartsData(MOCK_DATA_FOR_CHARTS));
     expect(result.current).toEqual({
-      barChartLabels: ['Algorithm1       ', 'Algorithm2       ', 'Algorithm1       '],
+      barChartLabels: ['Algorithm1 (iteration 1)       ', 'Algorithm2 (iteration 2)       ', 'Algorithm1 (iteration 3)       '],
       barChartData: [
         {
           id: 1,
