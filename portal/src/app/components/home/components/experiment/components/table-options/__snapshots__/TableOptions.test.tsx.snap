@@ -11,14 +11,23 @@ exports[`TableOptions renders without crashing 1`] = `
     target="_blank"
   >
     <div
-      class="grafana_link"
+      class="view_in_grafana_wrapper"
     >
       <img
-        alt="eye"
-        class="eye_icon"
+        alt="View in Grafana"
+        class="eye_icon default_image"
         src="eye.svg"
       />
-      View in Grafana
+      <img
+        alt="View in Grafana"
+        class="eye_icon hover_image"
+        src="eye-hover.svg"
+      />
+      <span
+        class="options_text"
+      >
+        View in Grafana
+      </span>
     </div>
   </a>
   <button
@@ -31,11 +40,16 @@ exports[`TableOptions renders without crashing 1`] = `
     >
       <img
         alt="Select columns"
-        class="select_columns_icon"
+        class="select_columns_icon default_image"
         src="select-columns.svg"
       />
+      <img
+        alt="Select columns"
+        class="select_columns_icon hover_image"
+        src="select-columns-checked.svg"
+      />
       <span
-        class="select_columns_text"
+        class="options_text"
       >
         Select columns
       </span>
