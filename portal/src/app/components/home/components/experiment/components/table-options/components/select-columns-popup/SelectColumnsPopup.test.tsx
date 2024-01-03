@@ -1,4 +1,4 @@
-import { render, fireEvent, waitFor } from '@testing-library/react';
+import { render, fireEvent } from '@testing-library/react';
 import { SelectColumnsPopup, SelectColumnsPopupProps } from './SelectColumnsPopup';
 import { SelectedColumnsDefaultData } from '../../constants/table-options.const';
 import { SELECT_COLUMNS_EN } from './translate/en';

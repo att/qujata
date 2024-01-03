@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useState } from 'react';
 import { AttSelectOption } from '../../../../../../../../shared/components/att-select';
 import styles from './SelectColumnsPopup.module.scss';
 import { SELECT_COLUMNS_EN } from './translate/en';

@@ -4,7 +4,6 @@ import SelectColumnsSvg from '../../../../../../../assets/images/select-columns.
 import EyeSvg from '../../../../../../../assets/images/eye.svg';
 import { Button, ButtonActionType, ButtonSize, ButtonStyleType } from '../../../../../../shared/components/att-button';
 import { ExternalLink, LinkRel, LinkSize, LinkStyle, LinkTarget } from '../../../../../../shared/components/att-link';
-import { EXPERIMENT_EN } from '../../translate/en';
 import { useEffect, useState } from 'react';
 import { Environment } from '../../../../../../../environments/environment';
 import { DashBoardPrefixLink } from '../../../../../../shared/constants/dashboard';
