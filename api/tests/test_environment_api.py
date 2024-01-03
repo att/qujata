@@ -1,5 +1,4 @@
 import unittest
-import logging
 from unittest.mock import Mock
 from flask import Flask
 

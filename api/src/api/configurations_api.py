@@ -1,10 +1,3 @@
-import os
-import uuid
-import json
-import time
-import requests
-import logging
-
 from flask import Blueprint, current_app
 from flask_cors import cross_origin
 from src.enums.algorithms import QuantumSafeAlgorithms, ClassicAlgorithms, HybridAlgorithms
@@ -15,9 +8,9 @@ api = Blueprint('qujata-api', __name__)
 @cross_origin(origins=['*'], supports_credentials=True)
 def get_algorithms():
     return {
-        "quantumSafe": [algorithm.value for algorithm in QuantumSafeAlgorithms if algorithm.value in current_app.configurations.allowedAlgorithms],
-        "classic": [algorithm.value for algorithm in ClassicAlgorithms if algorithm.value in current_app.configurations.allowedAlgorithms],
-        "hybrid": [algorithm.value for algorithm in HybridAlgorithms if algorithm.value in current_app.configurations.allowedAlgorithms],
+        "quantumSafe": [algorithm.value for algorithm in QuantumSafeAlgorithms if algorithm.value in current_app.configurations.allowed_algorithms],
+        "classic": [algorithm.value for algorithm in ClassicAlgorithms if algorithm.value in current_app.configurations.allowed_algorithms],
+        "hybrid": [algorithm.value for algorithm in HybridAlgorithms if algorithm.value in current_app.configurations.allowed_algorithms],
     }
 
 

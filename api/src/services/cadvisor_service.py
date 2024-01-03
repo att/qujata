@@ -1,7 +1,4 @@
-from flask import current_app
 import src.services.k8s_service as k8s_service
-from src.exceptions.exceptions import ApiException
-import logging
 
 DOCKER_METRCIS_URL = "{}/api/v1.3/docker/{}"
 K8S_DOCKER_CRI_METRCIS_URL = "http://{}:8080/api/v1.3/containers/kubepods/kubepods/besteffort/pod{}/{}"
@@ -42,7 +39,7 @@ def __build_k8s_metrics_url(service_name):
     elif cri == "containerd":
         return K8S_CONTAINERD_CRI_METRCIS_URL.format(cadvisor_host, pod_uid.replace("-","_"), container_id)
     else:
-        raise Exception("cri: " + cri + " not supported")  
+        raise RuntimeError("cri: " + cri + " not supported")
 
         
 

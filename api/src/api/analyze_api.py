@@ -1,13 +1,8 @@
-import os
-import uuid
-import json
-import time
+
 import logging
 
-from datetime import datetime, timedelta
-from flask import Blueprint, Flask, jsonify, request, current_app
+from flask import Blueprint, jsonify, request, current_app
 from flask_cors import cross_origin
-from src.models.test_suite import TestSuite
 import src.services.analyze_service as analyze_service
 from src.exceptions.exceptions import ApiException
 
@@ -49,6 +44,6 @@ def __validate(data):
     if process_is_running:
         raise ApiException('The previous test is still running. Please try again in few minutes', 'Current test is still running', HTTP_STATUS_LOCKED)
     for algorithm in data['algorithms']:
-        if algorithm not in current_app.configurations.allowedAlgorithms:
+        if algorithm not in current_app.configurations.allowed_algorithms:
             raise ApiException('Algorithm "' + algorithm + '" is not supported', INVALID_DATA_MESSAGE, HTTP_STATUS_BAD_REQUEST)
 

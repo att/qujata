@@ -1,5 +1,4 @@
-from sqlalchemy import create_engine, Column, Integer, String, Date, ForeignKey, TIMESTAMP
-from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy import Column, Integer, String, Date, ForeignKey
 from sqlalchemy.orm import relationship
 from .base import Base
 

@@ -1,5 +1,3 @@
-import logging
-
 from src.enums.metric import Metric
 
 def serialize(test_suite):

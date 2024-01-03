@@ -1,5 +1,3 @@
-import os
-import uuid
 import time
 import requests
 import logging
@@ -9,16 +7,11 @@ from datetime import datetime, timedelta
 from flask import jsonify, current_app
 import src.services.tests_service as tests_service
 import src.services.metrics_service as metrics_service
-from src.models.env_info import EnvInfo
-from src.models.test_suite import TestSuite
-from src.models.test_run import TestRun
 from src.enums.status import Status
-from src.exceptions.exceptions import ApiException
-
-
 
 # constants
 WAIT_MS = 15
+
 
 def analyze(data):
     test_suite = tests_service.create_test_suite(data)
@@ -46,7 +39,7 @@ def analyze(data):
 
 
 def __create_test_run(algorithm, iterations, test_suite_id):
-    start_time=datetime.now()
+    start_time = datetime.now()
     metrics_service.start_collecting()
     status, status_message = __run(algorithm, iterations)
     metrics_service.stop_collecting()

@@ -1,6 +1,4 @@
-import requests
 from flask import current_app
-from datetime import datetime
 from dateutil import parser
 import pytz
 from src.models.test_run_metric import TestRunMetric

@@ -1,5 +1,4 @@
 from kubernetes import client, config
-import logging
 
 NAMESPACE = 'qujata'
 
@@ -13,8 +12,8 @@ def init_cluster():
 def get_pod_by_label(label_name, label_value):
     pods = __get_pods_by_label("=".join([label_name, label_value]))
     if not pods.items:
-        raise Exception(label_value + " pod not found")
-    return pods.items[0] # for now, we handle only one running pod. in the future, we should handle multiple pods.
+        raise RuntimeError(label_value + " pod not found")
+    return pods.items[0]  # for now, we handle only one running pod. in the future, we should handle multiple pods.
 
 
 def get_pod_by_label_and_host(label_name, label_value, host):
@@ -22,7 +21,7 @@ def get_pod_by_label_and_host(label_name, label_value, host):
     for pod in pods.items:
         if pod.status.host_ip == host:
             return pod
-    raise Exception(label_value + " pod not found with host_ip: " + host)
+    raise RuntimeError(label_value + " pod not found with host_ip: " + host)
 
 
 def __get_pods_by_label(label):

@@ -1,17 +1,7 @@
-import os
-import uuid
-import json
-import time
-import requests
-import logging
-
-from datetime import datetime, timedelta
-from flask import Blueprint, Flask, jsonify, request
+from flask import Blueprint, jsonify, request
 from flask_cors import cross_origin
-from src.models.test_suite import TestSuite
 import src.services.tests_service as tests_service
 from src.exceptions.exceptions import ApiException, NotFoundException
-import json
 
 api = Blueprint('qujata-api', __name__)
 # constants

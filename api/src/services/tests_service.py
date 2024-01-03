@@ -1,11 +1,5 @@
-import os
-import uuid
-import time
-import requests
-import logging
-
-from datetime import datetime, timedelta
-from flask import jsonify, current_app
+from datetime import datetime
+from flask import current_app
 from src.models.env_info import EnvInfo
 from src.models.test_suite import TestSuite
 from src.models.test_run import TestRun

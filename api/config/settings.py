@@ -23,7 +23,7 @@ class Configuration:
         self.__validate_environment(config_dict.get('environment'))
         self.__configure_logging(config_dict.get('log_level', 'INFO'))
         self.environment = config_dict.get('environment')
-        self.allowedAlgorithms = config_dict.get('allowedAlgorithms')
+        self.allowed_algorithms = config_dict.get('allowedAlgorithms')
         self.curl_url = config_dict.get('curl_url')
         self.cadvisor_url = config_dict.get('cadvisor_url')
         self.request_timeout = config_dict.get('request_timeout')

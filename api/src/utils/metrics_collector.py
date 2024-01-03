@@ -1,11 +1,9 @@
 import threading
 import requests
 import time
-from datetime import datetime
 import pandas as pd
 import logging
-import json
-from src.exceptions.exceptions import ApiException
+
 import src.services.cadvisor_service as cadvisor_service
 from prettytable import PrettyTable
 
