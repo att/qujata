@@ -249,11 +249,9 @@ class TestMetricsService(unittest.TestCase):
         cadvisor_service.init('kubernetes', 'http://localhost:8080')
         k8s_service.__kubernetes_client = Mock(spec=CoreV1Api)
         
-        # Create a mock V1PodList instance
         mock_pod_list = V1PodList(
             items=[],
         )
-        # k8s_service.__kubernetes_client.list_namespaced_pod.return_value = mock_pod_list
         with patch('kubernetes.client.CoreV1Api.list_namespaced_pod') as mock_list_pod:
             with patch('kubernetes.config.load_incluster_config') as load_incluster_config:
                 k8s_service.init_cluster()
