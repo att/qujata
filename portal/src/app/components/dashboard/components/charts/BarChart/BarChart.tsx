@@ -1,4 +1,4 @@
-import { ChartData, ChartOptions, ChartType, TooltipItem, Chart } from 'chart.js';
+import { ChartData, ChartOptions, TooltipItem, Chart, LegendItem, ChartDataset } from 'chart.js';
 import { Bar } from 'react-chartjs-2';
 import { useEffect, useRef, useState } from 'react';
 import { IDatasets } from './models/BarChart.model';
@@ -20,7 +20,7 @@ export const BarChart: React.FC<BarChartProps> = (props: BarChartProps) => {
     const [dataValues, setDataValues] = useState();
     const [datasets, setDatasets] = useState<IDatasets[]>([]);
     const [algorithmsColors, setAlgorithmsColors] = useState<{[key: string]: string}>();
-    const chartRef = useRef<Chart<ChartType, ChartData<ChartType>, unknown>>(null);
+    const chartRef = useRef<any>(null);
 
     useEffect(() => {
         const temp = data.map((obj: any) => obj.results[keyOfData]);
@@ -64,6 +64,39 @@ export const BarChart: React.FC<BarChartProps> = (props: BarChartProps) => {
         },
         plugins: {
           ...defaultOptions.plugins,
+          legend: {
+            ...defaultOptions.plugins?.legend,
+            labels: {
+              ...defaultOptions.plugins?.legend?.labels,
+              filter: function(item: LegendItem, chart: ChartData) {
+                const prefix = item.text.split(' (iteration')[0];
+
+                const firstIndex = chart?.datasets?.findIndex((dataset: ChartDataset) => dataset?.label?.split(' (iteration')[0] === prefix);
+
+                if (item.datasetIndex !== firstIndex) {
+                  return false;
+                }
+
+                return true;
+              },
+              generateLabels: function(chart: Chart) {
+                if (!chart || !chart.data) {
+                  return [];
+                }
+              
+                const defaultLabels = Chart.defaults?.plugins?.legend?.labels?.generateLabels(chart);              
+              
+                // Modify the labels to remove the suffix
+                const modifiedLabels = defaultLabels?.map(label => {
+                  const prefix = label.text.split(' (iteration')[0];
+                  label.text = prefix;
+                  return label;
+                });
+              
+                return modifiedLabels;
+              },
+            }
+          },
           title: {
             display: true,
             text: title,

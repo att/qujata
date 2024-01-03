@@ -20,15 +20,15 @@
   position: absolute;
   background: var($backgroundColorWhite);
   opacity: 0.6;
-  top: 0;
-  left: 0;
+  inset-block-start: 0;
+  inset-inline-start: 0;
   z-index: $appSpinnerZindex;
 }
 
 .app_spinner {
   position: sticky;
-  top: 50%;
-  left: 50%;
+  inset-block-start: 50%;
+  inset-inline-start: 50%;
   text-align: center;
 }
 

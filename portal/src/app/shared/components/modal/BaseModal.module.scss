@@ -4,7 +4,7 @@ $modalPaddingBlock: 24px;
 
 .title {
     position: sticky;
-    top: 0;
+    inset-block-start: 0;
     background-color: var($backgroundColorWhite);
     z-index: 1;
     align-items: baseline;
@@ -36,7 +36,7 @@ $modalPaddingBlock: 24px;
 
 .footer_container {
     position: sticky;
-    bottom: 0;
+    inset-block-end: 0;
     padding: 24px;
     gap: 16px;
 }
@@ -49,8 +49,8 @@ $modalPaddingBlock: 24px;
 
 .modal_spinner {
     position: absolute;
-    top: 50%;
-    left: 50%;
+    inset-block-start: 50%;
+    inset-inline-start: 50%;
     padding: 0;
     z-index: 1;
 }

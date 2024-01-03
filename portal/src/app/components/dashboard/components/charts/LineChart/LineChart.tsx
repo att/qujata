@@ -86,7 +86,7 @@ export const LineChart: React.FC<LineChartProps> = (props: LineChartProps) => {
           (event.currentTarget as HTMLElement).style.cursor = 'default';
         }}
       >
-        <Line ref={chartRef} data={data} options={options} style={{ height: '450px' }} className={styles.line_chart} />
+        <Line ref={chartRef} data={data} options={options} style={{ blockSize: '450px' }} className={styles.line_chart} />
       </div>
     );
 }

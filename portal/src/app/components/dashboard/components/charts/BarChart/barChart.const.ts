@@ -4,6 +4,8 @@ import { CHARTS_EN } from '../../../../home/components/experiment/components/cha
 export const colors: string[] = ['#086CE1', '#FF8500', '#05BBFF', '#6D3FFC'];
 
 export let defaultOptions: ChartOptions<any> = {
+    responsive: true,
+    aspectRatio: 2, // The chart will have a width:height ratio of 2:1
     scales: {
         y: {
             title: {

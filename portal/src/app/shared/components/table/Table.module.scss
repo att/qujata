@@ -1,0 +1,35 @@
+@import "src/styles/variables-keys";
+
+table {
+  margin-block-start: 10px;
+  border-spacing: 0;
+  border: 1px solid var($backgroundColorGray);
+  inline-size: 100%;
+  table-layout: fixed;
+}
+
+th:first-child,
+td:first-child {
+  inline-size: 80px;
+}
+
+.table_titles {
+  padding: 16px;
+  background-color: var($attPurple);
+  color: var($backgroundColorWhite);
+
+  .sort_style {
+    cursor: pointer;
+  }
+}
+
+.table_content {
+  background-color: var($backgroundColorWhite);
+  
+  td {
+    padding: 16px;
+    border-block-end: 1px solid var($backgroundColorGray);
+    text-align: center;
+    vertical-align: middle;
+  }
+}

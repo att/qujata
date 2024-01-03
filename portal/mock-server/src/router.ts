@@ -6,8 +6,7 @@ const router: CoreRouter = Router();
 
 router.post('/analyze', async (req: Request, res: Response) => {
   console.log(`-${req.method} ${req.url}`);
-  // todo replace with - const data = {testSuiteId: 'testSuiteId-123'};
-  const data = { from: '1698747472962', to: '1698747480624', test_suite_id: '1' };
+  const data = { test_suite_id: '1' };
 
   setTimeout(() => {
     res.json(data);
