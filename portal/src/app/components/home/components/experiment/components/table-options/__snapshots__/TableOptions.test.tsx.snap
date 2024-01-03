@@ -1,0 +1,45 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`TableOptions renders without crashing 1`] = `
+<div
+  class="table_options_wrapper"
+>
+  <a
+    class="link_wrapper text_link"
+    href="http://localhost:3000/d/b3adde71-2231-4c2f-b216-3af0a16d8d9v/qujata-analysis?orgId=1&from=2021-07-26T12:00:00.000Z&to=2021-07-26T12:00:00.000Z"
+    rel="noopener"
+    target="_blank"
+  >
+    <div
+      class="grafana_link"
+    >
+      <img
+        alt="eye"
+        class="eye_icon"
+        src="eye.svg"
+      />
+      View in Grafana
+    </div>
+  </a>
+  <button
+    aria-label="Select columns"
+    class="button wrapper_button"
+    type="button"
+  >
+    <div
+      class="options_wrapper"
+    >
+      <img
+        alt="Select columns"
+        class="select_columns_icon"
+        src="select-columns.svg"
+      />
+      <span
+        class="select_columns_text"
+      >
+        Select columns
+      </span>
+    </div>
+  </button>
+</div>
+`;
