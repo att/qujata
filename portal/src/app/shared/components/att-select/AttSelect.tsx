@@ -58,6 +58,7 @@ const AttSelectPrivate: AttSelectPrivateType = (props: AttSelectProps, ref: Forw
     placeholder={props.placeholder}
     isMulti={props.isMulti}
     isClearable={props.isClearable}
+    // menuIsOpen={true}
     closeMenuOnSelect={props.closeMenuOnSelect}
     hideSelectedOptions={props.hideSelectedOptions}
     required={props.required}

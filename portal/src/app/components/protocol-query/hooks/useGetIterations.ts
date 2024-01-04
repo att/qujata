@@ -24,7 +24,10 @@ export function useGetIterations(): IUseGetIterations {
     useEffect(() => {
       if (data) {
         const iterationsOptions: AttSelectOption[] = data.iterations.map((iteration: number) => ({ label: iteration.toString(), value: iteration.toString() }));
-        setIterations(iterationsOptions);
+        setIterations([
+          ...iterationsOptions,
+          { label: 'Add New', value: 'Add New', metadata: { isInput: true }}
+        ]);
       }
     }, [data]);
 

@@ -11,6 +11,31 @@
   cursor: pointer;
 }
 
+.option_wrapper {
+  inline-size: 17px;
+  block-size: 17px;
+  margin-inline-end: 12px;
+}
+
+.add_new_wrapper {
+  display: flex;
+  align-items: center;
+  margin-block-start: 5px;
+
+  .add_new_checkbox_wrapper {
+    inline-size: 17px;
+    block-size: 17px;
+    margin-inline-end: 12px;
+  }
+
+  .add_new_input_option {
+    border-radius: 8px;
+    border: 1px solid var($attPurple);
+    inline-size: 100%;
+    block-size: 35px;
+  }
+}
+
 .iterations_input_option {
   margin-inline-end: 10px;
   cursor: pointer;
@@ -18,10 +43,4 @@
 
 .input_option {
   display: none;
-}
-
-.option_wrapper {
-  inline-size: 17px;
-  block-size: 17px;
-  margin-inline-end: 12px;
 }

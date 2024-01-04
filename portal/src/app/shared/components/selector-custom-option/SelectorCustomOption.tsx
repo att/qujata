@@ -1,8 +1,9 @@
-import { OptionProps, components } from 'react-select';
 import styles from './SelectorCustomOption.module.scss';
+import cn from 'classnames';
+import { useEffect, useRef, useState } from 'react';
+import { OptionProps, components } from 'react-select';
 import { AttSelectOption } from '../att-select';
 import { algorithmSections } from '../../../components/protocol-query/constants';
-import cn from 'classnames';
 import CheckedSvg from '../../../../assets/images/checked.svg';
 import UnCheckedSvg from '../../../../assets/images/unchecked.svg';
 
@@ -30,17 +31,57 @@ export const AlgorithmsSelectorCustomOption: React.FC<SelectorCustomOptionProps>
 };
 
 export const IterationsSelectorCustomOption: React.FC<SelectorCustomOptionProps> = (props: SelectorCustomOptionProps) => {
+  const [inputValue, setInputValue] = useState('');
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    console.log(event.target.value);
+    setInputValue(event.target.value);
+  };
+
+  useEffect(() => {
+    if (props.isSelected) {
+      inputRef.current?.focus();
+    }
+  }, [props.isSelected]);
+  
   return (
-    <components.Option {...props}>
-      <div className={styles.option_wrapper}>
-        <input
-          type="checkbox"
-          className={cn(styles.iterations_input_option, styles.input_option)}
-          checked={props.isSelected}
-          onChange={() => props.onOptionChanged} />
-          <img src={props.isSelected ? CheckedSvg : UnCheckedSvg} alt="checked" />
-      </div>
-      <span>{props.label}</span>
-    </components.Option>
+    <>
+      {!props.data.metadata && (
+        <components.Option {...props}>
+          <div className={styles.option_wrapper}>
+            <input
+              type="checkbox"
+              className={cn(styles.iterations_input_option, styles.input_option)}
+              checked={props.isSelected}
+              onChange={() => props.onOptionChanged}
+            />
+            <img src={props.isSelected ? CheckedSvg : UnCheckedSvg} alt="checked" />
+          </div>
+          <span>{props.label}</span>
+        </components.Option>
+      )}
+      {props.data.metadata?.isInput && (
+        <components.Option {...props}>
+          <div className={styles.add_new_wrapper}>
+            <div className={styles.add_new_checkbox_wrapper}>
+              <input
+                type="checkbox"
+                className={cn(styles.iterations_input_option, styles.input_option)}
+                checked={props.isSelected}
+                onChange={() => props.onOptionChanged}
+              />
+              <img src={props.isSelected ? CheckedSvg : UnCheckedSvg} alt="checked" />
+            </div>
+            <input
+              ref={inputRef}
+              value={inputValue}
+              onChange={handleInputChange}
+              className={styles.add_new_input_option}
+            />
+          </div>
+        </components.Option>
+      )}
+    </>
   );
 };
