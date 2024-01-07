@@ -1,5 +1,5 @@
 import unittest
-from datetime import datetime
+from datetime import datetime, timedelta
 import json
 
 import requests
@@ -8,6 +8,7 @@ from unittest.mock import Mock, MagicMock, patch
 
 from src.api.analyze_api import api
 from src.enums.status import Status
+from src.enums.metric import Metric
 import src.api.analyze_api as analyze_api
 from config.settings import load_config
 from src.utils.database_manager import DatabaseManager
@@ -18,9 +19,12 @@ POST_REQUEST = 'requests.post'
 GET_REQUEST = 'requests.get'
 INVALID_DATA_PROVIDED = "Invalid data provided"
 
-
+client_metrics = {str(datetime.now() + timedelta(seconds=30)) + "123Z":{"cpu":3.6, "memory":254}, str(datetime.now() + timedelta(seconds=36))+ "123Z":{"cpu":3.8, "memory":234}}
+server_metrics = {str(datetime.now() + timedelta(seconds=30))+ "123Z":{"cpu":2.3, "memory":154}, str(datetime.now() + timedelta(seconds=36))+ "123Z":{"cpu":2.7, "memory":156}}
+metrics = [client_metrics, server_metrics]
 @patch('src.services.metrics_service.start_collecting', return_value=None)
 @patch('src.services.metrics_service.stop_collecting', return_value=None)
+@patch('src.services.metrics_service.get_metrics', return_value=metrics)
 class TestAnalyzeAPI(unittest.TestCase):
     def setUp(self):
         self.app = Flask(__name__)
@@ -30,7 +34,7 @@ class TestAnalyzeAPI(unittest.TestCase):
         self.app.database_manager = Mock(spec=DatabaseManager)
 
 
-    def test_analyze(self, mock_start_collecting, mock_stop_collecting):
+    def test_analyze(self, mock_start_collecting, mock_stop_collecting, mock_get_metrics):
         input_data = {
             "algorithms":["kyber512"],
             "iterationsCount": [1000, 2000],
@@ -49,8 +53,17 @@ class TestAnalyzeAPI(unittest.TestCase):
                                         content_type=CONTENT_TYPE)
 
             
-                self.assertEqual(self.app.database_manager.create.call_count, 11)# 1 for the test suite, and 2 for test runs and 4*2(8) for test run results
-            
+                self.assertEqual(self.app.database_manager.create.call_count, 11)# 1 for the test suite, and 2 for test runs and 4*2(8) for test run metrics
+                db_call = self.app.database_manager.create.call_args_list
+                self.assertEqual(db_call[2].args[0].metric_name, Metric.CLIENT_AVERAGE_CPU)
+                self.assertEqual(db_call[2].args[0].value, 3.7)
+                self.assertEqual(db_call[3].args[0].metric_name, Metric.CLIENT_AVERAGE_MEMORY)
+                self.assertEqual(db_call[3].args[0].value, 244.0)
+                self.assertEqual(db_call[4].args[0].metric_name, Metric.SERVER_AVERAGE_CPU)
+                self.assertEqual(db_call[4].args[0].value, 2.5)
+                self.assertEqual(db_call[5].args[0].metric_name, Metric.SERVER_AVERAGE_MEMORY)
+                self.assertEqual(db_call[5].args[0].value, 155.0)
+                
                 self.assertEqual(response.status_code, 200)
                 # Check the response content
                 response_data = json.loads(response.data)
@@ -60,7 +73,7 @@ class TestAnalyzeAPI(unittest.TestCase):
 
 
 
-    def test_analyze_return_general_error(self, mock_start_collecting, mock_stop_collecting):
+    def test_analyze_return_general_error(self, mock_start_collecting, mock_stop_collecting, mock_get_metrics):
         input_data = {
             "algorithms":["kyber512"],
             "iterationsCount": [1000],
@@ -80,7 +93,7 @@ class TestAnalyzeAPI(unittest.TestCase):
                 self.assertEqual(response_json["error"], "An error occurred while processing the request")
                 self.assertEqual(response_json["message"], "")
 
-    def test_analyze_with_invalid_iterations_count(self, mock_start_collecting, mock_stop_collecting):
+    def test_analyze_with_invalid_iterations_count(self, mock_start_collecting, mock_stop_collecting, mock_get_metrics):
         input_data = {
             "algorithms": ["kyber512"],
             "iterationsCount": [-1],
@@ -96,7 +109,7 @@ class TestAnalyzeAPI(unittest.TestCase):
         self.assertEqual(response_json["message"], "The number of iterations should be greater than 0")
 
 
-    def test_analyze_with_invalid_algorithm(self, mock_start_collecting, mock_stop_collecting):
+    def test_analyze_with_invalid_algorithm(self, mock_start_collecting, mock_stop_collecting, mock_get_metrics):
         input_data = {
             "algorithms":["invalid_algorithm"],
             "iterationsCount": [1000],
@@ -112,7 +125,7 @@ class TestAnalyzeAPI(unittest.TestCase):
         self.assertEqual(response_json["message"], "Algorithm \"invalid_algorithm\" is not supported")
 
    
-    def test_analyze_with_invalid_body(self, mock_start_collecting, mock_stop_collecting):  
+    def test_analyze_with_invalid_body(self, mock_start_collecting, mock_stop_collecting, mock_get_metrics):  
         input_data = {
             "iterationsCount": 1000,
             "experimentName": "name",
@@ -126,7 +139,7 @@ class TestAnalyzeAPI(unittest.TestCase):
         self.assertEqual(response_json["error"], INVALID_DATA_PROVIDED)
         self.assertEqual(response_json["message"], "Missing properties, required properties: algorithms, iterationsCount, experimentName, description")
 
-    def test_analyze_with_curl_failure(self, mock_start_collecting, mock_stop_collecting):
+    def test_analyze_with_curl_failure(self, mock_start_collecting, mock_stop_collecting, mock_get_metrics):
         input_data = {
             "algorithms":["kyber512"],
             "iterationsCount": [1000],
@@ -148,7 +161,7 @@ class TestAnalyzeAPI(unittest.TestCase):
 
 
 
-    def test_analyze_with_missing_env_info(self, mock_start_collecting, mock_stop_collecting):
+    def test_analyze_with_missing_env_info(self, mock_start_collecting, mock_stop_collecting, mock_get_metrics):
         input_data = {
             "algorithms":["kyber512"],
             "iterationsCount": [1000],
@@ -165,7 +178,7 @@ class TestAnalyzeAPI(unittest.TestCase):
         self.assertEqual(response_json["message"], "Missing env info in database")
 
 
-    def test_analyze_with_423(self, mock_start_collecting, mock_stop_collecting):
+    def test_analyze_with_423(self, mock_start_collecting, mock_stop_collecting, mock_get_metrics):
         with patch(GET_REQUEST) as mock_get:
             mock_get.return_value.status_code = 200
             input_data = {
@@ -185,7 +198,7 @@ class TestAnalyzeAPI(unittest.TestCase):
             self.assertEqual(response_json["error"], "Current test is still running")
             analyze_api.process_is_running = False
 
-    def test_analyze_sleep_between_tests(self, mock_start_collecting, mock_stop_collecting):
+    def test_analyze_sleep_between_tests(self, mock_start_collecting, mock_stop_collecting, mock_get_metrics):
         input_data = {
             "algorithms":["kyber512","frodo640aes"],
             "iterationsCount": [1000],
