@@ -34,6 +34,7 @@ class TestMetricsService(unittest.TestCase):
         self.app.database_manager = Mock(spec=DatabaseManager)
         
 
+
     def test_collecting_docker(self):
         cadvisor_service.init('docker', CADVISOR_URL)
         with patch(POST_REQUEST) as mock_post:

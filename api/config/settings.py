@@ -1,6 +1,7 @@
 import logging
 import os
 from dotenv import load_dotenv
+from src.enums.environment import Environment
 
 
 def load_config(app):
@@ -8,7 +9,7 @@ def load_config(app):
     app.configurations = Configuration({
         'environment': os.environ.get('ENVIRONMENT'),
         'log_level': os.environ.get('LOG_LEVEL', 'INFO'),
-        'allowedAlgorithms': os.environ.get('DEFAULT_GROUPS',"kyber512:frodo640aes").split(":"),
+        'allowed_algorithms': os.environ.get('DEFAULT_GROUPS',"kyber512:frodo640aes").split(":"),
         'curl_url': os.environ.get('CURL_URL'),
         'cadvisor_url': os.environ.get('CADVISOR_URL'),
         'request_timeout': os.environ.get('REQUEST_TIMEOUT', 3600),
@@ -23,7 +24,7 @@ class Configuration:
         self.__validate_environment(config_dict.get('environment'))
         self.__configure_logging(config_dict.get('log_level', 'INFO'))
         self.environment = config_dict.get('environment')
-        self.allowed_algorithms = config_dict.get('allowedAlgorithms')
+        self.allowed_algorithms = config_dict.get('allowed_algorithms')
         self.curl_url = config_dict.get('curl_url')
         self.cadvisor_url = config_dict.get('cadvisor_url')
         self.request_timeout = config_dict.get('request_timeout')
@@ -32,7 +33,7 @@ class Configuration:
         self.iterations_options = config_dict.get('iterations_options')
 
     def __validate_environment(self, environment):
-        valid_environments = ['docker', 'kubernetes']
+        valid_environments = [e.value for e in Environment]
         if environment not in valid_environments:
             raise ValueError(f"Invalid environment: {environment}. Must be one of {valid_environments}")
 

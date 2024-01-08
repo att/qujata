@@ -14,6 +14,8 @@ import logging
 
 # constants
 HTTP_STATUS_UNPROCESSABLE_ENTITY = 422
+TYPE_CPU = "cpu"
+TYPE_MEMORY = "memory"
 
 def create_test_suite(data):
     env_info = current_app.database_manager.get_latest(EnvInfo)
@@ -93,8 +95,8 @@ def __create_test_run_metrics(test_run, client_metrics, server_metrics):
 
 def __save_metrics(cpu_metric_name, memory_metric_name, metrics, test_run):
     cpu, memory = __calculate_average(metrics, test_run.start_time)
-    __save_metric_to_db(test_run, cpu_metric_name, cpu, "cpu")
-    __save_metric_to_db(test_run, memory_metric_name, memory, "memory")
+    __save_metric_to_db(test_run, cpu_metric_name, cpu, TYPE_CPU)
+    __save_metric_to_db(test_run, memory_metric_name, memory, TYPE_MEMORY)
 
 
 def __calculate_average(metrics, start_time):
@@ -111,9 +113,9 @@ def __calculate_average(metrics, start_time):
     return cpu/counter, memory/counter
 
 def __save_metric_to_db(test_run, metric_name, metric_value, metric_type):
-    if metric_type == 'cpu':
+    if metric_type == TYPE_CPU:
         metric_value = round(metric_value, 2)
-    elif metric_type == 'memory':
+    elif metric_type == TYPE_MEMORY:
         metric_value = round(metric_value, 0)
     test_run_metric = TestRunMetric(
         test_run_id=test_run.id,
