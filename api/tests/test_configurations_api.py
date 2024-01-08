@@ -1,16 +1,12 @@
 import unittest
-from datetime import datetime
 import json
 
-import requests
 from flask import Flask
-from unittest.mock import Mock, MagicMock, patch
+from unittest.mock import Mock
 
 from src.api.configurations_api import api
 from config.settings import load_config
 from src.utils.database_manager import DatabaseManager
-import logging
-
 
 
 class TestConfigurationsAPI(unittest.TestCase):

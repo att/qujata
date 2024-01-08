@@ -1,198 +1,297 @@
 import unittest
+import logging
+import time
 from datetime import datetime, timezone
-from unittest.mock import patch, MagicMock, Mock, call, ANY
+from unittest.mock import patch, Mock
 
 import requests
 from flask import Flask
 from config.settings import load_config
-from src.services.metrics_service import aggregate, __query_prometheus_avg_metric, __save_metric_to_db
-from src.models.test_run_metric import TestRunMetric
-from src.enums.metric import Metric
-import logging
+import src.services.metrics_service as metrics_service
+import src.services.k8s_service as k8s_service
+import src.services.cadvisor_service as cadvisor_service
+from src.models.test_run import TestRun
 from src.utils.database_manager import DatabaseManager
+from kubernetes.client import CoreV1Api, V1PodList, V1Pod, V1PodStatus, V1ObjectMeta, V1ContainerStatus
+
+CADVISOR_URL = 'http://localhost:8080'
+LIST_NAMESPACED_POD = 'kubernetes.client.CoreV1Api.list_namespaced_pod'
+KUBERNETES_CONFIG = 'kubernetes.config.load_incluster_config'
+POST_REQUEST = 'requests.post'
+
+
+docker_response = { "docker":{ "id": "id", "name": "/docker", "aliases": [ "docker", "docker" ], "namespace": "docker", "spec": { "creation_time": "2023-12-15T01:08:18.235177452Z", "labels": { "io.cri-containerd.kind": "container", "io.kubernetes.container.name": "curl", "io.kubernetes.pod.name": "qujata-curl-5565f95dbc-wf4dt", "io.kubernetes.pod.namespace": "qujata", "io.kubernetes.pod.uid": "9422c26d-d44c-4f7c-9901-b05c2d0d908d" }, "has_cpu": True, "cpu": { "limit": 2, "max_limit": 0, "mask": "0-3", "period": 100000 }, "has_memory": True, "memory": { "limit": 18446744073709551615, "swap_limit": 18446744073709551615 }, "has_hugetlb": False, "has_network": False, "has_processes": True, "processes": { "limit": 19178 }, "has_filesystem": False, "has_diskio": True, "has_custom_metrics": False, "image": "docker.io/qujata/curl:1.0.0" }, "stats": [ { "timestamp": "2023-12-25T21:07:14.471924967Z", "cpu": { "usage": { "total": 275599403000, "user": 193932396000, "system": 81667006000 } }, "memory": { "usage": 38428672 } }, { "timestamp": "2023-12-25T21:07:18.546007469Z", "cpu": { "usage": { "total": 275599403000, "user": 193932396000, "system": 81667006000 } }, "memory": { "usage": 38428672 } }, { "timestamp": "2023-12-25T21:07:58.564316069Z", "cpu": { "usage": { "total": 275599566000, "user": 193932511000, "system": 81667054000 }, "load_average": 0 }, "memory": { "usage": 38428672 } } ] }}
+k8s_response = { "id": "id", "name": "/kubepods.slice/xxx", "aliases": [ "a57b1eb676f6d93426d58ed45e063f76f67d23d1f42bf543d8e851af952d5a67", "/kubepods.slice/kubepods-besteffort.slice/kubepods-besteffort-pod9422c26d_d44c_4f7c_9901_b05c2d0d908d.slice/cri-containerd-a57b1eb676f6d93426d58ed45e063f76f67d23d1f42bf543d8e851af952d5a67.scope" ], "namespace": "containerd", "spec": { "creation_time": "2023-12-15T01:08:18.235177452Z", "labels": { "io.cri-containerd.kind": "container", "io.kubernetes.container.name": "curl", "io.kubernetes.pod.name": "qujata-curl-5565f95dbc-wf4dt", "io.kubernetes.pod.namespace": "qujata", "io.kubernetes.pod.uid": "9422c26d-d44c-4f7c-9901-b05c2d0d908d" }, "has_cpu": True, "cpu": { "limit": 2, "max_limit": 0, "mask": "0-3", "period": 100000 }, "has_memory": True, "memory": { "limit": 18446744073709551615, "swap_limit": 18446744073709551615 }, "has_hugetlb": False, "has_network": False, "has_processes": True, "processes": { "limit": 19178 }, "has_filesystem": False, "has_diskio": True, "has_custom_metrics": False, "image": "docker.io/qujata/curl:1.0.0" }, "stats": [ { "timestamp": "2023-12-25T21:07:14.471924967Z", "cpu": { "usage": { "total": 275599403000, "user": 193932396000, "system": 81667006000 } }, "memory": { "usage": 38428672 } }, { "timestamp": "2023-12-25T21:07:18.546007469Z", "cpu": { "usage": { "total": 275599403000, "user": 193932396000, "system": 81667006000 } }, "memory": { "usage": 38428672 } }, { "timestamp": "2023-12-25T21:07:58.564316069Z", "cpu": { "usage": { "total": 275599566000, "user": 193932511000, "system": 81667054000 }, "load_average": 0 }, "memory": { "usage": 38428672 } } ] }
+expected_curl_metrics_collector_data = {'2023-12-25T21:07:18.546007469Z': {'cpu': 0.0, 'memory': 36.6484375}, '2023-12-25T21:07:58.564316069Z': {'cpu': 4.073167074816332e-06, 'memory': 36.6484375}}
+expected_nginx_metrics_collector_data = {'2023-12-25T21:07:18.546007469Z': {'cpu': 0.0, 'memory': 36.6484375}, '2023-12-25T21:07:58.564316069Z': {'cpu': 4.073167074816332e-06, 'memory': 36.6484375}}
 
 class TestMetricsService(unittest.TestCase):
-
 
     def setUp(self):
         self.app = Flask(__name__)
         self.client = self.app.test_client()
         load_config(self.app)
-        self.app.configurations.prometheus_url = 'http://localhost:9090'
         self.app.database_manager = Mock(spec=DatabaseManager)
-
-    def test_aggregate_docker(self):
-        self.app.configurations.environment = 'docker'
-        test_run_id = 1
-        start_time = datetime(2023, 12, 6, 11, 45, 0, tzinfo=timezone.utc)
-        end_time = datetime(2023, 12, 6, 11, 45, 30, tzinfo=timezone.utc)
-        test_run = MagicMock(id=test_run_id, start_time=start_time, end_time=end_time)
-
-        query_responses = {
-            'status': 'success',
-            'data':
-                {
-                    'resultType': 'vector',
-                    'result': [
-                        {
-                            'value': [1701866456, '0.001311722311087755']
-                        }
-                    ]
-                }
-        }
-
-        with self.app.test_request_context():
-            with patch('requests.get') as mock_get:
-                mock_get.return_value.status_code = 200
-                mock_get.return_value.json.return_value = query_responses
-                aggregate(test_run)
-                # Verify that requests.get was called 4 times with the expected parameters
-                expected_calls = [
-                    call(f"{self.app.configurations.prometheus_url}/api/v1/query", params={'query': 'avg_over_time(rate(container_cpu_usage_seconds_total{name="qujata-curl"}[30s])[30s:1s])', 'time': 1701863130}),
-                    call(f"{self.app.configurations.prometheus_url}/api/v1/query", params={'query': 'avg_over_time(rate(container_memory_usage_bytes{name="qujata-curl"}[30s])[30s:1s])', 'time': 1701863130}),
-                    call(f"{self.app.configurations.prometheus_url}/api/v1/query", params={'query': 'avg_over_time(rate(container_cpu_usage_seconds_total{name="qujata-nginx"}[30s])[30s:1s])', 'time': 1701863130}),
-                    call(f"{self.app.configurations.prometheus_url}/api/v1/query", params={'query': 'avg_over_time(rate(container_memory_usage_bytes{name="qujata-nginx"}[30s])[30s:1s])', 'time': 1701863130}),
-                ]
-                mock_get.assert_has_calls(expected_calls, any_order=True)
-
-            self.assertEqual(self.app.database_manager.create.call_count, 4)
-
-    def test_aggregate_equals_start_end_time(self):
-        self.app.configurations.environment = 'docker'
-        test_run_id = 1
-        start_time = datetime(2023, 12, 6, 11, 45, 0, tzinfo=timezone.utc)
-        end_time = datetime(2023, 12, 6, 11, 45, 0, tzinfo=timezone.utc)
-        test_run = MagicMock(id=test_run_id, start_time=start_time, end_time=end_time)
-
-        query_responses = {
-            'status': 'success',
-            'data':
-                {
-                    'resultType': 'vector',
-                    'result': [
-                        {
-                            'value': [1701866456, '0.001311722311087755']
-                        }
-                    ]
-                }
-        }
-
-        with self.app.test_request_context():
-            with patch('requests.get') as mock_get:
-                mock_get.return_value.status_code = 200
-                mock_get.return_value.json.return_value = query_responses
-                aggregate(test_run)
-                # Verify that requests.get was called 4 times with the expected parameters
-                expected_calls = [
-                    call(f"{self.app.configurations.prometheus_url}/api/v1/query", params={'query': 'avg_over_time(rate(container_cpu_usage_seconds_total{name="qujata-curl"}[30s])[1s:1s])', 'time': 1701863100}),
-                    call(f"{self.app.configurations.prometheus_url}/api/v1/query", params={'query': 'avg_over_time(rate(container_memory_usage_bytes{name="qujata-curl"}[30s])[1s:1s])', 'time': 1701863100}),
-                    call(f"{self.app.configurations.prometheus_url}/api/v1/query", params={'query': 'avg_over_time(rate(container_cpu_usage_seconds_total{name="qujata-nginx"}[30s])[1s:1s])', 'time': 1701863100}),
-                    call(f"{self.app.configurations.prometheus_url}/api/v1/query", params={'query': 'avg_over_time(rate(container_memory_usage_bytes{name="qujata-nginx"}[30s])[1s:1s])', 'time': 1701863100}),
-                ]
-                mock_get.assert_has_calls(expected_calls, any_order=True)
-
-            self.assertEqual(self.app.database_manager.create.call_count, 4)
+        
 
 
-    def test_aggregate_kubernetes(self):
-        self.app.configurations.environment = 'kubernetes'
-        test_run_id = 1
-        start_time = datetime(2023, 12, 6, 11, 45, 0, tzinfo=timezone.utc)
-        end_time = datetime(2023, 12, 6, 11, 45, 30, tzinfo=timezone.utc)
-        test_run = MagicMock(id=test_run_id, start_time=start_time, end_time=end_time)
+    def test_collecting_docker(self):
+        cadvisor_service.init('docker', CADVISOR_URL)
+        with patch(POST_REQUEST) as mock_post:
+            mock_post.return_value.status_code = 200
+            mock_post.return_value.json.return_value = docker_response
+            metrics_service.start_collecting()
+            self.assertTrue(metrics_service.client_collector._MetricsCollector__locked)
+            self.assertTrue(metrics_service.server_collector._MetricsCollector__locked)
+            time.sleep(5)
+            metrics_service.stop_collecting()
+            self.assertEqual(mock_post.call_count, 10) # 10: 5 for curl, and 5 for nginx (2 requests per sec)
+            actual_curl, actual_nginx = metrics_service.get_metrics()
+            self.assertEqual(actual_curl, expected_curl_metrics_collector_data)
+            self.assertEqual(actual_nginx, expected_nginx_metrics_collector_data)
 
-        with self.app.test_request_context():
-            with patch('requests.get') as mock_get:
-                query_responses = [
-                    {'status': 'success', 'data': {'resultType': 'vector', 'result': [{'value': [1701866456, '0.01454']}]}},
-                    {'status': 'success', 'data': {'resultType': 'vector', 'result': [{'value': [1701866457, '1457.023']}]}},
-                    {'status': 'success', 'data': {'resultType': 'vector', 'result': [{'value': [1701866456, '0.23454']}]}},
-                    {'status': 'success', 'data': {'resultType': 'vector', 'result': [{'value': [1701866457, '74852.000']}]}},
-                ]
+      
+    def test_collecting_k8s_with_cri_containerd(self):
+        cadvisor_service.init('kubernetes', CADVISOR_URL)
+        k8s_service.__kubernetes_client = Mock(spec=CoreV1Api)
+        mock_container_status = V1ContainerStatus(
+            container_id="containerd://mockedcontainerid",
+            image="dockerimage",
+            image_id="imageid",
+            name="name",
+            ready="ready",
+            restart_count=1
+        )
 
-                # Configure the mock to return responses from the list
-                mock_get.side_effect = lambda *args, query_responses=query_responses, **kwargs: MagicMock(
-                    status_code=200,
-                    json=MagicMock(return_value=query_responses.pop(0))
-                )
-                aggregate(test_run)
+        mock_pod = V1Pod(
+            status=V1PodStatus(
+                phase="Running",
+                host_ip="192.168.1.2",
+                pod_ip="192.168.1.2",
+                container_statuses=[mock_container_status]
+            ),
+            metadata=V1ObjectMeta(
+                name="test-pod",
+                namespace="test-namespace",
+                uid="caaed639-9b30-4540-b4f4-7e0f119ad172"
+            )
+        )
+        mock_pod_list = V1PodList(
+            items=[mock_pod],
+        )
+        with patch(LIST_NAMESPACED_POD) as mock_list_pod:
+            with patch(KUBERNETES_CONFIG):
+                k8s_service.init_cluster()
+                with patch(POST_REQUEST) as mock_post:
+                    mock_list_pod.return_value = mock_pod_list
+                    mock_post.return_value.status_code = 200
+                    mock_post.return_value.json.return_value = k8s_response
+                    metrics_service.start_collecting()
+                    self.assertTrue(metrics_service.client_collector._MetricsCollector__locked)
+                    self.assertTrue(metrics_service.server_collector._MetricsCollector__locked)
+                    time.sleep(5)
+                    metrics_service.stop_collecting()
+                    self.assertEqual(mock_post.call_count, 10) # 10: 5 for curl, and 5 for nginx (2 requests per sec)
+                    actual_curl, actual_nginx = metrics_service.get_metrics()
+                    self.assertEqual(actual_curl, expected_curl_metrics_collector_data)
+                    self.assertEqual(actual_nginx, expected_nginx_metrics_collector_data)
 
-                expected_calls = [
-                    call(f"{self.app.configurations.prometheus_url}/api/v1/query", params={'query': 'avg_over_time(rate(container_cpu_usage_seconds_total{container_label_io_kubernetes_pod_name=~"qujata-curl.*"}[30s])[30s:1s])', 'time': 1701863130}),
-                    call(f"{self.app.configurations.prometheus_url}/api/v1/query", params={'query': 'avg_over_time(rate(container_memory_usage_bytes{container_label_io_kubernetes_pod_name=~"qujata-curl.*"}[30s])[30s:1s])', 'time': 1701863130}),
-                    call(f"{self.app.configurations.prometheus_url}/api/v1/query", params={'query': 'avg_over_time(rate(container_cpu_usage_seconds_total{container_label_io_kubernetes_pod_name=~"qujata-nginx.*"}[30s])[30s:1s])', 'time': 1701863130}),
-                    call(f"{self.app.configurations.prometheus_url}/api/v1/query", params={'query': 'avg_over_time(rate(container_memory_usage_bytes{container_label_io_kubernetes_pod_name=~"qujata-nginx.*"}[30s])[30s:1s])', 'time': 1701863130}),
-                ]
-                mock_get.assert_has_calls(expected_calls, any_order=True)
 
-                self.assertEqual(self.app.database_manager.create.call_count, 4)
+    def test_collecting_k8s_with_cri_docker(self):
+        cadvisor_service.init('kubernetes', CADVISOR_URL)
+        k8s_service.__kubernetes_client = Mock(spec=CoreV1Api)
+        mock_container_status = V1ContainerStatus(
+            container_id="docker://mockedcontainerid",
+            image="dockerimage",
+            image_id="imageid",
+            name="name",
+            ready="ready",
+            restart_count=1
+        )
 
-                calls = self.app.database_manager.create.mock_calls
+        mock_pod = V1Pod(
+            status=V1PodStatus(
+                phase="Running",
+                host_ip="192.168.1.2",
+                pod_ip="192.168.1.2",
+                container_statuses=[mock_container_status]
+            ),
+            metadata=V1ObjectMeta(
+                name="test-pod",
+                namespace="test-namespace",
+                uid="caaed639-9b30-4540-b4f4-7e0f119ad172"
+            )
+        )
+        mock_pod_list = V1PodList(
+            items=[mock_pod],
+        )
+        with patch(LIST_NAMESPACED_POD) as mock_list_pod:
+            with patch(KUBERNETES_CONFIG):
+                k8s_service.init_cluster()
+                with patch(POST_REQUEST) as mock_post:
+                    mock_list_pod.return_value = mock_pod_list
+                    mock_post.return_value.status_code = 200
+                    mock_post.return_value.json.return_value = k8s_response
+                    metrics_service.start_collecting()
+                    self.assertTrue(metrics_service.client_collector._MetricsCollector__locked)
+                    self.assertTrue(metrics_service.server_collector._MetricsCollector__locked)
+                    time.sleep(5)
+                    metrics_service.stop_collecting()
+                    self.assertEqual(mock_post.call_count, 10) # 10: 5 for curl, and 5 for nginx (2 requests per sec)
+                    actual_curl, actual_nginx = metrics_service.get_metrics()
+                    self.assertEqual(actual_curl, expected_curl_metrics_collector_data)
+                    self.assertEqual(actual_nginx, expected_nginx_metrics_collector_data)
 
-                expected_metrics = {
-                    Metric.CLIENT_AVERAGE_CPU: 0.01,
-                    Metric.CLIENT_AVERAGE_MEMORY: 1457,
-                    Metric.SERVER_AVERAGE_CPU: 0.23,
-                    Metric.SERVER_AVERAGE_MEMORY: 74852,
-                }
 
-                for i, call_args in enumerate(calls):
-                    _, args, _ = call_args
-                    metric_name = args[0].metric_name
-                    value = args[0].value
-                    expected_value = expected_metrics[metric_name]
+    @patch('logging.error')           
+    def test_collecting_k8s_with_unsupported_cri(self, mock_log):
+        cadvisor_service.init('kubernetes', CADVISOR_URL)
+        k8s_service.__kubernetes_client = Mock(spec=CoreV1Api)
+        mock_container_status = V1ContainerStatus(
+            container_id="unsupported-cri://mockedcontainerid",
+            image="dockerimage",
+            image_id="imageid",
+            name="name",
+            ready="ready",
+            restart_count=1
+        )
 
-                    self.assertEqual(value, expected_value, f"Mismatch in call {i + 1}: {metric_name} - expected {expected_value}, got {value}")
+        mock_pod = V1Pod(
+            status=V1PodStatus(
+                phase="Running",
+                host_ip="192.168.1.2",
+                pod_ip="192.168.1.2",
+                container_statuses=[mock_container_status]
+            ),
+            metadata=V1ObjectMeta(
+                name="test-pod",
+                namespace="test-namespace",
+                uid="caaed639-9b30-4540-b4f4-7e0f119ad172"
+            )
+        )
+        mock_pod_list = V1PodList(
+            items=[mock_pod],
+        )
+        with patch(LIST_NAMESPACED_POD) as mock_list_pod:
+            with patch(KUBERNETES_CONFIG):
+                k8s_service.init_cluster()
+                with patch(POST_REQUEST) as mock_post:
+                    mock_list_pod.return_value = mock_pod_list
+                    mock_post.return_value.status_code = 200
+                    mock_post.return_value.json.return_value = k8s_response
+                    metrics_service.start_collecting()
+                    self.assertFalse(metrics_service.client_collector._MetricsCollector__locked)
+                    self.assertEqual(str(mock_log.call_args_list[0]), "call('[MetricCollector] Failed to collect metrics with error: %s', RuntimeError('cri: unsupported-cri not supported'), exc_info=True)")
 
-    def test_aggregate_non_supported_env(self):
-        self.app.configurations.environment= 'environment'
-        test_run_id = 1
-        start_time = datetime(2023, 12, 6, 11, 45, 0, tzinfo=timezone.utc)
-        end_time = datetime(2023, 12, 6, 11, 45, 30, tzinfo=timezone.utc)
-        test_run = MagicMock(id=test_run_id, start_time=start_time, end_time=end_time)
 
-        with self.app.test_request_context():
-            with patch('requests.get') as mock_get:
-                aggregate(test_run)
-                self.assertEqual(self.app.database_manager.create.call_count, 0)
-                self.assertEqual(mock_get.call_count, 0)
+    @patch('logging.error')     
+    def test_collecting_when_locked(self, mock_log):
+        cadvisor_service.init('docker', CADVISOR_URL)
+        with patch(POST_REQUEST) as mock_post:
+            mock_post.return_value.status_code = 200
+            mock_post.return_value.json.return_value = docker_response
+            metrics_service.client_collector._MetricsCollector__locked = True
+            metrics_service.server_collector._MetricsCollector__locked = True
+            metrics_service.start_collecting()
+            self.assertEqual(mock_post.call_count, 0)
+            metrics_service.client_collector._MetricsCollector__locked = False
+            metrics_service.client_collector._MetricsCollector__locked = False
+            self.assertEqual(str(mock_log.call_args_list[0]), "call('[MetricCollector] collector is already running', exc_info=True)")
 
-    def test_aggregate_invalid_response(self):
-        self.app.configurations.environment = 'docker'
-        test_run_id = 1
-        start_time = datetime(2023, 12, 6, 11, 45, 0, tzinfo=timezone.utc)
-        end_time = datetime(2023, 12, 6, 11, 45, 30, tzinfo=timezone.utc)
-        test_run = MagicMock(id=test_run_id, start_time=start_time, end_time=end_time)
 
-        invalid_response = {'status': 'failure', 'data': {'error': 'Invalid response'}}
-        with self.app.test_request_context():
-            with patch('requests.get') as mock_get:
-                mock_get.return_value.status_code = 200
-                mock_get.return_value.json.return_value = invalid_response
-                aggregate(test_run)
+    @patch('logging.error')
+    def test_collecting_when_init_k8s_failed(self, mock_log):
+        cadvisor_service.init('kubernetes', CADVISOR_URL)
+        with patch(KUBERNETES_CONFIG):
+            with patch(LIST_NAMESPACED_POD, side_effect=requests.exceptions.RequestException("Test exception")):
+                with patch(POST_REQUEST) as mock_post:
+                    k8s_service.init_cluster()
+                    metrics_service.start_collecting()
+                    self.assertEqual(mock_post.call_count, 0)
+                    self.assertEqual(str(mock_log.call_args_list[0]), "call('[MetricCollector] Failed to collect metrics with error: %s', RequestException('Test exception'), exc_info=True)")
 
-                calls_made = self.app.database_manager.create.mock_calls
 
-                self.assertEqual(len(calls_made), 4)
+    @patch('logging.error')
+    def test_collecting_k8s_when_pod_items_is_empty(self, mock_log):
+        cadvisor_service.init('kubernetes', CADVISOR_URL)
+        k8s_service.__kubernetes_client = Mock(spec=CoreV1Api)
+        
+        mock_pod_list = V1PodList(
+            items=[],
+        )
+        with patch(LIST_NAMESPACED_POD) as mock_list_pod:
+            with patch(KUBERNETES_CONFIG):
+                k8s_service.init_cluster()
+                with patch(POST_REQUEST) as mock_post:
+                    mock_list_pod.return_value = mock_pod_list
+                    mock_post.return_value.status_code = 200
+                    mock_post.return_value.json.return_value = k8s_response
+                    metrics_service.start_collecting()
+                    self.assertEqual(mock_post.call_count, 0)
+                    self.assertEqual(str(mock_log.call_args_list[0]), "call('[MetricCollector] Failed to collect metrics with error: %s', RuntimeError('qujata-curl pod not found'), exc_info=True)")
+                    self.assertEqual(str(mock_log.call_args_list[1]), "call('[MetricCollector] Failed to collect metrics with error: %s', RuntimeError('qujata-nginx pod not found'), exc_info=True)")
 
-                for call_args in calls_made:
-                    _, args, _ = call_args
-                    self.assertEqual(args[0].value, 0)
 
-    def test_aggregate_request_exception(self):
-        self.app.configurations.environment = 'docker'
-        test_run_id = 1
-        start_time = datetime(2023, 12, 6, 11, 45, 0, tzinfo=timezone.utc)
-        end_time = datetime(2023, 12, 6, 11, 45, 30, tzinfo=timezone.utc)
-        test_run = MagicMock(id=test_run_id, start_time=start_time, end_time=end_time)
+    @patch('logging.error')
+    def test_collecting_k8s_when_cadvisor_pod_not_found(self, mock_log):
+        cadvisor_service.init('kubernetes', CADVISOR_URL)
+        k8s_service.__kubernetes_client = Mock(spec=CoreV1Api)
+        
+        mock_container_status = V1ContainerStatus(
+            container_id="unsupported-cri://mockedcontainerid",
+            image="dockerimage",
+            image_id="imageid",
+            name="name",
+            ready="ready",
+            restart_count=1
+        )
 
-        with self.app.test_request_context():
-            with patch('requests.get') as mock_get:
-                mock_get.side_effect = requests.exceptions.RequestException('Request failed')
-                aggregate(test_run)
+        mock_pod1 = V1Pod(
+            status=V1PodStatus(
+                phase="Running",
+                host_ip="192.168.1.2",
+                pod_ip="192.168.1.2",
+                container_statuses=[mock_container_status]
+            ),
+            metadata=V1ObjectMeta(
+                name="test-pod",
+                namespace="test-namespace",
+                uid="caaed639-9b30-4540-b4f4-7e0f119ad172"
+            )
+        )
+        mock_pod2 = V1Pod(
+            status=V1PodStatus(
+                phase="Running",
+                host_ip="192.168.1.3",
+                pod_ip="192.168.1.3",
+                container_statuses=[mock_container_status]
+            ),
+            metadata=V1ObjectMeta(
+                name="test-pod",
+                namespace="test-namespace",
+                uid="caaed639-9b30-4540-b4f4-7e0f119ad172"
+            )
+        )
+        mock_pod_list1 = V1PodList(
+            items=[mock_pod1],
+        )
+        mock_pod_list2 = V1PodList(
+            items=[mock_pod2],
+        )
+        with patch(LIST_NAMESPACED_POD) as mock_list_pod:
+            mock_list_pod.side_effect = [mock_pod_list1, mock_pod_list2, mock_pod_list1, mock_pod_list2]
+            with patch(KUBERNETES_CONFIG):
+                k8s_service.init_cluster()
+                with patch(POST_REQUEST) as mock_post:
+                    mock_post.return_value.status_code = 200
+                    mock_post.return_value.json.return_value = k8s_response
+                    metrics_service.start_collecting()
+                    self.assertEqual(mock_post.call_count, 0)
+                    self.assertEqual(str(mock_log.call_args_list[0]), "call('[MetricCollector] Failed to collect metrics with error: %s', RuntimeError('qujata-cadvisor pod not found with host_ip: 192.168.1.2'), exc_info=True)")
+                    self.assertEqual(str(mock_log.call_args_list[1]), "call('[MetricCollector] Failed to collect metrics with error: %s', RuntimeError('qujata-cadvisor pod not found with host_ip: 192.168.1.2'), exc_info=True)")
+                    
+                    
 
-                # Assert that create was not called due to a request exception
-                self.assertEqual(self.app.database_manager.create.call_count, 0)
 
 if __name__ == '__main__':
     unittest.main()

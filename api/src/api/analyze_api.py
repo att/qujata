@@ -1,14 +1,8 @@
-import os
-import uuid
-import json
-import time
-import requests
+
 import logging
 
-from datetime import datetime, timedelta
-from flask import Blueprint, Flask, jsonify, request, current_app
+from flask import Blueprint, jsonify, request, current_app
 from flask_cors import cross_origin
-from src.models.test_suite import TestSuite
 import src.services.analyze_service as analyze_service
 from src.exceptions.exceptions import ApiException
 
@@ -38,18 +32,18 @@ def analyze():
         return jsonify({'error': e.error, 'message': e.message}), e.status_code
     except Exception as e:
         process_is_running = False
-        logging.error("Exception: Failed to run analyze request with error: " + str(e))
+        logging.exception("Exception: Failed to run analyze request with error: %s", e)
         return jsonify({'error': 'An error occurred while processing the request', 'message':''}), HTTP_STATUS_INTERNAL_SERVER_ERROR
 
 def __validate(data):
-    if not data or 'algorithms' not in data or 'iterationsCount' not in data or 'experimentName' not in data:
-        raise ApiException('Missing properties, required properties: algorithms, iterationsCount, experimentName', INVALID_DATA_MESSAGE, HTTP_STATUS_BAD_REQUEST)
+    if not data or 'algorithms' not in data or 'iterationsCount' not in data or 'experimentName' not in data or 'description' not in data:
+        raise ApiException('Missing properties, required properties: algorithms, iterationsCount, experimentName, description', INVALID_DATA_MESSAGE, HTTP_STATUS_BAD_REQUEST)
     for iterations in data['iterationsCount']:
         if iterations <= 0:
             raise ApiException('The number of iterations should be greater than 0', INVALID_DATA_MESSAGE, HTTP_STATUS_BAD_REQUEST)
     if process_is_running:
         raise ApiException('The previous test is still running. Please try again in few minutes', 'Current test is still running', HTTP_STATUS_LOCKED)
     for algorithm in data['algorithms']:
-        if algorithm not in current_app.configurations.allowedAlgorithms:
+        if algorithm not in current_app.configurations.allowed_algorithms:
             raise ApiException('Algorithm "' + algorithm + '" is not supported', INVALID_DATA_MESSAGE, HTTP_STATUS_BAD_REQUEST)
 
