@@ -39,7 +39,8 @@ class TestAnalyzeAPI(unittest.TestCase):
             "algorithms":["kyber512"],
             "iterationsCount": [1000, 2000],
             "experimentName": "name",
-            "description": "name"
+            "description": "name",
+            "messageSizes": [100]
         }
         # Mock the requests.post call
         with patch(POST_REQUEST) as mock_post:
@@ -78,7 +79,8 @@ class TestAnalyzeAPI(unittest.TestCase):
             "algorithms":["kyber512"],
             "iterationsCount": [1000],
             "experimentName": "name",
-            "description": "name"
+            "description": "name",
+            "messageSizes": [100]
 
         }
         # Mock the requests.post call to raise an exception
@@ -98,7 +100,8 @@ class TestAnalyzeAPI(unittest.TestCase):
             "algorithms": ["kyber512"],
             "iterationsCount": [-1],
             "experimentName": "name",
-            "description": "name"
+            "description": "name",
+            "messageSizes": [100]
         }
         response = self.client.post(PATH,
                                     data=json.dumps(input_data),
@@ -108,13 +111,30 @@ class TestAnalyzeAPI(unittest.TestCase):
         self.assertEqual(response_json["error"], INVALID_DATA_PROVIDED)
         self.assertEqual(response_json["message"], "The number of iterations should be greater than 0")
 
+    def test_analyze_with_invalid_message_sizes(self, mock_start_collecting, mock_stop_collecting, mock_get_metrics):
+        input_data = {
+            "algorithms": ["kyber512"],
+            "iterationsCount": [10],
+            "experimentName": "name",
+            "description": "name",
+            "messageSizes": [0]
+        }
+        response = self.client.post(PATH,
+                                    data=json.dumps(input_data),
+                                    content_type=CONTENT_TYPE)
+        self.assertEqual(response.status_code, 400)
+        response_json = json.loads(response.data)
+        self.assertEqual(response_json["error"], INVALID_DATA_PROVIDED)
+        self.assertEqual(response_json["message"], "The message size should be greater than 0")
+
 
     def test_analyze_with_invalid_algorithm(self, mock_start_collecting, mock_stop_collecting, mock_get_metrics):
         input_data = {
             "algorithms":["invalid_algorithm"],
             "iterationsCount": [1000],
             "experimentName": "name",
-            "description": "name"
+            "description": "name",
+            "messageSizes": [100]
         }        
         response = self.client.post(PATH,
                                     data=json.dumps(input_data),
@@ -137,14 +157,15 @@ class TestAnalyzeAPI(unittest.TestCase):
         self.assertEqual(response.status_code, 400)
         response_json = json.loads(response.data)
         self.assertEqual(response_json["error"], INVALID_DATA_PROVIDED)
-        self.assertEqual(response_json["message"], "Missing properties, required properties: algorithms, iterationsCount, experimentName, description")
+        self.assertEqual(response_json["message"], "Missing properties, required properties: algorithms, iterationsCount, experimentName, description, messageSizes")
 
     def test_analyze_with_curl_failure(self, mock_start_collecting, mock_stop_collecting, mock_get_metrics):
         input_data = {
             "algorithms":["kyber512"],
             "iterationsCount": [1000],
             "experimentName": "name",
-            "description": "name"
+            "description": "name",
+            "messageSizes": [100]
         }
         # Mock the requests.post call
         with patch(POST_REQUEST) as mock_post:
@@ -160,13 +181,13 @@ class TestAnalyzeAPI(unittest.TestCase):
                 self.assertEqual(actual_test_run[0].status_message, '{"result": "failed"}')
 
 
-
     def test_analyze_with_missing_env_info(self, mock_start_collecting, mock_stop_collecting, mock_get_metrics):
         input_data = {
-            "algorithms":["kyber512"],
+            "algorithms": ["kyber512"],
             "iterationsCount": [1000],
             "experimentName": "name",
-            "description": "name"
+            "description": "name",
+            "messageSizes": [100]
         }
         self.app.database_manager.get_latest.return_value = None
         response = self.client.post(PATH,
@@ -185,7 +206,8 @@ class TestAnalyzeAPI(unittest.TestCase):
                 "algorithms":["kyber512"],
                 "iterationsCount": [1000],
                 "experimentName": "name",
-                "description": "name"
+                "description": "name",
+                "messageSizes": [100]
             }
             analyze_api.process_is_running = True
             # Mock the requests.post call
@@ -203,7 +225,8 @@ class TestAnalyzeAPI(unittest.TestCase):
             "algorithms":["kyber512","frodo640aes"],
             "iterationsCount": [1000],
             "experimentName": "name",
-            "description": "name"
+            "description": "name",
+            "messageSizes": [100]
         }
         with patch(GET_REQUEST) as mock_get:
             mock_get.return_value.status_code = 200
