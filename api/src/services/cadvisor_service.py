@@ -65,7 +65,6 @@ def  __get_stats(metrics_url):
     headers = { 'Content-Type': 'application/json' }
     response = requests.post(metrics_url, headers=headers, json=body)
     result = response.json()
-    # return __handle_response(response.json())
     return result["stats"] if "stats" in result else list(result.values())[0]["stats"]
 
 
