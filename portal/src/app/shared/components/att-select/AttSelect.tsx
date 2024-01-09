@@ -36,6 +36,8 @@ export interface AttSelectProps {
   theme?: AttSelectTheme;
   isMulti?: boolean;
   closeMenuOnSelect?: boolean;
+  menuIsOpen?: boolean;
+  setMenuIsOpen?: (value: boolean) => void;
   hideSelectedOptions?: boolean;
   e2eId?: string;
   id?: string;
@@ -58,7 +60,9 @@ const AttSelectPrivate: AttSelectPrivateType = (props: AttSelectProps, ref: Forw
     placeholder={props.placeholder}
     isMulti={props.isMulti}
     isClearable={props.isClearable}
-    // menuIsOpen={true}
+    menuIsOpen={props.menuIsOpen}
+    onMenuOpen={() => props.setMenuIsOpen && props.setMenuIsOpen(true)}
+    onMenuClose={() => props.setMenuIsOpen && props.setMenuIsOpen(false)}
     closeMenuOnSelect={props.closeMenuOnSelect}
     hideSelectedOptions={props.hideSelectedOptions}
     required={props.required}

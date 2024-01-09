@@ -26,7 +26,8 @@ export function useGetIterations(): IUseGetIterations {
         const iterationsOptions: AttSelectOption[] = data.iterations.map((iteration: number) => ({ label: iteration.toString(), value: iteration.toString() }));
         setIterations([
           ...iterationsOptions,
-          { label: 'Add New', value: 'Add New', metadata: { isInput: true }}
+          { label: 'Add New', value: 'Add New', metadata: { isInput: true }},
+          { label: '+ Add new', value: '+ Add new', metadata: { isAddNewButton: true }}
         ]);
       }
     }, [data]);

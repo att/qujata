@@ -1,7 +1,5 @@
-import { render, fireEvent, RenderResult } from '@testing-library/react';
-import { components } from 'react-select';
+import { render, RenderResult } from '@testing-library/react';
 import { AlgorithmsSelectorCustomOption, IterationsSelectorCustomOption, SelectorCustomOptionProps } from './SelectorCustomOption';
-import { algorithmSections } from '../../../components/protocol-query/constants';
 
 describe('SelectorCustomOption', () => {
   const mockOption = { value: 'option1', label: 'Option 1' };
@@ -29,6 +27,12 @@ describe('SelectorCustomOption', () => {
     setValue: jest.fn(),
     theme: expect.any(Object),
     onOptionChanged: jest.fn(),
+    showInputOption: false,
+    setShowInputOption: jest.fn(),
+    inputValue: '',
+    setInputValue: jest.fn(),
+    iterationsOptions: [],
+    setMenuIsOpen: jest.fn()
   };
 
   it('should render AlgorithmsSelectorCustomOption correctly', () => {

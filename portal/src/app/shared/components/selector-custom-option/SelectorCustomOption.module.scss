@@ -30,10 +30,44 @@
 
   .add_new_input_option {
     border-radius: 8px;
-    border: 1px solid var($attPurple);
     inline-size: 100%;
     block-size: 35px;
+
+    .add_new_input_option_disabled {
+      border: 1px solid var($backgroundColorGray);
+    }
+    .add_new_input_option_enabled {
+      border: 1px solid var($attPurple);
+    }
   }
+
+  .input_wrapper {
+    position: relative;
+
+    .plus_button {
+      position: absolute;
+      inline-size: 17px;
+      inset-block-start: 50%;
+      inset-inline-end: 7px;
+      transform: translateY(-50%);
+    }
+
+    .clean_icon {
+      position: absolute;
+      inline-size: 17px;
+      inset-block-start: 50%;
+      inset-inline-end: -30px;
+      transform: translateY(-50%);
+      margin-inline-end: 5px;
+    }
+  }
+}
+
+.add_new_button {
+  color: var($attPurple);
+  margin-inline-start: 15px;
+  margin-block-start: 25px;
+  margin-block-end: 15px;
 }
 
 .iterations_input_option {
