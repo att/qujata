@@ -6,6 +6,7 @@ import logging
 client_collector = MetricsCollector("qujata-curl")
 server_collector = MetricsCollector("qujata-nginx")
 
+# TODO: add lock validation
 def start_collecting():
     client_collector.start()
     server_collector.start()

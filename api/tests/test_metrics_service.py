@@ -32,12 +32,8 @@ class TestMetricsService(unittest.TestCase):
         self.client = self.app.test_client()
         load_config(self.app)
         self.app.database_manager = Mock(spec=DatabaseManager)
+        
 
-    def __test_run(self):
-        return TestRun(
-            id=1,
-            start_time = datetime(2023, 12, 25, 21, 6, 0, tzinfo=timezone.utc)
-        )
 
     def test_collecting_docker(self):
         cadvisor_service.init('docker', CADVISOR_URL)
@@ -53,18 +49,7 @@ class TestMetricsService(unittest.TestCase):
             actual_curl, actual_nginx = metrics_service.get_metrics()
             self.assertEqual(actual_curl, expected_curl_metrics_collector_data)
             self.assertEqual(actual_nginx, expected_nginx_metrics_collector_data)
-            # with self.app.app_context():
-            #     metrics_service.save(self.__test_run())
-            #     metrics = self.app.database_manager.create.call_args_list
-            #     self.assertEqual(metrics[0].args[0].metric_name, Metric.CLIENT_AVERAGE_CPU)
-            #     self.assertEqual(metrics[0].args[0].value, 0.0)
-            #     self.assertEqual(metrics[1].args[0].metric_name, Metric.CLIENT_AVERAGE_MEMORY)
-            #     self.assertEqual(metrics[1].args[0].value, 37.0)
-            #     self.assertEqual(metrics[2].args[0].metric_name, Metric.SERVER_AVERAGE_CPU)
-            #     self.assertEqual(metrics[2].args[0].value, 0.0)
-            #     self.assertEqual(metrics[3].args[0].metric_name, Metric.SERVER_AVERAGE_MEMORY)
-            #     self.assertEqual(metrics[3].args[0].value, 37.0)
-            #     self.assertEqual(self.app.database_manager.create.call_count, 4)# cpu & memory for curl & nginx = 4
+
       
     def test_collecting_k8s_with_cri_containerd(self):
         cadvisor_service.init('kubernetes', CADVISOR_URL)
@@ -110,18 +95,6 @@ class TestMetricsService(unittest.TestCase):
                     actual_curl, actual_nginx = metrics_service.get_metrics()
                     self.assertEqual(actual_curl, expected_curl_metrics_collector_data)
                     self.assertEqual(actual_nginx, expected_nginx_metrics_collector_data)
-                    # with self.app.app_context():
-                    #     metrics_service.save(self.__test_run())
-                    #     metrics = self.app.database_manager.create.call_args_list
-                    #     self.assertEqual(metrics[0].args[0].metric_name, Metric.CLIENT_AVERAGE_CPU)
-                    #     self.assertEqual(metrics[0].args[0].value, 0.0)
-                    #     self.assertEqual(metrics[1].args[0].metric_name, Metric.CLIENT_AVERAGE_MEMORY)
-                    #     self.assertEqual(metrics[1].args[0].value, 37.0)
-                    #     self.assertEqual(metrics[2].args[0].metric_name, Metric.SERVER_AVERAGE_CPU)
-                    #     self.assertEqual(metrics[2].args[0].value, 0.0)
-                    #     self.assertEqual(metrics[3].args[0].metric_name, Metric.SERVER_AVERAGE_MEMORY)
-                    #     self.assertEqual(metrics[3].args[0].value, 37.0)
-                    #     self.assertEqual(self.app.database_manager.create.call_count, 4)# cpu & memory for curl & nginx = 4
 
 
     def test_collecting_k8s_with_cri_docker(self):
@@ -168,19 +141,7 @@ class TestMetricsService(unittest.TestCase):
                     actual_curl, actual_nginx = metrics_service.get_metrics()
                     self.assertEqual(actual_curl, expected_curl_metrics_collector_data)
                     self.assertEqual(actual_nginx, expected_nginx_metrics_collector_data)
-                    # with self.app.app_context():
-                    #     metrics_service.save(self.__test_run())
-                    #     metrics = self.app.database_manager.create.call_args_list
-                    #     self.assertEqual(metrics[0].args[0].metric_name, Metric.CLIENT_AVERAGE_CPU)
-                    #     self.assertEqual(metrics[0].args[0].value, 0.0)
-                    #     self.assertEqual(metrics[1].args[0].metric_name, Metric.CLIENT_AVERAGE_MEMORY)
-                    #     self.assertEqual(metrics[1].args[0].value, 37.0)
-                    #     self.assertEqual(metrics[2].args[0].metric_name, Metric.SERVER_AVERAGE_CPU)
-                    #     self.assertEqual(metrics[2].args[0].value, 0.0)
-                    #     self.assertEqual(metrics[3].args[0].metric_name, Metric.SERVER_AVERAGE_MEMORY)
-                    #     self.assertEqual(metrics[3].args[0].value, 37.0)
-                    #     self.assertEqual(self.app.database_manager.create.call_count, 4)# cpu & memory for curl & nginx = 4
-            
+
 
     @patch('logging.error')           
     def test_collecting_k8s_with_unsupported_cri(self, mock_log):

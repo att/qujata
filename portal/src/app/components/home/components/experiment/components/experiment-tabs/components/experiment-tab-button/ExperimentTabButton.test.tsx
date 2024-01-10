@@ -8,6 +8,7 @@ describe('ExperimentTabButton', () => {
       onClick: jest.fn(),
       children: undefined,
     };
+    
     const { container }: RenderResult = render(<ExperimentTabButton {...experimentTabButtonProps} />);
     expect(container.firstChild).toMatchSnapshot();
   });

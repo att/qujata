@@ -2,13 +2,14 @@ import src.services.k8s_service as k8s_service
 import requests
 import pandas as pd
 import logging
+from src.enums.environment import Environment
 
 DOCKER_METRICS_URL = "{}/api/v1.3/docker/{}"
 K8S_DOCKER_CRI_METRCIS_URL = "http://{}:8080/api/v1.3/containers/kubepods/kubepods/besteffort/pod{}/{}"
 K8S_CONTAINERD_CRI_METRCIS_URL = "http://{}:8080/api/v1.3/containers/kubepods.slice/kubepods-besteffort.slice/kubepods-besteffort-pod{}.slice/cri-containerd-{}.scope"
 
 CADVISOR_SERVICE_NAME = "qujata-cadvisor"
-APP_LABEL="app"
+LABEL="app"
 ONE_MEGABYTE = 1024 * 1024
 
 __environment = None
@@ -22,10 +23,12 @@ def init(environment, cadvisor_url):
 
 
 def get_metrics_url(service_name):
-    if __environment == "docker":
+    if __environment == Environment.DOCKER.value:
         return __build_docker_metrics_url(service_name)
-    else: #__environment == 'kubernetes'
+    elif __environment == Environment.KUBERNETES.value:
         return __build_k8s_metrics_url(service_name)
+    else:
+        raise RuntimeError("Invalid Environemnt: " + __environment) 
 
 
 def __build_docker_metrics_url(service_name):
@@ -33,8 +36,8 @@ def __build_docker_metrics_url(service_name):
 
 
 def __build_k8s_metrics_url(service_name):
-    pod = k8s_service.get_pod_by_label(APP_LABEL, service_name)
-    cadvisor_pod = k8s_service.get_pod_by_label_and_host(APP_LABEL, CADVISOR_SERVICE_NAME, pod.status.host_ip)
+    pod = k8s_service.get_pod_by_label(LABEL, service_name)
+    cadvisor_pod = k8s_service.get_pod_by_label_and_host(LABEL, CADVISOR_SERVICE_NAME, pod.status.host_ip)
     pod_uid = pod.metadata.uid
     cri, container_id = pod.status.container_statuses[0].container_id.split("://")
     cadvisor_host = cadvisor_pod.status.pod_ip
@@ -65,7 +68,6 @@ def  __get_stats(metrics_url):
     headers = { 'Content-Type': 'application/json' }
     response = requests.post(metrics_url, headers=headers, json=body)
     result = response.json()
-    # return __handle_response(response.json())
     return result["stats"] if "stats" in result else list(result.values())[0]["stats"]
 
 
@@ -73,14 +75,3 @@ def __get_interval(current, previous):
     cur = pd.Timestamp(current)
     prev = pd.Timestamp(previous)
     return (int(cur.value/1000000) - int(prev.value/1000000)) * 1000000
-
-
-
-
-
-
-
-
-
-
-
