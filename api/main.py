@@ -5,7 +5,7 @@ from src.api.environment_api import api as env_api_blueprint
 from src.api.tests_api import api as tests_blueprint
 import src.services.k8s_service as k8s_service
 import src.services.cadvisor_service as cadvisor_service
-from src.enums.environemnt import Environment
+from src.enums.environment import Environment
 from config.settings import load_config
 from flask_cors import CORS
 from src.utils.database_manager import DatabaseManager

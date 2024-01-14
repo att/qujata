@@ -20,7 +20,9 @@ def analyze(data):
     start_time = int(datetime.timestamp(datetime.now() - timedelta(seconds=60)) * 1000)
     iterations_count = data['iterationsCount']
     algorithms = data['algorithms']
-    message_sizes = data['messageSizes']
+    message_sizes = [0]
+    if 'messageSizes' in data:
+        message_sizes = data['messageSizes']
     first_run = True
     for algorithm in algorithms:
         for iterations in iterations_count:
@@ -50,12 +52,12 @@ def __create_test_run(algorithm, iterations, message_size, test_suite_id):
     test_suites_service.create_test_run(start_time, end_time, algorithm, iterations, message_size, test_suite_id, status, status_message, *metrics_service.get_metrics())
     
 
-def __run(algorithm, iterations, message_sizes):
+def __run(algorithm, iterations, message_size):
     logging.debug('Running test for algorithm: %s ', algorithm)
     payload = {
         'algorithm': algorithm,
         'iterationsCount': iterations,
-        'messageSizes': message_sizes
+        'messageSize': message_size
     }
     headers = { 'Content-Type': 'application/json' }
     response = requests.post(current_app.configurations.curl_url + "/curl", headers=headers, json=payload, timeout=int(current_app.configurations.request_timeout))
