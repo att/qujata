@@ -1,3 +1,5 @@
+import os
+import uuid
 import time
 import requests
 import logging
@@ -5,7 +7,7 @@ import json
 
 from datetime import datetime, timedelta
 from flask import jsonify, current_app
-import src.services.test_suites_service as tests_service
+import src.services.test_suites_service as test_suites_service
 import src.services.metrics_service as metrics_service
 from src.enums.status import Status
 
@@ -13,7 +15,7 @@ from src.enums.status import Status
 WAIT_MS = 15
 
 def analyze(data):
-    test_suite = tests_service.create_test_suite(data)
+    test_suite = test_suites_service.create_test_suite(data)
     # start time is now - 60 sec, to show the graph before the test for sure started running
     start_time = int(datetime.timestamp(datetime.now() - timedelta(seconds=60)) * 1000)
     iterations_count = data['iterationsCount']
@@ -34,7 +36,7 @@ def analyze(data):
     
     test_suite.start_time = start_time
     test_suite.end_time = end_time
-    tests_service.update_test_suite(test_suite)
+    test_suites_service.update_test_suite(test_suite)
 
     return jsonify({'test_suite_id': test_suite.id})
 
@@ -44,9 +46,9 @@ def __create_test_run(algorithm, iterations, message_size, test_suite_id):
     metrics_service.start_collecting()
     status, status_message = __run(algorithm, iterations, message_size)
     metrics_service.stop_collecting()
-    end_time=datetime.now()
-    tests_service.create_test_run(start_time, end_time, algorithm, iterations, message_size, test_suite_id, status, status_message, *metrics_service.get_metrics())
-
+    end_time = datetime.now()
+    test_suites_service.create_test_run(start_time, end_time, algorithm, iterations, message_size, test_suite_id, status, status_message, *metrics_service.get_metrics())
+    
 
 def __run(algorithm, iterations, message_sizes):
     logging.debug('Running test for algorithm: %s ', algorithm)
@@ -55,7 +57,7 @@ def __run(algorithm, iterations, message_sizes):
         'iterationsCount': iterations,
         'messageSizes': message_sizes
     }
-    headers = {'Content-Type': 'application/json'}
+    headers = { 'Content-Type': 'application/json' }
     response = requests.post(current_app.configurations.curl_url + "/curl", headers=headers, json=payload, timeout=int(current_app.configurations.request_timeout))
 
     return __validate_response(response)

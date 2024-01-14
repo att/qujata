@@ -23,9 +23,9 @@
     transform: scaleX(0);
     transition: transform 0.3s ease-in-out;
     position: absolute;
-    left: 0;
-    right: 0;
-    bottom: -10px;
+    inset-inline-start: 0;
+    inset-inline-end: 0;
+    inset-block-end: -10px;
   }
 
   &.selected:after {

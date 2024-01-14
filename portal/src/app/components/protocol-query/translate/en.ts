@@ -3,7 +3,7 @@ export const PROTOCOL_QUERY_EN = {
     TITLE: 'Run new experiment',
     NOTE: {
         TITLE: 'Note:',
-        TEXT: 'For each experiment you can select or type in one or more algorithms, number of iterations and message sizes',
+        TEXT: 'For each experiment you can select or type in one or more algorithms and number of iterations',
     },
     ACTION_BUTTONS: {
         RUN: 'Run',

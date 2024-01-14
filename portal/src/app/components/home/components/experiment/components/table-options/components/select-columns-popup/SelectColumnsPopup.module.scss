@@ -1,0 +1,70 @@
+@import "src/styles/variables-keys";
+
+$inputBorderColor: #DCDFE3;
+
+.select_columns_wrapper {
+  background-color: var($backgroundColorWhite);
+  position: absolute;
+  inset-block-start: 140%;
+  inset-inline-start: -22.5%;
+  inline-size: 400px;
+  z-index: 1;
+  padding: 20px;
+  border: 1px solid var($attPurple);
+}
+
+.popup_header {
+  display: flex;
+  justify-content: space-between;
+  margin-block-end: 20px;
+}
+
+.form_title {
+  display: flex;
+  align-items: flex-end;
+  font-size: 17px;
+  font-family: var($fontMedium);
+}
+
+.close_icon {
+  color: #454b52;
+  cursor: pointer;
+  background-color: #F5F1FF;
+  border-radius: 50%;
+  display: flex;
+  padding: 7px;
+}
+
+.input_form_item {
+  display: none;
+}
+
+.input_option {
+  margin-block-end: 10px;
+
+  .input_option_label {
+    cursor: pointer;
+  }
+
+  .input_option_checkbox_icon {
+    margin-inline-end: 10px;
+    cursor: pointer;
+  }
+}
+
+.popup_footer {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  margin-block-start: 30px;
+}
+
+.reset_button {
+  color: var($attPurple);
+  transform: translate(0, -50%);
+}
+
+.run_button {
+  inline-size: 40%;
+  block-size: 35px;
+}

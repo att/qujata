@@ -1,8 +1,7 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import * as shellJS from 'shelljs';
 import { CurlRequest } from '../dto/curl-request.dto';
 import { ConfigService } from '@nestjs/config';
-import { HttpException, HttpStatus } from '@nestjs/common';
 import {MessageGenerator} from '../utils/message.generator';
 
 @Injectable()
@@ -41,7 +40,7 @@ export class CurlService {
     }
   }
 
-  private async runCurls(iterationsCount: number, algorithm: String, message: String) {
+  private async runCurls(iterationsCount: number, algorithm: string, message: string) {
       const curlCommand = this.format(`${this.CURL_SCRIPT_PATH} ${this.configService.get('nginx.host')} ${this.configService.get('nginx.port')} ${iterationsCount} ${algorithm} ${message}`);
       this.processIsRunning = true;
       await this.execAsync(curlCommand);

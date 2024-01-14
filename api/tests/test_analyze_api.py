@@ -157,7 +157,7 @@ class TestAnalyzeAPI(unittest.TestCase):
         self.assertEqual(response.status_code, 400)
         response_json = json.loads(response.data)
         self.assertEqual(response_json["error"], INVALID_DATA_PROVIDED)
-        self.assertEqual(response_json["message"], "Missing properties, required properties: algorithms, iterationsCount, experimentName, description, messageSizes")
+        self.assertEqual(response_json["message"], "Missing properties, required properties: algorithms, iterationsCount, experimentName, description")
 
     def test_analyze_with_curl_failure(self, mock_start_collecting, mock_stop_collecting, mock_get_metrics):
         input_data = {

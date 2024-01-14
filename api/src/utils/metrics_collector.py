@@ -5,6 +5,7 @@ import logging
 import src.services.cadvisor_service as cadvisor_service
 from prettytable import PrettyTable
 
+WAIT_MS = 1
 class MetricsCollector:
 
     def __init__(self, service_name):
@@ -22,7 +23,7 @@ class MetricsCollector:
                 return
             self.__data = {}
             if self.__is_running is True: # handle case when collector is unlocked but previous thread is stil running (could take a 1 second for a thread to stop)
-                time.sleep(1)
+                time.sleep(WAIT_MS)
             self.__is_running = True
             self.__locked = True
             self.__metrics_url = cadvisor_service.get_metrics_url(self.__service_name)
@@ -56,12 +57,10 @@ class MetricsCollector:
         while self.__locked is True:
             thread = threading.Thread(target=self.__collect_metrics)
             thread.start()
-            time.sleep(1)
+            time.sleep(WAIT_MS)
         self.__is_running = False
 
 
     def __collect_metrics(self):
         self.__data.update(cadvisor_service.get_metrics(self.__metrics_url))
        
-
-

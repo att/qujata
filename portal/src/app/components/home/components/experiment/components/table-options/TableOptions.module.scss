@@ -1,0 +1,73 @@
+@import "src/styles/variables-keys";
+
+.table_options_wrapper {
+  display: flex;
+  align-items: flex-end;
+}
+
+.link_wrapper {
+  margin-inline-start: auto;
+  margin-inline-end: 25px;
+
+  .view_in_grafana_wrapper {
+    display: flex;
+    align-items: center;
+    color: var($attPurple);
+    font-size: 16px;
+
+    .eye_icon {
+      margin-inline-end: 5px;
+      background-color: #F5F1FF;
+      inline-size: 34px;
+      block-size: 34px;
+      border-radius: 50%;
+      padding: 7px;
+    }
+
+    &:hover .eye_icon {
+      background-color: var($attPurple);
+    }
+  }
+}
+
+.options_wrapper {
+  display: flex;
+  align-items: center;
+
+  .select_columns_icon {
+    margin-inline-start: auto;
+    margin-inline-end: 5px;
+    background-color: #F5F1FF;
+    inline-size: 34px;
+    block-size: 34px;
+    border-radius: 50%;
+  }
+}
+
+.options_text {
+  color: var($attPurple);
+}
+
+.options_wrapper:hover .hover_image {
+  display: block;
+}
+
+.options_wrapper:hover .default_image {
+  display: none;
+}
+
+.grafana_wrapper:hover .hover_image {
+  display: block;
+}
+
+.grafana_wrapper:hover .default_image {
+  display: none;
+}
+
+.default_image {
+  display: block;
+}
+
+.hover_image {
+  display: none;
+}

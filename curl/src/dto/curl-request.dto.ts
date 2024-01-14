@@ -3,7 +3,7 @@ import { IsNotEmpty, IsNumber, Min } from 'class-validator';
 export class CurlRequest {
 
   @IsNotEmpty()
-  algorithm: String;
+  algorithm: string;
 
   @IsNotEmpty()
   @IsNumber()

@@ -2,8 +2,8 @@
   "id": 1,
   "name": "test1",
   "description": "simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries,",
-  "start_time": "Thu, 14 Dec 2023 15:37:31 GMT",
-  "end_time": "Thu, 14 Dec 2023 15:38:39 GMT",
+  "start_time": "1704022565",
+  "end_time": "1704023405",
   "environment_info": {
     "codeRelease": "1.1.0",
     "cpu": "RELACE_WITH_CPU",
