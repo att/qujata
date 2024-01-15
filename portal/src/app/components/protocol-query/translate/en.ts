@@ -11,6 +11,7 @@ export const PROTOCOL_QUERY_EN = {
     },
     FIELDS_LABEL: {
         PLACEHOLDER: '',
+        REQUIRED: '*',
         EXPERIMENT_NAME: 'Experiment name',
         ITERATIONS_NUMBER: 'Number of iterations',
         ALGORITHM: 'Algorithm(s)',

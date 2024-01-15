@@ -33,7 +33,7 @@ export const ProtocolQuery: React.FC<ProtocolQueryProps> = (props: ProtocolQuery
   const [prevSelectedValues, setPrevSelectedValues] = useState<string[]>([]);
   const [description, setDescription] = useState('');
 
-  const [iterationsCount, setIterationsCount] = useState<SelectOptionType>();
+  const [iterationsCount, setIterationsCount] = useState<AttSelectOption[]>([]);
   const [showInputOption, setShowInputOption] = useState(false);
   const [inputValue, setInputValue] = useState('');
   const [iterationsMenuIsOpen, setIterationsMenuIsOpen] = useState(false);
@@ -61,7 +61,7 @@ export const ProtocolQuery: React.FC<ProtocolQueryProps> = (props: ProtocolQuery
   }, [algosBySection, algorithmOptions, prevSelectedValues]);
 
   const onIterationsNumChanged: OnSelectChanged = useCallback((options: SelectOptionType): void => {
-    const selectedIterationNum: Options<AttSelectOption> = options as Options<AttSelectOption>;
+    const selectedIterationNum: AttSelectOption[] = options as AttSelectOption[];
     setIterationsMenuIsOpen(true);
     setIterationsCount(selectedIterationNum);
   }, []);
@@ -82,9 +82,10 @@ export const ProtocolQuery: React.FC<ProtocolQueryProps> = (props: ProtocolQuery
       <form className={styles.wrapper} data-testid='protocol-query-form' onSubmit={onSubmitHandler}>
           <div className={styles.form_item}>
               <label className={styles.form_item_label}>
-                {PROTOCOL_QUERY_EN.FIELDS_LABEL.EXPERIMENT_NAME} <span className={styles.required}>*</span>
+                {PROTOCOL_QUERY_EN.FIELDS_LABEL.EXPERIMENT_NAME} <span className={styles.required}>{PROTOCOL_QUERY_EN.FIELDS_LABEL.REQUIRED}</span>
               </label>
               <input
+                id={PROTOCOL_QUERY_EN.FIELDS_LABEL.EXPERIMENT_NAME}
                 className={styles.input_form_item}
                 onChange={onExperimentNameChanged}
                 placeholder=''
@@ -92,10 +93,11 @@ export const ProtocolQuery: React.FC<ProtocolQueryProps> = (props: ProtocolQuery
               />
           </div>
           <div className={styles.form_item}>
-              <label className={styles.form_item_label}>
-                {PROTOCOL_QUERY_EN.FIELDS_LABEL.ALGORITHM} <span className={styles.required}>*</span>
+              <label id={PROTOCOL_QUERY_EN.FIELDS_LABEL.ALGORITHM} className={styles.form_item_label}>
+                {PROTOCOL_QUERY_EN.FIELDS_LABEL.ALGORITHM} <span className={styles.required}>{PROTOCOL_QUERY_EN.FIELDS_LABEL.REQUIRED}</span>
               </label>
               <AttSelect
+                id={PROTOCOL_QUERY_EN.FIELDS_LABEL.ALGORITHM}
                 className={styles.select_form_item}
                 options={algorithmOptions}
                 placeholder=''
@@ -109,14 +111,15 @@ export const ProtocolQuery: React.FC<ProtocolQueryProps> = (props: ProtocolQuery
               />
           </div>
           <div className={styles.form_item}>
-              <label className={styles.form_item_label}>
-                {PROTOCOL_QUERY_EN.FIELDS_LABEL.ITERATIONS_NUMBER} <span className={styles.required}>*</span>
+              <label id={PROTOCOL_QUERY_EN.FIELDS_LABEL.ITERATIONS_NUMBER} className={styles.form_item_label}>
+                {PROTOCOL_QUERY_EN.FIELDS_LABEL.ITERATIONS_NUMBER} <span className={styles.required}>{PROTOCOL_QUERY_EN.FIELDS_LABEL.REQUIRED}</span>
               </label>
               <AttSelect
+                id={PROTOCOL_QUERY_EN.FIELDS_LABEL.ITERATIONS_NUMBER}
                 className={styles.select_form_item}
                 options={iterationsOptions}
                 placeholder={PROTOCOL_QUERY_EN.FIELDS_LABEL.PLACEHOLDER}
-                value={iterationsCount as AttSelectOption}
+                value={iterationsCount as AttSelectOption[]}
                 onChange={onIterationsNumChanged}
                 isMulti
                 hideSelectedOptions={false}
@@ -132,17 +135,17 @@ export const ProtocolQuery: React.FC<ProtocolQueryProps> = (props: ProtocolQuery
                       setShowInputOption={setShowInputOption}
                       inputValue={inputValue}
                       setInputValue={setInputValue}
-                      iterationsOptions={iterationsOptions}
                       setMenuIsOpen={setIterationsMenuIsOpen}
                     />
                 }}
               />
           </div>
           <div className={styles.form_item}>
-              <label className={styles.form_item_label}>
+              <label id={PROTOCOL_QUERY_EN.FIELDS_LABEL.DESCRIPTION} className={styles.form_item_label}>
                 {PROTOCOL_QUERY_EN.FIELDS_LABEL.DESCRIPTION}
               </label>
               <textarea
+                id={PROTOCOL_QUERY_EN.FIELDS_LABEL.DESCRIPTION}
                 className={styles.form_item_text_area}
                 onChange={onDescriptionChanged}
                 placeholder={PROTOCOL_QUERY_EN.FIELDS_LABEL.PLACEHOLDER}

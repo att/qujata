@@ -1,4 +1,4 @@
-import { render, RenderResult } from '@testing-library/react';
+import { fireEvent, render, RenderResult } from '@testing-library/react';
 import { AttSelect, AttSelectProps } from './AttSelect';
 import { AttSelectOption } from './AttSelect.model';
 
@@ -37,6 +37,39 @@ describe('AttSelect', () => {
 
     const spinner = container.querySelector('.att_select_spinner');
     expect(spinner).toBeInTheDocument();
+  });
+
+  test('should open the menu when onMenuOpen is called', () => {
+    const props: AttSelectProps = {
+      options,
+      placeholder: '',
+      value: item1,
+      onChange: () => expect.anything(),
+      isProcessing: true,
+    };
+    const setMenuIsOpen = jest.fn();
+    const { getByRole } = render(<AttSelect {...props} setMenuIsOpen={setMenuIsOpen} />);
+
+    fireEvent.mouseDown(getByRole('combobox'));
+
+    expect(setMenuIsOpen).toHaveBeenCalledWith(true);
+  });
+
+  test('should close the menu when onMenuClose is called', () => {
+    const props: AttSelectProps = {
+      options,
+      placeholder: '',
+      value: item1,
+      onChange: () => expect.anything(),
+      isProcessing: true,
+    };
+    const setMenuIsOpen = jest.fn();
+    const { getByRole } = render(<AttSelect {...props} setMenuIsOpen={setMenuIsOpen} />);
+
+    fireEvent.mouseDown(getByRole('combobox'));
+    fireEvent.blur(getByRole('combobox'));
+
+    expect(setMenuIsOpen).toHaveBeenCalledWith(false);
   });
 });
 

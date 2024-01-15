@@ -44,12 +44,26 @@
   .input_wrapper {
     position: relative;
 
-    .plus_button {
+    .add_button {
       position: absolute;
-      inline-size: 17px;
-      inset-block-start: 50%;
-      inset-inline-end: 7px;
-      transform: translateY(-50%);
+      block-size: 100%;
+      font-size: 13px;
+      padding-block-start: 2px;
+      padding-inline: 15px;
+      color: var($primaryWhite);
+      background-color: var($attPurple);
+      inset-inline-end: 0;
+      border-radius: 8px;
+      border-top-left-radius: 0;
+      border-bottom-left-radius: 0;
+
+      &:disabled {
+        background-color: gray;
+        opacity: 0.3;
+      }
+      &:hover {
+        color: rgba(255, 255, 255, 0.8);
+      }
     }
 
     .clean_icon {
@@ -59,6 +73,10 @@
       inset-inline-end: -30px;
       transform: translateY(-50%);
       margin-inline-end: 5px;
+
+      &:hover {
+        opacity: 0.6;
+      }
     }
   }
 }

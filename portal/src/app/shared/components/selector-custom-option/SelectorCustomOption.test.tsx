@@ -18,7 +18,7 @@ describe('SelectorCustomOption', () => {
     cx: jest.fn(),
     getStyles: jest.fn(),
     getClassNames: jest.fn(),
-    getValue: jest.fn(),
+    getValue: jest.fn().mockReturnValue([{ label: 'Option 1', value: 'option1' }]),
     hasValue: true,
     isMulti: true,
     isRtl: false,
@@ -29,10 +29,9 @@ describe('SelectorCustomOption', () => {
     onOptionChanged: jest.fn(),
     showInputOption: false,
     setShowInputOption: jest.fn(),
-    inputValue: '',
+    inputValue: '1111',
     setInputValue: jest.fn(),
-    iterationsOptions: [],
-    setMenuIsOpen: jest.fn()
+    setMenuIsOpen: jest.fn(),
   };
 
   it('should render AlgorithmsSelectorCustomOption correctly', () => {

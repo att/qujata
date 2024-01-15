@@ -1,16 +1,20 @@
 import styles from './SelectorCustomOption.module.scss';
 import cn from 'classnames';
-import { createRef, useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef } from 'react';
 import { GroupBase, OptionProps, components } from 'react-select';
 import { AttSelectOption } from '../att-select';
 import { algorithmSections } from '../../../components/protocol-query/constants';
+import { Button, ButtonActionType, ButtonSize, ButtonStyleType } from '../att-button';
+import { SELECTOR_CUSTOM_OPTION_EN } from './translate/en';
 import CheckedSvg from '../../../../assets/images/checked.svg';
 import UnCheckedSvg from '../../../../assets/images/unchecked.svg';
-import { Button, ButtonActionType, ButtonSize, ButtonStyleType } from '../att-button';
 import CleanSvg from '../../../../assets/images/clean.svg';
 
 const CheckedAriaLabel: string = 'checked';
 const CleanAriaLabel: string = 'clean';
+
+type OnEventInputChange = (event: React.ChangeEvent<HTMLInputElement>) => void;
+type OnEventHandler = () => void;
 
 export type SelectorCustomOptionProps = OptionProps<AttSelectOption<any>, true, GroupBase<AttSelectOption<any>>> & {
   onOptionChanged: (option: AttSelectOption) => void;
@@ -18,7 +22,6 @@ export type SelectorCustomOptionProps = OptionProps<AttSelectOption<any>, true, 
   setShowInputOption: (show: boolean) => void;
   inputValue: string;
   setInputValue: (value: string) => void;
-  iterationsOptions: AttSelectOption[];
   setMenuIsOpen: (isOpen: boolean) => void;
 };
 
@@ -30,6 +33,7 @@ export const AlgorithmsSelectorCustomOption: React.FC<SelectorCustomOptionProps>
     <components.Option {...props}>
       <div className={styles.option_wrapper}>
         <input
+          id={props.label}
           type="checkbox"
           className={styles.input_option}
           checked={props.isSelected}
@@ -49,6 +53,7 @@ export const IterationsSelectorCustomOption: React.FC<SelectorCustomOptionProps>
         <components.Option {...props}>
           <div className={styles.option_wrapper}>
             <input
+              id={props.label}
               type="checkbox"
               className={cn(styles.iterations_input_option, styles.input_option)}
               checked={props.isSelected}
@@ -65,40 +70,45 @@ export const IterationsSelectorCustomOption: React.FC<SelectorCustomOptionProps>
 };
 
 export const CustomInput: React.FC<SelectorCustomOptionProps> = (props: SelectorCustomOptionProps) => {
-  const { showInputOption, setShowInputOption, inputValue, setInputValue, iterationsOptions, setMenuIsOpen } = props;
+  const { showInputOption, setShowInputOption, inputValue, setInputValue, setMenuIsOpen } = props;
+  const inputOption = useMemo<AttSelectOption>(() => ({ label: inputValue, value: inputValue, metadata: { isInput: true } }), [inputValue]);
   const inputRef = useRef<HTMLInputElement>(null);
-  const cleanRef = createRef<HTMLImageElement>();
-  
-  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setInputValue(event.target.value);
+  const isInputOptionExists = (props.options as AttSelectOption[]).some((option: AttSelectOption) => option.metadata?.isInput);
+
+  const handleInputChange: OnEventInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const newValue = event.target.value;
+    setInputValue(newValue);
+    if (isNaN(Number(newValue))) {
+      props.selectOption(inputOption as AttSelectOption);
+    }
   };
 
-  const handleAddNewClick: () => void = useCallback((): void => {
-    setShowInputOption(true);
-    setInputValue('');
-  }, [setShowInputOption, setInputValue]);
-
-  const applyCustomOption: () => void = useCallback((): void => {
-    const addNewOption = { label: 'Add New', value: 'Add New', metadata: { isInput: true }};
+  const applyCustomOption: OnEventHandler = useCallback((): void => {
     delete props.data.metadata;
-    const addNewIndex = iterationsOptions.findIndex(option => option.metadata?.isAddNewButton);
-    const newIterationsOptions = [...iterationsOptions];
-    newIterationsOptions.splice(addNewIndex, 0, addNewOption);
     setShowInputOption(false);
-  }, [iterationsOptions, setShowInputOption, props]);
-
-  const handleCustomOptionClean: () => void = useCallback((): void => {
-    cleanRef.current?.focus();
-    setInputValue('');
-  }, [cleanRef, setInputValue]);
+    setTimeout(() => props.selectOption({ label: inputOption.label, value: inputOption.value }), 0);
+  }, [props, setShowInputOption, inputOption]);
 
   useEffect(() => {
     if (showInputOption && props.data.metadata?.isInput) {
       inputRef.current?.focus();
-      props.data.label = inputValue;
-      props.data.value = inputValue;
+      props.data.label = props.data.value = inputValue;
     }
-  }, [showInputOption, props, inputValue]);
+  }, [showInputOption, props.data, inputValue]);
+
+  useEffect(() => {
+    const currentOptionsSelected = (props.getValue() ?? []).map((option: AttSelectOption) => option.label);
+    const lastOptionSelected = currentOptionsSelected[currentOptionsSelected.length - 1];
+
+    // handles deselection when the user selects the input option and then selects another option
+    if (currentOptionsSelected.includes(inputOption.label) && lastOptionSelected !== inputOption.label && props.data.metadata?.isInput) {
+      props.selectOption(inputOption as AttSelectOption);
+    }
+    // handles deselection when the user selects the input option and then types a wrong value
+    if (lastOptionSelected === inputOption.label && isNaN(Number(inputValue))) {
+      props.selectOption(inputOption as AttSelectOption);
+    }
+  }, [props, inputOption, inputValue]);
 
   return (
     <>
@@ -107,6 +117,7 @@ export const CustomInput: React.FC<SelectorCustomOptionProps> = (props: Selector
           <div className={styles.add_new_wrapper}>
             <div className={styles.add_new_checkbox_wrapper}>
               <input
+                id={props.label}
                 type="checkbox"
                 className={cn(styles.iterations_input_option, styles.input_option)}
                 checked={props.isSelected}
@@ -116,6 +127,7 @@ export const CustomInput: React.FC<SelectorCustomOptionProps> = (props: Selector
             </div>
             <div className={styles.input_wrapper}>
               <input
+                id={props.label}
                 ref={inputRef}
                 value={inputValue}
                 onChange={handleInputChange}
@@ -127,19 +139,20 @@ export const CustomInput: React.FC<SelectorCustomOptionProps> = (props: Selector
                 <>
                   <img
                     className={styles.clean_icon}
-                    ref={cleanRef}
-                    onClick={handleCustomOptionClean}
+                    onClick={() => setInputValue('')}
                     src={CleanSvg}
                     alt={CleanAriaLabel}
+                    tabIndex={props.isSelected ? 0 : -1}
                   />
                   <Button
-                    className={styles.plus_button}
+                    className={styles.add_button}
                     ariaLabel={props.label}
                     size={ButtonSize.NONE}
                     styleType={ButtonStyleType.WRAPPER}
-                    actionType={ButtonActionType.BUTTON}
+                    actionType={ButtonActionType.SUBMIT}
                     onButtonClick={applyCustomOption}
-                  >+</Button>
+                    disabled={!props.isSelected || isNaN(Number(inputValue))}
+                  >{SELECTOR_CUSTOM_OPTION_EN.ADD_BUTTON}</Button>
                 </>
               )}
 
@@ -147,18 +160,16 @@ export const CustomInput: React.FC<SelectorCustomOptionProps> = (props: Selector
           </div>
         </components.Option>
       )}
-      {props.data.metadata?.isAddNewButton && (
+      {props.data.metadata?.isAddNewButton && isInputOptionExists && (
         <Button
           className={styles.add_new_button}
           ariaLabel={props.label}
           size={ButtonSize.NONE}
           styleType={ButtonStyleType.WRAPPER}
           actionType={ButtonActionType.BUTTON}
-          onButtonClick={handleAddNewClick}
+          onButtonClick={() => setShowInputOption(true)}
           disabled={showInputOption}
-        >
-          <span>{props.label}</span>
-        </Button>
+        >{props.label}</Button>
       )}
     </>
   );
