@@ -117,7 +117,7 @@ class TestAnalyzeAPI(unittest.TestCase):
             "iterationsCount": [10],
             "experimentName": "name",
             "description": "name",
-            "messageSizes": [0]
+            "messageSizes": [-1]
         }
         response = self.client.post(PATH,
                                     data=json.dumps(input_data),
@@ -125,7 +125,7 @@ class TestAnalyzeAPI(unittest.TestCase):
         self.assertEqual(response.status_code, 400)
         response_json = json.loads(response.data)
         self.assertEqual(response_json["error"], INVALID_DATA_PROVIDED)
-        self.assertEqual(response_json["message"], "The message size should be greater than 0")
+        self.assertEqual(response_json["message"], "The message size should be greater than -1")
 
 
     def test_analyze_with_invalid_algorithm(self, mock_start_collecting, mock_stop_collecting, mock_get_metrics):
