@@ -43,7 +43,6 @@ exports[`ProtocolQuery should render ProtocolQuery 1`] = `
       </label>
       <input
         class="input_form_item"
-        id="Experiment name"
         placeholder=""
         required=""
       />
@@ -53,7 +52,6 @@ exports[`ProtocolQuery should render ProtocolQuery 1`] = `
     >
       <label
         class="form_item_label"
-        id="Algorithm(s)"
       >
         Algorithm(s)
          
@@ -100,7 +98,7 @@ exports[`ProtocolQuery should render ProtocolQuery 1`] = `
                 autocomplete="off"
                 autocorrect="off"
                 class="att_select__input"
-                id="Algorithm(s)"
+                id="react-select-2-input"
                 role="combobox"
                 spellcheck="false"
                 style="opacity: 1; width: 100%; grid-area: 1 / 2; min-width: 2px; border: 0px; margin: 0px; outline: 0; padding: 0px;"
@@ -146,7 +144,6 @@ exports[`ProtocolQuery should render ProtocolQuery 1`] = `
     >
       <label
         class="form_item_label"
-        id="Number of iterations"
       >
         Number of iterations
          
@@ -193,7 +190,7 @@ exports[`ProtocolQuery should render ProtocolQuery 1`] = `
                 autocomplete="off"
                 autocorrect="off"
                 class="att_select__input"
-                id="Number of iterations"
+                id="react-select-3-input"
                 role="combobox"
                 spellcheck="false"
                 style="opacity: 1; width: 100%; grid-area: 1 / 2; min-width: 2px; border: 0px; margin: 0px; outline: 0; padding: 0px;"
@@ -239,13 +236,11 @@ exports[`ProtocolQuery should render ProtocolQuery 1`] = `
     >
       <label
         class="form_item_label"
-        id="Description"
       >
         Description
       </label>
       <textarea
         class="form_item_text_area"
-        id="Description"
         placeholder=""
       />
     </div>

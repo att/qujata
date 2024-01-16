@@ -85,7 +85,6 @@ export const ProtocolQuery: React.FC<ProtocolQueryProps> = (props: ProtocolQuery
                 {PROTOCOL_QUERY_EN.FIELDS_LABEL.EXPERIMENT_NAME} <span className={styles.required}>{PROTOCOL_QUERY_EN.FIELDS_LABEL.REQUIRED}</span>
               </label>
               <input
-                id={PROTOCOL_QUERY_EN.FIELDS_LABEL.EXPERIMENT_NAME}
                 className={styles.input_form_item}
                 onChange={onExperimentNameChanged}
                 placeholder=''
@@ -93,11 +92,10 @@ export const ProtocolQuery: React.FC<ProtocolQueryProps> = (props: ProtocolQuery
               />
           </div>
           <div className={styles.form_item}>
-              <label id={PROTOCOL_QUERY_EN.FIELDS_LABEL.ALGORITHM} className={styles.form_item_label}>
+              <label className={styles.form_item_label}>
                 {PROTOCOL_QUERY_EN.FIELDS_LABEL.ALGORITHM} <span className={styles.required}>{PROTOCOL_QUERY_EN.FIELDS_LABEL.REQUIRED}</span>
               </label>
               <AttSelect
-                id={PROTOCOL_QUERY_EN.FIELDS_LABEL.ALGORITHM}
                 className={styles.select_form_item}
                 options={algorithmOptions}
                 placeholder=''
@@ -111,14 +109,13 @@ export const ProtocolQuery: React.FC<ProtocolQueryProps> = (props: ProtocolQuery
               />
           </div>
           <div className={styles.form_item}>
-              <label id={PROTOCOL_QUERY_EN.FIELDS_LABEL.ITERATIONS_NUMBER} className={styles.form_item_label}>
+              <label className={styles.form_item_label}>
                 {PROTOCOL_QUERY_EN.FIELDS_LABEL.ITERATIONS_NUMBER} <span className={styles.required}>{PROTOCOL_QUERY_EN.FIELDS_LABEL.REQUIRED}</span>
               </label>
               <AttSelect
-                id={PROTOCOL_QUERY_EN.FIELDS_LABEL.ITERATIONS_NUMBER}
                 className={styles.select_form_item}
                 options={iterationsOptions}
-                placeholder={PROTOCOL_QUERY_EN.FIELDS_LABEL.PLACEHOLDER}
+                placeholder=''
                 value={iterationsCount as AttSelectOption[]}
                 onChange={onIterationsNumChanged}
                 isMulti
@@ -141,14 +138,13 @@ export const ProtocolQuery: React.FC<ProtocolQueryProps> = (props: ProtocolQuery
               />
           </div>
           <div className={styles.form_item}>
-              <label id={PROTOCOL_QUERY_EN.FIELDS_LABEL.DESCRIPTION} className={styles.form_item_label}>
+              <label className={styles.form_item_label}>
                 {PROTOCOL_QUERY_EN.FIELDS_LABEL.DESCRIPTION}
               </label>
               <textarea
-                id={PROTOCOL_QUERY_EN.FIELDS_LABEL.DESCRIPTION}
                 className={styles.form_item_text_area}
                 onChange={onDescriptionChanged}
-                placeholder={PROTOCOL_QUERY_EN.FIELDS_LABEL.PLACEHOLDER}
+                placeholder=''
               />
           </div>
           <div className={styles.submitButtonWrapper}>
