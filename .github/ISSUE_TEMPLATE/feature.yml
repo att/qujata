@@ -5,7 +5,7 @@ body:
   - type: textarea
     id: feature-description
     attributes:
-      label: Feature Description
+      label: Description
       description: Describe the new feature in detail.
       placeholder: Please provide a detailed description of the feature.
     validations:
