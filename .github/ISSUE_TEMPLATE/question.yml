@@ -1,6 +1,7 @@
 name: Question
 description: Ask a question about this project
 labels: [question]
+projects: "att/5"
 body:
   - type: textarea
     id: description
