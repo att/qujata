@@ -1,4 +1,4 @@
-name: New Feature
+name: Feature
 description: Define a new feature for this project
 labels: [feature]
 body:
@@ -18,14 +18,11 @@ body:
       placeholder: Please provide the acceptance criteria for the feature.
     validations:
       required: true
-  - type: textarea
+  - type: checkboxes
     id: tasks
     attributes:
       label: Tasks
       description: A list of tasks for this feature.
-      placeholder: |
-        1. Task 1
-        2. Task 2
-        3. Task 3
-        ...
-      render: markdown
+      options:
+        - Task 1
+        - Task 2
