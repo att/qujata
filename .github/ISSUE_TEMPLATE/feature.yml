@@ -24,5 +24,5 @@ body:
       label: Tasks
       description: A list of tasks for this feature.
       options:
-        - Task 1
-        - Task 2
+        - label: Task 1
+        - label: Task 2
