@@ -1,0 +1,31 @@
+name: New Feature
+description: Define a new feature for this project
+labels: [feature]
+body:
+  - type: textarea
+    id: feature-description
+    attributes:
+      label: Feature Description
+      description: Describe the new feature in detail.
+      placeholder: Please provide a detailed description of the feature.
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance-criteria
+    attributes:
+      label: Acceptance Criteria
+      description: Define the criteria that must be met for the feature to be accepted.
+      placeholder: Please provide the acceptance criteria for the feature.
+    validations:
+      required: true
+  - type: textarea
+    id: tasks
+    attributes:
+      label: Tasks
+      description: A list of tasks for this feature.
+      placeholder: |
+        1. Task 1
+        2. Task 2
+        3. Task 3
+        ...
+      render: markdown
