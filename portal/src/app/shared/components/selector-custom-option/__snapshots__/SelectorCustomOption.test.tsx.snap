@@ -10,6 +10,7 @@ exports[`SelectorCustomOption should render AlgorithmsSelectorCustomOption corre
   >
     <input
       class="input_option"
+      id="Option 1"
       type="checkbox"
     />
     <img
@@ -36,6 +37,7 @@ exports[`SelectorCustomOption should render IterationsSelectorCustomOption corre
   >
     <input
       class="iterations_input_option input_option"
+      id="Option 1"
       type="checkbox"
     />
     <img

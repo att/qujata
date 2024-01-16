@@ -31,9 +31,13 @@ export const ProtocolQuery: React.FC<ProtocolQueryProps> = (props: ProtocolQuery
   const [experimentName, setExperimentName] = useState('');
   const [algorithms, setAlgorithms] = useState<SelectOptionType>();
   const [prevSelectedValues, setPrevSelectedValues] = useState<string[]>([]);
-  const [iterationsCount, setIterationsCount] = useState<SelectOptionType>();
   const [description, setDescription] = useState('');
 
+  const [iterationsCount, setIterationsCount] = useState<AttSelectOption[]>([]);
+  const [showInputOption, setShowInputOption] = useState(false);
+  const [inputValue, setInputValue] = useState('');
+  const [iterationsMenuIsOpen, setIterationsMenuIsOpen] = useState(false);
+  
   const onSubmitHandler = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     onRunClick({
@@ -57,7 +61,8 @@ export const ProtocolQuery: React.FC<ProtocolQueryProps> = (props: ProtocolQuery
   }, [algosBySection, algorithmOptions, prevSelectedValues]);
 
   const onIterationsNumChanged: OnSelectChanged = useCallback((options: SelectOptionType): void => {
-    const selectedIterationNum: Options<AttSelectOption> = options as Options<AttSelectOption>;
+    const selectedIterationNum: AttSelectOption[] = options as AttSelectOption[];
+    setIterationsMenuIsOpen(true);
     setIterationsCount(selectedIterationNum);
   }, []);
 
@@ -77,7 +82,7 @@ export const ProtocolQuery: React.FC<ProtocolQueryProps> = (props: ProtocolQuery
       <form className={styles.wrapper} data-testid='protocol-query-form' onSubmit={onSubmitHandler}>
           <div className={styles.form_item}>
               <label className={styles.form_item_label}>
-                {PROTOCOL_QUERY_EN.FIELDS_LABEL.EXPERIMENT_NAME} <span className={styles.required}>*</span>
+                {PROTOCOL_QUERY_EN.FIELDS_LABEL.EXPERIMENT_NAME} <span className={styles.required}>{PROTOCOL_QUERY_EN.FIELDS_LABEL.REQUIRED}</span>
               </label>
               <input
                 className={styles.input_form_item}
@@ -88,7 +93,7 @@ export const ProtocolQuery: React.FC<ProtocolQueryProps> = (props: ProtocolQuery
           </div>
           <div className={styles.form_item}>
               <label className={styles.form_item_label}>
-                {PROTOCOL_QUERY_EN.FIELDS_LABEL.ALGORITHM} <span className={styles.required}>*</span>
+                {PROTOCOL_QUERY_EN.FIELDS_LABEL.ALGORITHM} <span className={styles.required}>{PROTOCOL_QUERY_EN.FIELDS_LABEL.REQUIRED}</span>
               </label>
               <AttSelect
                 className={styles.select_form_item}
@@ -105,19 +110,31 @@ export const ProtocolQuery: React.FC<ProtocolQueryProps> = (props: ProtocolQuery
           </div>
           <div className={styles.form_item}>
               <label className={styles.form_item_label}>
-                {PROTOCOL_QUERY_EN.FIELDS_LABEL.ITERATIONS_NUMBER} <span className={styles.required}>*</span>
+                {PROTOCOL_QUERY_EN.FIELDS_LABEL.ITERATIONS_NUMBER} <span className={styles.required}>{PROTOCOL_QUERY_EN.FIELDS_LABEL.REQUIRED}</span>
               </label>
               <AttSelect
                 className={styles.select_form_item}
                 options={iterationsOptions}
-                placeholder={PROTOCOL_QUERY_EN.FIELDS_LABEL.PLACEHOLDER}
-                value={iterationsCount as AttSelectOption}
+                placeholder=''
+                value={iterationsCount as AttSelectOption[]}
                 onChange={onIterationsNumChanged}
                 isMulti
                 hideSelectedOptions={false}
                 closeMenuOnSelect={false}
+                menuIsOpen={iterationsMenuIsOpen}
+                setMenuIsOpen={setIterationsMenuIsOpen}
                 required
-                customComponent={{ Option: IterationsSelectorCustomOption as React.FC }}
+                customComponent={{
+                  Option: (props: any) =>
+                    <IterationsSelectorCustomOption
+                      {...props}
+                      showInputOption={showInputOption}
+                      setShowInputOption={setShowInputOption}
+                      inputValue={inputValue}
+                      setInputValue={setInputValue}
+                      setMenuIsOpen={setIterationsMenuIsOpen}
+                    />
+                }}
               />
           </div>
           <div className={styles.form_item}>

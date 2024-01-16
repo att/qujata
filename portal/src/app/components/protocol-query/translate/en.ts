@@ -10,7 +10,7 @@ export const PROTOCOL_QUERY_EN = {
         EXPORT: 'Export',
     },
     FIELDS_LABEL: {
-        PLACEHOLDER: '+ Add new',
+        REQUIRED: '*',
         EXPERIMENT_NAME: 'Experiment name',
         ITERATIONS_NUMBER: 'Number of iterations',
         ALGORITHM: 'Algorithm(s)',

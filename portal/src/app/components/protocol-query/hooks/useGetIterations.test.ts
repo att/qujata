@@ -19,6 +19,6 @@ describe('useGetIterations', () => {
     });
 
     const { result } = renderHook(() => useGetIterations());
-    expect(result.current.iterationsOptions.length).toEqual(mockData.iterations.length);
+    expect(result.current.iterationsOptions.length).toEqual(mockData.iterations.length + 2);
   });
 });
