@@ -1,6 +1,7 @@
 name: Feature
 description: Define a new feature for this project
 labels: [feature]
+projects: "att/5"
 body:
   - type: textarea
     id: feature-description
