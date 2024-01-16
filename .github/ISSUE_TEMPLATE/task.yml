@@ -1,6 +1,7 @@
 name: Task
 description: Create a new task
 labels: ["task"]
+projects: "att/5"
 body:
   - type: textarea
     id: description
