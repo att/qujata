@@ -1,5 +1,4 @@
 @import "src/styles/variables-keys";
-@import "src/styles/z-index";
 
 .experiment_table_wrapper {
   font-size: 14px;
@@ -7,4 +6,11 @@
   margin-block-end: 50px;
   display: flex;
   flex-wrap: wrap;
+}
+
+.experiment_table {
+  th:first-child,
+  td:first-child {
+    inline-size: 80px;
+  }
 }

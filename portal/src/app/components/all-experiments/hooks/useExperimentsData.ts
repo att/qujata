@@ -11,8 +11,11 @@ export interface IUseExperimentsData {
 
 export interface Experiment {
   id: string;
-  name: string;
-  description: string;
+  experimentName: string;
+  algorithms: string[];
+  iterations: number[];
+  messageSizes: number[];
+  date: string;
 }
 
 export function useExperimentsData(): IUseExperimentsData {
@@ -31,8 +34,11 @@ export function useExperimentsData(): IUseExperimentsData {
       if (status === FetchDataStatus.Success && data) {
         const allExperiments: Experiment[] = data.experiments.map((experiment: Experiment) => ({
           id: experiment.id,
-          name: experiment.name,
-          description: experiment.description
+          experimentName: experiment.experimentName,
+          algorithms: experiment.algorithms,
+          iterations: experiment.iterations,
+          messageSizes: experiment.messageSizes,
+          date: experiment.date,
         }));
         setAllExperiments(allExperiments);
       }

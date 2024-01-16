@@ -1,4 +1,5 @@
 import styles from './Table.module.scss';
+import cn from 'classnames';
 import { useMemo, useState } from 'react';
 import {
   Cell,
@@ -14,28 +15,28 @@ import {
   getCoreRowModel,
   useReactTable,
 } from '@tanstack/react-table';
-import { ITestRunResultData } from '../../models/test-run-result.interface';
 import SortascendingSvg from '../../../../assets/images/sort-ascending.svg';
 import SortDescendingSvg from '../../../../assets/images/sort-descending.svg';
 
 const SortAscendingLabel: string = 'ascending';
 const SortDescendingLabel: string = 'descending';
 
-export interface TableColumn {
+export interface TableColumn<T> {
   id: string;
-  header: (context: HeaderContext<ITestRunResultData, any>) => React.ReactNode;
-  accessor: (row: ITestRunResultData) => any;
-  cell?: (cellInfo: CellContext<ITestRunResultData, unknown>) => JSX.Element;
+  header: (context: HeaderContext<T, any>) => React.ReactNode;
+  accessor: (row: T) => any;
+  cell?: (cellInfo: CellContext<T, unknown>, row?: T) => JSX.Element;
 }
 
-export interface TableProps {
-  headers: TableColumn[];
-  data: ITestRunResultData[];
+export interface TableProps<T> {
+  className?: string;
+  headers: TableColumn<T>[];
+  data: T[];
 }
 
-export const Table: React.FC<TableProps> = ({ headers, data }) => {
+export const Table = <T extends any>({ headers, data, className }: TableProps<T>) => {
   const [sorting, setSorting] = useState<SortingState>([])
-  const columns: ColumnDef<ITestRunResultData>[] = useMemo(() => {
+  const columns: ColumnDef<T>[] = useMemo(() => {
     return headers.map(header => ({
       id: header.id,
       header: header.header,
@@ -56,11 +57,11 @@ export const Table: React.FC<TableProps> = ({ headers, data }) => {
   });
 
   return (
-    <table className={styles.table}>
+    <table className={cn(styles.table, className)}>
       <thead>
-        {table.getHeaderGroups().map((headerGroup: HeaderGroup<ITestRunResultData>) => (
+        {table.getHeaderGroups().map((headerGroup: HeaderGroup<T>) => (
           <tr key={headerGroup.id}>
-            {headerGroup.headers.map((header: Header<ITestRunResultData, unknown>) => (
+            {headerGroup.headers.map((header: Header<T, unknown>) => (
               <th key={header.id} className={styles.table_titles}>
                 <div
                 {...{
@@ -82,9 +83,9 @@ export const Table: React.FC<TableProps> = ({ headers, data }) => {
         ))}
       </thead>
       <tbody className={styles.table_content}>
-        {table.getRowModel().rows.map((row: Row<ITestRunResultData>) => (
+        {table.getRowModel().rows.map((row: Row<T>) => (
           <tr key={row.id}>
-            {row.getVisibleCells().map((cell: Cell<ITestRunResultData, unknown>) => (
+            {row.getVisibleCells().map((cell: Cell<T, unknown>) => (
               <td key={cell.id}>
                 {flexRender(cell.column.columnDef.cell, cell.getContext())}
               </td>

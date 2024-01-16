@@ -2,18 +2,51 @@
   "experiments": [
     {
       "id": 1,
-      "name": "Experiment 1",
-      "description": "This is the first experiment"
+      "experimentName": "Experiment 1",
+      "algorithms": ["kyber512", "hqc128"],
+      "iterations": [2000, 2500, 10000],
+      "messageSizes": [512, 1024, 2048],
+      "date": "2022-11-11"
     },
     {
       "id": 2,
-      "name": "Experiment 2",
-      "description": "This is the second experiment"
+      "experimentName": "Experiment 2",
+      "algorithms": ["hqc128", "prime256v1"],
+      "iterations": [1500, 1700, 20000],
+      "messageSizes": [1024, 2048],
+      "date": "2023-02-09"
     },
     {
       "id": 3,
-      "name": "Experiment 3",
-      "description": "This is the third experiment"
+      "experimentName": "Experiment 3",
+      "algorithms": ["secp384r1"],
+      "iterations": [100000],
+      "messageSizes": [512],
+      "date": "2024-01-01"
+    },
+    {
+      "id": 4,
+      "experimentName": "Experiment 4",
+      "algorithms": ["kyber768", "kyber1024", "secp384r1"],
+      "iterations": [2000, 1500],
+      "messageSizes": [1024],
+      "date": "2020-10-07"
+    },
+    {
+      "id": 5,
+      "experimentName": "Experiment 5",
+      "algorithms": ["hqc256"],
+      "iterations": [100, 500],
+      "messageSizes": [2048],
+      "date": "2021-11-12"
+    },
+    {
+      "id": 6,
+      "experimentName": "Experiment 6",
+      "algorithms": ["hqc256"],
+      "iterations": [],
+      "messageSizes": [2048],
+      "date": "2021-11-12"
     }
   ]
 }

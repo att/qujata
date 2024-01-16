@@ -8,11 +8,6 @@ table {
   table-layout: fixed;
 }
 
-th:first-child,
-td:first-child {
-  inline-size: 80px;
-}
-
 .table_titles {
   padding: 16px;
   background-color: var($attPurple);

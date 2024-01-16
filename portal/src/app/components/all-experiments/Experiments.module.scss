@@ -1,9 +1,25 @@
 @import "src/styles/variables-keys";
 
-.app_wrapper {
-  padding-block-start: 20px;
-  padding-inline-start: 80px;
+.experiments_wrapper {
+  padding-block-start: 40px;
   padding-block-end: 40px;
+  padding-inline-start: 80px;
+  padding-inline-end: 80px;
+}
+
+.experiments_title {
+  font-size: 20px;
+  font-family: var($fontMedium);
+  margin-inline-start: 150px;
+}
+
+.experiments_table {
+  margin-block-start: 60px;
+  margin-block-end: 60px;
+
+  // .duplicate_icon {
+  //   margin-inline-end: 20px;
+  // }
 }
 
 .spinner_wrapper {
