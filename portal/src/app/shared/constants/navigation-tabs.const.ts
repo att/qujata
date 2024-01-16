@@ -5,9 +5,8 @@ export const tabs = [
       link: '/qujata',
       title: SHARED_EN.NAVIGATION_TABS.HOME,
     },
-    // {
-    //   link: '/all-experiments',
-    //   title: SHARED_EN.NAVIGATION_TABS.ALL_EXPERIMENTS,
-    //   disabled: true,
-    // }
+    {
+      link: '/experiments',
+      title: SHARED_EN.NAVIGATION_TABS.ALL_EXPERIMENTS,
+    }
 ];

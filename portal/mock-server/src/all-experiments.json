@@ -1,0 +1,19 @@
+{ 
+  "experiments": [
+    {
+      "id": 1,
+      "name": "Experiment 1",
+      "description": "This is the first experiment"
+    },
+    {
+      "id": 2,
+      "name": "Experiment 2",
+      "description": "This is the second experiment"
+    },
+    {
+      "id": 3,
+      "name": "Experiment 3",
+      "description": "This is the third experiment"
+    }
+  ]
+}

@@ -1,0 +1,26 @@
+@import "src/styles/variables-keys";
+
+.app_wrapper {
+  padding-block-start: 20px;
+  padding-inline-start: 80px;
+  padding-block-end: 40px;
+}
+
+.spinner_wrapper {
+  position: sticky;
+  inset-block-start: 50%;
+  inset-inline-start: 50%;
+  text-align: center;   
+}
+
+.spinner_overlay {
+  inline-size: 100%;
+  block-size: 100%;
+  position: absolute;
+  background-color: #fff;
+  opacity: 0.6;
+  inset-block-start: 0;
+  inset-inline-start: 0;
+  z-index: 4;
+}
+
