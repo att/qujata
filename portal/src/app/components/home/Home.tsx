@@ -6,7 +6,7 @@ import { SubHeader } from "../sub-header";
 import { useCallback, useEffect, useState } from 'react';
 import styles from './Home.module.scss';
 import { useLocation, useNavigate } from "react-router-dom";
-import { Experiment } from "../all-experiments/hooks";
+import { Experiment, ExperimentData } from "../all-experiments/hooks";
 
 export const Home: React.FC = () => {
     const [isSubHeaderOpen, setIsSubHeaderOpen] = useState<boolean>(true);
@@ -27,11 +27,12 @@ export const HomeContent: React.FC = () => {
   const { handleRunQueryClick, status, testSuiteId }: IUseDashboardData = useDashboardData();
   const navigate = useNavigate();
   const location = useLocation();
-  const duplicateData: Experiment = location.state?.row;
+  const [duplicateData, setDuplicateData] = useState<ExperimentData | undefined>(location.state?.row);
+  // const duplicateData: Experiment = location.state?.row;
 
   useEffect(() => {
     // after the duplicate data has been created, we need to clear the state
-    location.state = undefined;
+    setDuplicateData(undefined);
   }, [location]);
 
   useEffect(() => {
@@ -53,6 +54,7 @@ export const HomeContent: React.FC = () => {
         isFetching={status === FetchDataStatus.Fetching}
         onRunClick={handleRunClick}
         duplicateData={duplicateData}
+        setDuplicateData={setDuplicateData}
       />
     </div>
   );

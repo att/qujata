@@ -114,7 +114,7 @@
         {
           "id": 371,
           "algorithm": "kyber512",
-          "iterations": 1000
+          "iterations": 1500
         }
       ]
     }

@@ -1,5 +1,5 @@
 import { noop } from 'lodash';
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { Options } from 'react-select';
 import { ITestParams } from '../../shared/models/quantum.interface';
 import { Button, ButtonActionType, ButtonSize, ButtonStyleType } from '../../shared/components/att-button';
@@ -10,7 +10,7 @@ import { Spinner, SpinnerSize } from '../../shared/components/att-spinner';
 import { useGetAlgorithms, useGetIterations } from './hooks';
 import { handleAlgorithmsSelection } from './utils';
 import { AlgorithmsSelectorCustomOption, IterationsSelectorCustomOption } from '../../shared/components/selector-custom-option';
-import { Experiment } from '../all-experiments/hooks';
+import { ExperimentData } from '../all-experiments/hooks';
 
 export type SelectOptionType = AttSelectOption | Options<AttSelectOption> | null;
 type onTextChangedEvent = (e: React.ChangeEvent<HTMLInputElement>) => void;
@@ -19,14 +19,13 @@ export type OnSelectChanged = (event: SelectOptionType) => void;
 
 export interface ProtocolQueryProps {
   isFetching: boolean;
-  canExportFile?: boolean;
   onRunClick: (data: ITestParams) => void;
-  onDownloadDataClicked?: () => void;
-  duplicateData?: Experiment;
+  duplicateData?: ExperimentData;
+  setDuplicateData: (data?: ExperimentData) => void;
 }
 
 export const ProtocolQuery: React.FC<ProtocolQueryProps> = (props: ProtocolQueryProps) => {
-  const { isFetching, canExportFile, onRunClick, onDownloadDataClicked, duplicateData } = props;
+  const { isFetching, onRunClick, duplicateData, setDuplicateData } = props;
   const { algorithmOptions, algosBySection } = useGetAlgorithms();
   const { iterationsOptions } = useGetIterations();
   
@@ -40,9 +39,29 @@ export const ProtocolQuery: React.FC<ProtocolQueryProps> = (props: ProtocolQuery
   const [inputValue, setInputValue] = useState('');
   const [iterationsMenuIsOpen, setIterationsMenuIsOpen] = useState(false);
 
+  // TODO: move this useEffect into different file
   useEffect(() => {
     console.log('duplicateData ProtocolQuery', duplicateData);
-  }, [duplicateData]);
+    if (duplicateData) {
+      if (duplicateData && duplicateData.name) {
+        setExperimentName(duplicateData.name);
+      }
+      if (duplicateData && duplicateData.algorithms) {
+        const algorithmOptions = duplicateData.algorithms.map((algorithm: string) => {
+          return { label: algorithm, value: algorithm } as AttSelectOption;
+        });
+        setAlgorithms(algorithmOptions);
+      }
+
+      if (duplicateData && duplicateData.iterations) {
+        const iterationsOptions = duplicateData.iterations.map((iteration: number) => {
+          return { label: iteration.toString(), value: iteration.toString() } as AttSelectOption;
+        });
+        setIterationsCount(iterationsOptions);
+      }
+      setDuplicateData(undefined);
+    }
+  }, [duplicateData, setDuplicateData]);
   
   const onSubmitHandler = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -92,6 +111,7 @@ export const ProtocolQuery: React.FC<ProtocolQueryProps> = (props: ProtocolQuery
               </label>
               <input
                 className={styles.input_form_item}
+                value={experimentName}
                 onChange={onExperimentNameChanged}
                 placeholder=''
                 required
