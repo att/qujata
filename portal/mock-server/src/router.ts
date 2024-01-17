@@ -37,7 +37,7 @@ router.get('/qujata-api/test_suites/:testSuiteId', async (req: Request, res: Res
   }, 1500);
 });
 
-router.get('/qujata-api/experiments', async (req: Request, res: Response) => {
+router.get('/qujata-api/test_suites', async (req: Request, res: Response) => {
   console.log(`-${req.method} ${req.url}`);
   const data = (await import('./all-experiments.json')).default;
   setTimeout(() => {

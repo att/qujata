@@ -6,7 +6,7 @@ export const tabs = [
       title: SHARED_EN.NAVIGATION_TABS.HOME,
     },
     {
-      link: '/qujata/experiments',
+      link: '/qujata/test_suites',
       title: SHARED_EN.NAVIGATION_TABS.ALL_EXPERIMENTS,
     }
 ];

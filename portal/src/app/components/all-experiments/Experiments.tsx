@@ -1,6 +1,6 @@
 import { ReactNode, useCallback, useMemo } from 'react';
 import styles from './Experiments.module.scss';
-import { Experiment, IUseExperimentsData, useExperimentsData } from './hooks';
+import { Experiment, ExperimentData, IUseExperimentsData, useExperimentsData } from './hooks';
 import { FetchDataStatus } from '../../shared/hooks/useFetch';
 import { Spinner, SpinnerSize } from '../../shared/components/att-spinner';
 import { ALL_EXPERIMENTS_TABLE_EN } from './translate/en';
@@ -9,19 +9,17 @@ import { Table } from '../../shared/components/table';
 import DuplicateSvg from '../../../assets/images/duplicate.svg';
 import { Button, ButtonActionType, ButtonSize, ButtonStyleType } from '../../shared/components/att-button';
 import { useNavigate } from 'react-router-dom';
-import { isEmpty } from 'lodash';
 
 const DuplicateAriaLabel: string = ALL_EXPERIMENTS_TABLE_EN.TABLE_COLUMNS.LINKS.DUPLICATE;
 
 export const Experiments: React.FC = () => {
-  const { experiments, status }: IUseExperimentsData = useExperimentsData();
-  const experimentsData = useMemo(() => (experiments ?? []), [experiments]);
+  const { test_suites, status }: IUseExperimentsData = useExperimentsData();
+  const experimentsData = useMemo(() => (test_suites ?? []), [test_suites]);
   const navigate = useNavigate();
 
-  const handleButtonClick = useCallback((row: Experiment) => {
-    console.log('Button clicked on row:', row);
-    // need to naviage with the entire row data, so we can duplicate it properly
-    navigate('/qujata');
+  const handleDuplicateClick = useCallback((row: Experiment) => {
+    // Navigate to the Home Page
+    navigate('/qujata', { state: { row } });
   }, [navigate]);
 
   const headers = useMemo(() => {
@@ -29,27 +27,22 @@ export const Experiments: React.FC = () => {
       {
         id: ALL_EXPERIMENTS_TABLE_EN.TABLE_COLUMNS.EXPERIMENT_NAME.ID,
         name: ALL_EXPERIMENTS_TABLE_EN.TABLE_COLUMNS.EXPERIMENT_NAME.NAME,
-        accessor: (row: Experiment) => row.experimentName
+        accessor: (row: ExperimentData) => row.name
       },
       {
         id: ALL_EXPERIMENTS_TABLE_EN.TABLE_COLUMNS.ALGORITHMS.ID,
         name: ALL_EXPERIMENTS_TABLE_EN.TABLE_COLUMNS.ALGORITHMS.NAME,
-        accessor: (row: Experiment) => row.algorithms.join(', ')
+        accessor: (row: ExperimentData) => row.algorithms?.join(', ')
       },
       {
         id: ALL_EXPERIMENTS_TABLE_EN.TABLE_COLUMNS.ITERATIONS.ID,
         name: ALL_EXPERIMENTS_TABLE_EN.TABLE_COLUMNS.ITERATIONS.NAME, 
-        accessor: (row: Experiment) => row.iterations.join(', ')
-      },
-      { 
-        id: ALL_EXPERIMENTS_TABLE_EN.TABLE_COLUMNS.MESSAGE_SIZE.ID,
-        name: ALL_EXPERIMENTS_TABLE_EN.TABLE_COLUMNS.MESSAGE_SIZE.NAME,
-        accessor: (row: Experiment) => row.messageSizes.join(', ')
+        accessor: (row: ExperimentData) => row.iterations?.join(', ')
       },
       { 
         id: ALL_EXPERIMENTS_TABLE_EN.TABLE_COLUMNS.DATE.ID,
         name: ALL_EXPERIMENTS_TABLE_EN.TABLE_COLUMNS.DATE.NAME,
-        accessor: (row: Experiment) => row.date
+        accessor: (row: ExperimentData) => row.end_time
       },
       { 
         id: ALL_EXPERIMENTS_TABLE_EN.TABLE_COLUMNS.LINKS.DUPLICATE,
@@ -60,7 +53,7 @@ export const Experiments: React.FC = () => {
             size={ButtonSize.NONE}
             styleType={ButtonStyleType.WRAPPER}
             actionType={ButtonActionType.BUTTON}
-            onButtonClick={() => handleButtonClick(cellInfo.row.original)}
+            onButtonClick={() => handleDuplicateClick(cellInfo.row.original)}
           >
             <img className={styles.duplicate_icon} src={DuplicateSvg} alt={DuplicateAriaLabel} />
           </Button>
@@ -74,13 +67,13 @@ export const Experiments: React.FC = () => {
       accessor,
       cell: cell || ((cellInfo: CellContext<Experiment, unknown>) => <span>{cellInfo.getValue() as ReactNode}</span>)
     }));
-  }, [handleButtonClick]);
+  }, [handleDuplicateClick]);
 
   return (
     <div className={styles.experiments_wrapper}>
       {status === FetchDataStatus.Fetching ? renderSpinner() : (
         <div>
-          <label className={styles.experiments_title}>{`${ALL_EXPERIMENTS_TABLE_EN.TITLE} (${experiments.length})`}</label>
+          <label className={styles.experiments_title}>{`${ALL_EXPERIMENTS_TABLE_EN.TITLE} (${test_suites.length})`}</label>
           <Table className={styles.experiments_table} headers={headers} data={experimentsData} />
         </div>
       )}

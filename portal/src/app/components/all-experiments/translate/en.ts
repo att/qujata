@@ -13,10 +13,6 @@ export const ALL_EXPERIMENTS_TABLE_EN = {
       NAME: 'Iterations',
       ID: 'iterations'
     },
-    MESSAGE_SIZE: {
-      NAME: 'Message Size (KB)',
-      ID: 'messageSizes'
-    },
     DATE: {
       NAME: 'Date',
       ID: 'date'

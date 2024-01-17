@@ -1,52 +1,122 @@
-{ 
-  "experiments": [
+{
+  "test_suites": [
     {
-      "id": 1,
-      "experimentName": "Experiment 1",
-      "algorithms": ["kyber512", "hqc128"],
-      "iterations": [2000, 2500, 10000],
-      "messageSizes": [512, 1024, 2048],
-      "date": "2022-11-11"
+      "id": 15,
+      "name": "Experiment 1",
+      "end_time": 1705240065192,
+      "testRuns": [
+        {
+          "id": 354,
+          "algorithm": "prime256v1",
+          "iterations": 100
+        },
+        {
+          "id": 355,
+          "algorithm": "prime256v1",
+          "iterations": 500
+        },
+        {
+          "id": 356,
+          "algorithm": "prime256v1",
+          "iterations": 1000
+        },
+        {
+          "id": 357,
+          "algorithm": "p256_kyber512",
+          "iterations": 100
+        },
+        {
+          "id": 358,
+          "algorithm": "p256_kyber512",
+          "iterations": 500
+        },
+        {
+          "id": 359,
+          "algorithm": "p256_kyber512",
+          "iterations": 1000
+        },
+        {
+          "id": 360,
+          "algorithm": "bikel3",
+          "iterations": 100
+        },
+        {
+          "id": 361,
+          "algorithm": "bikel3",
+          "iterations": 500
+        },
+        {
+          "id": 362,
+          "algorithm": "bikel3",
+          "iterations": 1000
+        }
+      ]
     },
     {
-      "id": 2,
-      "experimentName": "Experiment 2",
-      "algorithms": ["hqc128", "prime256v1"],
-      "iterations": [1500, 1700, 20000],
-      "messageSizes": [1024, 2048],
-      "date": "2023-02-09"
+      "id": 16,
+      "name": "Experiment 2",
+      "end_time": 1705389926549,
+      "testRuns": [
+        {
+          "id": 363,
+          "algorithm": "kyber512",
+          "iterations": 1000
+        },
+        {
+          "id": 364,
+          "algorithm": "bikel3",
+          "iterations": 1000
+        },
+        {
+          "id": 365,
+          "algorithm": "prime256v1",
+          "iterations": 1000
+        }
+      ]
     },
     {
-      "id": 3,
-      "experimentName": "Experiment 3",
-      "algorithms": ["secp384r1"],
-      "iterations": [100000],
-      "messageSizes": [512],
-      "date": "2024-01-01"
+      "id": 17,
+      "name": "Experiment 3",
+      "end_time": 1705389926549,
+      "testRuns": [
+        {
+          "id": 366,
+          "algorithm": "prime256v1",
+          "iterations": 500
+        },
+        {
+          "id": 367,
+          "algorithm": "bikel3",
+          "iterations": 1000
+        },
+        {
+          "id": 368,
+          "algorithm": "bikel3",
+          "iterations": 1000
+        },
+        {
+          "id": 369,
+          "algorithm": "prime256v1",
+          "iterations": 5000
+        }
+      ]
     },
     {
-      "id": 4,
-      "experimentName": "Experiment 4",
-      "algorithms": ["kyber768", "kyber1024", "secp384r1"],
-      "iterations": [2000, 1500],
-      "messageSizes": [1024],
-      "date": "2020-10-07"
-    },
-    {
-      "id": 5,
-      "experimentName": "Experiment 5",
-      "algorithms": ["hqc256"],
-      "iterations": [100, 500],
-      "messageSizes": [2048],
-      "date": "2021-11-12"
-    },
-    {
-      "id": 6,
-      "experimentName": "Experiment 6",
-      "algorithms": ["hqc256"],
-      "iterations": [],
-      "messageSizes": [2048],
-      "date": "2021-11-12"
+      "id": 18,
+      "name": "Experiment 4",
+      "end_time": 1705389926549,
+      "testRuns": [
+        {
+          "id": 370,
+          "algorithm": "kyber512",
+          "iterations": 500
+        },
+        {
+          "id": 371,
+          "algorithm": "kyber512",
+          "iterations": 1000
+        }
+      ]
     }
   ]
 }

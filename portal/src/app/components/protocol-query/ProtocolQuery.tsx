@@ -1,5 +1,5 @@
 import { noop } from 'lodash';
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { Options } from 'react-select';
 import { ITestParams } from '../../shared/models/quantum.interface';
 import { Button, ButtonActionType, ButtonSize, ButtonStyleType } from '../../shared/components/att-button';
@@ -10,6 +10,7 @@ import { Spinner, SpinnerSize } from '../../shared/components/att-spinner';
 import { useGetAlgorithms, useGetIterations } from './hooks';
 import { handleAlgorithmsSelection } from './utils';
 import { AlgorithmsSelectorCustomOption, IterationsSelectorCustomOption } from '../../shared/components/selector-custom-option';
+import { Experiment } from '../all-experiments/hooks';
 
 export type SelectOptionType = AttSelectOption | Options<AttSelectOption> | null;
 type onTextChangedEvent = (e: React.ChangeEvent<HTMLInputElement>) => void;
@@ -21,10 +22,11 @@ export interface ProtocolQueryProps {
   canExportFile?: boolean;
   onRunClick: (data: ITestParams) => void;
   onDownloadDataClicked?: () => void;
+  duplicateData?: Experiment;
 }
 
 export const ProtocolQuery: React.FC<ProtocolQueryProps> = (props: ProtocolQueryProps) => {
-  const { isFetching, canExportFile, onRunClick, onDownloadDataClicked } = props;
+  const { isFetching, canExportFile, onRunClick, onDownloadDataClicked, duplicateData } = props;
   const { algorithmOptions, algosBySection } = useGetAlgorithms();
   const { iterationsOptions } = useGetIterations();
   
@@ -37,6 +39,10 @@ export const ProtocolQuery: React.FC<ProtocolQueryProps> = (props: ProtocolQuery
   const [showInputOption, setShowInputOption] = useState(false);
   const [inputValue, setInputValue] = useState('');
   const [iterationsMenuIsOpen, setIterationsMenuIsOpen] = useState(false);
+
+  useEffect(() => {
+    console.log('duplicateData ProtocolQuery', duplicateData);
+  }, [duplicateData]);
   
   const onSubmitHandler = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
