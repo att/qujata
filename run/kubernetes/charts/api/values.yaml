@@ -36,6 +36,7 @@ securityContext: {}
   # runAsUser: 1000
 
 env:
+  LOG_LEVEL: INFO
   ENVIRONMENT: kubernetes
   CURL_URL: http://qujata-curl:3010
   PROMETHEUS_URL: http://qujata-prometheus:9090

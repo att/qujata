@@ -48,6 +48,7 @@ Selector labels
 {{- define "portal.selectorLabels" -}}
 app.kubernetes.io/name: {{ include "portal.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
+app: {{ include "portal.fullname" . }}
 {{- end }}
 
 {{/*

@@ -12,3 +12,4 @@ class NotFoundException(Exception):
         self.error = error
         self.status_code = 404
 
+

@@ -48,6 +48,7 @@ Selector labels
 {{- define "grafana.selectorLabels" -}}
 app.kubernetes.io/name: {{ include "grafana.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
+app: {{ include "grafana.fullname" . }}
 {{- end }}
 
 {{/*

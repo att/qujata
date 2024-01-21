@@ -1,6 +1,5 @@
-from sqlalchemy import create_engine, Column, Integer, String, Date, Enum, ForeignKey, TIMESTAMP
-from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import sessionmaker, relationship
+from sqlalchemy import Column, Integer, String, Enum, ForeignKey, TIMESTAMP
+from sqlalchemy.orm import relationship
 from src.enums.status import Status
 from .base import Base
 
