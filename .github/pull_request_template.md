@@ -1,8 +1,6 @@
-# Description
-Please include a summary of the changes and the related issue. 
-If possible, please add some screenshots to help provide context.
-
 # Checklist:
+- [ ] I have included a meaningful summary of my PR's content
+- [ ] If applicable, I have included screenshots to help describe my change
 - [ ] I have linked my PR to the relevant issue
 - [ ] I have performed a self-review of my code
 - [ ] I have commented my code, particularly in hard-to-understand areas
