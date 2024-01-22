@@ -28,7 +28,7 @@ export const Experiments: React.FC = () => {
   const { test_suites, status }: IUseExperimentsData = useExperimentsData();
   const [openDeleteModal, setOpenDeleteModal] = useState<boolean>(false);
   const [checkedRows, setCheckedRows] = useState<Record<number, boolean>>({});
-  const experimentsData = useMemo(() => (parseExperimentsData(test_suites) ?? []), [test_suites]);
+  const experimentsData = useMemo(() => (parseExperimentsData(test_suites)), [test_suites]);
   const navigate = useNavigate();
 
   const { post, status: deleteStatus, error: deleteError, cancelRequest: cancelRequestDelete }: IHttp<unknown>
@@ -43,10 +43,9 @@ export const Experiments: React.FC = () => {
 
   const handleCloseDeleteExperimentModal: (confirm?: boolean) => void = useCallback((confirm?: boolean): void => {
     if (confirm) {
+      const ids: number[] = Object.keys(checkedRows).map((key: string) => parseInt(key))
       post({
-        data: {
-          ids: Object.keys(checkedRows).map((key: string) => parseInt(key))
-        }
+        data: { ids }
       });
     }
     setOpenDeleteModal(false);

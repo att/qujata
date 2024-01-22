@@ -1,0 +1,41 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Experiments renders correctly 1`] = `
+<div>
+  <div
+    class="experiments_wrapper"
+  >
+    <div
+      class="spinner_overlay"
+    >
+      <div
+        class="spinner_wrapper"
+      >
+        <svg
+          class="md_spinner"
+          viewBox="0 0 43 43"
+        >
+          <g
+            class="spinner"
+          >
+            <circle
+              class="spinner_inner"
+              cx="21.5"
+              cy="21.5"
+              fill="none"
+              r="20"
+            />
+            <circle
+              class="spinner_outer"
+              cx="21.5"
+              cy="21.5"
+              fill="none"
+              r="20"
+            />
+          </g>
+        </svg>
+      </div>
+    </div>
+  </div>
+</div>
+`;
