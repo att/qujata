@@ -1,5 +1,5 @@
 import { noop } from 'lodash';
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { Options } from 'react-select';
 import { ITestParams } from '../../shared/models/quantum.interface';
 import { Button, ButtonActionType, ButtonSize, ButtonStyleType } from '../../shared/components/att-button';
@@ -11,6 +11,7 @@ import { useGetAlgorithms, useGetIterations } from './hooks';
 import { handleAlgorithmsSelection } from './utils';
 import { AlgorithmsSelectorCustomOption, IterationsSelectorCustomOption } from '../../shared/components/selector-custom-option';
 import { ExperimentData } from '../all-experiments/hooks';
+import { useDuplicateData } from './hooks';
 
 export type SelectOptionType = AttSelectOption | Options<AttSelectOption> | null;
 type onTextChangedEvent = (e: React.ChangeEvent<HTMLInputElement>) => void;
@@ -39,29 +40,8 @@ export const ProtocolQuery: React.FC<ProtocolQueryProps> = (props: ProtocolQuery
   const [inputValue, setInputValue] = useState('');
   const [iterationsMenuIsOpen, setIterationsMenuIsOpen] = useState(false);
 
-  // TODO: move this useEffect into different file
-  useEffect(() => {
-    if (duplicateData) {
-      if (duplicateData && duplicateData.name) {
-        setExperimentName(duplicateData.name);
-      }
-      if (duplicateData && duplicateData.algorithms) {
-        const algorithmOptions = duplicateData.algorithms.map((algorithm: string) => {
-          return { label: algorithm, value: algorithm } as AttSelectOption;
-        });
-        setAlgorithms(algorithmOptions);
-      }
+  useDuplicateData({ data: duplicateData, setDuplicateData, setExperimentName, setAlgorithms, setIterationsCount });
 
-      if (duplicateData && duplicateData.iterations) {
-        const iterationsOptions = duplicateData.iterations.map((iteration: number) => {
-          return { label: iteration.toString(), value: iteration.toString() } as AttSelectOption;
-        });
-        setIterationsCount(iterationsOptions);
-      }
-      setDuplicateData(undefined);
-    }
-  }, [duplicateData, setDuplicateData]);
-  
   const onSubmitHandler = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     onRunClick({
@@ -190,16 +170,6 @@ export const ProtocolQuery: React.FC<ProtocolQueryProps> = (props: ProtocolQuery
               </div>}
           </div>
        </form>
-       {/* <Button
-            className={styles.export_button}
-            actionType={ButtonActionType.BUTTON}
-            size={ButtonSize.LARGE}
-            styleType={ButtonStyleType.PRIMARY}
-            disabled={!canExportFile}
-            onButtonClick={onDownloadDataClicked}
-        >
-          {PROTOCOL_QUERY_EN.ACTION_BUTTONS.EXPORT}
-        </Button> */}
     </div>
   );
 };

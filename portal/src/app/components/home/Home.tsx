@@ -28,10 +28,9 @@ export const HomeContent: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const [duplicateData, setDuplicateData] = useState<ExperimentData | undefined>(location.state?.row);
-  // const duplicateData: Experiment = location.state?.row;
 
   useEffect(() => {
-    // after the duplicate data has been created, we need to clear the state
+    // Clear the state after the duplicate data has been created
     setDuplicateData(undefined);
   }, [location]);
 
