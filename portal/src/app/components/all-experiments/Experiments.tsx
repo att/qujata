@@ -110,7 +110,7 @@ export const Experiments: React.FC = () => {
       { 
         id: ALL_EXPERIMENTS_TABLE_EN.TABLE_COLUMNS.DATE.ID,
         name: ALL_EXPERIMENTS_TABLE_EN.TABLE_COLUMNS.DATE.NAME,
-        accessor: (row: ExperimentData) => formatDistanceToNow(row.end_time as string, { addSuffix: true })
+        accessor: (row: ExperimentData) => formatDistanceToNow(row.end_time, { addSuffix: true })
       },
       { 
         id: ALL_EXPERIMENTS_TABLE_EN.TABLE_COLUMNS.LINKS.DUPLICATE,

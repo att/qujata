@@ -17,7 +17,7 @@ export interface ExperimentData {
   name: string;
   algorithms: string[];
   iterations: number[];
-  end_time: string;
+  end_time: number;
 };
 
 export function useExperimentsData(): IUseExperimentsData {
@@ -33,7 +33,7 @@ export function useExperimentsData(): IUseExperimentsData {
 
 
     useEffect(() => {
-      if (status === FetchDataStatus.Success && data) {
+      if (data) {
         setAllExperiments(data);
       }
     }, [data, status, allExperiments]);

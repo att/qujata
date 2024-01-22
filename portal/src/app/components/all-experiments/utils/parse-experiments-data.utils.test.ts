@@ -12,7 +12,7 @@ describe('parseExperimentsData', () => {
           { algorithm: 'Algorithm 1', iterations: 1000 } as ITestRunResultData,
           { algorithm: 'Algorithm 2', iterations: 5000 } as ITestRunResultData,
         ],
-        end_time: '2022-01-01T00:00:00Z',
+        end_time: 1705240065192,
       },
     ];
 
@@ -22,7 +22,7 @@ describe('parseExperimentsData', () => {
         name: 'Experiment 1',
         algorithms: ['Algorithm 1', 'Algorithm 2'],
         iterations: [1000, 5000],
-        end_time: '2022-01-01T00:00:00Z',
+        end_time: 1705240065192,
       },
     ];
 

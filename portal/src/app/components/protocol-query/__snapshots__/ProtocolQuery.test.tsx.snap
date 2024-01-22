@@ -45,6 +45,7 @@ exports[`ProtocolQuery should render ProtocolQuery 1`] = `
         class="input_form_item"
         placeholder=""
         required=""
+        value=""
       />
     </div>
     <div

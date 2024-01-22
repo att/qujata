@@ -5,8 +5,8 @@ export const MOCK_DATA_FOR_CHARTS: IExperimentData = {
     id: 1,
     name: "TestRun1",
     description: "TestRun1",
-    start_time: "2021-07-26T12:00:00.000Z",
-    end_time: "2021-07-26T12:00:00.000Z",
+    start_time: 1705240065192,
+    end_time: 1705240065192,
     environment_info: {
       resourceName: "gddn-aks",
       operatingSystem: "Linux",
