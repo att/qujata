@@ -2,7 +2,9 @@
 @import "src/styles/z-index";
 
 .app_wrapper {
-  padding: 80px;
+  padding-block-start: 20px;
+  padding-inline-start: 80px;
+  padding-block-end: 40px;
 }
 
 .init_state_wrapper {
