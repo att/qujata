@@ -3,25 +3,26 @@ import { useEffect, useState } from 'react';
 import { APIS } from '../../../apis';
 import { useFetchSpinner } from '../../../shared/hooks/useFetchSpinner';
 import { useErrorMessage } from '../../../hooks/useErrorMessage';
-import { ITestRunResult } from '../../../shared/models/test-run-result.interface';
-import { parseExperimentsData } from '../utils/parse-experiments-data.utils';
+import { ITestRunResult, ITestRunResultData } from '../../../shared/models/test-run-result.interface';
 
-export type Experiment = Partial<ITestRunResult>;
+export type TestRunSubset = Pick<ITestRunResultData, 'id' | 'algorithm' | 'iterations'>;
+export type Experiment = Pick<ITestRunResult, 'id' | 'name' | 'end_time'> & { test_runs: TestRunSubset[] };
+
 export interface IUseExperimentsData {
   test_suites: Experiment[];
   status: FetchDataStatus;
 }
 export interface ExperimentData {
-  id?: number;
-  name?: string;
-  algorithms?: string[];
-  iterations?: number[];
-  end_time?: string;
+  id: number;
+  name: string;
+  algorithms: string[];
+  iterations: number[];
+  end_time: string;
 };
 
 export function useExperimentsData(): IUseExperimentsData {
-    const [allExperiments, setAllExperiments] = useState<ExperimentData[]>([]);
-    const { get, data, cancelRequest, status, error }: IHttp<IUseExperimentsData> = useFetch({ url: APIS.allExperiments });
+    const [allExperiments, setAllExperiments] = useState<Experiment[]>([]);
+    const { get, data, cancelRequest, status, error }: IHttp<Experiment[]> = useFetch({ url: APIS.allExperiments });
 
     useFetchSpinner(status);
     useErrorMessage(error);
@@ -32,11 +33,10 @@ export function useExperimentsData(): IUseExperimentsData {
 
 
     useEffect(() => {
-      if (data && data.test_suites) {
-        const experimentsData: ExperimentData[] = parseExperimentsData(data.test_suites);
-        setAllExperiments(experimentsData);
+      if (status === FetchDataStatus.Success && data) {
+        setAllExperiments(data);
       }
-    }, [data, status]);
+    }, [data, status, allExperiments]);
 
     return { test_suites: allExperiments, status };
 }

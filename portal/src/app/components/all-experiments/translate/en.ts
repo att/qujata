@@ -1,6 +1,7 @@
 export const ALL_EXPERIMENTS_TABLE_EN = {
   TITLE: 'All Experiments',
   TABLE_COLUMNS: {
+    CHECKBOX: 'checkbox',
     EXPERIMENT_NAME: {
       NAME: 'Experiment Name',
       ID: 'experimentName'
@@ -20,5 +21,8 @@ export const ALL_EXPERIMENTS_TABLE_EN = {
     LINKS: {
       DUPLICATE: 'duplicate',
     }
+  },
+  BUTTONS: {
+    DELETE: 'Delete',
   }
 }

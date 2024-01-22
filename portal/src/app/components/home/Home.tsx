@@ -6,7 +6,7 @@ import { SubHeader } from "../sub-header";
 import { useCallback, useEffect, useState } from 'react';
 import styles from './Home.module.scss';
 import { useLocation, useNavigate } from "react-router-dom";
-import { Experiment, ExperimentData } from "../all-experiments/hooks";
+import { ExperimentData } from "../all-experiments/hooks";
 
 export const Home: React.FC = () => {
     const [isSubHeaderOpen, setIsSubHeaderOpen] = useState<boolean>(true);

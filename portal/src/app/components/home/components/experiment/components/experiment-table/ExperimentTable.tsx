@@ -12,7 +12,7 @@ export interface ExperimentTableProps {
 }
 
 export const ExperimentTable: React.FC<ExperimentTableProps> = (props: ExperimentTableProps) => {
-  const data = useMemo(() => (props.data ? props.data.testRuns : []), [props.data]);
+  const data = useMemo(() => (props.data ? props.data.test_runs : []), [props.data]);
   
   const headers: TableColumn<ITestRunResultData>[] = useMemo(() => [
     {

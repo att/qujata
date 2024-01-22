@@ -17,7 +17,7 @@ export const MOCK_DATA_FOR_EXPERIMENT: ITestRunResult = {
     nodeSize: "Standard_D4s_v5",
     codeRelease: "1.1.0",
   },
-  testRuns: [
+  test_runs: [
     {
       id: 1,
       algorithm: "Algorithm1",
@@ -68,7 +68,7 @@ export const MOCK_DATA_FOR_EXPERIMENT_TABLE: ExperimentTableProps = {
       nodeSize: "Standard_D4s_v5",
       codeRelease: "1.1.0",
     },
-    testRuns: [
+    test_runs: [
       {
         id: 1,
         algorithm: "Algorithm1",
@@ -138,7 +138,7 @@ export const MOCK_DATA_FOR_EXPERIMENT_WITH_NO_TEST_RUNS: ExperimentTableProps = 
       nodeSize: "Standard_D4s_v5", 
       codeRelease: "1.1.0",
     }, 
-    testRuns: []
+    test_runs: []
   },
   selectedColumns: [
     {
@@ -176,7 +176,7 @@ export const MOCK_SUB_HEADER: ITestRunResult = {
       operatingSystem: 'codeRelease',
       resourceName: 'codeRelease',
   },
-  testRuns: [
+  test_runs: [
       {
           id:1,
           algorithm: "bikel1",

@@ -8,7 +8,7 @@ describe('parseExperimentsData', () => {
       {
         id: 1,
         name: 'Experiment 1',
-        testRuns: [
+        test_runs: [
           { algorithm: 'Algorithm 1', iterations: 1000 } as ITestRunResultData,
           { algorithm: 'Algorithm 2', iterations: 5000 } as ITestRunResultData,
         ],

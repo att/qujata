@@ -1,122 +1,120 @@
-{
-  "test_suites": [
-    {
-      "id": 15,
-      "name": "Experiment 1",
-      "end_time": 1705240065192,
-      "testRuns": [
-        {
-          "id": 354,
-          "algorithm": "prime256v1",
-          "iterations": 100
-        },
-        {
-          "id": 355,
-          "algorithm": "prime256v1",
-          "iterations": 500
-        },
-        {
-          "id": 356,
-          "algorithm": "prime256v1",
-          "iterations": 1000
-        },
-        {
-          "id": 357,
-          "algorithm": "p256_kyber512",
-          "iterations": 100
-        },
-        {
-          "id": 358,
-          "algorithm": "p256_kyber512",
-          "iterations": 500
-        },
-        {
-          "id": 359,
-          "algorithm": "p256_kyber512",
-          "iterations": 1000
-        },
-        {
-          "id": 360,
-          "algorithm": "bikel3",
-          "iterations": 100
-        },
-        {
-          "id": 361,
-          "algorithm": "bikel3",
-          "iterations": 500
-        },
-        {
-          "id": 362,
-          "algorithm": "bikel3",
-          "iterations": 1000
-        }
-      ]
-    },
-    {
-      "id": 16,
-      "name": "Experiment 2",
-      "end_time": 1705389926549,
-      "testRuns": [
-        {
-          "id": 363,
-          "algorithm": "kyber512",
-          "iterations": 1000
-        },
-        {
-          "id": 364,
-          "algorithm": "bikel3",
-          "iterations": 1000
-        },
-        {
-          "id": 365,
-          "algorithm": "prime256v1",
-          "iterations": 1000
-        }
-      ]
-    },
-    {
-      "id": 17,
-      "name": "Experiment 3",
-      "end_time": 1705389926549,
-      "testRuns": [
-        {
-          "id": 366,
-          "algorithm": "prime256v1",
-          "iterations": 500
-        },
-        {
-          "id": 367,
-          "algorithm": "bikel3",
-          "iterations": 1000
-        },
-        {
-          "id": 368,
-          "algorithm": "bikel3",
-          "iterations": 1000
-        },
-        {
-          "id": 369,
-          "algorithm": "prime256v1",
-          "iterations": 5000
-        }
-      ]
-    },
-    {
-      "id": 18,
-      "name": "Experiment 4",
-      "end_time": 1705389926549,
-      "testRuns": [
-        {
-          "id": 370,
-          "algorithm": "kyber512",
-          "iterations": 500
-        },
-        {
-          "id": 371,
-          "algorithm": "kyber512",
-          "iterations": 1500
-        }
-      ]
-    }
-  ]
-}
+[
+  {
+    "id": 15,
+    "name": "Experiment 1",
+    "end_time": 1705240065192,
+    "test_runs": [
+      {
+        "id": 354,
+        "algorithm": "prime256v1",
+        "iterations": 100
+      },
+      {
+        "id": 355,
+        "algorithm": "prime256v1",
+        "iterations": 500
+      },
+      {
+        "id": 356,
+        "algorithm": "prime256v1",
+        "iterations": 1000
+      },
+      {
+        "id": 357,
+        "algorithm": "p256_kyber512",
+        "iterations": 100
+      },
+      {
+        "id": 358,
+        "algorithm": "p256_kyber512",
+        "iterations": 500
+      },
+      {
+        "id": 359,
+        "algorithm": "p256_kyber512",
+        "iterations": 1000
+      },
+      {
+        "id": 360,
+        "algorithm": "bikel3",
+        "iterations": 100
+      },
+      {
+        "id": 361,
+        "algorithm": "bikel3",
+        "iterations": 500
+      },
+      {
+        "id": 362,
+        "algorithm": "bikel3",
+        "iterations": 1000
+      }
+    ]
+  },
+  {
+    "id": 16,
+    "name": "Experiment 2",
+    "end_time": 1705389926549,
+    "test_runs": [
+      {
+        "id": 363,
+        "algorithm": "kyber512",
+        "iterations": 1000
+      },
+      {
+        "id": 364,
+        "algorithm": "bikel3",
+        "iterations": 1000
+      },
+      {
+        "id": 365,
+        "algorithm": "prime256v1",
+        "iterations": 1000
+      }
+    ]
+  },
+  {
+    "id": 17,
+    "name": "Experiment 3",
+    "end_time": 1705389926549,
+    "test_runs": [
+      {
+        "id": 366,
+        "algorithm": "prime256v1",
+        "iterations": 500
+      },
+      {
+        "id": 367,
+        "algorithm": "bikel3",
+        "iterations": 1000
+      },
+      {
+        "id": 368,
+        "algorithm": "bikel3",
+        "iterations": 1000
+      },
+      {
+        "id": 369,
+        "algorithm": "prime256v1",
+        "iterations": 5000
+      }
+    ]
+  },
+  {
+    "id": 18,
+    "name": "Experiment 4",
+    "end_time": 1705389926549,
+    "test_runs": [
+      {
+        "id": 370,
+        "algorithm": "kyber512",
+        "iterations": 500
+      },
+      {
+        "id": 371,
+        "algorithm": "kyber512",
+        "iterations": 1500
+      }
+    ]
+  }
+]

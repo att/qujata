@@ -29,9 +29,9 @@ export function useExperimentData(): IUseExperimentData {
   }, [get, cancelRequest]);
 
   useEffect(() => {
-      if (data && data.testRuns) {
-          const sortedData: ITestRunResultData[] = sortDataByAlgorithm(data.testRuns);
-          setTestRunData({ ...data, testRuns: sortedData });
+      if (data && data.test_runs) {
+          const sortedData: ITestRunResultData[] = sortDataByAlgorithm(data.test_runs);
+          setTestRunData({ ...data, test_runs: sortedData });
       }
   }, [data]);
 

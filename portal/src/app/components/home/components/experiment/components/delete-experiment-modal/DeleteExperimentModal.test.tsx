@@ -5,7 +5,7 @@ import { DeleteExperimentModal, DeleteExperimentModalProps } from './DeleteExper
 describe('EditExperimentModal', () => {
   test('renders edit Experiment modal correctly', () => {
     const props: DeleteExperimentModalProps = {
-      name: 'Test',
+      name: ['Test'],
       onClose: jest.fn(),
     };
     const { baseElement }: RenderResult = render(<DeleteExperimentModal {...props}>TestMe</DeleteExperimentModal>);
@@ -15,7 +15,7 @@ describe('EditExperimentModal', () => {
   test('click submit button', () => {
     const handleClose = jest.fn();
     const props: DeleteExperimentModalProps = {
-      name: 'Test',
+      name: ['Test'],
       onClose: handleClose,
     };
     const { getByRole }: RenderResult = render(<DeleteExperimentModal {...props}>TestMe</DeleteExperimentModal>);

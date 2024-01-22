@@ -1,5 +1,5 @@
 import { noop } from 'lodash';
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { Options } from 'react-select';
 import { ITestParams } from '../../shared/models/quantum.interface';
 import { Button, ButtonActionType, ButtonSize, ButtonStyleType } from '../../shared/components/att-button';
@@ -41,7 +41,6 @@ export const ProtocolQuery: React.FC<ProtocolQueryProps> = (props: ProtocolQuery
 
   // TODO: move this useEffect into different file
   useEffect(() => {
-    console.log('duplicateData ProtocolQuery', duplicateData);
     if (duplicateData) {
       if (duplicateData && duplicateData.name) {
         setExperimentName(duplicateData.name);
