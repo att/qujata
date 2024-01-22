@@ -1,4 +1,4 @@
-import { render, fireEvent } from '@testing-library/react';
+import { render } from '@testing-library/react';
 import { Experiments } from './Experiments';
 import { useExperimentsData } from './hooks';
 import { FetchDataStatus, useFetch } from '../../shared/hooks/useFetch';
