@@ -162,7 +162,7 @@ export const Experiments: React.FC = () => {
               </Button>
             )}
           </div>
-          <Table className={styles.experiments_table} headers={headers} data={experimentsData} />
+          {experimentsData.length > 0 && <Table className={styles.experiments_table} headers={headers} data={experimentsData} />}
           {openDeleteModal && <DeleteExperimentModal name={checkedExperimentNames} onClose={handleCloseDeleteExperimentModal} />}
         </>
       )}
