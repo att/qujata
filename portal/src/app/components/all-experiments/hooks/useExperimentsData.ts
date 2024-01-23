@@ -5,7 +5,7 @@ import { useFetchSpinner } from '../../../shared/hooks/useFetchSpinner';
 import { useErrorMessage } from '../../../hooks/useErrorMessage';
 import { ITestRunResult, ITestRunResultData } from '../../../shared/models/test-run-result.interface';
 
-export type TestRunSubset = Pick<ITestRunResultData, 'id' | 'algorithm' | 'iterations'>;
+export type TestRunSubset = Pick<ITestRunResultData, 'id' | 'algorithm' | 'iterations' | 'message_size'>;
 export type Experiment = Pick<ITestRunResult, 'id' | 'name' | 'end_time'> & { test_runs: TestRunSubset[] };
 
 export interface IUseExperimentsData {
@@ -17,6 +17,7 @@ export interface ExperimentData {
   name: string;
   algorithms: string[];
   iterations: number[];
+  message_sizes: number[];
   end_time: number;
 };
 

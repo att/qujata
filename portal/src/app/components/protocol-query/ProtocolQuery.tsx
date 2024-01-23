@@ -47,7 +47,7 @@ export const ProtocolQuery: React.FC<ProtocolQueryProps> = (props: ProtocolQuery
   const [messageSizeInputValue, setMessageSizeInputValue] = useState('');
   const [messageSizeMenuIsOpen, setMessageSizeMenuIsOpen] = useState(false);
 
-  useDuplicateData({ data: duplicateData, setDuplicateData, setExperimentName, setAlgorithms, setIterationsCount });
+  useDuplicateData({ data: duplicateData, setDuplicateData, setExperimentName, setAlgorithms, setIterationsCount, setMessageSize });
 
   const onSubmitHandler = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();

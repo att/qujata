@@ -8,6 +8,7 @@ describe('useDuplicateData', () => {
     const setExperimentName = jest.fn();
     const setAlgorithms = jest.fn();
     const setIterationsCount = jest.fn();
+    const setMessageSize = jest.fn();
     const setDuplicateData = jest.fn();
 
     const duplicateData: ExperimentData = {
@@ -15,6 +16,7 @@ describe('useDuplicateData', () => {
       name: 'test',
       algorithms: ['algorithm1', 'algorithm2'],
       iterations: [1, 2, 3],
+      message_sizes: [4, 5, 6],
       end_time: 1705240065192,
     };
 
@@ -25,7 +27,8 @@ describe('useDuplicateData', () => {
         setExperimentName,
         setAlgorithms,
         setIterationsCount,
-      } as DuplicateData,
+        setMessageSize,
+      } as DuplicateData
     });
 
     expect(setExperimentName).not.toHaveBeenCalled();
@@ -39,11 +42,13 @@ describe('useDuplicateData', () => {
       setExperimentName,
       setAlgorithms,
       setIterationsCount,
+      setMessageSize
     });
 
     expect(setExperimentName).toHaveBeenCalledWith(duplicateData.name);
     expect(setAlgorithms).toHaveBeenCalledWith(duplicateData.algorithms.map(algorithm => ({ label: algorithm, value: algorithm } as AttSelectOption)));
     expect(setIterationsCount).toHaveBeenCalledWith(duplicateData.iterations.map(iteration => ({ label: iteration.toString(), value: iteration.toString() } as AttSelectOption)));
+    expect(setMessageSize).toHaveBeenCalledWith(duplicateData.message_sizes.map(messageSize => ({ label: messageSize.toString(), value: messageSize.toString() } as AttSelectOption)));
     expect(setDuplicateData).toHaveBeenCalledWith(undefined);
   });
 });

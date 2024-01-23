@@ -106,6 +106,11 @@ export const Experiments: React.FC = () => {
         name: ALL_EXPERIMENTS_TABLE_EN.TABLE_COLUMNS.ITERATIONS.NAME, 
         accessor: (row: ExperimentData) => row.iterations?.join(', ')
       },
+      {
+        id: ALL_EXPERIMENTS_TABLE_EN.TABLE_COLUMNS.MESSAGE_SIZES.ID,
+        name: ALL_EXPERIMENTS_TABLE_EN.TABLE_COLUMNS.MESSAGE_SIZES.NAME, 
+        accessor: (row: ExperimentData) => row.message_sizes?.join(', ')
+      },
       { 
         id: ALL_EXPERIMENTS_TABLE_EN.TABLE_COLUMNS.DATE.ID,
         name: ALL_EXPERIMENTS_TABLE_EN.TABLE_COLUMNS.DATE.NAME,
