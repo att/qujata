@@ -49,6 +49,7 @@ describe('Home', () => {
             experimentName: 'test',
             algorithms: { label: 'regular', value: 'regular' },
             iterationsCount: { label: 'regular', value: 'regular' },
+            messageSize: [{ label: '1024', value: '1024' }],
             description: 'test'
           });
         }
