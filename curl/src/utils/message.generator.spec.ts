@@ -20,9 +20,7 @@ describe('MessageGenerator', () => {
         it('should generate a message with the specified size', () => {
             const sizeInBytes = 10;
             const generatedMessage = MessageGenerator.generate(sizeInBytes);
-
-            // The length of the generated message in hex should be double the size in bytes
-            expect(generatedMessage.length).toBe(sizeInBytes * 2);
+            expect(generatedMessage.length).toBe(sizeInBytes);
         });
     });
 });

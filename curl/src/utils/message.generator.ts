@@ -1,10 +1,9 @@
-import { Injectable } from '@nestjs/common';
-import * as crypto from 'crypto';
+import {Injectable} from '@nestjs/common';
 
 @Injectable()
 export class MessageGenerator {
     static generate(sizeInBytes: number) {
-        const randomBytes = crypto.randomBytes(sizeInBytes);
-        return randomBytes.toString('hex');
-    }
+        // Generate the string by repeating the character 'a'
+        return 'a'.repeat(sizeInBytes);    }
+
 }
