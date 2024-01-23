@@ -27,7 +27,7 @@ exports[`SelectorCustomOption should render AlgorithmsSelectorCustomOption corre
 </div>
 `;
 
-exports[`SelectorCustomOption should render IterationsSelectorCustomOption correctly 1`] = `
+exports[`SelectorCustomOption should render SelectorCustomOption correctly 1`] = `
 <div
   aria-disabled="false"
   class="css-0"
@@ -36,7 +36,7 @@ exports[`SelectorCustomOption should render IterationsSelectorCustomOption corre
     class="option_wrapper"
   >
     <input
-      class="iterations_input_option input_option"
+      class="custom_input_option input_option"
       id="Option 1"
       type="checkbox"
     />

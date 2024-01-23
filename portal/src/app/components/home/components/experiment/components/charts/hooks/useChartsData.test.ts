@@ -22,7 +22,8 @@ describe('useChartsData', () => {
         {
           id: 1,
           algorithm: 'Algorithm1',
-          iterations: 1024,
+          iterations: 2000,
+          message_size: 1024,
           results: {
             averageCPU: 25.5,
             averageMemory: 512,
@@ -31,7 +32,8 @@ describe('useChartsData', () => {
         {
           id: 2,
           algorithm: 'Algorithm2',
-          iterations: 1024,
+          iterations: 1000,
+          message_size: 512,
           results: {
             averageCPU: 25.5,
             averageMemory: 512,
@@ -40,7 +42,8 @@ describe('useChartsData', () => {
         {
           id: 3,
           algorithm: 'Algorithm1',
-          iterations: 104,
+          iterations: 500,
+          message_size: 1024,
           results: {
               averageCPU: 2,
               averageMemory: 52,
@@ -51,7 +54,7 @@ describe('useChartsData', () => {
         'averageCPU',
         'averageMemory',
       ],
-      lineChartData: { labels: [104, 1024], datasets: [ 
+      lineChartData: { labels: [500, 1000, 2000], datasets: [ 
         {
           backgroundColor: "#05BBFF",
           borderColor: "#05BBFF",
