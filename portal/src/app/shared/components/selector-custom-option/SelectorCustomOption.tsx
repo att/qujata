@@ -1,13 +1,21 @@
-import { OptionProps, components } from 'react-select';
 import styles from './SelectorCustomOption.module.scss';
+import cn from 'classnames';
+import { GroupBase, OptionProps, components } from 'react-select';
 import { AttSelectOption } from '../att-select';
 import { algorithmSections } from '../../../components/protocol-query/constants';
-import cn from 'classnames';
 import CheckedSvg from '../../../../assets/images/checked.svg';
 import UnCheckedSvg from '../../../../assets/images/unchecked.svg';
+import { CustomInput } from './components';
 
-export type SelectorCustomOptionProps = OptionProps<AttSelectOption, true> & {
+const CheckedAriaLabel: string = 'checked';
+
+export type SelectorCustomOptionProps = OptionProps<AttSelectOption<any>, true, GroupBase<AttSelectOption<any>>> & {
   onOptionChanged: (option: AttSelectOption) => void;
+  showInputOption: boolean;
+  setShowInputOption: (show: boolean) => void;
+  inputValue: string;
+  setInputValue: (value: string) => void;
+  setMenuIsOpen: (isOpen: boolean) => void;
 };
 
 export const AlgorithmsSelectorCustomOption: React.FC<SelectorCustomOptionProps> = (props: SelectorCustomOptionProps) => {
@@ -18,11 +26,13 @@ export const AlgorithmsSelectorCustomOption: React.FC<SelectorCustomOptionProps>
     <components.Option {...props}>
       <div className={styles.option_wrapper}>
         <input
+          id={props.label}
           type="checkbox"
           className={styles.input_option}
           checked={props.isSelected}
-          onChange={() => props.onOptionChanged} />
-          <img className={optionStyle} src={props.isSelected ? CheckedSvg : UnCheckedSvg} alt="checked" />
+          onChange={() => props.onOptionChanged}
+        />
+        <img className={optionStyle} src={props.isSelected ? CheckedSvg : UnCheckedSvg} alt={CheckedAriaLabel} />
       </div>
       <span className={optionStyle}>{props.label}</span>
     </components.Option>
@@ -31,16 +41,23 @@ export const AlgorithmsSelectorCustomOption: React.FC<SelectorCustomOptionProps>
 
 export const IterationsSelectorCustomOption: React.FC<SelectorCustomOptionProps> = (props: SelectorCustomOptionProps) => {
   return (
-    <components.Option {...props}>
-      <div className={styles.option_wrapper}>
-        <input
-          type="checkbox"
-          className={cn(styles.iterations_input_option, styles.input_option)}
-          checked={props.isSelected}
-          onChange={() => props.onOptionChanged} />
-          <img src={props.isSelected ? CheckedSvg : UnCheckedSvg} alt="checked" />
-      </div>
-      <span>{props.label}</span>
-    </components.Option>
+    <>
+      {!props.data.metadata && (
+        <components.Option {...props}>
+          <div className={styles.option_wrapper}>
+            <input
+              id={props.label}
+              type="checkbox"
+              className={cn(styles.iterations_input_option, styles.input_option)}
+              checked={props.isSelected}
+              onChange={() => props.onOptionChanged}
+            />
+            <img src={props.isSelected ? CheckedSvg : UnCheckedSvg} alt={CheckedAriaLabel} />
+          </div>
+          <span>{props.label}</span>
+        </components.Option>
+      )}
+      <CustomInput {...props} />
+    </>
   );
 };

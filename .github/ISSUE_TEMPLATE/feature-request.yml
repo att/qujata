@@ -1,0 +1,27 @@
+name: Feature Request
+description: Suggest an idea for this project
+labels: [feature-request]
+projects: "att/5"
+body:
+  - type: textarea
+    id: feature-summary
+    attributes:
+      label: Feature Summary
+      description: Provide a brief summary of the feature.
+      placeholder: Summarize your feature suggestion in a few sentences.
+    validations:
+      required: true
+  - type: textarea
+    id: feature-purpose
+    attributes:
+      label: Purpose of the Feature
+      description: Explain what the feature is intended to accomplish.
+      placeholder: What will this feature achieve?
+    validations:
+      required: true
+  - type: textarea
+    id: additional-information
+    attributes:
+      label: Additional Information
+      description: Provide any additional information or context.
+      placeholder: Add any other context or screenshots about the feature request here.

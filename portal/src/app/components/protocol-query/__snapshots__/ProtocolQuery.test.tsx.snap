@@ -175,9 +175,7 @@ exports[`ProtocolQuery should render ProtocolQuery 1`] = `
             <div
               class="att_select__placeholder css-1jqq78o-placeholder"
               id="react-select-3-placeholder"
-            >
-              + Add new
-            </div>
+            />
             <div
               class="att_select__input-container css-d9r47t-Component"
               data-value=""
