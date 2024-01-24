@@ -20,9 +20,7 @@ def analyze(data):
     start_time = int(datetime.timestamp(datetime.now() - timedelta(seconds=60)) * 1000)
     iterations_count = data['iterationsCount']
     algorithms = data['algorithms']
-    message_sizes = [0]
-    if 'messageSizes' in data:
-        message_sizes = data['messageSizes']
+    message_sizes = data['messageSizes'] if 'messageSizes' in data else [0]
     first_run = True
     for algorithm in algorithms:
         for iterations in iterations_count:
