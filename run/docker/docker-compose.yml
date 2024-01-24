@@ -15,7 +15,7 @@ services:
       - "3306:3306"
 
   nginx:
-    image: qujata/nginx:1.1.0
+    image: qujata/nginx:1.2.0
     container_name: qujata-nginx
     ports:
       - 4433:4433
