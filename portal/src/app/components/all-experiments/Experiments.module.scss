@@ -3,6 +3,7 @@
 .experiments_wrapper {
   padding-inline: 80px;
   padding-block: 40px;
+  margin-block: 60px;
 }
 
 .title_options_container {
@@ -46,12 +47,8 @@
 }
 
 .experiments_table {
-  margin-block: 60px;
-
-  th, td {
-    text-align: left;
-  }
-
+  text-align: left;
+  
   th:first-child,
   td:first-child {
     text-align: center;

@@ -20,11 +20,7 @@ table {
 
 .table_content {
   background-color: var($backgroundColorWhite);
-  
-  td {
-    padding: 16px;
-    border-block-end: 1px solid var($backgroundColorGray);
-    text-align: center;
-    vertical-align: middle;
-  }
+  padding: 16px;
+  border-block-end: 1px solid var($backgroundColorGray);
+  vertical-align: middle;
 }

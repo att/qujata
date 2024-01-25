@@ -86,7 +86,7 @@ export const Table = <T extends any>({ headers, data, className }: TableProps<T>
         {table.getRowModel().rows.map((row: Row<T>) => (
           <tr key={row.id}>
             {row.getVisibleCells().map((cell: Cell<T, unknown>) => (
-              <td key={cell.id}>
+              <td key={cell.id} className={styles.table_content}>
                 {flexRender(cell.column.columnDef.cell, cell.getContext())}
               </td>
             ))}
