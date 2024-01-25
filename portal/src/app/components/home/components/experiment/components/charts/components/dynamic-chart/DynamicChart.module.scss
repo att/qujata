@@ -1,0 +1,28 @@
+@import "src/styles/variables-keys";
+
+.chart_wrapper {
+    inline-size: 880px;
+    block-size: 640px;
+    background-color: var($primaryWhite);
+    border: 1px solid #BDC2C7;
+    padding: 36px;
+}
+
+.chart_filters {
+    display: flex;
+    justify-content: space-between;
+}
+
+.select_item {
+    inline-size: 260px;
+    margin-inline-start: 16px;
+}
+
+.select_type_item {
+    inline-size: 187px;
+}
+
+.select_item_wrapper {
+    display: flex;
+    align-items: center;
+}
