@@ -3,7 +3,6 @@ import styles from './Experiments.module.scss';
 import cn from 'classnames';
 import { IUseExperimentsData, useExperimentsData } from './hooks';
 import { FetchDataStatus, IHttp, useFetch } from '../../shared/hooks/useFetch';
-import { Spinner, SpinnerSize } from '../../shared/components/att-spinner';
 import { ALL_EXPERIMENTS_TABLE_EN } from './translate/en';
 import { CellContext } from '@tanstack/react-table';
 import { Table } from '../../shared/components/table';
@@ -20,7 +19,6 @@ import TrashHoverSvg from '../../../assets/images/trash-hover.svg';
 import DuplicateSvg from '../../../assets/images/duplicate.svg';
 import { DeleteExperimentModal } from '../home/components/experiment/components/delete-experiment-modal';
 import { parseExperimentsData } from './utils/parse-experiments-data.utils';
-import { ISpinner, useSpinnerContext } from '../../shared/context/spinner';
 import { ExperimentData } from './models/experiments.interface';
 
 const DeleteAriaLabel: string = ALL_EXPERIMENTS_TABLE_EN.BUTTONS.DELETE;
@@ -31,7 +29,6 @@ export const Experiments: React.FC = () => {
   const [openDeleteModal, setOpenDeleteModal] = useState<boolean>(false);
   const [checkedRows, setCheckedRows] = useState<Record<number, boolean>>({});
   const experimentsData = useMemo(() => (testSuites ? parseExperimentsData(testSuites): []), [testSuites]);
-  const { isSpinnerOn }: ISpinner = useSpinnerContext();
   const navigate = useNavigate();
 
   const { post, status: deleteStatus, error: deleteError, cancelRequest: cancelRequestDelete }: IHttp<unknown>
@@ -146,7 +143,6 @@ export const Experiments: React.FC = () => {
   return (
     <div className={styles.experiments_wrapper}>
       <>
-        {isSpinnerOn && renderSpinner()}
         { status === FetchDataStatus.Success &&
           <div className={styles.title_options_container}>
             <label className={styles.experiments_title}>{`${ALL_EXPERIMENTS_TABLE_EN.TITLE} (${testSuites.length})`}</label>
@@ -171,14 +167,4 @@ export const Experiments: React.FC = () => {
        </>
     </div>
   ); 
-}
-
-function renderSpinner() {
-  return (
-      <div className={styles.spinner_overlay}>
-          <div className={styles.spinner_wrapper}>
-          <Spinner size={SpinnerSize.MEDIUM} />
-          </div>
-      </div>
-  );
 }
