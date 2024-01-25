@@ -2,9 +2,10 @@ import { ValueContainerProps, components } from "react-select"
 import { ChartType } from "../../models/dynamic-chart.interface";
 import styles from './CustomValueContainer.module.scss';
 import { AttSelectOption } from "../../../../../../../../../../shared/components/att-select";
-import { PropsWithChildren, RefObject, useCallback, useEffect, useRef } from "react";
+import { PropsWithChildren, useCallback, useRef } from "react";
 import cn from 'classnames';
 import { capitalizeFirstLetter, getIconByValue } from "../../utils/dynamic-chart.utils";
+import { useOutsideClick } from "../../../../../../../../../../hooks/useOutsideClick";
 
 export const CustomValueContainer: React.FC<ValueContainerProps<AttSelectOption, boolean>> = (props: PropsWithChildren<ValueContainerProps<AttSelectOption, boolean>>) => {
     const placeholder: string = props.selectProps?.placeholder as string;
@@ -34,19 +35,4 @@ export const CustomValueContainer: React.FC<ValueContainerProps<AttSelectOption,
         </div>
     )
 }
-
-const useOutsideClick = (ref: RefObject<HTMLElement>, callback: () => void) => {
-    useEffect(() => {
-      const handleClickOutside = (event: MouseEvent) => {
-        if (ref.current && !ref.current.contains(event.target as Node)) {
-          callback();
-        }
-      };
-  
-      document.addEventListener('mousedown', handleClickOutside);
-      return () => {
-        document.removeEventListener('mousedown', handleClickOutside);
-      };
-    }, [ref, callback]);
-};
   
