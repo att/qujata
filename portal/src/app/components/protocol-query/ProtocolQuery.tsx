@@ -10,7 +10,7 @@ import { Spinner, SpinnerSize } from '../../shared/components/att-spinner';
 import { useGetAlgorithms, useGetIterations } from './hooks';
 import { handleAlgorithmsSelection } from './utils';
 import { AlgorithmsSelectorCustomOption, IterationsSelectorCustomOption } from '../../shared/components/selector-custom-option';
-import { ExperimentData } from '../all-experiments/hooks';
+import { ExperimentData } from '../all-experiments/models/experiments.interface';
 import { useDuplicateData } from './hooks';
 
 export type SelectOptionType = AttSelectOption | Options<AttSelectOption> | null;

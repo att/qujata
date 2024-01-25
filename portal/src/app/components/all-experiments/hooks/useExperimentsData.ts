@@ -3,22 +3,12 @@ import { useEffect, useState } from 'react';
 import { APIS } from '../../../apis';
 import { useFetchSpinner } from '../../../shared/hooks/useFetchSpinner';
 import { useErrorMessage } from '../../../hooks/useErrorMessage';
-import { ITestRunResult, ITestRunResultData } from '../../../shared/models/test-run-result.interface';
-
-export type TestRunSubset = Pick<ITestRunResultData, 'id' | 'algorithm' | 'iterations'>;
-export type Experiment = Pick<ITestRunResult, 'id' | 'name' | 'end_time'> & { test_runs: TestRunSubset[] };
+import { Experiment } from '../models/experiments.interface';
 
 export interface IUseExperimentsData {
-  test_suites: Experiment[];
+  testSuites: Experiment[];
   status: FetchDataStatus;
 }
-export interface ExperimentData {
-  id: number;
-  name: string;
-  algorithms: string[];
-  iterations: number[];
-  end_time: number;
-};
 
 export function useExperimentsData(): IUseExperimentsData {
     const [allExperiments, setAllExperiments] = useState<Experiment[]>([]);
@@ -38,5 +28,5 @@ export function useExperimentsData(): IUseExperimentsData {
       }
     }, [data, status, allExperiments]);
 
-    return { test_suites: allExperiments, status };
+    return { testSuites: allExperiments, status };
 }

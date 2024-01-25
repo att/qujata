@@ -1,6 +1,6 @@
 import { parseExperimentsData } from './parse-experiments-data.utils';
 import { ITestRunResultData } from '../../../shared/models/test-run-result.interface';
-import { Experiment, ExperimentData } from '../hooks';
+import { Experiment, ExperimentData } from '../models/experiments.interface';
 
 describe('parseExperimentsData', () => {
   it('should parse experiments data correctly', () => {

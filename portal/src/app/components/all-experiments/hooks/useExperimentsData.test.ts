@@ -1,6 +1,7 @@
 import { renderHook } from '@testing-library/react';
 import { useFetch } from '../../../shared/hooks/useFetch';
-import { Experiment, useExperimentsData } from './useExperimentsData';
+import { Experiment } from '../models/experiments.interface';
+import { useExperimentsData } from './useExperimentsData';
 
 jest.mock('../../../shared/hooks/useFetch', () => ({
   useFetch: jest.fn(),
@@ -64,6 +65,6 @@ describe('useExperimentsData', () => {
     });
 
     const { result } = renderHook(() => useExperimentsData());
-    expect(result.current.test_suites.length).toEqual(allExperimentsMockData.length);
+    expect(result.current.testSuites.length).toEqual(allExperimentsMockData.length);
   });
 });
