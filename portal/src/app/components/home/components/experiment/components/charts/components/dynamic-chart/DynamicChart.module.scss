@@ -2,7 +2,7 @@
 
 .chart_wrapper {
     inline-size: 880px;
-    block-size: 640px;
+    min-block-size: 550px;
     background-color: var($primaryWhite);
     border: 1px solid #BDC2C7;
     padding: 36px;

@@ -10,5 +10,8 @@ export const DYNAMIC_CHART_EN = {
             CHART_TYPE: 'Select chart type',
         },
     },
+    X_VALUES_TITLE: {
+        ITERATIONS: 'Iterations',
+    }
 };
   

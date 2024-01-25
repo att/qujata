@@ -1,7 +1,7 @@
-import { chartTypeOptions, xAxisTypeOptions } from "./models/dynamic-chart.interface";
+import { ChartType, chartTypeOptions, xAxisTypeOptions } from "./models/dynamic-chart.interface";
 import styles from './DynamicChart.module.scss';
 import { AttSelect, AttSelectOption, OnSelectChanged } from "../../../../../../../../shared/components/att-select";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { SelectOptionType } from "../../../../../../../protocol-query";
 import { ITestRunResult } from "../../../../../../../../shared/models/test-run-result.interface";
 import { useDynamicChartData } from "./hooks/useDynamicChartData";
@@ -9,6 +9,12 @@ import { DYNAMIC_CHART_EN } from "./translate/en";
 import { CustomValueContainer } from "./components/custom-value-container";
 import { CustomOption } from "./components/custom-option";
 import { CustomDropdownIndicator } from "./components/custom-dropdown-indicator";
+import { BarChart } from "../../../../../../../dashboard/components/charts/BarChart";
+import { useChartsData } from "../../hooks/useChartsData";
+import { tooltipKeys, tooltipLabels } from "../../models/bar-chart.const";
+import { getTitleByXAxiosValue } from "./utils/dynamic-chart.utils";
+import { LineChart } from "../../../../../../../dashboard/components/charts/LineChart";
+import { getChartTitleByType } from "../../utils/chart.utils";
 
 export interface DynamicChartProps {
     chartData: ITestRunResult;
@@ -19,7 +25,25 @@ export const DynamicChart: React.FC<DynamicChartProps> = (props: DynamicChartPro
     const [chartType, setChartType] = useState<AttSelectOption>();
     const [xAxisValue, setXAxisValue] = useState<AttSelectOption>();
     const [yAxisValue, setYAxisValue] = useState<AttSelectOption>();
-    
+    const { barChartData, barChartLabels, lineChartData } = useChartsData({ data: chartData });
+    const [lineChartConvertData, setLineChartConvertData] = useState<{labels: number[], datasets: unknown}>();
+
+    useEffect(() => {
+        if (lineChartData) {
+            const datasets = lineChartData.datasets
+            .filter(dataset => dataset.data[yAxisValue?.value as string])
+            .map(dataset => ({
+                ...dataset,
+                data: dataset.data[yAxisValue?.value as string]
+            }));
+            
+            setLineChartConvertData({
+                labels: lineChartData.labels,
+                datasets: datasets.length === 0 ? null : datasets,
+            });
+        }
+    }, [lineChartData, yAxisValue?.value]);
+
     const onChartTypeChanged: OnSelectChanged = useCallback((options: SelectOptionType): void => {
         const selectedChartType: AttSelectOption = options as AttSelectOption;
         setChartType(selectedChartType);
@@ -74,6 +98,13 @@ export const DynamicChart: React.FC<DynamicChartProps> = (props: DynamicChartPro
                     />
                 </div>
             </div>
+
+            {xAxisValue?.value && chartType?.value && yAxisValue?.value &&
+                <>
+                    {chartType?.value === ChartType.BAR && barChartData && <BarChart title={getTitleByXAxiosValue(xAxisValue.value)} labels={barChartLabels} data={barChartData} tooltipKeys={tooltipKeys} tooltipLabels={tooltipLabels} keyOfData={yAxisValue.value} />}
+                    {chartType?.value === ChartType.LINE && lineChartConvertData && <LineChart data={lineChartConvertData} title={getTitleByXAxiosValue(xAxisValue.value)} tooltipLabel={getChartTitleByType(yAxisValue.value)} />}
+                </>
+            }
         </div>
     );
 }

@@ -4,6 +4,7 @@ import { ITestRunResultData } from "../../../../../../../shared/models/test-run-
 import { ILineChartData } from "../models/line-chart-data.interface";
 import { colors } from "../../../../../../dashboard/components/charts/LineChart/LineChart.const";
 import { IExperimentData } from "../../../Experiment";
+import { getColorByName } from "../../../../../../dashboard/components/charts/utils/charts.utils";
 
 export interface IUseChartsData {
     barChartLabels: string[];
@@ -45,8 +46,8 @@ function processedLineChartData(data: ITestRunResultData[], keysOfData: string[]
                 label: `${algorithm}       `,
                 data: data,
                 fill: false,
-                backgroundColor: colors[index % colors.length],
-                borderColor: colors[index % colors.length],
+                backgroundColor: getColorByName(algorithm),
+                borderColor: getColorByName(algorithm),
                 borderWidth: 1,
             };
         })

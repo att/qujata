@@ -10,11 +10,11 @@ export const chartTypeOptions: AttSelectOption[] = Object.keys(ChartType).map((k
     label: key,
 }));
 
-enum XAxisType {
+export enum XAxisType {
    NUMBER_OF_ITERATIONS = 'number of iterations',
 }
 
 export const xAxisTypeOptions: AttSelectOption[] = Object.keys(XAxisType).map((key) => ({
-    value: XAxisType[key as keyof typeof XAxisType],
-    label: key,
+    value: key,
+    label: XAxisType[key as keyof typeof XAxisType],
 }));
