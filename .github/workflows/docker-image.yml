@@ -1,4 +1,4 @@
-name: Deploy to GitHub Pages
+name: Build and Deploy to GitHub Pages
 
 on:
   push:
@@ -11,24 +11,30 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
+    - name: Checkout code
+      uses: actions/checkout@v2
 
-    # Build your Docker image
     - name: Build Docker image
-      run: docker build ./portal --file ./portal/Dockerfile --tag my-image
+      run: docker build ./portal --file ./portal/Dockerfile --tag my-website-image
 
-    # Run the Docker container and generate static content
-    # This step assumes your Docker container outputs static files to /usr/share/nginx/html
-    # Adjust the command according to how your container serves static content
     - name: Run Docker container
-      run: docker run --name my-container my-image
+      run: |
+        docker run --name my-website-container -d my-website-image
+        # Wait a few seconds to ensure the web server inside the container is fully up and running
+        sleep 10
 
     - name: Copy static content from Docker container
-      run: docker cp my-container:/usr/share/nginx/html ./static-content
+      run: |
+        mkdir -p static-content
+        docker cp my-website-container:/usr/share/nginx/html/qujata ./static-content
 
-    # Deploy to GitHub Pages
+    - name: Stop and remove Docker container
+      run: |
+        docker stop my-website-container
+        docker rm my-website-container
+
     - name: Deploy to GitHub Pages
       uses: peaceiris/actions-gh-pages@v3
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: ./static-content
+        publish_dir: ./static-content/qujata
