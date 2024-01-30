@@ -1,0 +1,35 @@
+{
+  "files": {
+    "main.css": "qujata/static/css/main.9d279d75.css",
+    "main.js": "qujata/static/js/main.69e37afe.js",
+    "static/js/496.4b609e30.chunk.js": "qujata/static/js/496.4b609e30.chunk.js",
+    "static/media/qujata-logo.svg": "qujata/static/media/qujata-logo.ac4d5d4ef22e4576837996b9f17ead9c.svg",
+    "static/media/handshake.svg": "qujata/static/media/handshake.6dc3ed8e81430dcce954162b687b3757.svg",
+    "static/media/select-columns.svg": "qujata/static/media/select-columns.234ea5c6add4ad34dd6e8d5240925809.svg",
+    "static/media/select-columns-checked.svg": "qujata/static/media/select-columns-checked.0d9ae3d0dd4b03217d59163159c8d65a.svg",
+    "static/media/keys.svg": "qujata/static/media/keys.9e18cdd6e80985c117a5c1790e0dd3bb.svg",
+    "static/media/pencil.svg": "qujata/static/media/pencil.38c2c384b0b580e57bf89d4320e23d1b.svg",
+    "static/media/eye.svg": "qujata/static/media/eye.c927c27176f0fe076844bf7dcaf4e2e4.svg",
+    "static/media/eye-hover.svg": "qujata/static/media/eye-hover.08bcabbca242b838598bc9f9b1de5c4c.svg",
+    "static/media/download.svg": "qujata/static/media/download.221c5b0c9d0bad87a5a2504c07300c07.svg",
+    "index.html": "qujata/index.html",
+    "static/media/lock.svg": "qujata/static/media/lock.07d1d70103870806f1f7e0868f03adfd.svg",
+    "static/media/clean.svg": "qujata/static/media/clean.a8f44859dfbf2b4b50af6653462cd0b5.svg",
+    "static/media/check.svg": "qujata/static/media/check.178bc6393cbb4df03310904d29c48c1d.svg",
+    "static/media/trash.svg": "qujata/static/media/trash.c8872d2bd41e791c1c86717040d771d1.svg",
+    "static/media/sort-ascending.svg": "qujata/static/media/sort-ascending.57b484d60cb2b92f092ef77c4362d2f5.svg",
+    "static/media/unchecked.svg": "qujata/static/media/unchecked.3b85e442de84c9ad03f377927828dea5.svg",
+    "static/media/sort-descending.svg": "qujata/static/media/sort-descending.d5ce73ded65231c17bf5411a87eded78.svg",
+    "static/media/checked.svg": "qujata/static/media/checked.52ae13e85ffa76eb976704e61b3afc96.svg",
+    "static/media/arrow-left.svg": "qujata/static/media/arrow-left.f2bb41f5502cea6e6b414c08ff5714da.svg",
+    "static/media/arrow-down.svg": "qujata/static/media/arrow-down.4efed336a810fb4d29bbc5e8c32799fe.svg",
+    "static/media/close.svg": "qujata/static/media/close.cc0689a16a03427c52419bb3e9e9dae4.svg",
+    "main.9d279d75.css.map": "qujata/static/css/main.9d279d75.css.map",
+    "main.69e37afe.js.map": "qujata/static/js/main.69e37afe.js.map",
+    "496.4b609e30.chunk.js.map": "qujata/static/js/496.4b609e30.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.9d279d75.css",
+    "static/js/main.69e37afe.js"
+  ]
+}
