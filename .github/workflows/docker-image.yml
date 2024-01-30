@@ -1,4 +1,4 @@
-name: Docker Image CI
+name: Deploy to GitHub Pages
 
 on:
   push:
@@ -7,13 +7,28 @@ on:
     branches: [ "main" ]
 
 jobs:
-  build:
+  build-and-deploy:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v2
 
-    - name: Build the Docker image
-      run: |
-        REPO_NAME=$(echo $GITHUB_REPOSITORY | tr '/' '-')
-        docker build ./portal --file ./portal/Dockerfile --tag $REPO_NAME:$(date +%s)
+    # Build your Docker image
+    - name: Build Docker image
+      run: docker build ./portal --file ./portal/Dockerfile --tag my-image
+
+    # Run the Docker container and generate static content
+    # This step assumes your Docker container outputs static files to /usr/share/nginx/html
+    # Adjust the command according to how your container serves static content
+    - name: Run Docker container
+      run: docker run --name my-container my-image
+
+    - name: Copy static content from Docker container
+      run: docker cp my-container:/usr/share/nginx/html ./static-content
+
+    # Deploy to GitHub Pages
+    - name: Deploy to GitHub Pages
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./static-content
