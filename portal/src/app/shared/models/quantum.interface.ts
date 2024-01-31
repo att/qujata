@@ -7,7 +7,7 @@ export interface ITestParams {
   experimentName: string;
   algorithms: SelectOptionType;
   iterationsCount: SelectOptionType;
-  messageSize: SelectOptionType;
+  messageSizes: SelectOptionType;
   description: string;
 }
 

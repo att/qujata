@@ -10,13 +10,22 @@ export interface IUseDashboardData {
   testSuiteId: string;
   status: FetchDataStatus;
   handleRunQueryClick: (queryData: ITestParams) => void;
-}
+};
+
+interface ITestRequestData {
+  experimentName: string;
+  algorithms: string[];
+  iterationsCount: number[];
+  messageSizes: number[];
+  description: string;
+};
 
 export function useDashboardData(): IUseDashboardData {
   const { post, data, status, error, cancelRequest }: IHttp<IQueryResponse> = useFetch<IQueryResponse>({ url: APIS.analyze });
   const [dashboardData, setDashboardData] = useState<ChartDataMap>(() => new Map<AttSelectOption, ITestResponseData | undefined>());
   const [algorithms, setAlgorithms] = useState<string[]>([]);
   const [iterationsCount, setIterationsCount] = useState<number[]>([]);
+  const [messageSize, setMessageSize] = useState<number[]>([]);
   const [testSuiteId, setTestSuiteId] = useState<string>('');
 
   useFetchSpinner(status);
@@ -32,6 +41,7 @@ export function useDashboardData(): IUseDashboardData {
   const handleRunQueryClick: (queryData: ITestParams) => void = useCallback((queryData: ITestParams): void => {
     let algoValues: string[] = [];
     let iterationsValues: number[] = [];
+    let messageSizesValues: number[] = [];
     
     if (queryData.algorithms) {
       const algos = queryData.algorithms as AttSelectOption[];
@@ -60,14 +70,29 @@ export function useDashboardData(): IUseDashboardData {
       setDashboardData(map);
       iterationsValues = iterations.map((item: AttSelectOption) => +item.value);
     }
+
+    if (queryData.messageSizes) {
+      const messageSizes = queryData.messageSizes as AttSelectOption[];
+      const map: ChartDataMap = new Map<AttSelectOption, ITestResponseData | undefined>();
+
+      messageSizes.forEach((messageSize: AttSelectOption) => {
+        map.set(messageSize, undefined);
+        messageSizesValues.push(+messageSize.value);
+      });
+
+      setMessageSize(messageSizesValues);
+      setDashboardData(map);
+      messageSizesValues = messageSizes.map((item: AttSelectOption) => +item.value);
+    }
     
     post({
       data: {
         experimentName: queryData.experimentName,
         algorithms: algoValues,
         iterationsCount: iterationsValues,
+        messageSizes: messageSizesValues,
         description: queryData.description
-      } 
+      } as ITestRequestData
     });
   }, [post]);
 
