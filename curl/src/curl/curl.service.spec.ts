@@ -5,7 +5,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 
 import { HttpException, HttpStatus } from '@nestjs/common';
 import * as shellJS from 'shelljs';
-import {MessageGenerator} from "../utils/message.generator";
+import { MessageGenerator } from "../utils/message.generator";
 jest.mock('shelljs', () => ({
   exec: jest.fn(),
 }));

@@ -26,11 +26,12 @@ def __get_environment_info(env_info):
     }
 
 
-
 def __get_test_runs_metrics(test_runs):
     test_runs_list = []
     for test_run in test_runs:
-        cpu_avg, memory_avg = __calculate_cpu_memory_avg(test_run.test_run_metrics)
+        metrics = test_run.test_run_metrics
+        cpu_avg, memory_avg = __calculate_cpu_memory_avg(metrics)
+        request_throughput, bytes_throughput = get_throughput_metrics(metrics)
         results = {
             "id": test_run.id,
             "algorithm": test_run.algorithm,
@@ -39,10 +40,13 @@ def __get_test_runs_metrics(test_runs):
             "results": {
                 "averageCPU": round(cpu_avg, 2),
                 "averageMemory": int(memory_avg),
+                "requestThroughput": int(request_throughput),
+                "bytesThroughput": int(bytes_throughput)
             }
         }
         test_runs_list.append(results)
     return test_runs_list
+
 
 def __calculate_cpu_memory_avg(test_run_metrics):
     cpu_avg, memory_avg = 0.00, 0
@@ -54,3 +58,11 @@ def __calculate_cpu_memory_avg(test_run_metrics):
             memory_avg += metric.value
 
     return cpu_avg, memory_avg
+
+
+def get_throughput_metrics(test_run_metrics):
+    return __find_metric(test_run_metrics, Metric.MESSAGES_THROUGHPUT_PER_SECOND), __find_metric(test_run_metrics, Metric.BYTES_THROUGHPUT_PER_SECOND)
+
+
+def __find_metric(test_run_metrics, metric_name):
+    return next((metric.value for metric in test_run_metrics if metric.metric_name == metric_name), 0)

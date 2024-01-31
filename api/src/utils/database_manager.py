@@ -15,6 +15,10 @@ class DatabaseManager:
         self.__db.session.delete(instance)
         self.__db.session.commit()
 
+    def delete_by_ids(self, model, ids):
+        self.__db.session.query(model).filter(model.id.in_(ids)).delete(synchronize_session='fetch')
+        self.__db.session.commit()
+
     def update(self, instance):
         self.__db.session.commit()
 

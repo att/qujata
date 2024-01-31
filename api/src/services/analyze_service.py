@@ -1,5 +1,3 @@
-import os
-import uuid
 import time
 import requests
 import logging
@@ -8,7 +6,7 @@ import json
 from datetime import datetime, timedelta
 from flask import jsonify, current_app
 import src.services.test_suites_service as test_suites_service
-import src.services.metrics_service as metrics_service
+import src.utils.metrics_collection_manager as metrics_collection_manager
 from src.enums.status import Status
 
 # constants
@@ -43,12 +41,12 @@ def analyze(data):
 
 def __create_test_run(algorithm, iterations, message_size, test_suite_id):
     start_time = datetime.now()
-    metrics_service.start_collecting()
-    status, status_message = __run(algorithm, iterations, message_size)
-    metrics_service.stop_collecting()
+    metrics_collection_manager.start_collecting()
+    status, status_message, data_bytes = __run(algorithm, iterations, message_size)
+    metrics_collection_manager.stop_collecting()
     end_time = datetime.now()
-    test_suites_service.create_test_run(start_time, end_time, algorithm, iterations, message_size, test_suite_id, status, status_message, *metrics_service.get_metrics())
-    
+    test_suites_service.create_test_run(start_time, end_time, algorithm, iterations, message_size, test_suite_id, status, status_message, data_bytes, *metrics_collection_manager.get_metrics())
+
 
 def __run(algorithm, iterations, message_size):
     logging.debug('Running test for algorithm: %s ', algorithm)
@@ -61,10 +59,12 @@ def __run(algorithm, iterations, message_size):
     response = requests.post(current_app.configurations.curl_url + "/curl", headers=headers, json=payload, timeout=int(current_app.configurations.request_timeout))
 
     return __validate_response(response)
-        
+
 
 def __validate_response(response):
-    if response.status_code < 200 or response.status_code  > 299:
-        return Status.FAILED, json.dumps(response.json())
+    response_json = response.json()
+    logging.error(response_json)
+    if response.status_code < 200 or response.status_code > 299:
+        return Status.FAILED, json.dumps(response_json), 0
     else:
-        return Status.SUCCESS, ""
+        return Status.SUCCESS, "", response_json.get('totalRequestSize')
