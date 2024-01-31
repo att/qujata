@@ -35,6 +35,7 @@ def __get_test_runs_metrics(test_runs):
             "id": test_run.id,
             "algorithm": test_run.algorithm,
             "iterations": test_run.iterations,
+            "message_size": test_run.message_size,
             "results": {
                 "averageCPU": round(cpu_avg, 2),
                 "averageMemory": int(memory_avg),
