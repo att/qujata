@@ -10,8 +10,10 @@ def load_config(app):
         'environment': os.environ.get('ENVIRONMENT'),
         'log_level': os.environ.get('LOG_LEVEL', 'INFO'),
         'allowed_algorithms': os.environ.get('DEFAULT_GROUPS',"kyber512:frodo640aes").split(":"),
-        'curl_url': os.environ.get('CURL_URL'),
-        'cadvisor_url': os.environ.get('CADVISOR_URL'),
+        'curl_host': os.environ.get('CURL_HOST'),
+        'curl_port': os.environ.get('CURL_PORT'),
+        'cadvisor_host': os.environ.get('CADVISOR_HOST'),
+        'cadvisor_port': os.environ.get('CADVISOR_PORT'),
         'request_timeout': os.environ.get('REQUEST_TIMEOUT', 3600),
         'code_release': os.environ.get('CODE_RELEASE'),
         'protocol': os.environ.get('PROTOCOL'),
@@ -25,8 +27,10 @@ class Configuration:
         self.__configure_logging(config_dict.get('log_level', 'INFO'))
         self.environment = config_dict.get('environment')
         self.allowed_algorithms = config_dict.get('allowed_algorithms')
-        self.curl_url = config_dict.get('curl_url')
-        self.cadvisor_url = config_dict.get('cadvisor_url')
+        self.curl_host = config_dict.get('curl_host')
+        self.curl_port = config_dict.get('curl_port')
+        self.cadvisor_host = config_dict.get('cadvisor_host')
+        self.cadvisor_port = config_dict.get('cadvisor_port')
         self.request_timeout = config_dict.get('request_timeout')
         self.code_release = config_dict.get('code_release')
         self.protocol = config_dict.get('protocol')

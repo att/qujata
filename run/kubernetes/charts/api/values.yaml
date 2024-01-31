@@ -6,7 +6,7 @@ replicaCount: 1
 
 image:
   repository: qujata/api
-  tag: "1.1.0"
+  tag: "1.2.0-scale"
   pullPolicy: Always
 
 imagePullSecrets: []
@@ -38,7 +38,10 @@ securityContext: {}
 env:
   LOG_LEVEL: INFO
   ENVIRONMENT: kubernetes
-  CURL_URL: http://qujata-curl:3010
+  CURL_HOST: qujata-curl
+  CURL_PORT: 3010
+  CADVISOR_HOST: qujata-cadvisor
+  CADVISOR_PORT: 30000
   PROMETHEUS_URL: http://qujata-prometheus:9090
   DATABASE_URI: mysql+pymysql://root:qujata@qujata-mysql:3306/qujata
   DEFAULT_GROUPS: prime256v1:secp384r1:frodo640aes:frodo640shake:frodo976aes:frodo976shake:frodo1344aes:frodo1344shake:kyber512:p256_kyber512:kyber768:p384_kyber768:x25519_kyber768:kyber1024:bikel1:bikel3:bikel5:hqc128:hqc192:hqc256

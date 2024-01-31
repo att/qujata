@@ -84,7 +84,7 @@ cd run/docker
 ```
 2. Start the application using:
 ```bash
-docker compose up
+docker compose -p qujata up
 ```
 3. the UI is available on:
 ```bash

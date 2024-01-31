@@ -14,7 +14,6 @@ from src.models.test_run import TestRun
 from src.utils.database_manager import DatabaseManager
 from kubernetes.client import CoreV1Api, V1PodList, V1Pod, V1PodStatus, V1ObjectMeta, V1ContainerStatus
 
-CADVISOR_URL = 'http://localhost:8080'
 LIST_NAMESPACED_POD = 'kubernetes.client.CoreV1Api.list_namespaced_pod'
 KUBERNETES_CONFIG = 'kubernetes.config.load_incluster_config'
 POST_REQUEST = 'requests.post'

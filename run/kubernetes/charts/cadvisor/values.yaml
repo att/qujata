@@ -42,9 +42,10 @@ securityContext: {}
 env:
 
 service:
-  type: ClusterIP
+  type: NodePort
   port: 8080
   targetPort: 8080
+  nodePort: 30000
 
 configMap:
   enabled: true

@@ -8,11 +8,11 @@ from prettytable import PrettyTable
 WAIT_MS = 1
 class MetricsCollector:
 
-    def __init__(self, service_name):
+    def __init__(self, service_name, metrics_url=None):
         self.__data = {}
         self.__locked = False # collector status
         self.__is_running = False # thread status
-        self.__metrics_url = None
+        self.__metrics_url = metrics_url
         self.__service_name = service_name
 
 
@@ -26,7 +26,8 @@ class MetricsCollector:
                 time.sleep(WAIT_MS)
             self.__is_running = True
             self.__locked = True
-            self.__metrics_url = cadvisor_service.get_metrics_url(self.__service_name)
+
+            self.__metrics_url = cadvisor_service.get_metrics_url(self.__service_name, self.__metrics_url)
 
             thread = threading.Thread(target=self.__run_collector)
             thread.start()
@@ -38,6 +39,7 @@ class MetricsCollector:
 
     def stop(self):
         self.__locked = False
+        logging.info(self.to_pretty_table())
 
 
     def get_data(self):
@@ -46,7 +48,7 @@ class MetricsCollector:
 
     def to_pretty_table(self):
         table = PrettyTable()
-        table.title = self.__service_name
+        table.title = self.__service_name + " - " + self.__metrics_url
         table.field_names = ["Timestamp", "CPU", "Memory"]
         for timestamp, values in self.__data.items():
             table.add_row([timestamp, values["cpu"], values["memory"]])

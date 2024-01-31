@@ -21,7 +21,7 @@ app.database_manager = DatabaseManager(app)
 if app.configurations.environment == Environment.KUBERNETES.value:
     k8s_service.init_cluster()
 # init cadvisor_service    
-cadvisor_service.init(app.configurations.environment, app.configurations.cadvisor_url)
+cadvisor_service.init(app.configurations.environment, app.configurations.cadvisor_host, app.configurations.cadvisor_port)
 # init routes
 app.register_blueprint(configurations_api_blueprint, url_prefix=URL_PREFIX, name='configurations_api')
 app.register_blueprint(analyze_api_blueprint, url_prefix=URL_PREFIX, name='analyze_api')

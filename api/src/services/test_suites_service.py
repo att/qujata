@@ -5,6 +5,8 @@ from src.models.test_suite import TestSuite
 from src.models.test_run import TestRun
 from src.models.test_run_metric import TestRunMetric
 from src.enums.metric import Metric
+from src.enums.status import Status
+
 from src.exceptions.exceptions import ApiException, NotFoundException
 import src.utils.test_suite_serializer as test_suite_serializer
 import pytz
@@ -36,7 +38,7 @@ def create_test_suite(data):
     current_app.database_manager.create(test_suite)
     return test_suite
 
-def create_test_run(start_time, end_time, algorithm, iterations, test_suite_id, status, status_message, client_metrics, server_metrics):
+def create_test_run(start_time, end_time, algorithm, iterations, test_suite_id, status, status_message, clients_metrics, server_metrics):
     test_run = TestRun(
         start_time=start_time,
         end_time=end_time,
@@ -48,7 +50,8 @@ def create_test_run(start_time, end_time, algorithm, iterations, test_suite_id, 
         test_suite_id=test_suite_id
     )    
     current_app.database_manager.create(test_run)
-    __create_test_run_metrics(test_run, client_metrics, server_metrics)
+    if status is Status.SUCCESS:
+        __create_test_run_metrics(test_run, clients_metrics, server_metrics)
     return test_run
 
 def update_test_suite(test_suite):
@@ -88,8 +91,8 @@ def delete_test_suite(test_suite_id):
     current_app.database_manager.delete(test_suite)
 
 
-def __create_test_run_metrics(test_run, client_metrics, server_metrics):
-    __save_metrics(Metric.CLIENT_AVERAGE_CPU, Metric.CLIENT_AVERAGE_MEMORY, client_metrics, test_run)
+def __create_test_run_metrics(test_run, clients_metrics, server_metrics):
+    __save_metrics(Metric.CLIENT_AVERAGE_CPU, Metric.CLIENT_AVERAGE_MEMORY, clients_metrics, test_run)
     __save_metrics(Metric.SERVER_AVERAGE_CPU, Metric.SERVER_AVERAGE_MEMORY, server_metrics, test_run)
 
 
@@ -100,17 +103,23 @@ def __save_metrics(cpu_metric_name, memory_metric_name, metrics, test_run):
 
 
 def __calculate_average(metrics, start_time):
-    cpu, memory = 0, 0
-    counter = 0
-    for ts, value in metrics.items():
-        if parser.parse(ts) >= start_time.astimezone(pytz.UTC):
-            cpu += value["cpu"]
-            memory += value["memory"]
-            counter += 1
+    total_cpu, total_memory = 0, 0
+    if isinstance(metrics, dict):
+        metrics = [metrics]
+    for metric in metrics:    
+        cpu, memory = 0, 0
+        counter = 0
+        for ts, value in metric.items():
+            if parser.parse(ts) >= start_time.astimezone(pytz.UTC):
+                # print first ts
+                cpu += value["cpu"]
+                memory += value["memory"]
+                counter += 1
+        cpu_avg, memory_avg = (0, 0) if counter == 0 else (cpu/counter, memory/counter)
+        total_cpu += cpu_avg
+        total_memory += memory_avg
 
-    if counter == 0:
-        return 0, 0 
-    return cpu/counter, memory/counter
+    return total_cpu, total_memory
 
 def __save_metric_to_db(test_run, metric_name, metric_value, metric_type):
     if metric_type == TYPE_CPU:
