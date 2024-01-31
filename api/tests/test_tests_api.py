@@ -70,7 +70,7 @@ class TestTestsAPI(unittest.TestCase):
         self.app.database_manager.get_by_id.return_value = test_suite
         response = self.client.get(TEST_SUITES_GET_URL)
         result = json.loads(response.data)
-        expected = {'codeRelease': '1.1.0', 'description': 'description', 'end_time': None, 'environment_info': {'cpu': None, 'cpuArchitecture': None, 'cpuClockSpeed': None, 'cpuCores': None, 'nodeSize': None, 'operatingSystem': None, 'resourceName': None}, 'id': None, 'name': 'name', 'start_time': None, 'testRuns': [{'algorithm': None, 'id': 1, 'iterations': None, 'results': {'averageCPU': 9.0, 'averageMemory': 14}}]}
+        expected = {'code_release': '1.1.0', 'description': 'description', 'end_time': None, 'environment_info': {'cpu': None, 'cpuArchitecture': None, 'cpuClockSpeed': None, 'cpuCores': None, 'nodeSize': None, 'operatingSystem': None, 'resourceName': None}, 'id': None, 'name': 'name', 'start_time': None, 'test_runs': [{'algorithm': None, 'id': 1, 'iterations': None, 'message_size': None, 'results': {'averageCPU': 9.0, 'averageMemory': 14}}]}
         self.assertEqual(result, expected)
 
     def test_get_test_suite_return_not_found(self):

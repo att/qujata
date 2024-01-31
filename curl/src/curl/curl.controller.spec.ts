@@ -29,6 +29,7 @@ describe('CurlController', () => {
       const curlRequest: CurlRequest = {
         algorithm: 'kyber512',
         iterationsCount: 500,
+        messageSize: 10
       };
       const runSpy = jest.spyOn(curlService, 'run');
       await curlController.create(curlRequest);
@@ -38,6 +39,7 @@ describe('CurlController', () => {
       const curlRequest: CurlRequest = {
         algorithm: 'kyber512',
         iterationsCount: 500,
+        messageSize: 10
       };
       const expectedResult = undefined;
       jest.spyOn(curlService, 'run').mockResolvedValue(expectedResult);
@@ -48,6 +50,7 @@ describe('CurlController', () => {
       const curlRequest: CurlRequest = {
         algorithm: 'kyber512',
         iterationsCount: 500,
+        messageSize: 10
       };
       const error = new HttpException('Exception', 409);
       jest.spyOn(curlService, 'run').mockRejectedValue(error);
