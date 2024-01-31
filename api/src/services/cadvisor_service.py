@@ -1,7 +1,6 @@
 import src.services.k8s_service as k8s_service
 import requests
 import pandas as pd
-import logging
 from src.enums.environment import Environment
 
 DOCKER_METRICS_URL = "{}/api/v1.3/docker/{}"
@@ -28,7 +27,7 @@ def get_metrics_url(service_name):
     elif __environment == Environment.KUBERNETES.value:
         return __build_k8s_metrics_url(service_name)
     else:
-        raise RuntimeError("Invalid Environemnt: " + __environment) 
+        raise RuntimeError("Invalid Environment: " + __environment)
 
 
 def __build_docker_metrics_url(service_name):

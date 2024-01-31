@@ -5,8 +5,8 @@ export const MOCK_DATA_FOR_EXPERIMENT: ITestRunResult = {
   id: 1,
   name: "TestRun1",
   description: "TestRun1",
-  start_time: "2021-07-26T12:00:00.000Z",
-  end_time: "2021-07-26T12:00:00.000Z",
+  start_time: 1705240065192,
+  end_time: 1705240065192,
   environment_info: {
     resourceName: "gddn-aks",
     operatingSystem: "Linux",
@@ -17,7 +17,7 @@ export const MOCK_DATA_FOR_EXPERIMENT: ITestRunResult = {
     nodeSize: "Standard_D4s_v5",
     codeRelease: "1.1.0",
   },
-  testRuns: [
+  test_runs: [
     {
       id: 1,
       algorithm: "Algorithm1",
@@ -56,8 +56,8 @@ export const MOCK_DATA_FOR_EXPERIMENT_TABLE: ExperimentTableProps = {
     id: 1,
     name: "TestRun1",
     description: "TestRun1",
-    start_time: "2021-07-26T12:00:00.000Z",
-    end_time: "2021-07-26T12:00:00.000Z",
+    start_time: 1705240065192,
+    end_time: 1705240065192,
     environment_info: {
       resourceName: "gddn-aks",
       operatingSystem: "Linux",
@@ -68,7 +68,7 @@ export const MOCK_DATA_FOR_EXPERIMENT_TABLE: ExperimentTableProps = {
       nodeSize: "Standard_D4s_v5",
       codeRelease: "1.1.0",
     },
-    testRuns: [
+    test_runs: [
       {
         id: 1,
         algorithm: "Algorithm1",
@@ -126,8 +126,8 @@ export const MOCK_DATA_FOR_EXPERIMENT_WITH_NO_TEST_RUNS: ExperimentTableProps = 
     id: 1,
     name: "TestRun1",
     description: "TestRun1",
-    start_time: "2021-07-26T12:00:00.000Z",
-    end_time: "2021-07-26T12:00:00.000Z",
+    start_time: 1705240065192,
+    end_time: 1705240065192,
     environment_info: { 
       resourceName: "gddn-aks", 
       operatingSystem: "Linux", 
@@ -138,7 +138,7 @@ export const MOCK_DATA_FOR_EXPERIMENT_WITH_NO_TEST_RUNS: ExperimentTableProps = 
       nodeSize: "Standard_D4s_v5", 
       codeRelease: "1.1.0",
     }, 
-    testRuns: []
+    test_runs: []
   },
   selectedColumns: [
     {
@@ -163,20 +163,20 @@ export const MOCK_DATA_FOR_EXPERIMENT_WITH_NO_TEST_RUNS: ExperimentTableProps = 
 export const MOCK_SUB_HEADER: ITestRunResult = {
   id: 1,
   name: 'name',
-  description: 'name',
-  start_time: 'name',
-  end_time: 'name',
+  description: 'description',
+  start_time: 1705240065192,
+  end_time: 1705240065192,
   environment_info: {
       codeRelease: 'codeRelease',
-      cpu: 'codeRelease',
-      cpuArchitecture: 'codeRelease',
-      cpuClockSpeed: 'codeRelease',
+      cpu: 'cpu',
+      cpuArchitecture: 'cpuArchitecture',
+      cpuClockSpeed: 'cpuClockSpeed',
       cpuCores: 2,
-      nodeSize: 'codeRelease',
-      operatingSystem: 'codeRelease',
-      resourceName: 'codeRelease',
+      nodeSize: 'nodeSize',
+      operatingSystem: 'operatingSystem',
+      resourceName: 'resourceName',
   },
-  testRuns: [
+  test_runs: [
       {
           id:1,
           algorithm: "bikel1",

@@ -36,7 +36,7 @@ def create_test_suite(data):
     current_app.database_manager.create(test_suite)
     return test_suite
 
-def create_test_run(start_time, end_time, algorithm, iterations, test_suite_id, status, status_message, client_metrics, server_metrics):
+def create_test_run(start_time, end_time, algorithm, iterations, message_size, test_suite_id, status, status_message, client_metrics, server_metrics):
     test_run = TestRun(
         start_time=start_time,
         end_time=end_time,
@@ -44,7 +44,7 @@ def create_test_run(start_time, end_time, algorithm, iterations, test_suite_id, 
         iterations=iterations,
         status=status,
         status_message=status_message,
-        # message_size=1024,
+        message_size=message_size,
         test_suite_id=test_suite_id
     )    
     current_app.database_manager.create(test_run)

@@ -31,8 +31,11 @@ python3 -m src.main
 curl --location 'http://localhost:3020/qujata-api/analyze' \
 --header 'Content-Type: application/json' \
 --data '{
+    "experimentName": "name",
+    "description" : "test description",
     "algorithms": ["kyber512"],
-    "iterationsCount": 5
+    "iterationsCount": [5],
+    "messageSizes": [10]
 }'
 ```
 

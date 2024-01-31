@@ -1,0 +1,67 @@
+@import "src/styles/variables-keys";
+
+.experiments_wrapper {
+  padding-inline: 80px;
+  padding-block: 40px;
+
+  .title_options_container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .experiments_title {
+      font-size: 20px;
+      font-family: var($fontMedium);
+      margin-block-end: 40px;
+    }
+
+    .options_wrapper {
+      .trash_icon {
+        background-color: #F5F1FF;
+        inline-size: 34px;
+        block-size: 34px;
+        border-radius: 50%;
+      }
+    }
+    
+    .options_wrapper:hover .hover_image {
+      display: block;
+    }
+    
+    .options_wrapper:hover .default_image {
+      display: none;
+    }
+    
+    .default_image {
+      padding-inline: 11px;
+      display: block;
+    }
+    
+    .hover_image {
+      display: none;
+    }
+  }
+}
+
+.experiments_table {
+  text-align: left;
+  
+  th:first-child,
+  td:first-child {
+    text-align: center;
+    inline-size: 80px;
+  }
+}
+
+.input_form_item {
+  display: none;
+}
+
+.input_option {
+  margin-block-end: -5px;
+
+  .input_option_checkbox_icon {
+    margin-inline-end: 10px;
+    cursor: pointer;
+  }
+}

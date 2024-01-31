@@ -1,5 +1,3 @@
-from flask import current_app
-from src.models.test_run_metric import TestRunMetric
 from src.utils.metrics_collector import MetricsCollector
 import logging
 
