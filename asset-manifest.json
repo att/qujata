@@ -1,8 +1,9 @@
 {
   "files": {
-    "main.css": "qujata/static/css/main.9d279d75.css",
-    "main.js": "qujata/static/js/main.69e37afe.js",
+    "main.css": "qujata/static/css/main.ba175994.css",
+    "main.js": "qujata/static/js/main.7d0fe561.js",
     "static/js/496.4b609e30.chunk.js": "qujata/static/js/496.4b609e30.chunk.js",
+    "static/media/duplicate.svg": "qujata/static/media/duplicate.44855b9ba191051568deacd505961fb3.svg",
     "static/media/qujata-logo.svg": "qujata/static/media/qujata-logo.ac4d5d4ef22e4576837996b9f17ead9c.svg",
     "static/media/handshake.svg": "qujata/static/media/handshake.6dc3ed8e81430dcce954162b687b3757.svg",
     "static/media/select-columns.svg": "qujata/static/media/select-columns.234ea5c6add4ad34dd6e8d5240925809.svg",
@@ -15,6 +16,7 @@
     "index.html": "qujata/index.html",
     "static/media/lock.svg": "qujata/static/media/lock.07d1d70103870806f1f7e0868f03adfd.svg",
     "static/media/clean.svg": "qujata/static/media/clean.a8f44859dfbf2b4b50af6653462cd0b5.svg",
+    "static/media/trash-hover.svg": "qujata/static/media/trash-hover.162848d475cec5701b02341bd5b8d8ed.svg",
     "static/media/check.svg": "qujata/static/media/check.178bc6393cbb4df03310904d29c48c1d.svg",
     "static/media/trash.svg": "qujata/static/media/trash.c8872d2bd41e791c1c86717040d771d1.svg",
     "static/media/sort-ascending.svg": "qujata/static/media/sort-ascending.57b484d60cb2b92f092ef77c4362d2f5.svg",
@@ -24,12 +26,12 @@
     "static/media/arrow-left.svg": "qujata/static/media/arrow-left.f2bb41f5502cea6e6b414c08ff5714da.svg",
     "static/media/arrow-down.svg": "qujata/static/media/arrow-down.4efed336a810fb4d29bbc5e8c32799fe.svg",
     "static/media/close.svg": "qujata/static/media/close.cc0689a16a03427c52419bb3e9e9dae4.svg",
-    "main.9d279d75.css.map": "qujata/static/css/main.9d279d75.css.map",
-    "main.69e37afe.js.map": "qujata/static/js/main.69e37afe.js.map",
+    "main.ba175994.css.map": "qujata/static/css/main.ba175994.css.map",
+    "main.7d0fe561.js.map": "qujata/static/js/main.7d0fe561.js.map",
     "496.4b609e30.chunk.js.map": "qujata/static/js/496.4b609e30.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.9d279d75.css",
-    "static/js/main.69e37afe.js"
+    "static/css/main.ba175994.css",
+    "static/js/main.7d0fe561.js"
   ]
 }
