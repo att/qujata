@@ -21,10 +21,10 @@ describe('useExperimentData', () => {
     (useFetchSpinner as jest.Mock).mockImplementation(() => undefined);
     (useErrorMessage as jest.Mock).mockImplementation(() => undefined);
 
-    const mockDataNumOfTestRuns = MOCK_DATA_FOR_EXPERIMENT.testRuns.length;
+    const mockDataNumOfTestRuns = MOCK_DATA_FOR_EXPERIMENT.test_runs.length;
     const { result } = renderHook(() => useExperimentData());
     
-    expect(result.current.data.testRuns.length).toEqual(mockDataNumOfTestRuns);
+    expect(result.current.data.test_runs.length).toEqual(mockDataNumOfTestRuns);
   });
 
   test('Should not render data', () => {

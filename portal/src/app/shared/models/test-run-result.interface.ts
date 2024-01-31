@@ -24,8 +24,8 @@ export interface ITestRunResult {
     id: number;
     name: string;
     description: string;
-    start_time: string;
-    end_time: string;
+    start_time: number;
+    end_time: number;
     environment_info: IEnvironmentInfo;
-    testRuns: ITestRunResultData[];
+    test_runs: ITestRunResultData[];
 }

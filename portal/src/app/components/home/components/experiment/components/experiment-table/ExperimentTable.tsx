@@ -12,9 +12,9 @@ export interface ExperimentTableProps {
 }
 
 export const ExperimentTable: React.FC<ExperimentTableProps> = (props: ExperimentTableProps) => {
-  const data = useMemo(() => (props.data ? props.data.testRuns : []), [props.data]);
+  const data = useMemo(() => (props.data ? props.data.test_runs : []), [props.data]);
   
-  const headers: TableColumn[] = useMemo(() => [
+  const headers: TableColumn<ITestRunResultData>[] = useMemo(() => [
     {
       id: 'hashtag',
       header: () => <span>{EXPERIMENT_TABLE_EN.TABLE_TITLES.HASHTAG}</span>,
@@ -44,7 +44,7 @@ export const ExperimentTable: React.FC<ExperimentTableProps> = (props: Experimen
 
   return (
     <div className={styles.experiment_table_wrapper}>
-      <Table headers={headers} data={data} />
+      <Table className={styles.experiment_table} headers={headers} data={data} />
     </div>
   );
 };

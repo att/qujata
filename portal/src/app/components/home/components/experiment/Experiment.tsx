@@ -4,13 +4,10 @@ import { Charts } from './components/charts';
 import { SubHeader } from './components/sub-header';
 import { useExperimentData } from './components/hooks/useExperimentData';
 import { ITestRunResult } from '../../../../shared/models/test-run-result.interface';
-import { FetchDataStatus } from '../../../../shared/hooks/useFetch';
-import { Spinner, SpinnerSize } from '../../../../shared/components/att-spinner';
 import { useEffect, useRef, useState } from 'react';
 import { EXPERIMENT_EN } from './translate/en';
 import { ExperimentTabs } from './components/experiment-tabs';
 import { handleSectionScrolling } from './utils';
-import { ISpinner, useSpinnerContext } from '../../../../shared/context/spinner';
 import { TableOptions } from './components/table-options';
 import { SelectColumnsPopup } from './components/table-options/components/select-columns-popup';
 import { SelectedColumnsDefaultData, TableOptionsData } from './components/table-options/constants/table-options.const';
@@ -22,11 +19,11 @@ export type IExperimentData = {
 }
 
 export const Experiment: React.FC = () => {
-  const { data: testRunData, status } = useExperimentData();
+  const { data: testRunData } = useExperimentData();
 
   return (
       <div className={styles.experiment_wrapper}>
-        {status === FetchDataStatus.Fetching ? renderSpinner() : testRunData && <ExperimentContent data={testRunData} />}
+        {testRunData && <ExperimentContent data={testRunData} />}
       </div>
   );
 }
@@ -36,7 +33,6 @@ export const ExperimentContent: React.FC<IExperimentData> = (props: IExperimentD
     const [currentSection, setCurrentSection] = useState(EXPERIMENT_EN.TABS.RESULTS_DATA);
     const [selectedColumns, setSelectedColumns] = useState<AttSelectOption[]>(SelectedColumnsDefaultData);
 
-    const { isSpinnerOn }: ISpinner = useSpinnerContext();
     const resultsDataRef = useRef<HTMLDivElement>(null);
     const visualizationRef = useRef<HTMLDivElement>(null);
     const tableOptionsRef = useRef<HTMLDivElement>(null);
@@ -71,7 +67,6 @@ export const ExperimentContent: React.FC<IExperimentData> = (props: IExperimentD
 
     return (
         <>
-            {isSpinnerOn && renderSpinner()}
             <SubHeader data={data} />
             <div className={styles.tabs_and_options_wrapper}>
                 <ExperimentTabs currentSection={currentSection} handleButtonClick={handleButtonClick} />
@@ -97,15 +92,5 @@ export const ExperimentContent: React.FC<IExperimentData> = (props: IExperimentD
                 <Charts data={data} />
             </div>
         </>
-    );
-}
-
-function renderSpinner() {
-    return (
-        <div className={styles.spinner_overlay}>
-            <div className={styles.spinner_wrapper}>
-            <Spinner size={SpinnerSize.MEDIUM} />
-            </div>
-        </div>
     );
 }

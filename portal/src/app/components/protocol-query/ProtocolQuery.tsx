@@ -10,6 +10,8 @@ import { Spinner, SpinnerSize } from '../../shared/components/att-spinner';
 import { useGetAlgorithms, useGetIterations } from './hooks';
 import { handleAlgorithmsSelection } from './utils';
 import { AlgorithmsSelectorCustomOption, IterationsSelectorCustomOption } from '../../shared/components/selector-custom-option';
+import { ExperimentData } from '../all-experiments/models/experiments.interface';
+import { useDuplicateData } from './hooks';
 
 export type SelectOptionType = AttSelectOption | Options<AttSelectOption> | null;
 type onTextChangedEvent = (e: React.ChangeEvent<HTMLInputElement>) => void;
@@ -18,13 +20,13 @@ export type OnSelectChanged = (event: SelectOptionType) => void;
 
 export interface ProtocolQueryProps {
   isFetching: boolean;
-  canExportFile?: boolean;
   onRunClick: (data: ITestParams) => void;
-  onDownloadDataClicked?: () => void;
+  duplicateData?: ExperimentData;
+  setDuplicateData: (data?: ExperimentData) => void;
 }
 
 export const ProtocolQuery: React.FC<ProtocolQueryProps> = (props: ProtocolQueryProps) => {
-  const { isFetching, canExportFile, onRunClick, onDownloadDataClicked } = props;
+  const { isFetching, onRunClick, duplicateData, setDuplicateData } = props;
   const { algorithmOptions, algosBySection } = useGetAlgorithms();
   const { iterationsOptions } = useGetIterations();
   
@@ -37,7 +39,9 @@ export const ProtocolQuery: React.FC<ProtocolQueryProps> = (props: ProtocolQuery
   const [showInputOption, setShowInputOption] = useState(false);
   const [inputValue, setInputValue] = useState('');
   const [iterationsMenuIsOpen, setIterationsMenuIsOpen] = useState(false);
-  
+
+  useDuplicateData({ data: duplicateData, setDuplicateData, setExperimentName, setAlgorithms, setIterationsCount });
+
   const onSubmitHandler = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     onRunClick({
@@ -86,6 +90,7 @@ export const ProtocolQuery: React.FC<ProtocolQueryProps> = (props: ProtocolQuery
               </label>
               <input
                 className={styles.input_form_item}
+                value={experimentName}
                 onChange={onExperimentNameChanged}
                 placeholder=''
                 required
@@ -165,16 +170,6 @@ export const ProtocolQuery: React.FC<ProtocolQueryProps> = (props: ProtocolQuery
               </div>}
           </div>
        </form>
-       {/* <Button
-            className={styles.export_button}
-            actionType={ButtonActionType.BUTTON}
-            size={ButtonSize.LARGE}
-            styleType={ButtonStyleType.PRIMARY}
-            disabled={!canExportFile}
-            onButtonClick={onDownloadDataClicked}
-        >
-          {PROTOCOL_QUERY_EN.ACTION_BUTTONS.EXPORT}
-        </Button> */}
     </div>
   );
 };
