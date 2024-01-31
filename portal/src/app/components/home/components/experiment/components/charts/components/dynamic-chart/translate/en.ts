@@ -14,4 +14,3 @@ export const DYNAMIC_CHART_EN = {
         ITERATIONS: 'Iterations',
     }
 };
-  

@@ -35,4 +35,3 @@ export const CustomValueContainer: React.FC<ValueContainerProps<AttSelectOption,
         </div>
     )
 }
-  
