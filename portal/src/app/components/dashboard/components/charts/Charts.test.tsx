@@ -17,7 +17,7 @@ describe('Charts', () => {
         label: '1000',
         value: '1000',
       },
-      messageSize: {
+      messageSizes: {
         label: '1024',
         value: '1024'
       },

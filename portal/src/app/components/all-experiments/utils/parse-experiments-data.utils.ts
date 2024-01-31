@@ -1,4 +1,4 @@
-import { Experiment, ExperimentData, TestRunSubset } from '../hooks';
+import { Experiment, ExperimentData, TestRunSubset } from '../models/experiments.interface';
 
 export function parseExperimentsData(test_suites: Experiment[]) {
   const experimentsData: ExperimentData[] = [];

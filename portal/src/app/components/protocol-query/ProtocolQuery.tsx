@@ -10,7 +10,7 @@ import { Spinner, SpinnerSize } from '../../shared/components/att-spinner';
 import { useGetAlgorithms, useGetIterations, useMessageSizeData } from './hooks';
 import { handleAlgorithmsSelection } from './utils';
 import { AlgorithmsSelectorCustomOption, SelectorCustomOption } from '../../shared/components/selector-custom-option';
-import { ExperimentData } from '../all-experiments/hooks';
+import { ExperimentData } from '../all-experiments/models/experiments.interface';
 import { useDuplicateData } from './hooks';
 
 export type SelectOptionType = AttSelectOption | Options<AttSelectOption> | null;
@@ -55,7 +55,7 @@ export const ProtocolQuery: React.FC<ProtocolQueryProps> = (props: ProtocolQuery
       experimentName,
       algorithms: algorithms as SelectOptionType,
       iterationsCount: iterationsCount as SelectOptionType,
-      messageSize: messageSize as SelectOptionType,
+      messageSizes: messageSize as SelectOptionType,
       description
     });
   };

@@ -9,16 +9,3 @@ body:
       label: Description
     validations:
       required: true
-  - type: checkboxes
-    id: dod
-    attributes:
-      label: Definition of Done
-      description: The criteria that must be met for this issue to be considered done.
-      options:
-        - label: Code complete, including unit tests
-        - label: Peer code review performed
-        - label: All tests pass on main branch
-        - label: Security Compliance passed
-        - label: Product Owner has signed off on the feature
-        - label: Deployed to environment
-        - label: Documentation updated

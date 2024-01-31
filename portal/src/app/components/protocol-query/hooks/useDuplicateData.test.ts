@@ -1,7 +1,7 @@
-import { renderHook, act } from '@testing-library/react-hooks';
+import { renderHook } from '@testing-library/react-hooks';
 import { useDuplicateData, DuplicateData } from './useDuplicateData';
 import { AttSelectOption } from '../../../shared/components/att-select';
-import { ExperimentData } from '../../all-experiments/hooks';
+import { ExperimentData } from '../../all-experiments/models/experiments.interface';
 
 describe('useDuplicateData', () => {
   it('should set experiment name, algorithms, and iterations count when duplicate data is provided', () => {

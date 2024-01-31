@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { AttSelectOption } from '../../../shared/components/att-select';
-import { ExperimentData } from '../../all-experiments/hooks';
+import { ExperimentData } from '../../all-experiments/models/experiments.interface';
 
 export type DuplicateData = {
   data: ExperimentData | undefined,

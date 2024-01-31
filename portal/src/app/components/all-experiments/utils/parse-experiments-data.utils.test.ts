@@ -1,5 +1,5 @@
 import { parseExperimentsData } from './parse-experiments-data.utils';
-import { Experiment, ExperimentData, TestRunSubset } from '../hooks';
+import { Experiment, ExperimentData, TestRunSubset } from '../models/experiments.interface';
 
 describe('parseExperimentsData', () => {
   it('should parse experiments data correctly', () => {

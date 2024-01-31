@@ -4,14 +4,13 @@ import { replaceParams } from "../../../../../../shared/utils/replaceParams";
 import { useParams } from "react-router-dom";
 import { ITestRunResult, ITestRunResultData } from "../../../../../../shared/models/test-run-result.interface";
 import { TestRunUrlParams } from "../../../../../../shared/models/url-params.interface";
-import { FetchDataStatus, IHttp, useFetch } from "../../../../../../shared/hooks/useFetch";
+import { IHttp, useFetch } from "../../../../../../shared/hooks/useFetch";
 import { sortDataByAlgorithm } from "../charts/utils/test-run.utils";
 import { useFetchSpinner } from "../../../../../../shared/hooks/useFetchSpinner";
 import { useErrorMessage } from "../../../../../../hooks/useErrorMessage";
 
 export interface IUseExperimentData {
     data: ITestRunResult;
-    status: FetchDataStatus;
 }
 
 export function useExperimentData(): IUseExperimentData {
@@ -36,7 +35,6 @@ export function useExperimentData(): IUseExperimentData {
   }, [data]);
 
   return {
-      data: testRunData,
-      status,
+      data: testRunData
   } as IUseExperimentData;
 }

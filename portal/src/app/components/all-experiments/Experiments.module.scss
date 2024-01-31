@@ -1,60 +1,51 @@
 @import "src/styles/variables-keys";
 
 .experiments_wrapper {
-  padding-block-start: 40px;
-  padding-block-end: 40px;
-  padding-inline-start: 80px;
-  padding-inline-end: 80px;
-}
+  padding-inline: 80px;
+  padding-block: 40px;
 
-.title_options_container {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  .title_options_container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 
-  .experiments_title {
-    font-size: 20px;
-    font-family: var($fontMedium);
-    margin-inline-start: 150px;
-  }
-
-  .options_wrapper {
-    margin-inline-end: 50px;
-    
-    .trash_icon {
-      background-color: #F5F1FF;
-      inline-size: 34px;
-      block-size: 34px;
-      border-radius: 50%;
+    .experiments_title {
+      font-size: 20px;
+      font-family: var($fontMedium);
+      margin-block-end: 40px;
     }
-  }
-  
-  .options_wrapper:hover .hover_image {
-    display: block;
-  }
-  
-  .options_wrapper:hover .default_image {
-    display: none;
-  }
-  
-  .default_image {
-    padding-inline: 11px;
-    display: block;
-  }
-  
-  .hover_image {
-    display: none;
+
+    .options_wrapper {
+      .trash_icon {
+        background-color: #F5F1FF;
+        inline-size: 34px;
+        block-size: 34px;
+        border-radius: 50%;
+      }
+    }
+    
+    .options_wrapper:hover .hover_image {
+      display: block;
+    }
+    
+    .options_wrapper:hover .default_image {
+      display: none;
+    }
+    
+    .default_image {
+      padding-inline: 11px;
+      display: block;
+    }
+    
+    .hover_image {
+      display: none;
+    }
   }
 }
 
 .experiments_table {
-  margin-block-start: 60px;
-  margin-block-end: 60px;
-
-  th, td {
-    text-align: left;
-  }
-
+  text-align: left;
+  
   th:first-child,
   td:first-child {
     text-align: center;
@@ -74,22 +65,3 @@
     cursor: pointer;
   }
 }
-
-.spinner_wrapper {
-  position: sticky;
-  inset-block-start: 50%;
-  inset-inline-start: 50%;
-  text-align: center;   
-}
-
-.spinner_overlay {
-  inline-size: 100%;
-  block-size: 100%;
-  position: absolute;
-  background-color: #fff;
-  opacity: 0.6;
-  inset-block-start: 0;
-  inset-inline-start: 0;
-  z-index: 4;
-}
-

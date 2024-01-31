@@ -6,7 +6,7 @@ import { SubHeader } from "../sub-header";
 import { useCallback, useEffect, useState } from 'react';
 import styles from './Home.module.scss';
 import { useLocation, useNavigate } from "react-router-dom";
-import { ExperimentData } from "../all-experiments/hooks";
+import { ExperimentData } from "../all-experiments/models/experiments.interface";
 
 export const Home: React.FC = () => {
     const [isSubHeaderOpen, setIsSubHeaderOpen] = useState<boolean>(true);
@@ -32,7 +32,7 @@ export const HomeContent: React.FC = () => {
   useEffect(() => {
     // Clear the state after the duplicate data has been created
     setDuplicateData(undefined);
-  }, [location]);
+  }, []);
 
   useEffect(() => {
     if (status === FetchDataStatus.Success && testSuiteId) {

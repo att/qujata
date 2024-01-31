@@ -1,28 +1,46 @@
-name: Bug Report
-description: File a bug report
-labels: ["bug"]
-projects: "att/5"
+name: Report a bug
+description: Report a bug, use this form
 body:
   - type: markdown
     attributes:
       value: |
-        Thanks for taking the time to fill out this bug report!
+        ## Self Check
+        - Look for similar errors in existing [GitHub Issues](https://github.com/att/qujata/issues?q=is%3Aissue) (open or closed).
   - type: textarea
-    id: what-happened
+    validations:
+      required: true
     attributes:
-      label: What happened?
-      description: Also tell us, what did you expect to happen?
+      label: Describe the bug
+      description: A clear description of what the bug is.
       placeholder: Please give as many details as possible
-    validations:
-      required: true
   - type: textarea
-    id: steps-to-reproduce
-    attributes:
-      label: Steps to Reproduce
-      description: Please list the steps needed to reproduce the issue.
-      placeholder: "1. Step 1\n2. Step 2\n3. Step 3"
     validations:
       required: true
+    attributes:
+      label: Steps to reproduce
+      description: |
+        Steps to reproduce the problem.
+      placeholder: |
+        For example:
+        1. Run docker '...' or try to complete command '...'
+        2. See error
+  - type: textarea
+    validations:
+      required: true
+    attributes:
+      label: Expected behavior
+      description: A brief description of what should happen.
+  - type: textarea
+    attributes:
+      label: Screenshots and recordings
+      description: |
+        If applicable, add screenshots to help explain your problem. You can also record an asciinema session: https://asciinema.org/
+  - type: input
+    validations:
+      required: true
+    attributes:
+      label: OS / Linux distribution
+      placeholder: Windows 10, Ubuntu 20.04, Arch Linux, macOS 10.15...
   - type: dropdown
     id: browsers
     attributes:
@@ -36,7 +54,6 @@ body:
         - Mobile (iOS)
         - Mobile (Android)
   - type: textarea
-    id: screenshots
     attributes:
-      label: Screenshots
-      description: If applicable, add screenshots to help explain your problem. You can drag and drop, paste images directly here or link to them.
+      label: Additional context
+      description: Add any other context about the problem here. You can drag and drop, paste images directly here or link to them.
