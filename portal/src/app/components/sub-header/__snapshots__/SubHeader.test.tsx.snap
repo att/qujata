@@ -10,7 +10,7 @@ exports[`SubHeader renders sub header  1`] = `
   <div
     class="sub_header_title"
   >
-    That’s what are we doing on each iteration:
+    That’s what we are doing on each iteration:
   </div>
   <div
     class="items_wrapper"
