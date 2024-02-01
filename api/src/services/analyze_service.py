@@ -63,7 +63,6 @@ def __run(algorithm, iterations, message_size):
 
 def __validate_response(response):
     response_json = response.json()
-    logging.error(response_json)
     if response.status_code < 200 or response.status_code > 299:
         return Status.FAILED, json.dumps(response_json), 0
     else:

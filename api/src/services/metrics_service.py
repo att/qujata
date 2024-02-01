@@ -22,9 +22,6 @@ def __save_resource_metrics(cpu_metric_name, memory_metric_name, metrics, test_r
 
 def __save_throughput_metrics(requests_metric_name, bytes_metric_name, start_time, end_time, data_bytes, test_run):
     requests_throughput, bytes_throughput = __calculate_throughput(test_run.iterations, start_time, end_time, data_bytes)
-    logging.error('__save_throughput_metrics')
-    logging.error(requests_throughput)
-    logging.error(bytes_throughput)
     __save_metric_to_db(test_run, requests_metric_name, requests_throughput)
     __save_metric_to_db(test_run, bytes_metric_name, bytes_throughput)
 
