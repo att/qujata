@@ -17,7 +17,4 @@ generate_message() {
 # Generate the message
 generate_message "$message_size"
 
-# Perform curl requests using xargs
-#seq "$iteration_count" | xargs -P "$num_processes" -n 1 -I % sh -c "curl 'https://${nginx_host}:${nginx_port}' -k --curves '${algorithm}' -XPOST -d @/tmp/message.txt -H 'Content-Type: text/plain' -o /dev/null"
-#seq ${iteration_count} | xargs -P $num_processes -n 1 -I % curl https://${nginx_host}:${nginx_port} -k --curves ${algorithm} -XPOST -d "$payload" -H "Content-Type: text/plain" -o /dev/null
 seq "$iteration_count" | xargs -P "$num_processes" -n 1 -I % curl "https://${nginx_host}:${nginx_port}" -k --curves "${algorithm}" -XPOST -d "@/tmp/message.txt" -H "Content-Type: text/plain" -o /dev/null
