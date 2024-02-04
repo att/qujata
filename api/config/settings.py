@@ -15,7 +15,8 @@ def load_config(app):
         'request_timeout': os.environ.get('REQUEST_TIMEOUT', 3600),
         'code_release': os.environ.get('CODE_RELEASE'),
         'protocol': os.environ.get('PROTOCOL'),
-        'iterations_options': list(map(int, os.environ.get('ITERATIONS_OPTIONS', "100:500:1000:2000:5000:10000:50000").split(':')))
+        'iterations_options': list(map(int, os.environ.get('ITERATIONS_OPTIONS', "100:500:1000:2000:5000:10000:50000").split(':'))),
+        'message_sizes_options': list(map(int, os.environ.get('MESSAGE_SIZES_OPTIONS', "0:1:2:100:1024:102400:204800:1048576:2097152:10485760").split(':')))
     })
 
 
@@ -31,6 +32,8 @@ class Configuration:
         self.code_release = config_dict.get('code_release')
         self.protocol = config_dict.get('protocol')
         self.iterations_options = config_dict.get('iterations_options')
+        self.message_sizes_options = config_dict.get('message_sizes_options')
+
 
     def __validate_environment(self, environment):
         valid_environments = [e.value for e in Environment]
