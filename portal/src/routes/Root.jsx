@@ -4,14 +4,21 @@ import { Outlet } from 'react-router-dom';
 import { tabs } from '../app/shared/constants/navigation-tabs.const';
 import { Spinner, SpinnerSize } from '../app/shared/components/att-spinner';
 import { useSpinnerContext } from '../app/shared/context/spinner';
+import { GHPages } from "../gh-pages";
 
 export default function Root() {
   const { isSpinnerOn } = useSpinnerContext();
+  const env = process.env.REACT_APP__ENVIRONMENT;
   return (
+    
     <>
-      <GlobalHeader tabs={tabs} />
+      <GlobalHeader tabs={ env === 'gh-pages' ? [] : tabs} />
       {isSpinnerOn && renderSpinner()}
-      <Outlet />
+      { 
+        env === 'gh-pages' ?  (<GHPages />) :(<Outlet />)
+      }
+              
+      
     </>
   );
 }
