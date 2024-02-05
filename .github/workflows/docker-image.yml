@@ -2,7 +2,7 @@ name: Build and Deploy to GitHub Pages
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "main", "static-web-page/US63/conditional-main-page" ]
   pull_request:
     branches: [ "main" ]
 
