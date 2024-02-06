@@ -1,6 +1,7 @@
 FROM nginx:1.25-alpine3.18
 
 RUN apk --no-cache add --update nodejs npm
+ARG BUILD_ENV
 
 ## Replace the default nginx index page with our portal
 RUN rm -rf /usr/share/nginx/html/*
@@ -11,7 +12,7 @@ RUN npm install -g yarn
 RUN yarn install
 RUN yarn add env-cmd
 RUN if [ "$BUILD_ENV" = "gh-pages" ]; then \
-       yarn build:gh-pages; \
+        yarn build:gh-pages; \
     else \
         yarn build; \
     fi \
