@@ -19,11 +19,23 @@ export function useDynamicChartData(chartData: ITestRunResult): IUseDynamicChart
     }
 
     if (uniqueKeys.size > 0) {
-      setYAxiosOptions(Array.from(uniqueKeys).map(key => ({ label: key, value: key })));
+      setYAxiosOptions(Array.from(uniqueKeys).map(key => ({ label: convertLabelByCapitalLetter(key), value: key })));
     }
   }, [chartData]);
 
   return {
     yAxiosOptions,
   };
+}
+
+function convertLabelByCapitalLetter(str: string): string {
+  let isFirstCapital = true;
+  const result = str.replace(/([A-Z])/g, (match) => {
+    if (isFirstCapital) {
+      isFirstCapital = false;
+      return ` ${match}`;
+    }
+    return match;
+  }).trim();
+  return result.charAt(0).toUpperCase() + result.slice(1);
 }

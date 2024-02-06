@@ -11,7 +11,7 @@ export const chartTypeOptions: AttSelectOption[] = Object.keys(ChartType).map((k
 }));
 
 export enum XAxisType {
-   NUMBER_OF_ITERATIONS = 'number of iterations',
+   NUMBER_OF_ITERATIONS = 'Number of Iterations',
 }
 
 export const xAxisTypeOptions: AttSelectOption[] = Object.keys(XAxisType).map((key) => ({
