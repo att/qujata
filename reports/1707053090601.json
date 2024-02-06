@@ -1,11 +1,11 @@
 {
-    "id": 1,
-    "name": "test1",
-    "description": "test1",
+    "id": 2,
+    "name": "test2",
+    "description": "test2",
     "start_time": "Thu, 15 Dec 2023 15:37:31 GMT",
     "end_time": "Thu, 15 Dec 2023 15:38:39 GMT",
     "environment_info": {
-      "codeRelease": "1.1.0",
+      "codeRelease": "1.2.0",
       "cpu": "RELACE_WITH_CPU",
       "cpuArchitecture": "RELACE_WITH_CPU_ARCHITECTURE",
       "cpuClockSpeed": "RELACE_WITH_CLOCK_SPEED",
