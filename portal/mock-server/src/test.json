@@ -15,7 +15,7 @@
     "resourceName": "RELACE_WITH_RESOURCE_NAME"
   },
  
-  "testRuns": [
+  "test_runs": [
     {
       "id":1,
       "algorithm": "bikel1",

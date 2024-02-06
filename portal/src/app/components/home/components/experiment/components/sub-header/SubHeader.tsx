@@ -62,8 +62,8 @@ export const SubHeader: React.FC<SubHeaderProps> = (props: SubHeaderProps) => {
 
     const handleDownloadClick: () => void = useCallback((): void => {
         const csvFileName: string = `${SUB_HEADER_EN.CSV_REPORT.FILE_NAME}-${name || ''}.csv`;
-        downloadCsvFile(mapExperimentDataToCsvDataType(data.testRuns), csvFileName);
-    }, [data.testRuns, name]);
+        downloadCsvFile(mapExperimentDataToCsvDataType(data.test_runs), csvFileName);
+    }, [data.test_runs, name]);
     
     const handleCloseEditExperimentModal: (editData?: EditExperimentModalData) => void = useCallback((editData?: EditExperimentModalData): void => {
         if (editData) {
@@ -103,11 +103,11 @@ export const SubHeader: React.FC<SubHeaderProps> = (props: SubHeaderProps) => {
                     </div>
                     <div className={styles.item_wrapper}>
                         <div className={styles.item_title}>{SUB_HEADER_EN.ALGORITHM}</div>
-                        <div className={styles.item_description}>{getAlgorithmsName(data.testRuns)}</div>
+                        <div className={styles.item_description}>{getAlgorithmsName(data.test_runs)}</div>
                     </div>
                     <div className={styles.item_wrapper}>
                         <div className={styles.item_title}>{SUB_HEADER_EN.ITERATIONS}</div>
-                        <div className={styles.item_description}>{getIterations(data.testRuns)}</div>
+                        <div className={styles.item_description}>{getIterations(data.test_runs)}</div>
                     </div>
                 </div>
                 <div className={styles.item_description}>{experimentDescription}</div>

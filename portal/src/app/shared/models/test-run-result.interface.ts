@@ -27,5 +27,5 @@ export interface ITestRunResult {
     start_time: string;
     end_time: string;
     environment_info: IEnvironmentInfo;
-    testRuns: ITestRunResultData[];
+    test_runs: ITestRunResultData[];
 }

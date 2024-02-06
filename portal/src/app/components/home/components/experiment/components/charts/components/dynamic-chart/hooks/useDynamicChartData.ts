@@ -11,7 +11,7 @@ export function useDynamicChartData(chartData: ITestRunResult): IUseDynamicChart
   useEffect(() => {
     const uniqueKeys = new Set<string>();
 
-    for (const testRun of chartData.testRuns) {
+    for (const testRun of chartData.test_runs) {
       const results = testRun.results;
       for (const key in results) {
         uniqueKeys.add(key);

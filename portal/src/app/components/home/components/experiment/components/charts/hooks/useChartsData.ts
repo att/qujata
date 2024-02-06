@@ -63,8 +63,8 @@ export function useChartsData(props: IExperimentData): IUseChartsData {
     const [lineChartData, setLineChartData] = useState<ILineChartData>();
     
     useEffect(() => {
-        if(props.data && props.data.testRuns.length > 0) {
-            const testRuns: ITestRunResultData[] = props.data.testRuns;
+        if(props.data && props.data.test_runs.length > 0) {
+            const testRuns: ITestRunResultData[] = props.data.test_runs;
             setBarChartData(testRuns);
             const labels: string[] = getLabels(testRuns);
             setBarChartLabels(labels);

@@ -17,7 +17,7 @@ export const MOCK_DATA_FOR_CHARTS: IExperimentData = {
       nodeSize: "Standard_D4s_v5",
       codeRelease: "1.1.0",
     },
-    testRuns: [
+    test_runs: [
       {
         id: 1,
         algorithm: "Algorithm1",
