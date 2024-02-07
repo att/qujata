@@ -34,7 +34,6 @@ export const ProtocolQuery: React.FC<ProtocolQueryProps> = (props: ProtocolQuery
   const [prevSelectedValues, setPrevSelectedValues] = useState<string[]>([]);
   const [description, setDescription] = useState('');
 
-  // TODO: change the variable names include "iterationsCount" word in it
   const { iterationsOptions } = useGetIterations();
   const [iterationsCount, setIterationsCount] = useState<AttSelectOption[]>([]);
   const [showIterationsInputOption, setShowIterationsInputOption] = useState(false);

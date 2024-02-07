@@ -4,7 +4,7 @@ import { ExperimentData } from '../../all-experiments/models/experiments.interfa
 
 export type DuplicateData = {
   data: ExperimentData | undefined,
-  setDuplicateData: (data: any) => void,
+  setDuplicateData: (data?: ExperimentData) => void,
   setExperimentName: (name: string) => void,
   setAlgorithms: (options: AttSelectOption[]) => void,
   setIterationsCount: (options: AttSelectOption[]) => void,
