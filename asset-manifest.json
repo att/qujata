@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "qujata/static/css/main.ba175994.css",
-    "main.js": "qujata/static/js/main.54f93bfa.js",
+    "main.css": "qujata/static/css/main.610bdde7.css",
+    "main.js": "qujata/static/js/main.ecf19568.js",
     "static/js/496.4b609e30.chunk.js": "qujata/static/js/496.4b609e30.chunk.js",
     "static/media/duplicate.svg": "qujata/static/media/duplicate.44855b9ba191051568deacd505961fb3.svg",
     "static/media/qujata-logo.svg": "qujata/static/media/qujata-logo.ac4d5d4ef22e4576837996b9f17ead9c.svg",
@@ -24,14 +24,17 @@
     "static/media/sort-descending.svg": "qujata/static/media/sort-descending.d5ce73ded65231c17bf5411a87eded78.svg",
     "static/media/checked.svg": "qujata/static/media/checked.52ae13e85ffa76eb976704e61b3afc96.svg",
     "static/media/arrow-left.svg": "qujata/static/media/arrow-left.f2bb41f5502cea6e6b414c08ff5714da.svg",
+    "static/media/arrow-down-selector.svg": "qujata/static/media/arrow-down-selector.e790a8070a5bae1afdc1bdab8935a1d2.svg",
+    "static/media/bar.svg": "qujata/static/media/bar.19d5d9d3b1178d08ee3db28d94608dc0.svg",
     "static/media/arrow-down.svg": "qujata/static/media/arrow-down.4efed336a810fb4d29bbc5e8c32799fe.svg",
     "static/media/close.svg": "qujata/static/media/close.cc0689a16a03427c52419bb3e9e9dae4.svg",
-    "main.ba175994.css.map": "qujata/static/css/main.ba175994.css.map",
-    "main.54f93bfa.js.map": "qujata/static/js/main.54f93bfa.js.map",
+    "static/media/line.svg": "qujata/static/media/line.4ede20dbb0ab437b58b9f71e53f0460c.svg",
+    "main.610bdde7.css.map": "qujata/static/css/main.610bdde7.css.map",
+    "main.ecf19568.js.map": "qujata/static/js/main.ecf19568.js.map",
     "496.4b609e30.chunk.js.map": "qujata/static/js/496.4b609e30.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.ba175994.css",
-    "static/js/main.54f93bfa.js"
+    "static/css/main.610bdde7.css",
+    "static/js/main.ecf19568.js"
   ]
 }
