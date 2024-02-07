@@ -22,10 +22,6 @@ interface ITestRequestData {
 
 export function useDashboardData(): IUseDashboardData {
   const { post, data, status, error, cancelRequest }: IHttp<IQueryResponse> = useFetch<IQueryResponse>({ url: APIS.analyze });
-  const [dashboardData, setDashboardData] = useState<ChartDataMap>(() => new Map<AttSelectOption, ITestResponseData | undefined>());
-  const [algorithms, setAlgorithms] = useState<string[]>([]);
-  const [iterationsCount, setIterationsCount] = useState<number[]>([]);
-  const [messageSize, setMessageSize] = useState<number[]>([]);
   const [testSuiteId, setTestSuiteId] = useState<string>('');
 
   useFetchSpinner(status);
@@ -39,59 +35,26 @@ export function useDashboardData(): IUseDashboardData {
   }, [data, status]);
 
   const handleRunQueryClick: (queryData: ITestParams) => void = useCallback((queryData: ITestParams): void => {
-    let algoValues: string[] = [];
+    let algorithmsValues: string[] = [];
     let iterationsValues: number[] = [];
     let messageSizesValues: number[] = [];
-    
-    if (queryData.algorithms) {
-      const algos = queryData.algorithms as AttSelectOption[];
-      const map: ChartDataMap = new Map<AttSelectOption, ITestResponseData | undefined>();
-  
-      algos.forEach((algo: AttSelectOption) => {
-        map.set(algo, undefined);
-        algoValues.push(algo.value);
-      });
-  
-      setAlgorithms(algoValues);
-      setDashboardData(map);
-      algoValues = algos.map((item: AttSelectOption) => item.value); 
-    }
 
-    if (queryData.iterationsCount) {
-      const iterations = queryData.iterationsCount as AttSelectOption[];
-      const map: ChartDataMap = new Map<AttSelectOption, ITestResponseData | undefined>();
+    const algorithms = queryData.algorithms as AttSelectOption[];
+    algorithmsValues = algorithms.map((algorithm: AttSelectOption) => algorithm.value);
 
-      iterations.forEach((iteration: AttSelectOption) => {
-        map.set(iteration, undefined);
-        iterationsValues.push(+iteration.value);
-      });
+    const iterations = queryData.iterationsCount as AttSelectOption[];
+    iterationsValues = iterations.map((iteration: AttSelectOption) => +iteration.value);
 
-      setIterationsCount(iterationsValues);
-      setDashboardData(map);
-      iterationsValues = iterations.map((item: AttSelectOption) => +item.value);
-    }
-
-    if (queryData.messageSizes) {
-      const messageSizes = queryData.messageSizes as AttSelectOption[];
-      const map: ChartDataMap = new Map<AttSelectOption, ITestResponseData | undefined>();
-
-      messageSizes.forEach((messageSize: AttSelectOption) => {
-        map.set(messageSize, undefined);
-        messageSizesValues.push(+messageSize.value);
-      });
-
-      setMessageSize(messageSizesValues);
-      setDashboardData(map);
-      messageSizesValues = messageSizes.map((item: AttSelectOption) => +item.value);
-    }
+    const messageSizes = queryData.messageSizes as AttSelectOption[];
+    messageSizesValues = messageSizes.map((messageSize: AttSelectOption) => +messageSize.value);
     
     post({
       data: {
-        experimentName: queryData.experimentName,
-        algorithms: algoValues,
+        experimentName: queryData.experimentName ?? '',
+        algorithms: algorithmsValues,
         iterationsCount: iterationsValues,
         messageSizes: messageSizesValues,
-        description: queryData.description
+        description: queryData.description ?? ''
       } as ITestRequestData
     });
   }, [post]);

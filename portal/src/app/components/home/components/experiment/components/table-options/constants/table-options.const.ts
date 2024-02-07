@@ -21,8 +21,8 @@ export const TableOptionsData = {
 };
 
 export const SelectedColumnsDefaultData: SelectedColumnsDefaultData[] = [
-  { label: 'iterations', value: TableOptionsData.options[0] },
-  { label: 'message_size', value: TableOptionsData.options[1] },
-  { label: 'results.averageCPU', value: TableOptionsData.options[2] },
-  { label: 'results.averageMemory', value: TableOptionsData.options[3] }
+  { label: 'iterations', value: EXPERIMENT_TABLE_EN.TABLE_TITLES.ITERATIONS },
+  { label: 'message_size', value: EXPERIMENT_TABLE_EN.TABLE_TITLES.MESSAGE_SIZE },
+  { label: 'results.averageCPU', value: EXPERIMENT_TABLE_EN.TABLE_TITLES.AVERAGE_CPU },
+  { label: 'results.averageMemory', value: EXPERIMENT_TABLE_EN.TABLE_TITLES.AVERAGE_MEMORY }
 ];
