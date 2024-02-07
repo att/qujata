@@ -57,9 +57,11 @@ class TestTestsAPI(unittest.TestCase):
         )
 
     def __test_run_metrics(self):
-        return [TestRunMetric(metric_name=Metric.CLIENT_AVERAGE_CPU, value=3),
+        return [TestRunMetric(metric_name=Metric.CLIENT_AVERAGE_CPU_CORES, value=3),
+                TestRunMetric(metric_name=Metric.CLIENT_AVERAGE_CPU, value=0.3),
                 TestRunMetric(metric_name=Metric.CLIENT_AVERAGE_MEMORY, value=5),
-                TestRunMetric(metric_name=Metric.SERVER_AVERAGE_CPU, value=6),
+                TestRunMetric(metric_name=Metric.SERVER_AVERAGE_CPU_CORES, value=6),
+                TestRunMetric(metric_name=Metric.SERVER_AVERAGE_CPU, value=0.5),
                 TestRunMetric(metric_name=Metric.SERVER_AVERAGE_MEMORY, value=9),
                 TestRunMetric(metric_name=Metric.MESSAGES_THROUGHPUT_PER_SECOND, value=50),
                 TestRunMetric(metric_name=Metric.BYTES_THROUGHPUT_PER_SECOND, value=4500)]
@@ -75,7 +77,7 @@ class TestTestsAPI(unittest.TestCase):
         self.app.database_manager.get_by_id.return_value = test_suite
         response = self.client.get(TEST_SUITES_GET_URL)
         result = json.loads(response.data)
-        expected = {'code_release': '1.1.0', 'description': 'description', 'end_time': None, 'environment_info': {'cpu': None, 'cpuArchitecture': None, 'cpuClockSpeed': None, 'cpuCores': None, 'nodeSize': None, 'operatingSystem': None, 'resourceName': None}, 'id': None, 'name': 'name', 'start_time': None, 'test_runs': [{'algorithm': None, 'id': 1, 'iterations': None, 'message_size': None, 'results': {'averageCPU': 9.0, 'averageMemory': 14, 'requestThroughput': 50, 'bytesThroughput': 4500}}]}
+        expected = {'code_release': '1.1.0', 'description': 'description', 'end_time': None, 'environment_info': {'cpu': None, 'cpuArchitecture': None, 'cpuClockSpeed': None, 'cpuCores': None, 'nodeSize': None, 'operatingSystem': None, 'resourceName': None}, 'id': None, 'name': 'name', 'start_time': None, 'test_runs': [{'algorithm': None, 'id': 1, 'iterations': None, 'message_size': None, 'results': {'averageCPU': 0.8, 'averageCPUCores': 9.0, 'averageMemory': 14, 'requestThroughput': 50, 'bytesThroughput': 4500}}]}
         self.assertEqual(result, expected)
 
     def test_get_test_suite_return_not_found(self):

@@ -19,8 +19,8 @@ POST_REQUEST = 'requests.post'
 GET_REQUEST = 'requests.get'
 INVALID_DATA_PROVIDED = "Invalid data provided"
 
-client_metrics = {str(datetime.now() + timedelta(seconds=30)) + "123Z":{"cpu":3.6, "memory":254}, str(datetime.now() + timedelta(seconds=36))+ "123Z":{"cpu":3.8, "memory":234}}
-server_metrics = {str(datetime.now() + timedelta(seconds=30))+ "123Z":{"cpu":2.3, "memory":154}, str(datetime.now() + timedelta(seconds=36))+ "123Z":{"cpu":2.7, "memory":156}}
+client_metrics = {str(datetime.now() + timedelta(seconds=30)) + "123Z":{"cpu_cores":3.6, "cpu":10, "memory":254}, str(datetime.now() + timedelta(seconds=36))+ "123Z":{"cpu_cores":3.8, "cpu":11, "memory":234}}
+server_metrics = {str(datetime.now() + timedelta(seconds=30))+ "123Z":{"cpu_cores":2.3, "cpu":7.5, "memory":154}, str(datetime.now() + timedelta(seconds=36))+ "123Z":{"cpu_cores":2.7, "cpu":8.5, "memory":156}}
 metrics = [client_metrics, server_metrics]
 
 
@@ -65,24 +65,28 @@ class TestAnalyzeAPI(unittest.TestCase):
                                             content_type=CONTENT_TYPE)
 
 
-                    self.assertEqual(self.app.database_manager.create.call_count, 15)# 1 for the test suite, and 2 for test runs and 6*2(12) for test run metrics
+                    self.assertEqual(self.app.database_manager.create.call_count, 19)# 1 for the test suite, and 2 for test runs and 8*2(16) for test run metrics
                     db_call = self.app.database_manager.create.call_args_list
-                    self.assertEqual(db_call[2].args[0].metric_name, Metric.CLIENT_AVERAGE_CPU)
+                    self.assertEqual(db_call[2].args[0].metric_name, Metric.CLIENT_AVERAGE_CPU_CORES)
                     self.assertEqual(db_call[2].args[0].value, 3.7)
                     self.assertEqual(db_call[3].args[0].metric_name, Metric.CLIENT_AVERAGE_MEMORY)
                     self.assertEqual(db_call[3].args[0].value, 244.0)
-                    self.assertEqual(db_call[4].args[0].metric_name, Metric.SERVER_AVERAGE_CPU)
-                    self.assertEqual(db_call[4].args[0].value, 2.5)
-                    self.assertEqual(db_call[5].args[0].metric_name, Metric.SERVER_AVERAGE_MEMORY)
-                    self.assertEqual(db_call[5].args[0].value, 155.0)
-                    self.assertEqual(db_call[6].args[0].metric_name, Metric.MESSAGES_THROUGHPUT_PER_SECOND)
-                    self.assertEqual(db_call[6].args[0].value, 8.0)
-                    self.assertEqual(db_call[7].args[0].metric_name, Metric.BYTES_THROUGHPUT_PER_SECOND)
-                    self.assertEqual(db_call[7].args[0].value, 83.0)
-                    self.assertEqual(db_call[13].args[0].metric_name, Metric.MESSAGES_THROUGHPUT_PER_SECOND)
-                    self.assertEqual(db_call[13].args[0].value, 33.0)
-                    self.assertEqual(db_call[14].args[0].metric_name, Metric.BYTES_THROUGHPUT_PER_SECOND)
-                    self.assertEqual(db_call[14].args[0].value, 167.0)
+                    self.assertEqual(db_call[4].args[0].metric_name, Metric.CLIENT_AVERAGE_CPU)
+                    self.assertEqual(db_call[4].args[0].value, 10.5)
+                    self.assertEqual(db_call[5].args[0].metric_name, Metric.SERVER_AVERAGE_CPU_CORES)
+                    self.assertEqual(db_call[5].args[0].value, 2.5)
+                    self.assertEqual(db_call[6].args[0].metric_name, Metric.SERVER_AVERAGE_MEMORY)
+                    self.assertEqual(db_call[6].args[0].value, 155.0)
+                    self.assertEqual(db_call[7].args[0].metric_name, Metric.SERVER_AVERAGE_CPU)
+                    self.assertEqual(db_call[7].args[0].value, 8.0)
+                    self.assertEqual(db_call[8].args[0].metric_name, Metric.MESSAGES_THROUGHPUT_PER_SECOND)
+                    self.assertEqual(db_call[8].args[0].value, 8.0)
+                    self.assertEqual(db_call[9].args[0].metric_name, Metric.BYTES_THROUGHPUT_PER_SECOND)
+                    self.assertEqual(db_call[9].args[0].value, 83.0)
+                    self.assertEqual(db_call[17].args[0].metric_name, Metric.MESSAGES_THROUGHPUT_PER_SECOND)
+                    self.assertEqual(db_call[17].args[0].value, 33.0)
+                    self.assertEqual(db_call[18].args[0].metric_name, Metric.BYTES_THROUGHPUT_PER_SECOND)
+                    self.assertEqual(db_call[18].args[0].value, 167.0)
 
                     self.assertEqual(response.status_code, 200)
                     # Check the response content
