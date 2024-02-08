@@ -16,13 +16,13 @@ def serialize(test_suite):
 
 def __get_environment_info(env_info):
     return {
-        "resourceName": env_info.resource_name,
-        "operatingSystem": env_info.operating_system,
+        "resource_name": env_info.resource_name,
+        "operating_system": env_info.operating_system,
         "cpu": env_info.cpu,
-        "cpuArchitecture": env_info.cpu_architecture,
-        "cpuCores": env_info.cpu_cores,
-        "cpuClockSpeed": env_info.clock_speed,
-        "nodeSize": env_info.node_size
+        "cpu_architecture": env_info.cpu_architecture,
+        "cpu_cores": env_info.cpu_cores,
+        "cpu_clock_speed": env_info.clock_speed,
+        "node_size": env_info.node_size
     }
 
 
@@ -38,10 +38,10 @@ def __get_test_runs_metrics(test_runs):
             "iterations": test_run.iterations,
             "message_size": test_run.message_size,
             "results": {
-                "averageCPU": round(cpu_avg, 2),
-                "averageMemory": int(memory_avg),
-                "requestThroughput": int(request_throughput),
-                "bytesThroughput": int(bytes_throughput)
+                "average_cpu": round(cpu_avg, 2),
+                "average_memory": int(memory_avg),
+                "request_throughput": int(request_throughput),
+                "bytes_throughput": int(bytes_throughput)
             }
         }
         test_runs_list.append(results)
