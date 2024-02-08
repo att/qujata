@@ -11,7 +11,7 @@ export function convertDataToOptions(data: typeof TableOptionsData) {
       value: data.options[1]
     },
     {
-      label: 'results.averageMemory',
+      label: 'results.average_memory',
       value: data.options[2]
     },
     {

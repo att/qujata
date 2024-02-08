@@ -18,6 +18,6 @@ export function mapExperimentDataToCsvDataType(list: ITestRunResultData[]): CsvD
       item.algorithm,
       item.iterations,
       item.results.average_cpu,
-      item.results.averageMemory,
+      item.results.average_memory,
     ])];
 }

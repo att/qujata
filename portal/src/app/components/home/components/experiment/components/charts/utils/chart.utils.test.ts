@@ -10,7 +10,7 @@ describe('Chart utils', () => {
 
     test('should get keys of data', () => {
         const { result } = renderHook(() => getKeysOfData(MOCK_DATA_FOR_CHART_UTILS[0].results));
-        expect(result.current).toEqual(['average_cpu', 'averageMemory', 'bytes_throughput', 'request_throughput']);
+        expect(result.current).toEqual(['average_cpu', 'average_memory', 'bytes_throughput', 'request_throughput']);
     });
 
     test('should chart title by type', () => {

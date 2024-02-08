@@ -12,7 +12,7 @@ describe('test-run utils', () => {
           results:  
           { 
             average_cpu: 25.5, 
-            averageMemory: 512,
+            average_memory: 512,
             bytes_throughput: 11,
             request_throughput: 21,
           } 
@@ -29,7 +29,7 @@ describe('test-run utils', () => {
           results:  
           { 
             average_cpu: 25, 
-            averageMemory: 52,
+            average_memory: 52,
             bytes_throughput: 11,
             request_throughput: 21,
           } 

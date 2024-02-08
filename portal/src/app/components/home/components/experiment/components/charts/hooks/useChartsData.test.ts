@@ -25,7 +25,7 @@ describe('useChartsData', () => {
           iterations: 1024,
           results: {
             average_cpu: 25.5,
-            averageMemory: 512,
+            average_memory: 512,
             bytes_throughput: 11,
             request_throughput: 21,
           }
@@ -36,7 +36,7 @@ describe('useChartsData', () => {
           iterations: 1024,
           results: {
             average_cpu: 25.5,
-            averageMemory: 512,
+            average_memory: 512,
             bytes_throughput: 11,
             request_throughput: 21,
           }
@@ -47,7 +47,7 @@ describe('useChartsData', () => {
           iterations: 104,
           results: {
               average_cpu: 2,
-              averageMemory: 52,
+              average_memory: 52,
               bytes_throughput: 11,
               request_throughput: 21,
           }
@@ -55,7 +55,7 @@ describe('useChartsData', () => {
       ],
       barChartKeysOfData: [
         'average_cpu',
-        'averageMemory',
+        'average_memory',
         'bytes_throughput',
         'request_throughput',
       ],
@@ -66,7 +66,7 @@ describe('useChartsData', () => {
           borderWidth: 1,
           data: {
               average_cpu: [25.5, 2],
-              averageMemory: [512, 52],
+              average_memory: [512, 52],
               bytes_throughput: [11, 11],
               request_throughput: [21, 21],
           },
@@ -79,7 +79,7 @@ describe('useChartsData', () => {
           borderWidth: 1,
           data: {
               average_cpu: [25.5],
-              averageMemory: [512],
+              average_memory: [512],
               bytes_throughput: [11],
               request_throughput: [21],
           },

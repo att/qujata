@@ -15,7 +15,7 @@ describe('convertDataToOptions', () => {
         value: TableOptionsData.options[1]
       },
       {
-        label: 'results.averageMemory',
+        label: 'results.average_memory',
         value: TableOptionsData.options[2]
       },
       {

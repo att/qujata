@@ -1,6 +1,6 @@
 export interface IResult {
     average_cpu: number;
-    averageMemory: number;
+    average_memory: number;
     bytes_throughput: number;
     request_throughput: number;
 }

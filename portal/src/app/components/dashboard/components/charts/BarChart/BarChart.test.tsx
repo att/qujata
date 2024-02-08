@@ -14,7 +14,7 @@ const data = [
         "iterations": 1,
         "results": {
             "average_cpu": 5,
-            "averageMemory": 512,
+            "average_memory": 512,
         }
     },
     {
@@ -22,7 +22,7 @@ const data = [
         "iterations": 133,
         "results": {
             "average_cpu": 533,
-            "averageMemory": 512,
+            "average_memory": 512,
         }
     },
     {
@@ -30,7 +30,7 @@ const data = [
         "iterations": 1000,
         "results": {
             "average_cpu": 25,
-            "averageMemory": 512,
+            "average_memory": 512,
         }
     },
     {
@@ -38,7 +38,7 @@ const data = [
         "iterations": 2000,
         "results": {
             "average_cpu": 28,
-            "averageMemory": 512,
+            "average_memory": 512,
         }
     },
     {
@@ -46,7 +46,7 @@ const data = [
         "iterations": 2000,
         "results": {
             "average_cpu": 28,
-            "averageMemory": 512,
+            "average_memory": 512,
         }
     }
 ];
