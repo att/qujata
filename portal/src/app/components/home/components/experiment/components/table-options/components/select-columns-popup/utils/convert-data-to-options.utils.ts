@@ -7,7 +7,7 @@ export function convertDataToOptions(data: typeof TableOptionsData) {
       value: data.options[0]
     },
     {
-      label: 'results.averageCPU',
+      label: 'results.average_cpu',
       value: data.options[1]
     },
     {

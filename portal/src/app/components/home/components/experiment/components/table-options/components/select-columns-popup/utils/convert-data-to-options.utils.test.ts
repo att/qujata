@@ -11,7 +11,7 @@ describe('convertDataToOptions', () => {
         value: TableOptionsData.options[0]
       },
       {
-        label: 'results.averageCPU',
+        label: 'results.average_cpu',
         value: TableOptionsData.options[1]
       },
       {

@@ -24,7 +24,7 @@ export const MOCK_DATA_FOR_CHARTS: IExperimentData = {
         iterations: 1024,
         results:
         {
-          averageCPU: 25.5,
+          average_cpu: 25.5,
           averageMemory: 512,
           bytes_throughput: 11,
           request_throughput: 21
@@ -36,7 +36,7 @@ export const MOCK_DATA_FOR_CHARTS: IExperimentData = {
         iterations: 1024,
         results:
         {
-          averageCPU: 25.5,
+          average_cpu: 25.5,
           averageMemory: 512,
           bytes_throughput: 11,
           request_throughput: 21
@@ -48,7 +48,7 @@ export const MOCK_DATA_FOR_CHARTS: IExperimentData = {
         iterations: 104,
         results:
         {
-          averageCPU: 2,
+          average_cpu: 2,
           averageMemory: 52,
           bytes_throughput: 11,
           request_throughput: 21
@@ -62,13 +62,13 @@ export const MOCK_DATA_FOR_BAR_CHART = [{
   algorithm: "Algorithm1",
   iterations: 100,
   results: {
-    averageCPU: 2,
+    average_cpu: 2,
     averageMemory: 52,
   },
 }];
 
 export const MOCK_DATA_FOR_BAR_CHART_LABELS = ['Algorithm1'];
-export const MOCK_DATA_FOR_BAR_CHART_KEYS = ["averageCPU", "averageMemory", "errorRate", "bytesThroughput", "messagesThroughput", "averageTLSHandshakeTime"];
+export const MOCK_DATA_FOR_BAR_CHART_KEYS = ["average_cpu", "averageMemory", "errorRate", "bytesThroughput", "messagesThroughput", "averageTLSHandshakeTime"];
 export const MOCK_DATA_FOR_LINE_CHART = {
   datasets: [{
     backgroundColor: "#05BBFF",
@@ -77,7 +77,7 @@ export const MOCK_DATA_FOR_LINE_CHART = {
     fill: false,
     label: "Algorithm1",
     data: {
-      averageCPU: [2],
+      average_cpu: [2],
       averageMemory: [3],
     }
   }],

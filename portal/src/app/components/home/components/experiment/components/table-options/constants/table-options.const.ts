@@ -17,7 +17,7 @@ export const TableOptionsData = {
 
 export const SelectedColumnsDefaultData = [
   { label: 'iterations', value: EXPERIMENT_TABLE_EN.TABLE_TITLES.ITERATIONS },
-  { label: 'results.averageCPU', value: EXPERIMENT_TABLE_EN.TABLE_TITLES.AVERAGE_CPU },
+  { label: 'results.average_cpu', value: EXPERIMENT_TABLE_EN.TABLE_TITLES.AVERAGE_CPU },
   { label: 'results.averageMemory', value: EXPERIMENT_TABLE_EN.TABLE_TITLES.AVERAGE_MEMORY },
   { label: 'results.bytes_throughput', value: EXPERIMENT_TABLE_EN.TABLE_TITLES.THROUGHPUT_BYTES },
   { label: 'results.request_throughput', value: EXPERIMENT_TABLE_EN.TABLE_TITLES.THROUGHPUT_REQUEST },

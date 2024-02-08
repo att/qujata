@@ -13,7 +13,7 @@ const data = [
         "algorithm": "Algorithm1",
         "iterations": 1,
         "results": {
-            "averageCPU": 5,
+            "average_cpu": 5,
             "averageMemory": 512,
         }
     },
@@ -21,7 +21,7 @@ const data = [
         "algorithm": "Algorithm1",
         "iterations": 133,
         "results": {
-            "averageCPU": 533,
+            "average_cpu": 533,
             "averageMemory": 512,
         }
     },
@@ -29,7 +29,7 @@ const data = [
         "algorithm": "Algorithm1",
         "iterations": 1000,
         "results": {
-            "averageCPU": 25,
+            "average_cpu": 25,
             "averageMemory": 512,
         }
     },
@@ -37,7 +37,7 @@ const data = [
         "algorithm": "Algorithm2",
         "iterations": 2000,
         "results": {
-            "averageCPU": 28,
+            "average_cpu": 28,
             "averageMemory": 512,
         }
     },
@@ -45,14 +45,14 @@ const data = [
         "algorithm": "Algorithm3",
         "iterations": 2000,
         "results": {
-            "averageCPU": 28,
+            "average_cpu": 28,
             "averageMemory": 512,
         }
     }
 ];
 describe('BarChart', () => {
   test('renders BarChart component', () => {
-    const { getByTestId }: RenderResult = render(<BarChart labels={['Algorithm1', 'Algorithm1']} data={data} title={'chart'} keyOfData={'averageCPU'} tooltipKeys={tooltipKeys} tooltipLabels={tooltipLabels} />);
+    const { getByTestId }: RenderResult = render(<BarChart labels={['Algorithm1', 'Algorithm1']} data={data} title={'chart'} keyOfData={'average_cpu'} tooltipKeys={tooltipKeys} tooltipLabels={tooltipLabels} />);
     const chartElement: HTMLElement = getByTestId('chart');
     expect(chartElement).toBeTruthy();
   });
