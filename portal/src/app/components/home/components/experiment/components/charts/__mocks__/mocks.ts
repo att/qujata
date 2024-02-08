@@ -26,6 +26,8 @@ export const MOCK_DATA_FOR_CHARTS: IExperimentData = {
         {
           averageCPU: 25.5,
           averageMemory: 512,
+          bytes_throughput: 11,
+          request_throughput: 21
         }
       },
       {
@@ -36,6 +38,8 @@ export const MOCK_DATA_FOR_CHARTS: IExperimentData = {
         {
           averageCPU: 25.5,
           averageMemory: 512,
+          bytes_throughput: 11,
+          request_throughput: 21
         }
       },
       {
@@ -46,6 +50,8 @@ export const MOCK_DATA_FOR_CHARTS: IExperimentData = {
         {
           averageCPU: 2,
           averageMemory: 52,
+          bytes_throughput: 11,
+          request_throughput: 21
         }
       }
     ]

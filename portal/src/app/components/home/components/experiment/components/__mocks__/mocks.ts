@@ -26,6 +26,8 @@ export const MOCK_DATA_FOR_EXPERIMENT: ITestRunResult = {
       {
         averageCPU: 25.5,
         averageMemory: 512,
+        bytes_throughput: 11,
+        request_throughput: 21
       }
     },
     {
@@ -36,6 +38,8 @@ export const MOCK_DATA_FOR_EXPERIMENT: ITestRunResult = {
       {
         averageCPU: 25.5,
         averageMemory: 512,
+        bytes_throughput: 11,
+        request_throughput: 21
       }
     },
     {
@@ -46,6 +50,8 @@ export const MOCK_DATA_FOR_EXPERIMENT: ITestRunResult = {
       {
         averageCPU: 2,
         averageMemory: 52,
+        bytes_throughput: 11,
+        request_throughput: 21
       }
     }
   ]
@@ -77,6 +83,8 @@ export const MOCK_DATA_FOR_EXPERIMENT_TABLE: ExperimentTableProps = {
         {
           averageCPU: 25.5,
           averageMemory: 512,
+          bytes_throughput: 11,
+          request_throughput: 21
         }
       },
       {
@@ -87,6 +95,8 @@ export const MOCK_DATA_FOR_EXPERIMENT_TABLE: ExperimentTableProps = {
         {
           averageCPU: 25.5,
           averageMemory: 512,
+          bytes_throughput: 11,
+          request_throughput: 21
         }
       },
       {
@@ -97,6 +107,8 @@ export const MOCK_DATA_FOR_EXPERIMENT_TABLE: ExperimentTableProps = {
         {
           averageCPU: 2,
           averageMemory: 52,
+          bytes_throughput: 11,
+          request_throughput: 21
         }
       }
     ]
@@ -183,7 +195,9 @@ export const MOCK_SUB_HEADER: ITestRunResult = {
           iterations: 1000,
           results: {
             averageCPU: 3.5,
-            averageMemory: 3
+            averageMemory: 3,
+            bytes_throughput: 11,
+            request_throughput: 21
           }
         },
   ],
@@ -197,6 +211,8 @@ export const CSV_MOCK: ITestRunResultData[] = [
     results: {
       averageCPU: 2000,
       averageMemory: 3000,
+      bytes_throughput: 11,
+      request_throughput: 21
     },
   },
   {
@@ -206,6 +222,8 @@ export const CSV_MOCK: ITestRunResultData[] = [
     results: {
       averageCPU: 5000,
       averageMemory: 6000,
+      bytes_throughput: 11,
+      request_throughput: 21
     },
   },
 ];

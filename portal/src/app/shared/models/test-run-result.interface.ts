@@ -1,6 +1,8 @@
 export interface IResult {
     averageCPU: number;
     averageMemory: number;
+    bytes_throughput: number;
+    request_throughput: number;
 }
 
 export interface ITestRunResultData {

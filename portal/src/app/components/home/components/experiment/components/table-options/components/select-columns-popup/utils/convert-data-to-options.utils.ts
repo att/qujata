@@ -13,6 +13,14 @@ export function convertDataToOptions(data: typeof TableOptionsData) {
     {
       label: 'results.averageMemory',
       value: data.options[2]
+    },
+    {
+      label: 'results.bytes_throughput',
+      value: data.options[3]
+    },
+    {
+      label: 'results.request_throughput',
+      value: data.options[4]
     }
   ];
 }

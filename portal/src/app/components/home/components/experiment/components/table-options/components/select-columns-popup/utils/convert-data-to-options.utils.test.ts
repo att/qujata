@@ -17,6 +17,14 @@ describe('convertDataToOptions', () => {
       {
         label: 'results.averageMemory',
         value: TableOptionsData.options[2]
+      },
+      {
+        label: 'results.bytes_throughput',
+        value: 'Throughput (bytes/sec)'
+      },
+      {
+        label: 'results.request_throughput',
+        value: 'Throughput (message/sec)'
       }
     ]);
   });

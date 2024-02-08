@@ -12,7 +12,9 @@ describe('test-run utils', () => {
           results:  
           { 
             averageCPU: 25.5, 
-            averageMemory: 512
+            averageMemory: 512,
+            bytes_throughput: 11,
+            request_throughput: 21,
           } 
         });
         expect(result.current).toEqual(MOCK_DATA_TO_SORT_BY_ALGORITHM);
@@ -27,7 +29,9 @@ describe('test-run utils', () => {
           results:  
           { 
             averageCPU: 25, 
-            averageMemory: 52
+            averageMemory: 52,
+            bytes_throughput: 11,
+            request_throughput: 21,
           } 
         });
     });

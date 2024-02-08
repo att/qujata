@@ -8,7 +8,9 @@ export const MOCK_DATA_TO_SORT_BY_ALGORITHM: ITestRunResultData[] = [
     results:  
     { 
       averageCPU: 25.5, 
-      averageMemory: 512, 
+      averageMemory: 512,
+      bytes_throughput: 11,
+      request_throughput: 21 
     } 
   },
   {
@@ -18,7 +20,9 @@ export const MOCK_DATA_TO_SORT_BY_ALGORITHM: ITestRunResultData[] = [
     results:  
     { 
       averageCPU: 25, 
-      averageMemory: 52, 
+      averageMemory: 52,
+      bytes_throughput: 11,
+      request_throughput: 21 
     } 
   },
   {
@@ -28,7 +32,9 @@ export const MOCK_DATA_TO_SORT_BY_ALGORITHM: ITestRunResultData[] = [
     results:  
     { 
       averageCPU: 25, 
-      averageMemory: 52, 
+      averageMemory: 52,
+      bytes_throughput: 11,
+      request_throughput: 21 
     } 
   }
 ];
@@ -41,7 +47,9 @@ export const MOCK_DATA_TO_SORT_BY_ITERATION: ITestRunResultData[] = [
     results:  
     { 
       averageCPU: 25.5, 
-      averageMemory: 512, 
+      averageMemory: 512,
+      bytes_throughput: 11,
+      request_throughput: 21 
     } 
   },
   { 
@@ -52,6 +60,8 @@ export const MOCK_DATA_TO_SORT_BY_ITERATION: ITestRunResultData[] = [
     { 
       averageCPU: 25, 
       averageMemory: 52,
+      bytes_throughput: 11,
+      request_throughput: 21
     } 
   },
   { 
@@ -61,7 +71,9 @@ export const MOCK_DATA_TO_SORT_BY_ITERATION: ITestRunResultData[] = [
     results:  
     { 
       averageCPU: 25, 
-      averageMemory: 52, 
+      averageMemory: 52,
+      bytes_throughput: 11,
+      request_throughput: 21 
     } 
   }
 ];
@@ -74,7 +86,9 @@ export const MOCK_DATA_FOR_CHART_UTILS: ITestRunResultData[] = [
     results:  
     { 
       averageCPU: 25.5, 
-      averageMemory: 512, 
+      averageMemory: 512,
+      bytes_throughput: 11,
+      request_throughput: 21 
   } 
   },
   {
@@ -84,7 +98,9 @@ export const MOCK_DATA_FOR_CHART_UTILS: ITestRunResultData[] = [
     results:  
     { 
       averageCPU: 25, 
-      averageMemory: 52, 
+      averageMemory: 52,
+      bytes_throughput: 11,
+      request_throughput: 21 
     } 
   },
   {
@@ -94,7 +110,9 @@ export const MOCK_DATA_FOR_CHART_UTILS: ITestRunResultData[] = [
     results:  
     { 
       averageCPU: 25, 
-      averageMemory: 52, 
+      averageMemory: 52,
+      bytes_throughput: 11,
+      request_throughput: 21
     } 
   }
 ];
