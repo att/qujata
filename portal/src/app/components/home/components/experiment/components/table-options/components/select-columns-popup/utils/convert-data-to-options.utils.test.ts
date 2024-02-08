@@ -20,11 +20,11 @@ describe('convertDataToOptions', () => {
       },
       {
         label: 'results.bytes_throughput',
-        value: 'Throughput (bytes/sec)'
+        value: TableOptionsData.options[3]
       },
       {
         label: 'results.request_throughput',
-        value: 'Throughput (message/sec)'
+        value: TableOptionsData.options[4]
       }
     ]);
   });
