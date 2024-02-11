@@ -53,8 +53,8 @@ describe('useChartsData', () => {
       ],
       lineChartData: { labels: [104, 1024], datasets: [ 
         {
-          backgroundColor: "#05BBFF",
-          borderColor: "#05BBFF",
+          backgroundColor: "#086CE1",
+          borderColor: "#086CE1",
           borderWidth: 1,
           data: {
               averageCPU: [25.5, 2],

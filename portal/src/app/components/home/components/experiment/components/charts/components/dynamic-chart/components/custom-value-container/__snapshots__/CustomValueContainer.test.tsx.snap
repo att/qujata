@@ -1,0 +1,17 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CustomValueContainer should render CustomValueContainer 1`] = `
+<div>
+  <div
+    class="css-0"
+  >
+    <div
+      class="input_wrapper"
+    >
+      <span
+        class="placeholder"
+      />
+    </div>
+  </div>
+</div>
+`;

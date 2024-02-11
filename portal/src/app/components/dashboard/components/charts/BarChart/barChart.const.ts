@@ -1,7 +1,7 @@
 import { ChartOptions } from 'chart.js';
 import { CHARTS_EN } from '../../../../home/components/experiment/components/charts/translate/en';
 
-export const colors: string[] = ['#086CE1', '#FF8500', '#05BBFF', '#6D3FFC'];
+export const colors: string[] = ['#086CE1', '#FF8500', '#05BBFF', '#6D3FFC', '#E2180B', '#8208E1', '#08E145', '#9AB2C9', '#EB00FF', '#FFC700', '#8F5C47', '#05FFFF', '#FA9BF7'];
 
 export let defaultOptions: ChartOptions<any> = {
     responsive: true,

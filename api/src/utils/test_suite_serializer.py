@@ -5,11 +5,11 @@ def serialize(test_suite):
         "id": test_suite.id,
         "name": test_suite.name,
         "description": test_suite.description,
-        "codeRelease": test_suite.code_release,
+        "code_release": test_suite.code_release,
         "start_time": test_suite.start_time,
         "end_time": test_suite.end_time,
         "environment_info": __get_environment_info(test_suite.env_info),
-        "testRuns": __get_test_runs_metrics(test_suite.test_runs)
+        "test_runs": __get_test_runs_metrics(test_suite.test_runs)
     }
     return response_data
 
@@ -35,6 +35,7 @@ def __get_test_runs_metrics(test_runs):
             "id": test_run.id,
             "algorithm": test_run.algorithm,
             "iterations": test_run.iterations,
+            "message_size": test_run.message_size,
             "results": {
                 "averageCPU": round(cpu_avg, 2),
                 "averageMemory": int(memory_avg),
