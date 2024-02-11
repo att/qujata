@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "qujata/static/css/main.610bdde7.css",
-    "main.js": "qujata/static/js/main.ecf19568.js",
+    "main.css": "qujata/static/css/main.49539dcf.css",
+    "main.js": "qujata/static/js/main.0d8b55b1.js",
     "static/js/496.4b609e30.chunk.js": "qujata/static/js/496.4b609e30.chunk.js",
     "static/media/duplicate.svg": "qujata/static/media/duplicate.44855b9ba191051568deacd505961fb3.svg",
     "static/media/qujata-logo.svg": "qujata/static/media/qujata-logo.ac4d5d4ef22e4576837996b9f17ead9c.svg",
@@ -13,6 +13,8 @@
     "static/media/eye.svg": "qujata/static/media/eye.c927c27176f0fe076844bf7dcaf4e2e4.svg",
     "static/media/eye-hover.svg": "qujata/static/media/eye-hover.08bcabbca242b838598bc9f9b1de5c4c.svg",
     "static/media/download.svg": "qujata/static/media/download.221c5b0c9d0bad87a5a2504c07300c07.svg",
+    "static/media/arrow-up.svg": "qujata/static/media/arrow-up.411801b68a657f0c10df05eb112403b8.svg",
+    "static/media/arrow-down-icon.svg": "qujata/static/media/arrow-down-icon.30a6d93a3985b4445048cf68899d1608.svg",
     "index.html": "qujata/index.html",
     "static/media/lock.svg": "qujata/static/media/lock.07d1d70103870806f1f7e0868f03adfd.svg",
     "static/media/clean.svg": "qujata/static/media/clean.a8f44859dfbf2b4b50af6653462cd0b5.svg",
@@ -29,12 +31,12 @@
     "static/media/arrow-down.svg": "qujata/static/media/arrow-down.4efed336a810fb4d29bbc5e8c32799fe.svg",
     "static/media/close.svg": "qujata/static/media/close.cc0689a16a03427c52419bb3e9e9dae4.svg",
     "static/media/line.svg": "qujata/static/media/line.4ede20dbb0ab437b58b9f71e53f0460c.svg",
-    "main.610bdde7.css.map": "qujata/static/css/main.610bdde7.css.map",
-    "main.ecf19568.js.map": "qujata/static/js/main.ecf19568.js.map",
+    "main.49539dcf.css.map": "qujata/static/css/main.49539dcf.css.map",
+    "main.0d8b55b1.js.map": "qujata/static/js/main.0d8b55b1.js.map",
     "496.4b609e30.chunk.js.map": "qujata/static/js/496.4b609e30.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.610bdde7.css",
-    "static/js/main.ecf19568.js"
+    "static/css/main.49539dcf.css",
+    "static/js/main.0d8b55b1.js"
   ]
 }
