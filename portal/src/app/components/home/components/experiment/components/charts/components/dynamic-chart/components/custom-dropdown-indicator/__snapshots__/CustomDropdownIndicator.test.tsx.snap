@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CustomDropdownIndicator should render CustomDropdownIndicator 1`] = `
+<div>
+  <div
+    class="css-0"
+  >
+    <svg>
+      arrow-down-selector.svg
+    </svg>
+  </div>
+</div>
+`;

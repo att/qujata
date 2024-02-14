@@ -1,0 +1,17 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CustomOption should render CustomOption 1`] = `
+<div
+  aria-disabled="false"
+  class="css-0"
+>
+  <img
+    alt="option1"
+    class="icon"
+    src="bar.svg"
+  />
+  <span>
+    Option1
+  </span>
+</div>
+`;

@@ -6,7 +6,7 @@ services:
       - "9091:9091"
 
   mysql:
-    image: qujata/mysql:1.1.0
+    image: qujata/mysql:1.2.0
     container_name: qujata-mysql
     environment:
       MYSQL_ROOT_PASSWORD: qujata
@@ -15,7 +15,7 @@ services:
       - "3306:3306"
 
   nginx:
-    image: qujata/nginx:1.2.0
+    image: qujata/nginx:1.2.0-c
     container_name: qujata-nginx
     ports:
       - 4433:4433
@@ -23,7 +23,7 @@ services:
       - DEFAULT_GROUPS=prime256v1:secp384r1:frodo640aes:frodo640shake:frodo976aes:frodo976shake:frodo1344aes:frodo1344shake:kyber512:p256_kyber512:kyber768:p384_kyber768:x25519_kyber768:kyber1024:bikel1:bikel3:bikel5:hqc128:hqc192:hqc256
   
   curl:
-    image: qujata/curl:1.2.0
+    image: qujata/curl:1.2.0-c
     container_name: qujata-curl
     ports:
       - 3010:3010
@@ -31,7 +31,7 @@ services:
       - DEFAULT_GROUPS=prime256v1:secp384r1:frodo640aes:frodo640shake:frodo976aes:frodo976shake:frodo1344aes:frodo1344shake:kyber512:p256_kyber512:kyber768:p384_kyber768:x25519_kyber768:kyber1024:bikel1:bikel3:bikel5:hqc128:hqc192:hqc256
 
   api:
-    image: qujata/api:1.2.0
+    image: qujata/api:1.2.0-c
     container_name: qujata-api
     ports:
       - 3020:3020
@@ -41,11 +41,12 @@ services:
       - CURL_URL=http://qujata-curl:3010
       - CADVISOR_URL=http://qujata-cadvisor:8080
       - ITERATIONS_OPTIONS=100:500:1000:2000:5000:10000:50000
+      - MESSAGE_SIZES_OPTIONS=0:1:2:100:1024:102400:204800:1048576:2097152:10485760
       - DATABASE_URI=mysql+pymysql://root:qujata@qujata-mysql:3306/qujata
       - DEFAULT_GROUPS=prime256v1:secp384r1:frodo640aes:frodo640shake:frodo976aes:frodo976shake:frodo1344aes:frodo1344shake:kyber512:p256_kyber512:kyber768:p384_kyber768:x25519_kyber768:kyber1024:bikel1:bikel3:bikel5:hqc128:hqc192:hqc256
 
   portal:
-    image: qujata/portal:1.1.0
+    image: qujata/portal:1.2.0
     container_name: qujata-portal
     ports:
       - 2000:80

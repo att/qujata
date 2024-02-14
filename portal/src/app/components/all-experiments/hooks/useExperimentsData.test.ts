@@ -20,22 +20,26 @@ describe('useExperimentsData', () => {
           {
             id: 366,
             algorithm: "prime256v1",
-            iterations: 500
+            iterations: 500,
+            message_size: 1024
           },
           {
             id: 367,
             algorithm: "bikel3",
-            iterations: 1000
+            iterations: 1000,
+            message_size: 512
           },
           {
             id: 368,
             algorithm: "p256_kyber512",
-            iterations: 10000
+            iterations: 10000,
+            message_size: 1024
           },
           {
             id: 369,
             algorithm: "prime256v1",
-            iterations: 5000
+            iterations: 5000,
+            message_size: 512
           }
         ]
       },
@@ -47,12 +51,14 @@ describe('useExperimentsData', () => {
           {
             id: 370,
             algorithm: "kyber512",
-            iterations: 500
+            iterations: 500,
+            message_size: 1024
           },
           {
             id: 371,
             algorithm: "kyber512",
-            iterations: 1000
+            iterations: 1000,
+            message_size: 2048
           }
         ]
       }

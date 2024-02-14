@@ -4,16 +4,18 @@ exports[`SubHeader renders sub header  1`] = `
 <div
   class="sub_header_wrapper"
 >
-  <div>
-    Button
-  </div>
   <div
-    class="sub_header_title"
+    class="sub_header_action_buttons"
   >
-    That’s what we are doing on each iteration:
+    <div>
+      Button
+    </div>
+    <div>
+      Button
+    </div>
   </div>
   <div
-    class="items_wrapper"
+    class="items_wrapper_open items_wrapper"
   >
     <div
       class="item"

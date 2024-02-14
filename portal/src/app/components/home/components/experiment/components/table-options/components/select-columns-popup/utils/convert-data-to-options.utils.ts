@@ -7,12 +7,16 @@ export function convertDataToOptions(data: typeof TableOptionsData) {
       value: data.options[0]
     },
     {
-      label: 'results.averageCPU',
+      label: 'message_size',
       value: data.options[1]
     },
     {
-      label: 'results.averageMemory',
+      label: 'results.averageCPU',
       value: data.options[2]
+    },
+    {
+      label: 'results.averageMemory',
+      value: data.options[3]
     }
   ];
 }

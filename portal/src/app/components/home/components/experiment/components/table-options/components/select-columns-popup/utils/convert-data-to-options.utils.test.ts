@@ -11,12 +11,16 @@ describe('convertDataToOptions', () => {
         value: TableOptionsData.options[0]
       },
       {
-        label: 'results.averageCPU',
+        label: 'message_size',
         value: TableOptionsData.options[1]
       },
       {
-        label: 'results.averageMemory',
+        label: 'results.averageCPU',
         value: TableOptionsData.options[2]
+      },
+      {
+        label: 'results.averageMemory',
+        value: TableOptionsData.options[3]
       }
     ]);
   });

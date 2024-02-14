@@ -7,6 +7,7 @@ export interface ITestRunResultData {
     id: number;
     algorithm: string;
     iterations: number;
+    message_size: number;
     results: IResult;
 }
 export interface IEnvironmentInfo {

@@ -21,7 +21,8 @@ export const MOCK_DATA_FOR_CHARTS: IExperimentData = {
       {
         id: 1,
         algorithm: "Algorithm1",
-        iterations: 1024,
+        iterations: 2000,
+        message_size: 1024,
         results:
         {
           averageCPU: 25.5,
@@ -31,7 +32,8 @@ export const MOCK_DATA_FOR_CHARTS: IExperimentData = {
       {
         id: 2,
         algorithm: "Algorithm2",
-        iterations: 1024,
+        iterations: 1000,
+        message_size: 512,
         results:
         {
           averageCPU: 25.5,
@@ -41,7 +43,8 @@ export const MOCK_DATA_FOR_CHARTS: IExperimentData = {
       {
         id: 3,
         algorithm: "Algorithm1",
-        iterations: 104,
+        iterations: 500,
+        message_size: 1024,
         results:
         {
           averageCPU: 2,

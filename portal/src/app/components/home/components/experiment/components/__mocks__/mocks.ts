@@ -21,7 +21,8 @@ export const MOCK_DATA_FOR_EXPERIMENT: ITestRunResult = {
     {
       id: 1,
       algorithm: "Algorithm1",
-      iterations: 1024,
+      iterations: 2000,
+      message_size: 1024,
       results:
       {
         averageCPU: 25.5,
@@ -31,7 +32,8 @@ export const MOCK_DATA_FOR_EXPERIMENT: ITestRunResult = {
     {
       id: 2,
       algorithm: "Algorithm2",
-      iterations: 1024,
+      iterations: 1000,
+      message_size: 1024,
       results:
       {
         averageCPU: 25.5,
@@ -41,7 +43,8 @@ export const MOCK_DATA_FOR_EXPERIMENT: ITestRunResult = {
     {
       id: 3,
       algorithm: "Algorithm1",
-      iterations: 104,
+      iterations: 1000,
+      message_size: 1024,
       results:
       {
         averageCPU: 2,
@@ -72,7 +75,8 @@ export const MOCK_DATA_FOR_EXPERIMENT_TABLE: ExperimentTableProps = {
       {
         id: 1,
         algorithm: "Algorithm1",
-        iterations: 1024,
+        iterations: 1000,
+        message_size: 1024,
         results:
         {
           averageCPU: 25.5,
@@ -82,7 +86,8 @@ export const MOCK_DATA_FOR_EXPERIMENT_TABLE: ExperimentTableProps = {
       {
         id: 2,
         algorithm: "Algorithm2",
-        iterations: 1024,
+        iterations: 2000,
+        message_size: 512,
         results:
         {
           averageCPU: 25.5,
@@ -92,7 +97,8 @@ export const MOCK_DATA_FOR_EXPERIMENT_TABLE: ExperimentTableProps = {
       {
         id: 3,
         algorithm: "Algorithm1",
-        iterations: 104,
+        iterations: 500,
+        message_size: 2048,
         results:
         {
           averageCPU: 2,
@@ -181,6 +187,7 @@ export const MOCK_SUB_HEADER: ITestRunResult = {
           id:1,
           algorithm: "bikel1",
           iterations: 1000,
+          message_size: 1024,
           results: {
             averageCPU: 3.5,
             averageMemory: 3
@@ -194,6 +201,7 @@ export const CSV_MOCK: ITestRunResultData[] = [
     id: 1,
     algorithm: 'App1',
     iterations: 1000,
+    message_size: 1024,
     results: {
       averageCPU: 2000,
       averageMemory: 3000,
@@ -203,6 +211,7 @@ export const CSV_MOCK: ITestRunResultData[] = [
     id: 2,
     algorithm: 'App2',
     iterations: 4000,
+    message_size: 2048,
     results: {
       averageCPU: 5000,
       averageMemory: 6000,
