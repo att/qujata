@@ -3,7 +3,6 @@ import * as shellJS from 'shelljs';
 import { CurlRequest } from '../dto/curl-request.dto';
 import { CurlResponseDto } from '../dto/curl-response.dto';
 import { ConfigService } from '@nestjs/config';
-import { MessageGenerator } from '../utils/message.generator';
 
 @Injectable()
 export class CurlService {
@@ -21,8 +20,7 @@ export class CurlService {
   async run(curlRequest: CurlRequest): Promise<CurlResponseDto> {
     this.validate(curlRequest);
     try {
-      const message = MessageGenerator.generate(curlRequest.messageSize);
-      return await this.runCurls(curlRequest.iterationsCount, curlRequest.algorithm, message)
+      return await this.runCurls(curlRequest.iterationsCount, curlRequest.algorithm, curlRequest.messageSize);
     } catch (err) {
       this.processIsRunning = false;
       console.error('[CurlService:run] Error occurred: ', err);
@@ -41,8 +39,8 @@ export class CurlService {
     }
   }
 
-  private async runCurls(iterationsCount: number, algorithm: string, message: string) : Promise<CurlResponseDto> {
-      const curlCommand = this.format(`${this.CURL_SCRIPT_PATH} ${this.configService.get('nginx.host')} ${this.configService.get('nginx.port')} ${iterationsCount} ${algorithm} ${message}`);
+  private async runCurls(iterationsCount: number, algorithm: string, messageSize: number) : Promise<CurlResponseDto> {
+      const curlCommand = this.format(`${this.CURL_SCRIPT_PATH} ${this.configService.get('nginx.host')} ${this.configService.get('nginx.port')} ${iterationsCount} ${algorithm} ${messageSize}`);
       this.processIsRunning = true;
       const result = await this.execAsync(curlCommand);
       console.log('[CurlService:run] Finished taking all curl samples');

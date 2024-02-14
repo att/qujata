@@ -15,5 +15,6 @@ export const SUB_HEADER_EN = {
         DOWNLOAD: 'Download',
         CHECK: 'Check',
     },
+    TOGGLE_BUTTON: 'Learn about the process of each iteration',
 };
   

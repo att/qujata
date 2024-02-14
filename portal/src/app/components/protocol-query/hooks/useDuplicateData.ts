@@ -4,11 +4,13 @@ import { ExperimentData } from '../../all-experiments/models/experiments.interfa
 
 export type DuplicateData = {
   data: ExperimentData | undefined,
-  setDuplicateData: (data: any) => void,
+  setDuplicateData: (data?: ExperimentData) => void,
   setExperimentName: (name: string) => void,
   setAlgorithms: (options: AttSelectOption[]) => void,
-  setIterationsCount: (options: AttSelectOption[]) => void
+  setIterationsCount: (options: AttSelectOption[]) => void,
+  setMessageSize: (options: AttSelectOption[]) => void
 }
+
 export const useDuplicateData = (duplicate: DuplicateData) => {
   useEffect(() => {
     if (duplicate.data) {
@@ -22,12 +24,17 @@ export const useDuplicateData = (duplicate: DuplicateData) => {
         });
         duplicate.setAlgorithms(algorithmOptions);
       }
-
       if (duplicateData.iterations) {
         const iterationsOptions = duplicateData.iterations.map((iteration: number) => {
           return { label: iteration.toString(), value: iteration.toString() } as AttSelectOption;
         });
         duplicate.setIterationsCount(iterationsOptions);
+      }
+      if (duplicateData.message_sizes) {
+        const messageSizeOptions = duplicateData.message_sizes.map((messageSize: number) => {
+          return { label: messageSize.toString(), value: messageSize.toString() } as AttSelectOption;
+        });
+        duplicate.setMessageSize(messageSizeOptions);
       }
       duplicate.setDuplicateData(undefined);
     }

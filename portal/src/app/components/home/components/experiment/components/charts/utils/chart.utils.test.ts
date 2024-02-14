@@ -10,11 +10,11 @@ describe('Chart utils', () => {
 
     test('should get keys of data', () => {
         const { result } = renderHook(() => getKeysOfData(MOCK_DATA_FOR_CHART_UTILS[0].results));
-        expect(result.current).toEqual(['averageCPU', 'averageMemory']);
+        expect(result.current).toEqual(['average_cpu', 'average_memory', 'bytes_throughput', 'request_throughput']);
     });
 
     test('should chart title by type', () => {
-        const { result } = renderHook(() => getChartTitleByType('averageCPU'));
+        const { result } = renderHook(() => getChartTitleByType('average_cpu'));
         expect(result.current).toEqual("Server Memory (%) vs.  Average CPU");
     });
 });

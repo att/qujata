@@ -11,13 +11,25 @@ describe('convertDataToOptions', () => {
         value: TableOptionsData.options[0]
       },
       {
-        label: 'results.averageCPU',
-        value: TableOptionsData.options[1]
+        label: 'results.average_cpu',
+        value: TableOptionsData.options[2]
       },
       {
-        label: 'results.averageMemory',
-        value: TableOptionsData.options[2]
-      }
+        label: 'results.average_memory',
+        value: TableOptionsData.options[3]
+      },
+      {
+        label: 'results.bytes_throughput',
+        value: TableOptionsData.options[4]
+      },
+      {
+        label: 'results.request_throughput',
+        value: TableOptionsData.options[5]
+      },
+      {
+        label: 'message_size',
+        value: TableOptionsData.options[1]
+      },
     ]);
   });
 });

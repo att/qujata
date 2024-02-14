@@ -42,10 +42,10 @@ def analyze(data):
 def __create_test_run(algorithm, iterations, message_size, test_suite_id):
     start_time = datetime.now()
     metrics_collection_manager.start_collecting()
-    status, status_message, data_bytes = __run(algorithm, iterations, message_size)
+    status, status_message, requests_size = __run(algorithm, iterations, message_size)
     metrics_collection_manager.stop_collecting()
     end_time = datetime.now()
-    test_suites_service.create_test_run(start_time, end_time, algorithm, iterations, message_size, test_suite_id, status, status_message, data_bytes, *metrics_collection_manager.get_metrics())
+    test_suites_service.create_test_run(start_time, end_time, algorithm, iterations, message_size, test_suite_id, status, status_message, requests_size, *metrics_collection_manager.get_metrics())
 
 
 def __run(algorithm, iterations, message_size):
@@ -62,8 +62,8 @@ def __run(algorithm, iterations, message_size):
 
 
 def __validate_response(response):
-    response_json = response.json()
+    data = response.json()
     if response.status_code < 200 or response.status_code > 299:
-        return Status.FAILED, json.dumps(response_json), 0
+        return Status.FAILED, json.dumps(data), 0
     else:
-        return Status.SUCCESS, "", response_json.get('totalRequestSize')
+        return Status.SUCCESS, "", data.get('totalRequestSize')

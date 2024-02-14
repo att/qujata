@@ -10,6 +10,6 @@ describe('SubHeader', () => {
     (Button as jest.Mock).mockImplementation(() => <div>Button</div>);
     const { container, getByText }: RenderResult = render(<SubHeader handleCloseClick={jest.fn()} />, { wrapper: MemoryRouter });
     expect(container.firstChild).toMatchSnapshot();
-    expect(getByText('That’s what we are doing on each iteration:')).toBeTruthy();
+    expect(getByText('Deriving symmetric keys, establishing a secure channel for communication.')).toBeTruthy();
   });
 });

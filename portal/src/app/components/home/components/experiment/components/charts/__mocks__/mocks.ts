@@ -21,31 +21,40 @@ export const MOCK_DATA_FOR_CHARTS: IExperimentData = {
       {
         id: 1,
         algorithm: "Algorithm1",
-        iterations: 1024,
+        iterations: 2000,
+        message_size: 1024,
         results:
         {
-          averageCPU: 25.5,
-          averageMemory: 512,
+          average_cpu: 25.5,
+          average_memory: 512,
+          bytes_throughput: 11,
+          request_throughput: 21
         }
       },
       {
         id: 2,
         algorithm: "Algorithm2",
-        iterations: 1024,
+        iterations: 1000,
+        message_size: 512,
         results:
         {
-          averageCPU: 25.5,
-          averageMemory: 512,
+          average_cpu: 25.5,
+          average_memory: 512,
+          bytes_throughput: 11,
+          request_throughput: 21
         }
       },
       {
         id: 3,
         algorithm: "Algorithm1",
-        iterations: 104,
+        iterations: 500,
+        message_size: 1024,
         results:
         {
-          averageCPU: 2,
-          averageMemory: 52,
+          average_cpu: 2,
+          average_memory: 52,
+          bytes_throughput: 11,
+          request_throughput: 21
         }
       }
     ]
@@ -56,13 +65,13 @@ export const MOCK_DATA_FOR_BAR_CHART = [{
   algorithm: "Algorithm1",
   iterations: 100,
   results: {
-    averageCPU: 2,
-    averageMemory: 52,
+    average_cpu: 2,
+    average_memory: 52,
   },
 }];
 
 export const MOCK_DATA_FOR_BAR_CHART_LABELS = ['Algorithm1'];
-export const MOCK_DATA_FOR_BAR_CHART_KEYS = ["averageCPU", "averageMemory", "errorRate", "bytesThroughput", "messagesThroughput", "averageTLSHandshakeTime"];
+export const MOCK_DATA_FOR_BAR_CHART_KEYS = ["average_cpu", "average_memory", "errorRate", "bytesThroughput", "messagesThroughput", "averageTLSHandshakeTime"];
 export const MOCK_DATA_FOR_LINE_CHART = {
   datasets: [{
     backgroundColor: "#05BBFF",
@@ -71,8 +80,8 @@ export const MOCK_DATA_FOR_LINE_CHART = {
     fill: false,
     label: "Algorithm1",
     data: {
-      averageCPU: [2],
-      averageMemory: [3],
+      average_cpu: [2],
+      average_memory: [3],
     }
   }],
   labels: [24, 104, 122, 124, 1024],

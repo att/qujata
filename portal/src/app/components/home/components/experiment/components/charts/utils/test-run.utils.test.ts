@@ -9,10 +9,13 @@ describe('test-run utils', () => {
           id: 1,
           algorithm: "Algorithm1", 
           iterations: 1000,
+          message_size: 1024,
           results:  
           { 
-            averageCPU: 25.5, 
-            averageMemory: 512
+            average_cpu: 25.5, 
+            average_memory: 512,
+            bytes_throughput: 11,
+            request_throughput: 21,
           } 
         });
         expect(result.current).toEqual(MOCK_DATA_TO_SORT_BY_ALGORITHM);
@@ -24,10 +27,13 @@ describe('test-run utils', () => {
           id: 2, 
           algorithm: "Algorithm1", 
           iterations: 100,
+          message_size: 512,
           results:  
           { 
-            averageCPU: 25, 
-            averageMemory: 52
+            average_cpu: 25, 
+            average_memory: 52,
+            bytes_throughput: 11,
+            request_throughput: 21,
           } 
         });
     });

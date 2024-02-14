@@ -6,18 +6,38 @@ $subHeaderColor: #7F848A;
     background-color: var($primaryWhite);
     block-size: 300px;
     z-index: 2;
-    padding: 20px 20px 20px 80px;
+    padding: 12px 24px 0 30px;
+}
+
+.close {
+    block-size: 60px;
+}
+
+.toggle_button {
+    display: flex;
+    align-items: center;
+    color: var($attPurple);
+    font-size: 18px;
+
+    .arrow_icon {
+        margin-inline-end: 12px;
+    }
+}
+
+.sub_header_action_buttons {
+    display: flex;
+    justify-content: space-between;
+}
+
+.sub_header_action_buttons_close {
+    margin-block-start: 6px;
 }
 
 .close_button {
-    display: flex;
-    margin-inline-start: auto;
     background-color: #F5F1FF;
     inline-size: 34px;
     block-size: 34px;
     border-radius: 50%;
-    justify-content: center;
-    align-items: center;
 }
 
 .sub_header_title {
@@ -28,6 +48,10 @@ $subHeaderColor: #7F848A;
 .items_wrapper {
     display: flex;
     margin-block-start: 40px;
+    transition: opacity 0.5s ease, max-block-size 0.5s ease;
+    opacity: 0;
+    max-block-size: 0;
+    overflow: hidden;
 }
 
 .item {
@@ -64,4 +88,14 @@ $subHeaderColor: #7F848A;
     inline-size: 100%;
     block-size: 1px;
     background-color: $subHeaderColor;
+}
+
+.items_wrapper_open {
+    opacity: 1;
+    max-block-size: 500px;
+}
+
+.items_wrapper_close {
+    opacity: 0;
+    max-block-size: 0;
 }
