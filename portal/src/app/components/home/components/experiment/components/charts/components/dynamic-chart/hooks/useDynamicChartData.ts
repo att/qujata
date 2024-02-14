@@ -17,7 +17,7 @@ export function useDynamicChartData(chartData: ITestRunResult): IUseDynamicChart
         uniqueKeys.add(key);
       }
     }
-    console.log('uniqueKeys ', uniqueKeys);
+
     if (uniqueKeys.size > 0) {
       setYAxiosOptions(Array.from(uniqueKeys).map(key => ({ label: convertLabelByCapitalLetter(key), value: key })));
     }
