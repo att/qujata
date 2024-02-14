@@ -41,6 +41,10 @@ def __validate(data):
     for iterations in data['iterationsCount']:
         if iterations <= 0:
             raise ApiException('The number of iterations should be greater than 0', INVALID_DATA_MESSAGE, HTTP_STATUS_BAD_REQUEST)
+    if 'messageSizes' in data:
+        for message_size in data['messageSizes']:
+            if message_size < 0:
+                raise ApiException('The message size should be greater than -1', INVALID_DATA_MESSAGE, HTTP_STATUS_BAD_REQUEST)
     if process_is_running:
         raise ApiException('The previous test is still running. Please try again in few minutes', 'Current test is still running', HTTP_STATUS_LOCKED)
     for algorithm in data['algorithms']:

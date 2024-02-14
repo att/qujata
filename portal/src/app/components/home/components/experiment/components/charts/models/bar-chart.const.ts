@@ -1,7 +1,9 @@
+import { ITestRunResultData } from '../../../../../../../shared/models/test-run-result.interface';
 import { CHARTS_EN } from '../translate/en';
 
-export const tooltipKeys = ['algorithm', 'iterations'];
-export const tooltipLabels = ['Algorithm', 'Iterations'];
+type TooltipKeys = keyof ITestRunResultData;
+export const tooltipKeys: TooltipKeys[] = ['iterations', 'message_size'];
+export const tooltipLabels = ['Iterations', 'Message Size'];
 
 export enum ChartKey {
     average_cpu = 'average_cpu',

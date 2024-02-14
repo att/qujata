@@ -9,6 +9,7 @@ describe('test-run utils', () => {
           id: 1,
           algorithm: "Algorithm1", 
           iterations: 1000,
+          message_size: 1024,
           results:  
           { 
             average_cpu: 25.5, 
@@ -26,6 +27,7 @@ describe('test-run utils', () => {
           id: 2, 
           algorithm: "Algorithm1", 
           iterations: 100,
+          message_size: 512,
           results:  
           { 
             average_cpu: 25, 

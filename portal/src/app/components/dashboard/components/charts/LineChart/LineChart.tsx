@@ -1,17 +1,17 @@
 import { Line } from 'react-chartjs-2';
 import { ChartOptions, Chart, TooltipItem } from 'chart.js';
 import { TITLE_PREFIX, defaultOptions } from './LineChart.const';
-import styles from './LineChart.module.scss';
 import { useRef } from 'react';
 
 export interface LineChartProps {
     data: any;
     tooltipLabel?: string;
     title?: string;
+    xAxiosTitle?: string;
 }
 
 export const LineChart: React.FC<LineChartProps> = (props: LineChartProps) => {
-    const { data, title, tooltipLabel } = props;
+    const { data, title, tooltipLabel, xAxiosTitle } = props;
     const chartRef = useRef<Chart<"line", number[], unknown>>(null);
 
     const options: ChartOptions<any> = {
@@ -29,7 +29,7 @@ export const LineChart: React.FC<LineChartProps> = (props: LineChartProps) => {
       plugins: {
         title: {
           display: true,
-          text: title,
+          text: xAxiosTitle,
           align: 'start',
           font: {
             size: 18,
@@ -86,7 +86,7 @@ export const LineChart: React.FC<LineChartProps> = (props: LineChartProps) => {
           (event.currentTarget as HTMLElement).style.cursor = 'default';
         }}
       >
-        <Line ref={chartRef} data={data} options={options} style={{ blockSize: '450px' }} className={styles.line_chart} />
+        <Line ref={chartRef} data={data} options={options} style={{ blockSize: '450px' }} />
       </div>
     );
 }

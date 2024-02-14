@@ -1,4 +1,4 @@
-import { fireEvent, render, waitFor, within } from '@testing-library/react';
+import { render, waitFor } from '@testing-library/react';
 import { SubHeader } from './components/sub-header';
 import { Charts } from './components/charts';
 import { Experiment, ExperimentContent } from './Experiment';

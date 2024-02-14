@@ -21,6 +21,10 @@ export function convertDataToOptions(data: typeof TableOptionsData) {
     {
       label: 'results.request_throughput',
       value: data.options[4]
-    }
+    },
+    {
+      label: 'message_size',
+      value: data.options[1]
+    },
   ];
 }

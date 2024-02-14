@@ -4034,6 +4034,11 @@ data-urls@^2.0.0:
     whatwg-mimetype "^2.3.0"
     whatwg-url "^8.0.0"
 
+date-fns@^3.3.0:
+  version "3.3.0"
+  resolved "https://registry.yarnpkg.com/date-fns/-/date-fns-3.3.0.tgz#c1681691cf751a1d371279099a45e71409c7c761"
+  integrity sha512-xuouT0GuI2W8yXhCMn/AXbSl1Av3wu2hJXxMnnILTY3bYY0UgNK0qOwVXqdFBrobW5qbX1TuOTgMw7c2H2OuhA==
+
 debug@2.6.9, debug@^2.6.0:
   version "2.6.9"
   resolved "https://registry.yarnpkg.com/debug/-/debug-2.6.9.tgz#5d128515df134ff327e90a4c93f4e077a536341f"
@@ -5050,6 +5055,11 @@ filelist@^1.0.1:
   integrity sha512-w1cEuf3S+DrLCQL7ET6kz+gmlJdbq9J7yXCSjK/OZCPA+qEN1WyF4ZAf0YYJa4/shHJra2t/d/r8SV4Ji+x+8Q==
   dependencies:
     minimatch "^5.0.1"
+
+filesize@^10.1.0:
+  version "10.1.0"
+  resolved "https://registry.yarnpkg.com/filesize/-/filesize-10.1.0.tgz#846f5cd8d16e073c5d6767651a8264f6149183cd"
+  integrity sha512-GTLKYyBSDz3nPhlLVPjPWZCnhkd9TrrRArNcy8Z+J2cqScB7h2McAzR6NBX6nYOoWafql0roY8hrocxnZBv9CQ==
 
 filesize@^8.0.6:
   version "8.0.7"

@@ -14,12 +14,12 @@
     "operatingSystem": "RELACE_WITH_OPERATING_SYSTEM",
     "resourceName": "RELACE_WITH_RESOURCE_NAME"
   },
- 
-  "testRuns": [
+  "test_runs": [
     {
       "id":1,
       "algorithm": "bikel1",
       "iterations": 1000,
+      "message_size": 1024,
       "results": {
         "average_cpu": 3.5,
         "average_memory": 3,
@@ -31,6 +31,7 @@
       "id":2,
       "algorithm": "bikel1",
       "iterations": 2000,
+      "message_size": 2048,
       "results": {
         "average_cpu": 7.0,
         "average_memory": 6,
@@ -42,6 +43,7 @@
      "id":3,
       "algorithm": "kyber512",
       "iterations": 1000,
+      "message_size": 1024,
       "results": {
         "average_cpu": 1.7,
         "average_memory": 2,
@@ -53,6 +55,7 @@
       "id":4,
       "algorithm": "kyber512",
       "iterations": 2000,
+      "message_size": 1024,
       "results": {
         "average_cpu": 2.6,
         "average_memory": 2,

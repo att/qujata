@@ -49,18 +49,20 @@ describe('CurlService', () => {
       const curlRequest: CurlRequest = {
         algorithm: 'kyber512',
         iterationsCount: 1000,
+        messageSize: 10
       };
       const validateSpy = jest.spyOn<any, any>(curlService, 'validate');
       const runCurlsSpy = jest.spyOn<any, any>(curlService, 'runCurls').mockResolvedValue(undefined);
       await curlService.run(curlRequest);
       expect(validateSpy).toHaveBeenCalledWith(curlRequest);
-      expect(runCurlsSpy).toHaveBeenCalledWith(curlRequest.iterationsCount, curlRequest.algorithm);
+      expect(runCurlsSpy).toHaveBeenCalledWith(curlRequest.iterationsCount, curlRequest.algorithm, curlRequest.messageSize);
     });
 
     it('should throw an HttpException with status INTERNAL_SERVER_ERROR when runCurls throws an error', async () => {
       const curlRequest: CurlRequest = {
         algorithm: 'kyber512',
         iterationsCount: 1000,
+        messageSize: 10
       };
       jest.spyOn<any, any>(curlService, 'runCurls').mockRejectedValue(new HttpException('runCurls error', 500));
       await expect(curlService.run(curlRequest)).rejects.toThrow(HttpException);
@@ -74,6 +76,7 @@ describe('CurlService', () => {
       const curlRequest: CurlRequest = {
         algorithm: 'unsupported_algorithm',
         iterationsCount: 1000,
+        messageSize: 10
       };
       jest.spyOn(configService, 'get').mockReturnValue(['test_algorithm']);
       await expect(curlService.run(curlRequest)).rejects.toThrow(HttpException);
@@ -86,6 +89,7 @@ describe('CurlService', () => {
       const curlRequest: CurlRequest = {
         algorithm: 'kyber512',
         iterationsCount: 1000,
+        messageSize: 10
       };
       jest.spyOn(configService, 'get').mockReturnValue(['test_algorithm']);
       jest.spyOn<any, any>(curlService, 'runCurls').mockImplementation(() => {
@@ -108,6 +112,7 @@ describe('CurlService', () => {
       const curlRequest: CurlRequest = {
         algorithm: 'kyber512',
         iterationsCount: 1000,
+        messageSize: 10
       };
       jest.spyOn(configService, 'get').mockReturnValue(['test_algorithm']);
       expect(() => curlService['validate'](curlRequest)).not.toThrow();
@@ -118,9 +123,10 @@ describe('CurlService', () => {
     it('should call execAsync with the correct command', async () => {
       const iterationsCount = 1000;
       const algorithm = 'kyber512';
+      const messageSize = 1024;
       const execAsyncSpy = jest.spyOn<any, any>(curlService, 'execAsync').mockResolvedValue(undefined);
-      await curlService['runCurls'](iterationsCount, algorithm);
-      const expectedCommand = curlService['format'](`./scripts/run-curl-loop.sh ${configService.get('nginx.host')} ${configService.get('nginx.port')} ${iterationsCount} ${algorithm}`);
+      await curlService['runCurls'](iterationsCount, algorithm, messageSize);
+      const expectedCommand = curlService['format'](`./scripts/run-curl-loop.sh ${configService.get('nginx.host')} ${configService.get('nginx.port')} ${iterationsCount} ${algorithm} ${messageSize}`);
       expect(execAsyncSpy).toHaveBeenCalledWith(expectedCommand);
     });
     // Add more test cases for error handling in runCurls.

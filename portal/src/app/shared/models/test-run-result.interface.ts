@@ -9,6 +9,7 @@ export interface ITestRunResultData {
     id: number;
     algorithm: string;
     iterations: number;
+    message_size: number;
     results: IResult;
 }
 export interface IEnvironmentInfo {
@@ -26,8 +27,8 @@ export interface ITestRunResult {
     id: number;
     name: string;
     description: string;
-    start_time: string;
-    end_time: string;
+    start_time: number;
+    end_time: number;
     environment_info: IEnvironmentInfo;
-    testRuns: ITestRunResultData[];
+    test_runs: ITestRunResultData[];
 }

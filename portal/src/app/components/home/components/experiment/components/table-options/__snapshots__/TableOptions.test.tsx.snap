@@ -6,7 +6,7 @@ exports[`TableOptions renders without crashing 1`] = `
 >
   <a
     class="link_wrapper text_link"
-    href="http://localhost:3000/d/b3adde71-2231-4c2f-b216-3af0a16d8d9v/qujata-analysis?orgId=1&from=2021-07-26T12:00:00.000Z&to=2021-07-26T12:00:00.000Z"
+    href="http://localhost:3000/d/b3adde71-2231-4c2f-b216-3af0a16d8d9v/qujata-analysis?orgId=1&from=1705240065192&to=1705240065192"
     rel="noopener"
     target="_blank"
   >

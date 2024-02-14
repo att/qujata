@@ -1,5 +1,5 @@
 import { render, RenderResult } from '@testing-library/react';
-import { AlgorithmsSelectorCustomOption, IterationsSelectorCustomOption, SelectorCustomOptionProps } from './SelectorCustomOption';
+import { AlgorithmsSelectorCustomOption, SelectorCustomOption, SelectorCustomOptionProps } from './SelectorCustomOption';
 
 describe('SelectorCustomOption', () => {
   const mockOption = { value: 'option1', label: 'Option 1' };
@@ -39,8 +39,8 @@ describe('SelectorCustomOption', () => {
     expect(container.firstChild).toMatchSnapshot();
   });
 
-  it('should render IterationsSelectorCustomOption correctly', () => {
-    const { container }: RenderResult = render(<IterationsSelectorCustomOption {...mockProps} />);
+  it('should render SelectorCustomOption correctly', () => {
+    const { container }: RenderResult = render(<SelectorCustomOption {...mockProps} />);
     expect(container.firstChild).toMatchSnapshot();
   });
 });

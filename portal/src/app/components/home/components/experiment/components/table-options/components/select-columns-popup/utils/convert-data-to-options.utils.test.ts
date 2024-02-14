@@ -25,7 +25,11 @@ describe('convertDataToOptions', () => {
       {
         label: 'results.request_throughput',
         value: TableOptionsData.options[4]
-      }
+      },
+      {
+        label: 'message_size',
+        value: TableOptionsData.options[1]
+      },
     ]);
   });
 });

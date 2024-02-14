@@ -5,7 +5,8 @@ import { ProtocolQuery } from "../protocol-query";
 import { SubHeader } from "../sub-header";
 import { useCallback, useEffect, useState } from 'react';
 import styles from './Home.module.scss';
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
+import { ExperimentData } from "../all-experiments/models/experiments.interface";
 
 export const Home: React.FC = () => {
     const [isSubHeaderOpen, setIsSubHeaderOpen] = useState<boolean>(true);
@@ -25,6 +26,13 @@ export const Home: React.FC = () => {
 export const HomeContent: React.FC = () => {
   const { handleRunQueryClick, status, testSuiteId }: IUseDashboardData = useDashboardData();
   const navigate = useNavigate();
+  const location = useLocation();
+  const [duplicateData, setDuplicateData] = useState<ExperimentData | undefined>(location.state?.row);
+
+  useEffect(() => {
+    // Clear the state after the duplicate data has been created
+    setDuplicateData(undefined);
+  }, []);
 
   useEffect(() => {
     if (status === FetchDataStatus.Success && testSuiteId) {
@@ -41,7 +49,12 @@ export const HomeContent: React.FC = () => {
 
   return (
     <div className={styles.app_wrapper}>
-      <ProtocolQuery isFetching={status === FetchDataStatus.Fetching} onRunClick={handleRunClick} />
+      <ProtocolQuery
+        isFetching={status === FetchDataStatus.Fetching}
+        onRunClick={handleRunClick}
+        duplicateData={duplicateData}
+        setDuplicateData={setDuplicateData}
+      />
     </div>
   );
 };

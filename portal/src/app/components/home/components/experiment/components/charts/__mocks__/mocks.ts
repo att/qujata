@@ -5,8 +5,8 @@ export const MOCK_DATA_FOR_CHARTS: IExperimentData = {
     id: 1,
     name: "TestRun1",
     description: "TestRun1",
-    start_time: "2021-07-26T12:00:00.000Z",
-    end_time: "2021-07-26T12:00:00.000Z",
+    start_time: 1705240065192,
+    end_time: 1705240065192,
     environment_info: {
       resourceName: "gddn-aks",
       operatingSystem: "Linux",
@@ -17,11 +17,12 @@ export const MOCK_DATA_FOR_CHARTS: IExperimentData = {
       nodeSize: "Standard_D4s_v5",
       codeRelease: "1.1.0",
     },
-    testRuns: [
+    test_runs: [
       {
         id: 1,
         algorithm: "Algorithm1",
-        iterations: 1024,
+        iterations: 2000,
+        message_size: 1024,
         results:
         {
           average_cpu: 25.5,
@@ -33,7 +34,8 @@ export const MOCK_DATA_FOR_CHARTS: IExperimentData = {
       {
         id: 2,
         algorithm: "Algorithm2",
-        iterations: 1024,
+        iterations: 1000,
+        message_size: 512,
         results:
         {
           average_cpu: 25.5,
@@ -45,7 +47,8 @@ export const MOCK_DATA_FOR_CHARTS: IExperimentData = {
       {
         id: 3,
         algorithm: "Algorithm1",
-        iterations: 104,
+        iterations: 500,
+        message_size: 1024,
         results:
         {
           average_cpu: 2,

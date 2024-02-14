@@ -6,12 +6,10 @@ import { PROTOCOL_QUERY_EN } from './translate/en';
 describe('ProtocolQuery', () => {
   let props: ProtocolQueryProps;
   beforeAll(() => {
-    // Prepare the props for the ProtocolQuery component
     props = {
       isFetching: false,
-      canExportFile: true,
       onRunClick: jest.fn(),
-      onDownloadDataClicked: jest.fn(),
+      setDuplicateData: jest.fn()
     };
   });
 
