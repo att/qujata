@@ -12,19 +12,19 @@ describe('convertDataToOptions', () => {
       },
       {
         label: 'results.average_cpu',
-        value: TableOptionsData.options[1]
-      },
-      {
-        label: 'results.average_memory',
         value: TableOptionsData.options[2]
       },
       {
-        label: 'results.bytes_throughput',
+        label: 'results.average_memory',
         value: TableOptionsData.options[3]
       },
       {
-        label: 'results.request_throughput',
+        label: 'results.bytes_throughput',
         value: TableOptionsData.options[4]
+      },
+      {
+        label: 'results.request_throughput',
+        value: TableOptionsData.options[5]
       },
       {
         label: 'message_size',
