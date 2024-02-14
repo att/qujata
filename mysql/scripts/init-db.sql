@@ -49,7 +49,7 @@ CREATE TABLE IF NOT EXISTS test_runs (
 
 CREATE TABLE IF NOT EXISTS test_run_metrics (
                                   test_run_id INT,
-                                  metric_name ENUM('server_avg_cpu_cores', 'server_avg_memory', 'sever_avg_cpu', 'client_avg_cpu_cores', 'client_avg_memory', 'client_avg_cpu', 'error_rate', 'bytes_throughput_per_sec', 'msg_throughput_per_sec', 'avg_tls_handshake_time'),
+                                  metric_name ENUM('server_avg_cpu_cores', 'server_avg_memory', 'server_avg_cpu', 'client_avg_cpu_cores', 'client_avg_memory', 'client_avg_cpu', 'error_rate', 'bytes_throughput_per_sec', 'msg_throughput_per_sec', 'avg_tls_handshake_time'),
                                   value DOUBLE,
                                   PRIMARY KEY (test_run_id, metric_name),
                                   FOREIGN KEY (test_run_id) REFERENCES test_runs(id) ON DELETE CASCADE

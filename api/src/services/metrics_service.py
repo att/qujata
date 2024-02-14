@@ -53,5 +53,5 @@ def __calculate_throughput(iterations, start_time, end_time, requests_size):
     seconds = (end_time - start_time).total_seconds()
     request_throughput = 0 if seconds == 0 else iterations / seconds
     bytes_throughput = 0 if seconds == 0 or requests_size is None else int(requests_size) / seconds
-    return round(request_throughput, 0), round(bytes_throughput, 0)
+    return round(request_throughput, 2), round(bytes_throughput, 0)
 

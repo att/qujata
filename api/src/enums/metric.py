@@ -3,7 +3,7 @@ from enum import Enum
 class Metric(Enum):
     SERVER_AVERAGE_CPU_CORES = 'server_avg_cpu_cores'
     SERVER_AVERAGE_MEMORY = 'server_avg_memory'
-    SERVER_AVERAGE_CPU = 'sever_avg_cpu'
+    SERVER_AVERAGE_CPU = 'server_avg_cpu'
     CLIENT_AVERAGE_CPU_CORES = 'client_avg_cpu_cores'
     CLIENT_AVERAGE_MEMORY = 'client_avg_memory'
     CLIENT_AVERAGE_CPU = 'client_avg_cpu'
