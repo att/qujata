@@ -7,9 +7,11 @@ import { AttSelect, AttSelectOption } from '../../shared/components/att-select';
 import styles from './ProtocolQuery.module.scss';
 import { PROTOCOL_QUERY_EN } from './translate/en';
 import { Spinner, SpinnerSize } from '../../shared/components/att-spinner';
-import { useGetAlgorithms, useGetIterations } from './hooks';
+import { useGetAlgorithms, useGetIterations, useMessageSizeData } from './hooks';
 import { handleAlgorithmsSelection } from './utils';
-import { AlgorithmsSelectorCustomOption, IterationsSelectorCustomOption } from '../../shared/components/selector-custom-option';
+import { AlgorithmsSelectorCustomOption, SelectorCustomOption } from '../../shared/components/selector-custom-option';
+import { ExperimentData } from '../all-experiments/models/experiments.interface';
+import { useDuplicateData } from './hooks';
 
 export type SelectOptionType = AttSelectOption | Options<AttSelectOption> | null;
 type onTextChangedEvent = (e: React.ChangeEvent<HTMLInputElement>) => void;
@@ -18,32 +20,41 @@ export type OnSelectChanged = (event: SelectOptionType) => void;
 
 export interface ProtocolQueryProps {
   isFetching: boolean;
-  canExportFile?: boolean;
   onRunClick: (data: ITestParams) => void;
-  onDownloadDataClicked?: () => void;
+  duplicateData?: ExperimentData;
+  setDuplicateData: (data?: ExperimentData) => void;
 }
 
 export const ProtocolQuery: React.FC<ProtocolQueryProps> = (props: ProtocolQueryProps) => {
-  const { isFetching, canExportFile, onRunClick, onDownloadDataClicked } = props;
+  const { isFetching, onRunClick, duplicateData, setDuplicateData } = props;
   const { algorithmOptions, algosBySection } = useGetAlgorithms();
-  const { iterationsOptions } = useGetIterations();
   
   const [experimentName, setExperimentName] = useState('');
   const [algorithms, setAlgorithms] = useState<SelectOptionType>();
   const [prevSelectedValues, setPrevSelectedValues] = useState<string[]>([]);
   const [description, setDescription] = useState('');
 
+  const { iterationsOptions } = useGetIterations();
   const [iterationsCount, setIterationsCount] = useState<AttSelectOption[]>([]);
-  const [showInputOption, setShowInputOption] = useState(false);
-  const [inputValue, setInputValue] = useState('');
+  const [showIterationsInputOption, setShowIterationsInputOption] = useState(false);
+  const [iterationsInputValue, setIterationsInputValue] = useState('');
   const [iterationsMenuIsOpen, setIterationsMenuIsOpen] = useState(false);
-  
+
+  const { messageSizeOptions } = useMessageSizeData();
+  const [messageSize, setMessageSize] = useState<AttSelectOption[]>([]);
+  const [showMessageSizeInputOption, setShowMessageSizeInputOption] = useState(false);
+  const [messageSizeInputValue, setMessageSizeInputValue] = useState('');
+  const [messageSizeMenuIsOpen, setMessageSizeMenuIsOpen] = useState(false);
+
+  useDuplicateData({ data: duplicateData, setDuplicateData, setExperimentName, setAlgorithms, setIterationsCount, setMessageSize });
+
   const onSubmitHandler = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     onRunClick({
       experimentName,
       algorithms: algorithms as SelectOptionType,
       iterationsCount: iterationsCount as SelectOptionType,
+      messageSizes: messageSize as SelectOptionType,
       description
     });
   };
@@ -66,6 +77,12 @@ export const ProtocolQuery: React.FC<ProtocolQueryProps> = (props: ProtocolQuery
     setIterationsCount(selectedIterationNum);
   }, []);
 
+  const onMessageSizeChanged: OnSelectChanged = useCallback((options: SelectOptionType): void => {
+    const selectedMessageSize: AttSelectOption[] = options as AttSelectOption[];
+    setMessageSizeMenuIsOpen(true);
+    setMessageSize(selectedMessageSize);
+  }, []);
+
   const onDescriptionChanged: onTextAreaChangedEvent = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     setDescription(event.target.value);
   };
@@ -86,6 +103,7 @@ export const ProtocolQuery: React.FC<ProtocolQueryProps> = (props: ProtocolQuery
               </label>
               <input
                 className={styles.input_form_item}
+                value={experimentName}
                 onChange={onExperimentNameChanged}
                 placeholder=''
                 required
@@ -126,13 +144,42 @@ export const ProtocolQuery: React.FC<ProtocolQueryProps> = (props: ProtocolQuery
                 required
                 customComponent={{
                   Option: (props: any) =>
-                    <IterationsSelectorCustomOption
+                    <SelectorCustomOption
                       {...props}
-                      showInputOption={showInputOption}
-                      setShowInputOption={setShowInputOption}
-                      inputValue={inputValue}
-                      setInputValue={setInputValue}
+                      showInputOption={showIterationsInputOption}
+                      setShowInputOption={setShowIterationsInputOption}
+                      inputValue={iterationsInputValue}
+                      setInputValue={setIterationsInputValue}
                       setMenuIsOpen={setIterationsMenuIsOpen}
+                    />
+                }}
+              />
+          </div>
+          <div className={styles.form_item}>
+              <label className={styles.form_item_label}>
+                {PROTOCOL_QUERY_EN.FIELDS_LABEL.MESSAGE_SIZE} <span className={styles.required}>{PROTOCOL_QUERY_EN.FIELDS_LABEL.REQUIRED}</span>
+              </label>
+              <AttSelect
+                className={styles.select_form_item}
+                options={messageSizeOptions}
+                placeholder=''
+                value={messageSize as AttSelectOption[]}
+                onChange={onMessageSizeChanged}
+                isMulti
+                hideSelectedOptions={false}
+                closeMenuOnSelect={false}
+                menuIsOpen={messageSizeMenuIsOpen}
+                setMenuIsOpen={setMessageSizeMenuIsOpen}
+                required
+                customComponent={{
+                  Option: (props: any) =>
+                    <SelectorCustomOption
+                      {...props}
+                      showInputOption={showMessageSizeInputOption}
+                      setShowInputOption={setShowMessageSizeInputOption}
+                      inputValue={messageSizeInputValue}
+                      setInputValue={setMessageSizeInputValue}
+                      setMenuIsOpen={setMessageSizeMenuIsOpen}
                     />
                 }}
               />
@@ -165,16 +212,6 @@ export const ProtocolQuery: React.FC<ProtocolQueryProps> = (props: ProtocolQuery
               </div>}
           </div>
        </form>
-       {/* <Button
-            className={styles.export_button}
-            actionType={ButtonActionType.BUTTON}
-            size={ButtonSize.LARGE}
-            styleType={ButtonStyleType.PRIMARY}
-            disabled={!canExportFile}
-            onButtonClick={onDownloadDataClicked}
-        >
-          {PROTOCOL_QUERY_EN.ACTION_BUTTONS.EXPORT}
-        </Button> */}
     </div>
   );
 };

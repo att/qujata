@@ -5,8 +5,8 @@ export const MOCK_DATA_FOR_EXPERIMENT: ITestRunResult = {
   id: 1,
   name: "TestRun1",
   description: "TestRun1",
-  start_time: "2021-07-26T12:00:00.000Z",
-  end_time: "2021-07-26T12:00:00.000Z",
+  start_time: 1705240065192,
+  end_time: 1705240065192,
   environment_info: {
     resourceName: "gddn-aks",
     operatingSystem: "Linux",
@@ -17,35 +17,44 @@ export const MOCK_DATA_FOR_EXPERIMENT: ITestRunResult = {
     nodeSize: "Standard_D4s_v5",
     codeRelease: "1.1.0",
   },
-  testRuns: [
+  test_runs: [
     {
       id: 1,
       algorithm: "Algorithm1",
-      iterations: 1024,
+      iterations: 2000,
+      message_size: 1024,
       results:
       {
-        averageCPU: 25.5,
-        averageMemory: 512,
+        average_cpu: 25.5,
+        average_memory: 512,
+        bytes_throughput: 11,
+        request_throughput: 21
       }
     },
     {
       id: 2,
       algorithm: "Algorithm2",
-      iterations: 1024,
+      iterations: 1000,
+      message_size: 1024,
       results:
       {
-        averageCPU: 25.5,
-        averageMemory: 512,
+        average_cpu: 25.5,
+        average_memory: 512,
+        bytes_throughput: 11,
+        request_throughput: 21
       }
     },
     {
       id: 3,
       algorithm: "Algorithm1",
-      iterations: 104,
+      iterations: 1000,
+      message_size: 1024,
       results:
       {
-        averageCPU: 2,
-        averageMemory: 52,
+        average_cpu: 2,
+        average_memory: 52,
+        bytes_throughput: 11,
+        request_throughput: 21
       }
     }
   ]
@@ -56,8 +65,8 @@ export const MOCK_DATA_FOR_EXPERIMENT_TABLE: ExperimentTableProps = {
     id: 1,
     name: "TestRun1",
     description: "TestRun1",
-    start_time: "2021-07-26T12:00:00.000Z",
-    end_time: "2021-07-26T12:00:00.000Z",
+    start_time: 1705240065192,
+    end_time: 1705240065192,
     environment_info: {
       resourceName: "gddn-aks",
       operatingSystem: "Linux",
@@ -68,35 +77,44 @@ export const MOCK_DATA_FOR_EXPERIMENT_TABLE: ExperimentTableProps = {
       nodeSize: "Standard_D4s_v5",
       codeRelease: "1.1.0",
     },
-    testRuns: [
+    test_runs: [
       {
         id: 1,
         algorithm: "Algorithm1",
-        iterations: 1024,
+        iterations: 1000,
+        message_size: 1024,
         results:
         {
-          averageCPU: 25.5,
-          averageMemory: 512,
+          average_cpu: 25.5,
+          average_memory: 512,
+          bytes_throughput: 11,
+          request_throughput: 21
         }
       },
       {
         id: 2,
         algorithm: "Algorithm2",
-        iterations: 1024,
+        iterations: 2000,
+        message_size: 512,
         results:
         {
-          averageCPU: 25.5,
-          averageMemory: 512,
+          average_cpu: 25.5,
+          average_memory: 512,
+          bytes_throughput: 11,
+          request_throughput: 21
         }
       },
       {
         id: 3,
         algorithm: "Algorithm1",
-        iterations: 104,
+        iterations: 500,
+        message_size: 2048,
         results:
         {
-          averageCPU: 2,
-          averageMemory: 52,
+          average_cpu: 2,
+          average_memory: 52,
+          bytes_throughput: 11,
+          request_throughput: 21
         }
       }
     ]
@@ -112,11 +130,11 @@ export const MOCK_DATA_FOR_EXPERIMENT_TABLE: ExperimentTableProps = {
     },
     {
       label: "Average CPU",
-      value: "averageCPU",
+      value: "average_cpu",
     },
     {
       label: "Average Memory",
-      value: "averageMemory",
+      value: "average_memory",
     },
   ]
 };
@@ -126,8 +144,8 @@ export const MOCK_DATA_FOR_EXPERIMENT_WITH_NO_TEST_RUNS: ExperimentTableProps = 
     id: 1,
     name: "TestRun1",
     description: "TestRun1",
-    start_time: "2021-07-26T12:00:00.000Z",
-    end_time: "2021-07-26T12:00:00.000Z",
+    start_time: 1705240065192,
+    end_time: 1705240065192,
     environment_info: { 
       resourceName: "gddn-aks", 
       operatingSystem: "Linux", 
@@ -138,7 +156,7 @@ export const MOCK_DATA_FOR_EXPERIMENT_WITH_NO_TEST_RUNS: ExperimentTableProps = 
       nodeSize: "Standard_D4s_v5", 
       codeRelease: "1.1.0",
     }, 
-    testRuns: []
+    test_runs: []
   },
   selectedColumns: [
     {
@@ -151,11 +169,11 @@ export const MOCK_DATA_FOR_EXPERIMENT_WITH_NO_TEST_RUNS: ExperimentTableProps = 
     },
     {
       label: "Average CPU",
-      value: "averageCPU",
+      value: "average_cpu",
     },
     {
       label: "Average Memory",
-      value: "averageMemory",
+      value: "average_memory",
     },
   ]
 };
@@ -163,27 +181,30 @@ export const MOCK_DATA_FOR_EXPERIMENT_WITH_NO_TEST_RUNS: ExperimentTableProps = 
 export const MOCK_SUB_HEADER: ITestRunResult = {
   id: 1,
   name: 'name',
-  description: 'name',
-  start_time: 'name',
-  end_time: 'name',
+  description: 'description',
+  start_time: 1705240065192,
+  end_time: 1705240065192,
   environment_info: {
       codeRelease: 'codeRelease',
-      cpu: 'codeRelease',
-      cpuArchitecture: 'codeRelease',
-      cpuClockSpeed: 'codeRelease',
+      cpu: 'cpu',
+      cpuArchitecture: 'cpuArchitecture',
+      cpuClockSpeed: 'cpuClockSpeed',
       cpuCores: 2,
-      nodeSize: 'codeRelease',
-      operatingSystem: 'codeRelease',
-      resourceName: 'codeRelease',
+      nodeSize: 'nodeSize',
+      operatingSystem: 'operatingSystem',
+      resourceName: 'resourceName',
   },
-  testRuns: [
+  test_runs: [
       {
           id:1,
           algorithm: "bikel1",
           iterations: 1000,
+          message_size: 1024,
           results: {
-            averageCPU: 3.5,
-            averageMemory: 3
+            average_cpu: 3.5,
+            average_memory: 3,
+            bytes_throughput: 11,
+            request_throughput: 21
           }
         },
   ],
@@ -194,18 +215,24 @@ export const CSV_MOCK: ITestRunResultData[] = [
     id: 1,
     algorithm: 'App1',
     iterations: 1000,
+    message_size: 1024,
     results: {
-      averageCPU: 2000,
-      averageMemory: 3000,
+      average_cpu: 2000,
+      average_memory: 3000,
+      bytes_throughput: 11,
+      request_throughput: 21
     },
   },
   {
     id: 2,
     algorithm: 'App2',
     iterations: 4000,
+    message_size: 2048,
     results: {
-      averageCPU: 5000,
-      averageMemory: 6000,
+      average_cpu: 5000,
+      average_memory: 6000,
+      bytes_throughput: 11,
+      request_throughput: 21
     },
   },
 ];

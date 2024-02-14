@@ -3,6 +3,7 @@ import { CurlController } from './curl.controller';
 import { CurlService } from './curl.service';
 import { CurlRequest } from '../dto/curl-request.dto';
 import { HttpException } from '@nestjs/common';
+import { CurlResponseDto } from "../dto/curl-response.dto";
 describe('CurlController', () => {
   let curlController: CurlController;
   let curlService: CurlService;
@@ -29,6 +30,7 @@ describe('CurlController', () => {
       const curlRequest: CurlRequest = {
         algorithm: 'kyber512',
         iterationsCount: 500,
+        messageSize: 10
       };
       const runSpy = jest.spyOn(curlService, 'run');
       await curlController.create(curlRequest);
@@ -38,8 +40,10 @@ describe('CurlController', () => {
       const curlRequest: CurlRequest = {
         algorithm: 'kyber512',
         iterationsCount: 500,
+        messageSize: 10
       };
-      const expectedResult = undefined;
+      const expectedResult = new CurlResponseDto();
+      expectedResult.totalRequestSize = 123;
       jest.spyOn(curlService, 'run').mockResolvedValue(expectedResult);
       const result = await curlController.create(curlRequest);
       expect(result).toBe(expectedResult);
@@ -48,6 +52,7 @@ describe('CurlController', () => {
       const curlRequest: CurlRequest = {
         algorithm: 'kyber512',
         iterationsCount: 500,
+        messageSize: 10
       };
       const error = new HttpException('Exception', 409);
       jest.spyOn(curlService, 'run').mockRejectedValue(error);

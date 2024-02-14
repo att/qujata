@@ -31,6 +31,13 @@ class TestConfigurationsAPI(unittest.TestCase):
         data = json.loads(response.data)
         self.assertIn('iterations', data)
 
-   
+    def test_get_message_sizes_list(self):
+        response = self.client.get('/api/message_sizes')
+        self.assertEqual(response.status_code, 200)
+        data = json.loads(response.data)
+        self.assertIn('message_sizes', data)
+
+
+
 if __name__ == '__main__':
     unittest.main()

@@ -4,6 +4,7 @@ import { SubHeader, SubHeaderProps } from '../sub-header';
 import { ProtocolQuery, ProtocolQueryProps } from '../protocol-query';
 
 const mockUseNavigate = jest.fn();
+const mockUseLocation = jest.fn();
 
 jest.mock('../sub-header');
 jest.mock('../protocol-query');
@@ -17,6 +18,7 @@ jest.mock('../../hooks/useDashboardData', () => ({
 jest.mock('react-router-dom', () => ({
   ...jest.requireActual('react-router-dom'),
   useNavigate: () => mockUseNavigate,
+  useLocation: () => mockUseLocation,
 }));
 
 describe('Home', () => {
@@ -47,6 +49,7 @@ describe('Home', () => {
             experimentName: 'test',
             algorithms: { label: 'regular', value: 'regular' },
             iterationsCount: { label: 'regular', value: 'regular' },
+            messageSizes: [{ label: '1024', value: '1024' }],
             description: 'test'
           });
         }

@@ -1,16 +1,13 @@
 import unittest
-import logging
 import time
-from datetime import datetime, timezone
 from unittest.mock import patch, Mock
 
 import requests
 from flask import Flask
 from config.settings import load_config
-import src.services.metrics_service as metrics_service
+import src.utils.metrics_collection_manager as metrics_collection_manager
 import src.services.k8s_service as k8s_service
 import src.services.cadvisor_service as cadvisor_service
-from src.models.test_run import TestRun
 from src.utils.database_manager import DatabaseManager
 from kubernetes.client import CoreV1Api, V1PodList, V1Pod, V1PodStatus, V1ObjectMeta, V1ContainerStatus
 
@@ -40,13 +37,13 @@ class TestMetricsService(unittest.TestCase):
         with patch(POST_REQUEST) as mock_post:
             mock_post.return_value.status_code = 200
             mock_post.return_value.json.return_value = docker_response
-            metrics_service.start_collecting()
-            self.assertTrue(metrics_service.client_collector._MetricsCollector__locked)
-            self.assertTrue(metrics_service.server_collector._MetricsCollector__locked)
+            metrics_collection_manager.start_collecting()
+            self.assertTrue(metrics_collection_manager.client_collector._MetricsCollector__locked)
+            self.assertTrue(metrics_collection_manager.server_collector._MetricsCollector__locked)
             time.sleep(5)
-            metrics_service.stop_collecting()
+            metrics_collection_manager.stop_collecting()
             self.assertEqual(mock_post.call_count, 10) # 10: 5 for curl, and 5 for nginx (2 requests per sec)
-            actual_curl, actual_nginx = metrics_service.get_metrics()
+            actual_curl, actual_nginx = metrics_collection_manager.get_metrics()
             self.assertEqual(actual_curl, expected_curl_metrics_collector_data)
             self.assertEqual(actual_nginx, expected_nginx_metrics_collector_data)
 
@@ -86,13 +83,13 @@ class TestMetricsService(unittest.TestCase):
                     mock_list_pod.return_value = mock_pod_list
                     mock_post.return_value.status_code = 200
                     mock_post.return_value.json.return_value = k8s_response
-                    metrics_service.start_collecting()
-                    self.assertTrue(metrics_service.client_collector._MetricsCollector__locked)
-                    self.assertTrue(metrics_service.server_collector._MetricsCollector__locked)
+                    metrics_collection_manager.start_collecting()
+                    self.assertTrue(metrics_collection_manager.client_collector._MetricsCollector__locked)
+                    self.assertTrue(metrics_collection_manager.server_collector._MetricsCollector__locked)
                     time.sleep(5)
-                    metrics_service.stop_collecting()
+                    metrics_collection_manager.stop_collecting()
                     self.assertEqual(mock_post.call_count, 10) # 10: 5 for curl, and 5 for nginx (2 requests per sec)
-                    actual_curl, actual_nginx = metrics_service.get_metrics()
+                    actual_curl, actual_nginx = metrics_collection_manager.get_metrics()
                     self.assertEqual(actual_curl, expected_curl_metrics_collector_data)
                     self.assertEqual(actual_nginx, expected_nginx_metrics_collector_data)
 
@@ -132,13 +129,13 @@ class TestMetricsService(unittest.TestCase):
                     mock_list_pod.return_value = mock_pod_list
                     mock_post.return_value.status_code = 200
                     mock_post.return_value.json.return_value = k8s_response
-                    metrics_service.start_collecting()
-                    self.assertTrue(metrics_service.client_collector._MetricsCollector__locked)
-                    self.assertTrue(metrics_service.server_collector._MetricsCollector__locked)
+                    metrics_collection_manager.start_collecting()
+                    self.assertTrue(metrics_collection_manager.client_collector._MetricsCollector__locked)
+                    self.assertTrue(metrics_collection_manager.server_collector._MetricsCollector__locked)
                     time.sleep(5)
-                    metrics_service.stop_collecting()
+                    metrics_collection_manager.stop_collecting()
                     self.assertEqual(mock_post.call_count, 10) # 10: 5 for curl, and 5 for nginx (2 requests per sec)
-                    actual_curl, actual_nginx = metrics_service.get_metrics()
+                    actual_curl, actual_nginx = metrics_collection_manager.get_metrics()
                     self.assertEqual(actual_curl, expected_curl_metrics_collector_data)
                     self.assertEqual(actual_nginx, expected_nginx_metrics_collector_data)
 
@@ -179,8 +176,8 @@ class TestMetricsService(unittest.TestCase):
                     mock_list_pod.return_value = mock_pod_list
                     mock_post.return_value.status_code = 200
                     mock_post.return_value.json.return_value = k8s_response
-                    metrics_service.start_collecting()
-                    self.assertFalse(metrics_service.client_collector._MetricsCollector__locked)
+                    metrics_collection_manager.start_collecting()
+                    self.assertFalse(metrics_collection_manager.client_collector._MetricsCollector__locked)
                     self.assertEqual(str(mock_log.call_args_list[0]), "call('[MetricCollector] Failed to collect metrics with error: %s', RuntimeError('cri: unsupported-cri not supported'), exc_info=True)")
 
 
@@ -190,12 +187,12 @@ class TestMetricsService(unittest.TestCase):
         with patch(POST_REQUEST) as mock_post:
             mock_post.return_value.status_code = 200
             mock_post.return_value.json.return_value = docker_response
-            metrics_service.client_collector._MetricsCollector__locked = True
-            metrics_service.server_collector._MetricsCollector__locked = True
-            metrics_service.start_collecting()
+            metrics_collection_manager.client_collector._MetricsCollector__locked = True
+            metrics_collection_manager.server_collector._MetricsCollector__locked = True
+            metrics_collection_manager.start_collecting()
             self.assertEqual(mock_post.call_count, 0)
-            metrics_service.client_collector._MetricsCollector__locked = False
-            metrics_service.client_collector._MetricsCollector__locked = False
+            metrics_collection_manager.client_collector._MetricsCollector__locked = False
+            metrics_collection_manager.client_collector._MetricsCollector__locked = False
             self.assertEqual(str(mock_log.call_args_list[0]), "call('[MetricCollector] collector is already running', exc_info=True)")
 
 
@@ -206,7 +203,7 @@ class TestMetricsService(unittest.TestCase):
             with patch(LIST_NAMESPACED_POD, side_effect=requests.exceptions.RequestException("Test exception")):
                 with patch(POST_REQUEST) as mock_post:
                     k8s_service.init_cluster()
-                    metrics_service.start_collecting()
+                    metrics_collection_manager.start_collecting()
                     self.assertEqual(mock_post.call_count, 0)
                     self.assertEqual(str(mock_log.call_args_list[0]), "call('[MetricCollector] Failed to collect metrics with error: %s', RequestException('Test exception'), exc_info=True)")
 
@@ -226,7 +223,7 @@ class TestMetricsService(unittest.TestCase):
                     mock_list_pod.return_value = mock_pod_list
                     mock_post.return_value.status_code = 200
                     mock_post.return_value.json.return_value = k8s_response
-                    metrics_service.start_collecting()
+                    metrics_collection_manager.start_collecting()
                     self.assertEqual(mock_post.call_count, 0)
                     self.assertEqual(str(mock_log.call_args_list[0]), "call('[MetricCollector] Failed to collect metrics with error: %s', RuntimeError('qujata-curl pod not found'), exc_info=True)")
                     self.assertEqual(str(mock_log.call_args_list[1]), "call('[MetricCollector] Failed to collect metrics with error: %s', RuntimeError('qujata-nginx pod not found'), exc_info=True)")
@@ -285,7 +282,7 @@ class TestMetricsService(unittest.TestCase):
                 with patch(POST_REQUEST) as mock_post:
                     mock_post.return_value.status_code = 200
                     mock_post.return_value.json.return_value = k8s_response
-                    metrics_service.start_collecting()
+                    metrics_collection_manager.start_collecting()
                     self.assertEqual(mock_post.call_count, 0)
                     self.assertEqual(str(mock_log.call_args_list[0]), "call('[MetricCollector] Failed to collect metrics with error: %s', RuntimeError('qujata-cadvisor pod not found with host_ip: 192.168.1.2'), exc_info=True)")
                     self.assertEqual(str(mock_log.call_args_list[1]), "call('[MetricCollector] Failed to collect metrics with error: %s', RuntimeError('qujata-cadvisor pod not found with host_ip: 192.168.1.2'), exc_info=True)")

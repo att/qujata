@@ -24,7 +24,7 @@ const mockData = {
 
 describe('LineChart', () => {
     test('renders LineChart', () => {
-        const { getByTestId }: RenderResult = render(<LineChart data={mockData} title='title' tooltipLabel='averageCPU' />);
+        const { getByTestId }: RenderResult = render(<LineChart data={mockData} title='title' tooltipLabel='average_cpu' />);
         const chartElement: HTMLElement = getByTestId('line2');
         expect(chartElement).toBeTruthy();
     });

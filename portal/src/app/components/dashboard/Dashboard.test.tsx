@@ -23,6 +23,10 @@ describe('Dashboard', () => {
         label: '1000',
         value: '1000',
       },
+      messageSizes: {
+        label: '1024',
+        value: '1024'
+      },
       description: 'Sample description',
     };
 

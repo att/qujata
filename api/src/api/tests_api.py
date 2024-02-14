@@ -63,7 +63,23 @@ def get_test_run(test_suite_id, test_run_id):
     else:
         return jsonify({'error': 'Not Found', 'message':'Test run with id: ' + str(test_run_id) +' and test suite id: '+ str(test_suite_id) +' not found'}), HTTP_STATUS_NOT_FOUND
 
+@api.route('/test_suites/delete', methods=['POST'])
+@cross_origin(origins=['*'], supports_credentials=True)
+def delete_test_suites():
+    try:
+        data = request.get_json()
+        __validate_delete_test_suites(data)
+        test_suites_service.delete_test_suites(data['ids'])
+        return jsonify(), HTTP_STATUS_NO_CONTENT
+    except (ApiException) as e:
+        return jsonify({'error': e.error, 'message': e.message}), e.status_code
+
 
 def __validate_update_test_suite(data):
     if not data or 'name' not in data or 'description' not in data:
         raise ApiException('Missing properties, required properties: name, description', 'Invalid data provided', HTTP_STATUS_BAD_REQUEST)
+
+
+def __validate_delete_test_suites(data):
+    if not data or 'ids' not in data:
+        raise ApiException('Missing properties, required property: ids', 'Invalid data provided', HTTP_STATUS_BAD_REQUEST)

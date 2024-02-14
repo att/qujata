@@ -28,7 +28,7 @@ describe('SelectColumnsPopup', () => {
   test('handles column selection', () => {
     const { getByTestId } = render(<SelectColumnsPopup {...selectColumnsPopupProps} />);
     const iterationsCheckbox = getByTestId('iterations-checkbox');
-    const resultsAverageCPUCheckbox = getByTestId('results.averageCPU-checkbox');
+    const resultsAverageCPUCheckbox = getByTestId('results.average_cpu-checkbox');
 
     fireEvent.click(iterationsCheckbox);
     fireEvent.click(resultsAverageCPUCheckbox);
