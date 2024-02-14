@@ -8,7 +8,8 @@ algorithm="$4"
 message_size="$5"
 num_processes=$(($(getconf _NPROCESSORS_ONLN) * 2))
 
-# Generate random message with specified size
+# Generates a random message with the specified size and saves it to a temporary file.
+# This is useful for cases where the payload is too large to be sent in the curl command as text.
 generate_message() {
   local size="$1"
   tr -dc '[:print:]' </dev/urandom | head -c "$size" > /tmp/message.txt
