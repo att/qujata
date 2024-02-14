@@ -1,13 +1,12 @@
 const testSuites = 'test_suites';
-const prefix = 'qujata-api';
 
 export const APIS: { [key in keyof typeof API_URLS]: string } = {
-  analyze: `${prefix}/analyze`,
-  algorithms: `${prefix}/algorithms`,
-  iterations: `${prefix}/iterations`,
-  testRunResults: `${prefix}/${testSuites}/:testSuiteId`,
-  editExperiment: `${prefix}/${testSuites}/:testSuiteId`,
-  deleteExperiment: `${prefix}/${testSuites}/:testSuiteId`,
+  analyze: 'analyze',
+  algorithms: 'algorithms',
+  iterations: 'iterations',
+  testRunResults: `${testSuites}/:testSuiteId`,
+  editExperiment: `${testSuites}/:testSuiteId`,
+  deleteExperiment: `${testSuites}/:testSuiteId`,
 };
 
 enum API_URLS {

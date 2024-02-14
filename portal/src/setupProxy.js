@@ -6,7 +6,7 @@ module.exports = (app) => {
     return;
   }
   app.use(
-    ['/analyze', '/algorithms', '/iterations', '/qujata-api'],
+    ['/analyze', '/algorithms', '/iterations', '/qujata-api', '/test_suites/*'],
     createProxyMiddleware({
       target,
       changeOrigin: true,
