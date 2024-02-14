@@ -1,6 +1,7 @@
-import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import * as shellJS from 'shelljs';
 import { CurlRequest } from '../dto/curl-request.dto';
+import { CurlResponseDto } from '../dto/curl-response.dto';
 import { ConfigService } from '@nestjs/config';
 
 @Injectable()
@@ -16,10 +17,10 @@ export class CurlService {
     this.CURL_SCRIPT_PATH = "./scripts/run-curl-loop.sh"
   }
 
-  async run(curlRequest: CurlRequest): Promise<void> {
+  async run(curlRequest: CurlRequest): Promise<CurlResponseDto> {
     this.validate(curlRequest);
     try {
-      await this.runCurls(curlRequest.iterationsCount, curlRequest.algorithm, curlRequest.messageSize);
+      return await this.runCurls(curlRequest.iterationsCount, curlRequest.algorithm, curlRequest.messageSize);
     } catch (err) {
       this.processIsRunning = false;
       console.error('[CurlService:run] Error occurred: ', err);
@@ -38,15 +39,18 @@ export class CurlService {
     }
   }
 
-  private async runCurls(iterationsCount: number, algorithm: string, messageSize: number) {
+  private async runCurls(iterationsCount: number, algorithm: string, messageSize: number) : Promise<CurlResponseDto> {
       const curlCommand = this.format(`${this.CURL_SCRIPT_PATH} ${this.configService.get('nginx.host')} ${this.configService.get('nginx.port')} ${iterationsCount} ${algorithm} ${messageSize}`);
       this.processIsRunning = true;
-      await this.execAsync(curlCommand);
+      const result = await this.execAsync(curlCommand);
       console.log('[CurlService:run] Finished taking all curl samples');
       this.processIsRunning = false;
+      return {
+          totalRequestSize: parseInt(result)
+      };
   }
 
-  private execAsync(command): Promise<void> {
+  private execAsync(command): Promise<string> {
     return new Promise((resolve, reject) => {
       shellJS.exec(command, { async: true }, (code, stdout, stderr) => {
         if (code === 0) {

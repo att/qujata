@@ -13,12 +13,15 @@ from src.models.test_run import TestRun
 from src.models.test_run_metric import TestRunMetric
 from src.models.env_info import EnvInfo
 from src.enums.metric import Metric
+from src.exceptions.exceptions import ApiException
+
 
 CONTENT_TYPE_APPLICATION_JSON = 'application/json'
 TEST_SUITE_NAME = "new name"
 TEST_SUITE_NOT_FOUND_MSG = 'Test suite with id: 1 not found'
 NOT_FOUND = 'Not Found'
 TEST_SUITES_GET_URL = '/api/test_suites/1'
+TEST_SUITES_DELETE_URL = '/api/test_suites/delete'
 
 class TestTestsAPI(unittest.TestCase):
     def setUp(self):
@@ -54,10 +57,12 @@ class TestTestsAPI(unittest.TestCase):
         )
 
     def __test_run_metrics(self):
-        return [TestRunMetric(metric_name=Metric.CLIENT_AVERAGE_CPU,value=3),
-                TestRunMetric(metric_name=Metric.CLIENT_AVERAGE_MEMORY,value=5),
-                TestRunMetric(metric_name=Metric.SERVER_AVERAGE_CPU,value=6),
-                TestRunMetric(metric_name=Metric.SERVER_AVERAGE_MEMORY,value=9)]
+        return [TestRunMetric(metric_name=Metric.CLIENT_AVERAGE_CPU, value=3),
+                TestRunMetric(metric_name=Metric.CLIENT_AVERAGE_MEMORY, value=5),
+                TestRunMetric(metric_name=Metric.SERVER_AVERAGE_CPU, value=6),
+                TestRunMetric(metric_name=Metric.SERVER_AVERAGE_MEMORY, value=9),
+                TestRunMetric(metric_name=Metric.MESSAGES_THROUGHPUT_PER_SECOND, value=50),
+                TestRunMetric(metric_name=Metric.BYTES_THROUGHPUT_PER_SECOND, value=4500)]
 
     def test_get_test_suites(self):
         self.app.database_manager.list.return_value = [self.__test_suite()]
@@ -70,7 +75,7 @@ class TestTestsAPI(unittest.TestCase):
         self.app.database_manager.get_by_id.return_value = test_suite
         response = self.client.get(TEST_SUITES_GET_URL)
         result = json.loads(response.data)
-        expected = {'code_release': '1.1.0', 'description': 'description', 'end_time': None, 'environment_info': {'cpu': None, 'cpuArchitecture': None, 'cpuClockSpeed': None, 'cpuCores': None, 'nodeSize': None, 'operatingSystem': None, 'resourceName': None}, 'id': None, 'name': 'name', 'start_time': None, 'test_runs': [{'algorithm': None, 'id': 1, 'iterations': None, 'message_size': None, 'results': {'averageCPU': 9.0, 'averageMemory': 14}}]}
+        expected = {'code_release': '1.1.0', 'description': 'description', 'end_time': None, 'environment_info': {'cpu': None, 'cpu_architecture': None, 'cpu_clock_speed': None, 'cpu_cores': None, 'node_size': None, 'operating_system': None, 'resource_name': None}, 'id': None, 'name': 'name', 'start_time': None, 'test_runs': [{'algorithm': None, 'id': 1, 'iterations': None, 'message_size': None, 'results': {'average_cpu': 9.0, 'average_memory': 14, 'request_throughput': 50, 'bytes_throughput': 4500}}]}
         self.assertEqual(result, expected)
 
     def test_get_test_suite_return_not_found(self):
@@ -143,4 +148,28 @@ class TestTestsAPI(unittest.TestCase):
         self.assertEqual(result, {'error': NOT_FOUND, 'message': 'Test run with id: 1 and test suite id: 1 not found'})
         self.assertEqual(response.status_code, 404)
 
+    def test_delete_test_suites(self):
+        input_data = {"ids": [1, 2, 3]}
+        self.app.database_manager.delete_by_ids.return_value = None
+        response = self.client.post(TEST_SUITES_DELETE_URL, data=json.dumps(input_data), content_type=CONTENT_TYPE_APPLICATION_JSON)
+        self.assertEqual(response.status_code, 204)
+        self.app.database_manager.delete_by_ids.assert_called_once_with(TestSuite, [1, 2, 3])
+
+    def test_delete_test_suites_missing_ids(self):
+        input_data = {}  # Missing 'ids' key
+        response = self.client.post(TEST_SUITES_DELETE_URL, data=json.dumps(input_data), content_type=CONTENT_TYPE_APPLICATION_JSON)
+        result = json.loads(response.data)
+        self.assertEqual(response.status_code, 400)
+        self.assertEqual(result, {'error': 'Invalid data provided', 'message': 'Missing properties, required property: ids'})
+        self.assertEqual(self.app.database_manager.delete_by_ids.call_count, 0)
+
+    def test_delete_test_suites_api_exception(self):
+        input_data = {"ids": [1, 2, 3]}
+        error_message = 'Some error message'
+        self.app.database_manager.delete_by_ids.side_effect = ApiException(error_message, 'Some error', status_code=500)
+        response = self.client.post(TEST_SUITES_DELETE_URL, data=json.dumps(input_data), content_type=CONTENT_TYPE_APPLICATION_JSON)
+        result = json.loads(response.data)
+        self.assertEqual(response.status_code, 500)
+        self.assertEqual(result, {'error': 'Some error', 'message': 'Some error message'})
+        self.app.database_manager.delete_by_ids.assert_called_once_with(TestSuite, [1, 2, 3])
 

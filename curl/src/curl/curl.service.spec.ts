@@ -2,9 +2,9 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { CurlService } from './curl.service';
 import { CurlRequest } from '../dto/curl-request.dto';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-
 import { HttpException, HttpStatus } from '@nestjs/common';
 import * as shellJS from 'shelljs';
+
 jest.mock('shelljs', () => ({
   exec: jest.fn(),
 }));
@@ -120,14 +120,17 @@ describe('CurlService', () => {
 
   });
   describe('runCurls', () => {
-    it('should call execAsync with the correct command', async () => {
+    it('should call execAsync with the correct command and return a valid response', async () => {
       const iterationsCount = 1000;
       const algorithm = 'kyber512';
       const messageSize = 1024;
-      const execAsyncSpy = jest.spyOn<any, any>(curlService, 'execAsync').mockResolvedValue(undefined);
-      await curlService['runCurls'](iterationsCount, algorithm, messageSize);
+      const expectedResult = '123';
+      const execAsyncSpy = jest.spyOn<any, any>(curlService, 'execAsync').mockResolvedValue(expectedResult);
+      const result =await curlService['runCurls'](iterationsCount, algorithm, messageSize);
       const expectedCommand = curlService['format'](`./scripts/run-curl-loop.sh ${configService.get('nginx.host')} ${configService.get('nginx.port')} ${iterationsCount} ${algorithm} ${messageSize}`);
       expect(execAsyncSpy).toHaveBeenCalledWith(expectedCommand);
+      expect(result).toEqual({ totalRequestSize: parseInt(expectedResult) });
+
     });
     // Add more test cases for error handling in runCurls.
   });
