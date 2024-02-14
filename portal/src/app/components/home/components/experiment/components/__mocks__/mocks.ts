@@ -25,8 +25,10 @@ export const MOCK_DATA_FOR_EXPERIMENT: ITestRunResult = {
       message_size: 1024,
       results:
       {
-        averageCPU: 25.5,
-        averageMemory: 512,
+        average_cpu: 25.5,
+        average_memory: 512,
+        bytes_throughput: 11,
+        request_throughput: 21
       }
     },
     {
@@ -36,8 +38,10 @@ export const MOCK_DATA_FOR_EXPERIMENT: ITestRunResult = {
       message_size: 1024,
       results:
       {
-        averageCPU: 25.5,
-        averageMemory: 512,
+        average_cpu: 25.5,
+        average_memory: 512,
+        bytes_throughput: 11,
+        request_throughput: 21
       }
     },
     {
@@ -47,8 +51,10 @@ export const MOCK_DATA_FOR_EXPERIMENT: ITestRunResult = {
       message_size: 1024,
       results:
       {
-        averageCPU: 2,
-        averageMemory: 52,
+        average_cpu: 2,
+        average_memory: 52,
+        bytes_throughput: 11,
+        request_throughput: 21
       }
     }
   ]
@@ -79,8 +85,10 @@ export const MOCK_DATA_FOR_EXPERIMENT_TABLE: ExperimentTableProps = {
         message_size: 1024,
         results:
         {
-          averageCPU: 25.5,
-          averageMemory: 512,
+          average_cpu: 25.5,
+          average_memory: 512,
+          bytes_throughput: 11,
+          request_throughput: 21
         }
       },
       {
@@ -90,8 +98,10 @@ export const MOCK_DATA_FOR_EXPERIMENT_TABLE: ExperimentTableProps = {
         message_size: 512,
         results:
         {
-          averageCPU: 25.5,
-          averageMemory: 512,
+          average_cpu: 25.5,
+          average_memory: 512,
+          bytes_throughput: 11,
+          request_throughput: 21
         }
       },
       {
@@ -101,8 +111,10 @@ export const MOCK_DATA_FOR_EXPERIMENT_TABLE: ExperimentTableProps = {
         message_size: 2048,
         results:
         {
-          averageCPU: 2,
-          averageMemory: 52,
+          average_cpu: 2,
+          average_memory: 52,
+          bytes_throughput: 11,
+          request_throughput: 21
         }
       }
     ]
@@ -118,11 +130,11 @@ export const MOCK_DATA_FOR_EXPERIMENT_TABLE: ExperimentTableProps = {
     },
     {
       label: "Average CPU",
-      value: "averageCPU",
+      value: "average_cpu",
     },
     {
       label: "Average Memory",
-      value: "averageMemory",
+      value: "average_memory",
     },
   ]
 };
@@ -157,11 +169,11 @@ export const MOCK_DATA_FOR_EXPERIMENT_WITH_NO_TEST_RUNS: ExperimentTableProps = 
     },
     {
       label: "Average CPU",
-      value: "averageCPU",
+      value: "average_cpu",
     },
     {
       label: "Average Memory",
-      value: "averageMemory",
+      value: "average_memory",
     },
   ]
 };
@@ -189,8 +201,10 @@ export const MOCK_SUB_HEADER: ITestRunResult = {
           iterations: 1000,
           message_size: 1024,
           results: {
-            averageCPU: 3.5,
-            averageMemory: 3
+            average_cpu: 3.5,
+            average_memory: 3,
+            bytes_throughput: 11,
+            request_throughput: 21
           }
         },
   ],
@@ -203,8 +217,10 @@ export const CSV_MOCK: ITestRunResultData[] = [
     iterations: 1000,
     message_size: 1024,
     results: {
-      averageCPU: 2000,
-      averageMemory: 3000,
+      average_cpu: 2000,
+      average_memory: 3000,
+      bytes_throughput: 11,
+      request_throughput: 21
     },
   },
   {
@@ -213,8 +229,10 @@ export const CSV_MOCK: ITestRunResultData[] = [
     iterations: 4000,
     message_size: 2048,
     results: {
-      averageCPU: 5000,
-      averageMemory: 6000,
+      average_cpu: 5000,
+      average_memory: 6000,
+      bytes_throughput: 11,
+      request_throughput: 21
     },
   },
 ];

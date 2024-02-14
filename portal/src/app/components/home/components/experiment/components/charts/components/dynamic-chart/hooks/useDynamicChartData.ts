@@ -29,13 +29,8 @@ export function useDynamicChartData(chartData: ITestRunResult): IUseDynamicChart
 }
 
 function convertLabelByCapitalLetter(str: string): string {
-  let isFirstCapital = true;
-  const result = str.replace(/([A-Z])/g, (match) => {
-    if (isFirstCapital) {
-      isFirstCapital = false;
-      return ` ${match}`;
-    }
-    return match;
-  }).trim();
-  return result.charAt(0).toUpperCase() + result.slice(1);
+  return str
+  .split('_') // split the string by underscore
+  .map(word => word.charAt(0).toUpperCase() + word.slice(1)) // capitalize the first letter of each word
+  .join(' '); // join the words back together with a space
 }

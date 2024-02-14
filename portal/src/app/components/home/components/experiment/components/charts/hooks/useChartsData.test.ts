@@ -25,8 +25,10 @@ describe('useChartsData', () => {
           iterations: 2000,
           message_size: 1024,
           results: {
-            averageCPU: 25.5,
-            averageMemory: 512,
+            average_cpu: 25.5,
+            average_memory: 512,
+            bytes_throughput: 11,
+            request_throughput: 21,
           }
         },
         {
@@ -35,8 +37,10 @@ describe('useChartsData', () => {
           iterations: 1000,
           message_size: 512,
           results: {
-            averageCPU: 25.5,
-            averageMemory: 512,
+            average_cpu: 25.5,
+            average_memory: 512,
+            bytes_throughput: 11,
+            request_throughput: 21,
           }
         },
         {
@@ -45,14 +49,18 @@ describe('useChartsData', () => {
           iterations: 500,
           message_size: 1024,
           results: {
-              averageCPU: 2,
-              averageMemory: 52,
+              average_cpu: 2,
+              average_memory: 52,
+              bytes_throughput: 11,
+              request_throughput: 21,
           }
         }
       ],
       barChartKeysOfData: [
-        'averageCPU',
-        'averageMemory',
+        'average_cpu',
+        'average_memory',
+        'bytes_throughput',
+        'request_throughput',
       ],
       lineChartData: { labels: [500, 1000, 2000], datasets: [ 
         {
@@ -60,8 +68,10 @@ describe('useChartsData', () => {
           borderColor: "#086CE1",
           borderWidth: 1,
           data: {
-              averageCPU: [25.5, 2],
-              averageMemory: [512, 52],
+              average_cpu: [25.5, 2],
+              average_memory: [512, 52],
+              bytes_throughput: [11, 11],
+              request_throughput: [21, 21],
           },
           fill: false,
           label: "Algorithm1       ",
@@ -71,8 +81,10 @@ describe('useChartsData', () => {
           borderColor: "#086CE1",
           borderWidth: 1,
           data: {
-              averageCPU: [25.5],
-              averageMemory: [512],
+              average_cpu: [25.5],
+              average_memory: [512],
+              bytes_throughput: [11],
+              request_throughput: [21],
           },
           fill: false,
           label: "Algorithm2       ",
