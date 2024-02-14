@@ -30,7 +30,7 @@ def __get_test_runs_metrics(test_runs):
     test_runs_list = []
     for test_run in test_runs:
         metrics = test_run.test_run_metrics
-        cpu_avg, memory_avg = __calculate_cpu_memory_avg(metrics)
+        cpu_cores_avg, cpu_avg, memory_avg = __calculate_cpu_memory_avg(metrics)
         request_throughput, bytes_throughput = get_throughput_metrics(metrics)
         results = {
             "id": test_run.id,
@@ -38,6 +38,7 @@ def __get_test_runs_metrics(test_runs):
             "iterations": test_run.iterations,
             "message_size": test_run.message_size,
             "results": {
+                "average_cpu_cores": round(cpu_cores_avg, 2),
                 "average_cpu": round(cpu_avg, 2),
                 "average_memory": int(memory_avg),
                 "request_throughput": int(request_throughput),
@@ -49,15 +50,17 @@ def __get_test_runs_metrics(test_runs):
 
 
 def __calculate_cpu_memory_avg(test_run_metrics):
-    cpu_avg, memory_avg = 0.00, 0
+    cpu_cores_avg, cpu_avg, memory_avg = 0.00, 0.00, 0
 
     for metric in test_run_metrics:
-        if metric.metric_name in (Metric.CLIENT_AVERAGE_CPU, Metric.SERVER_AVERAGE_CPU):
-            cpu_avg += metric.value
+        if metric.metric_name in (Metric.CLIENT_AVERAGE_CPU_CORES, Metric.SERVER_AVERAGE_CPU_CORES):
+            cpu_cores_avg += metric.value
         elif metric.metric_name in (Metric.CLIENT_AVERAGE_MEMORY, Metric.SERVER_AVERAGE_MEMORY):
             memory_avg += metric.value
+        elif metric.metric_name in (Metric.CLIENT_AVERAGE_CPU, Metric.SERVER_AVERAGE_CPU):
+            cpu_avg += metric.value
 
-    return cpu_avg, memory_avg
+    return cpu_cores_avg, cpu_avg, memory_avg
 
 
 def get_throughput_metrics(test_run_metrics):
