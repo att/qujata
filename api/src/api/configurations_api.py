@@ -19,3 +19,9 @@ def get_algorithms():
 def get_iterations_list():
     return { "iterations": current_app.configurations.iterations_options }
 
+
+@api.route('/message_sizes', methods=['GET'])
+@cross_origin(origins=['*'], supports_credentials=True)
+def get_message_sizes_list():
+    return { "message_sizes": current_app.configurations.message_sizes_options }
+

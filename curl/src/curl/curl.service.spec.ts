@@ -5,7 +5,6 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 
 import { HttpException, HttpStatus } from '@nestjs/common';
 import * as shellJS from 'shelljs';
-import {MessageGenerator} from "../utils/message.generator";
 jest.mock('shelljs', () => ({
   exec: jest.fn(),
 }));
@@ -56,7 +55,7 @@ describe('CurlService', () => {
       const runCurlsSpy = jest.spyOn<any, any>(curlService, 'runCurls').mockResolvedValue(undefined);
       await curlService.run(curlRequest);
       expect(validateSpy).toHaveBeenCalledWith(curlRequest);
-      expect(runCurlsSpy).toHaveBeenCalledWith(curlRequest.iterationsCount, curlRequest.algorithm, expect.any(String));
+      expect(runCurlsSpy).toHaveBeenCalledWith(curlRequest.iterationsCount, curlRequest.algorithm, curlRequest.messageSize);
     });
 
     it('should throw an HttpException with status INTERNAL_SERVER_ERROR when runCurls throws an error', async () => {
@@ -124,10 +123,10 @@ describe('CurlService', () => {
     it('should call execAsync with the correct command', async () => {
       const iterationsCount = 1000;
       const algorithm = 'kyber512';
-      const message = MessageGenerator.generate(8);
+      const messageSize = 1024;
       const execAsyncSpy = jest.spyOn<any, any>(curlService, 'execAsync').mockResolvedValue(undefined);
-      await curlService['runCurls'](iterationsCount, algorithm, message);
-      const expectedCommand = curlService['format'](`./scripts/run-curl-loop.sh ${configService.get('nginx.host')} ${configService.get('nginx.port')} ${iterationsCount} ${algorithm} ${message}`);
+      await curlService['runCurls'](iterationsCount, algorithm, messageSize);
+      const expectedCommand = curlService['format'](`./scripts/run-curl-loop.sh ${configService.get('nginx.host')} ${configService.get('nginx.port')} ${iterationsCount} ${algorithm} ${messageSize}`);
       expect(execAsyncSpy).toHaveBeenCalledWith(expectedCommand);
     });
     // Add more test cases for error handling in runCurls.
