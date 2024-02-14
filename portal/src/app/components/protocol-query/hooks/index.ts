@@ -1,3 +1,4 @@
+export * from './useDuplicateData';
 export * from './useGetAlgorithms';
 export * from './useGetIterations';
-export * from './useDuplicateData';
+export * from './useMessageSizeData';
