@@ -41,7 +41,7 @@ def __get_test_runs_metrics(test_runs):
                 "average_cpu_cores": round(cpu_cores_avg, 2),
                 "average_cpu": round(cpu_avg, 2),
                 "average_memory": int(memory_avg),
-                "request_throughput": int(request_throughput),
+                "request_throughput": round(request_throughput, 2),
                 "bytes_throughput": int(bytes_throughput)
             }
         }
