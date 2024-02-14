@@ -11,11 +11,14 @@ url="https://${nginx_host}:${nginx_port}"
 header="Content-Type: text/plain"
 
 # Execute the first curl command and capture output(request size) and errors
-request_size=$(curl ${url} -k --curves ${algorithm} -XPOST -d "$payload" -H "${header}" -o /dev/null 2>/dev/null -w '%{size_request}')
-
+response=$(curl -sS -D - "${url}" -k --curves "${algorithm}" -XPOST -d @"${payload}" -H "${header}" -o /dev/null 2>/dev/null)
 if [ $? -ne 0 ]; then
     echo "Error: Failed to execute curl command."
     exit 1
+fi
+request_size=$(echo "$response" | awk '/Total-Request-Size/ {print $2}')
+if [ -z "$request_size" ]; then
+    request_size=0
 fi
 
 num_processes=$(($(getconf _NPROCESSORS_ONLN) * 2))

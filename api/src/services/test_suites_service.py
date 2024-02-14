@@ -32,7 +32,7 @@ def create_test_suite(data):
     current_app.database_manager.create(test_suite)
     return test_suite
 
-def create_test_run(start_time, end_time, algorithm, iterations, message_size, test_suite_id, status, status_message, data_bytes, client_metrics, server_metrics):
+def create_test_run(start_time, end_time, algorithm, iterations, message_size, test_suite_id, status, status_message, requests_size, client_metrics, server_metrics):
     test_run = TestRun(
         start_time=start_time,
         end_time=end_time,
@@ -45,7 +45,7 @@ def create_test_run(start_time, end_time, algorithm, iterations, message_size, t
     )    
     current_app.database_manager.create(test_run)
     if status == Status.SUCCESS:
-        metrics_service.create(test_run, client_metrics, server_metrics, data_bytes, start_time, end_time)
+        metrics_service.create(test_run, client_metrics, server_metrics, requests_size, start_time, end_time)
     return test_run
 
 def update_test_suite(test_suite):
