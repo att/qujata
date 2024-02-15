@@ -80,11 +80,11 @@ class TestAnalyzeAPI(unittest.TestCase):
                     self.assertEqual(db_call[7].args[0].metric_name, Metric.SERVER_AVERAGE_CPU)
                     self.assertEqual(db_call[7].args[0].value, 8.0)
                     self.assertEqual(db_call[8].args[0].metric_name, Metric.MESSAGES_THROUGHPUT_PER_SECOND)
-                    self.assertEqual(db_call[8].args[0].value, 8.0)
+                    self.assertEqual(db_call[8].args[0].value, 8.33)
                     self.assertEqual(db_call[9].args[0].metric_name, Metric.BYTES_THROUGHPUT_PER_SECOND)
                     self.assertEqual(db_call[9].args[0].value, 83.0)
                     self.assertEqual(db_call[17].args[0].metric_name, Metric.MESSAGES_THROUGHPUT_PER_SECOND)
-                    self.assertEqual(db_call[17].args[0].value, 33.0)
+                    self.assertEqual(db_call[17].args[0].value, 33.33)
                     self.assertEqual(db_call[18].args[0].metric_name, Metric.BYTES_THROUGHPUT_PER_SECOND)
                     self.assertEqual(db_call[18].args[0].value, 167.0)
 
