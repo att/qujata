@@ -77,7 +77,7 @@ class TestTestsAPI(unittest.TestCase):
         self.app.database_manager.get_by_id.return_value = test_suite
         response = self.client.get(TEST_SUITES_GET_URL)
         result = json.loads(response.data)
-        expected = {'code_release': '1.1.0', 'description': 'description', 'end_time': None, 'environment_info': {'cpu': None, 'cpu_architecture': None, 'cpu_clock_speed': None, 'cpu_cores': None, 'node_size': None, 'operating_system': None, 'resource_name': None}, 'id': None, 'name': 'name', 'start_time': None, 'test_runs': [{'algorithm': None, 'id': 1, 'iterations': None, 'message_size': None, 'results': {'average_cpu': 0.8, 'average_cpu_cores': 9.0, 'average_memory': 14, 'request_throughput': 50, 'bytes_throughput': 4500}}]}
+        expected = {'code_release': '1.1.0', 'description': 'description', 'end_time': None, 'environment_info': {'cpu': None, 'cpu_architecture': None, 'cpu_clock_speed': None, 'cpu_cores': None, 'node_size': None, 'operating_system': None, 'resource_name': None}, 'id': None, 'name': 'name', 'start_time': None, 'test_runs': [{'algorithm': None, 'id': 1, 'iterations': None, 'message_size': None, 'results': {'average_cpu': 0.8, 'average_memory': 14, 'request_throughput': 50, 'bytes_throughput': 4500}}]}
         self.assertEqual(result, expected)
 
     def test_get_test_suite_return_not_found(self):
