@@ -18,13 +18,16 @@ import { getChartTitleByType } from "../../utils/chart.utils";
 
 export interface DynamicChartProps {
     chartData: ITestRunResult;
+    xDefaultOption: AttSelectOption;
+    yDefaultOption: AttSelectOption;
+    chartDefaultType: AttSelectOption;
 }
 export const DynamicChart: React.FC<DynamicChartProps> = (props: DynamicChartProps) => {
-    const { chartData } = props;
+    const { chartData, xDefaultOption, yDefaultOption, chartDefaultType } = props;
     const { yAxiosOptions } = useDynamicChartData(chartData);
-    const [chartType, setChartType] = useState<AttSelectOption>();
-    const [xAxisValue, setXAxisValue] = useState<AttSelectOption>();
-    const [yAxisValue, setYAxisValue] = useState<AttSelectOption>();
+    const [chartType, setChartType] = useState<AttSelectOption>(chartDefaultType);
+    const [xAxisValue, setXAxisValue] = useState<AttSelectOption>(xDefaultOption);
+    const [yAxisValue, setYAxisValue] = useState<AttSelectOption>(yDefaultOption);
     const { barChartData, barChartLabels, lineChartData } = useChartsData({ data: chartData });
     const [lineChartConvertData, setLineChartConvertData] = useState<{labels: number[], datasets: unknown}>();
 

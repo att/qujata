@@ -1,7 +1,7 @@
 @import "src/styles/variables-keys";
 
 .chart_wrapper {
-    inline-size: 880px;
+    inline-size: 100%;
     min-block-size: 550px;
     background-color: var($primaryWhite);
     border: 1px solid #BDC2C7;
