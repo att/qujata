@@ -31,6 +31,7 @@ export const Experiments: React.FC = () => {
   const experimentsData = useMemo(() => (testSuites ? parseExperimentsData(testSuites): []), [testSuites]);
   const navigate = useNavigate();
 
+  
   const { post, status: deleteStatus, error: deleteError, cancelRequest: cancelRequestDelete }: IHttp<unknown>
     = useFetch<unknown>({ url: APIS.deleteExperiments });
   useFetchSpinner(deleteStatus);
