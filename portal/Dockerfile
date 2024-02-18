@@ -1,6 +1,7 @@
 FROM nginx:1.25-alpine3.18
 
 RUN apk --no-cache add --update nodejs npm
+ARG BUILD_ENV
 
 ## Replace the default nginx index page with our portal
 RUN rm -rf /usr/share/nginx/html/*
@@ -9,7 +10,13 @@ RUN mkdir /usr/share/nginx/html/qujata
 COPY . .
 RUN npm install -g yarn
 RUN yarn install
-RUN yarn build && cp -r  build/* /usr/share/nginx/html/qujata && cp build/index.html /usr/share/nginx/html/qujata/index.html.tpl && chmod 755 -R /usr/share/nginx/html/qujata
+RUN yarn add env-cmd
+RUN if [ "$BUILD_ENV" = "gh-pages" ]; then \
+        yarn build:gh-pages; \
+    else \
+        yarn build; \
+    fi \
+    && cp -r  build/* /usr/share/nginx/html/qujata && cp build/index.html /usr/share/nginx/html/qujata/index.html.tpl && chmod 755 -R /usr/share/nginx/html/qujata
 
 COPY nginx.conf /etc/nginx/nginx.conf
 

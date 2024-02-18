@@ -1,0 +1,52 @@
+{
+  "id": 1,
+  "name": "test1",
+  "description": "test1",
+  "start_time": "Thu, 14 Dec 2023 15:37:31 GMT",
+  "end_time": "Thu, 14 Dec 2023 15:38:39 GMT",
+  "environment_info": {
+    "codeRelease": "1.1.0",
+    "cpu": "RELACE_WITH_CPU",
+    "cpuArchitecture": "RELACE_WITH_CPU_ARCHITECTURE",
+    "cpuClockSpeed": "RELACE_WITH_CLOCK_SPEED",
+    "cpuCores": 0,
+    "nodeSize": "RELACE_WITH_NODE_SIZE",
+    "operatingSystem": "RELACE_WITH_OPERATING_SYSTEM",
+    "resourceName": "RELACE_WITH_RESOURCE_NAME"
+  },
+ 
+  "testRuns": [
+    {
+      "algorithm": "bikel1",
+      "iterations": 200,
+      "results": {
+        "averageCPU": 4.1,
+        "averageMemory": 200
+      }
+    },
+    {
+      "algorithm": "bikel1",
+      "iterations": 400,
+      "results": {
+        "averageCPU": 4.9,
+        "averageMemory": 150
+      }
+    },
+    {
+      "algorithm": "kyber512",
+      "iterations": 1000,
+      "results": {
+        "averageCPU": 4.5,
+        "averageMemory": 249
+      }
+    },
+    {
+      "algorithm": "kyber512",
+      "iterations": 2000,
+      "results": {
+        "averageCPU": 0.0,
+        "averageMemory": 0
+      }
+    }
+  ]
+}
