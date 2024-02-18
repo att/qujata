@@ -16,8 +16,7 @@ export const Charts: React.FC<IExperimentData> = (props: IExperimentData) => {
                 {
                     yAxiosOptions?.map((item, index) => (
                         <div className={styles.chart}>
-                                                    <DynamicChart chartData={props.data} xDefaultOption={xDefaultOption} yDefaultOption={item} chartDefaultType={getChartDefaultTypeByValue(item.value) as AttSelectOption} />
-
+                            <DynamicChart chartData={props.data} xDefaultOption={xDefaultOption} yDefaultOption={item} chartDefaultType={getChartDefaultTypeByValue(item.value) as AttSelectOption} />
                         </div>
                     ))
                 }
