@@ -60,7 +60,7 @@
     "start:quantum-api": "cross-env REACT_SERVER_TARGET=http://localhost:3010 yarn start",
     "start:mock:client": "cross-env REACT_SERVER_TARGET=http://localhost:2011 yarn start",
     "start:mock:server": "cd ./mock-server && yarn serve",
-    "build": "env-cmd -f .env.gh-pages yarn react-scripts build",
+    "build": "yarn react-scripts build",
     "build:gh-pages": "env-cmd -f .env.gh-pages yarn react-scripts build",
     "build:ci": "yarn react-scripts build",
     "test": "react-scripts test",
