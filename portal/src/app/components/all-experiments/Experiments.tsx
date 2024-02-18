@@ -25,18 +25,33 @@ const DeleteAriaLabel: string = ALL_EXPERIMENTS_TABLE_EN.BUTTONS.DELETE;
 const DuplicateAriaLabel: string = ALL_EXPERIMENTS_TABLE_EN.TABLE_COLUMNS.LINKS.DUPLICATE;
 
 export const Experiments: React.FC = () => {
+  const navigate = useNavigate();
   const { testSuites, status }: IUseExperimentsData = useExperimentsData();
   const [openDeleteModal, setOpenDeleteModal] = useState<boolean>(false);
   const [checkedRows, setCheckedRows] = useState<Record<number, boolean>>({});
-  const experimentsData = useMemo(() => (testSuites ? parseExperimentsData(testSuites): []), [testSuites]);
-  const navigate = useNavigate();
+  const [experimentsData, setExperimentsData] = useState<ExperimentData[]>([]);
+  const [itemsToDelete, setItemsToDelete] = useState<ExperimentData[]>([]);
 
-  
   const { post, status: deleteStatus, error: deleteError, cancelRequest: cancelRequestDelete }: IHttp<unknown>
     = useFetch<unknown>({ url: APIS.deleteExperiments });
   useFetchSpinner(deleteStatus);
   useErrorMessage(deleteError);
   useEffect(() => cancelRequestDelete, [cancelRequestDelete]);
+
+  // Update the experimentsData state when testSuites changes
+  useEffect(() => {
+    if (testSuites) {
+      setExperimentsData(parseExperimentsData(testSuites));
+    }
+  }, [testSuites]);
+
+  // Update the experimentsData state when delete operation is successful
+  useEffect(() => {
+    if (deleteStatus === FetchDataStatus.Success) {
+      setExperimentsData(prevExperimentsData => prevExperimentsData.filter(experiment => !itemsToDelete.includes(experiment)));
+      setCheckedRows({});
+    }
+  }, [deleteStatus, itemsToDelete]);
 
   const handleDeleteClick: () => void = useCallback((): void => {
     setOpenDeleteModal(true);
@@ -44,13 +59,15 @@ export const Experiments: React.FC = () => {
 
   const handleCloseDeleteExperimentModal: (confirm?: boolean) => void = useCallback((confirm?: boolean): void => {
     if (confirm) {
+      const items = experimentsData.filter(experiment => checkedRows[experiment.id]);
+      setItemsToDelete(items);
       const ids: number[] = Object.keys(checkedRows).map((key: string) => parseInt(key))
       post({
         data: { ids }
       });
     }
     setOpenDeleteModal(false);
-  }, [post, checkedRows]);
+  }, [post, experimentsData, checkedRows]);
 
   const handleCheckboxClick = useCallback((rowInfo: ExperimentData): void => {
     const rowId = rowInfo.id as number;
@@ -122,6 +139,7 @@ export const Experiments: React.FC = () => {
         accessor: () => null,
         cell: (cellInfo: CellContext<ExperimentData, unknown>) => (
           <Button
+            key={cellInfo.row.original.id}
             ariaLabel={DuplicateAriaLabel}
             size={ButtonSize.NONE}
             styleType={ButtonStyleType.WRAPPER}
@@ -151,7 +169,7 @@ export const Experiments: React.FC = () => {
       <>
         { status === FetchDataStatus.Success &&
           <div className={styles.title_options_container}>
-            <label className={styles.experiments_title}>{`${ALL_EXPERIMENTS_TABLE_EN.TITLE} (${testSuites.length})`}</label>
+            <label className={styles.experiments_title}>{`${ALL_EXPERIMENTS_TABLE_EN.TITLE} (${experimentsData.length})`}</label>
             {Object.values(checkedRows).some((value: boolean) => value) && (
               <Button
                 ariaLabel={DeleteAriaLabel}
