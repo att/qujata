@@ -60,6 +60,7 @@ export const Experiments: React.FC = () => {
 
   const handleCloseDeleteExperimentModal: (confirm?: boolean) => void = useCallback((confirm?: boolean): void => {
     if (confirm) {
+      setDeleteHandled(false);
       const ids: number[] = Object.keys(checkedRows).map((key: string) => parseInt(key))
       post({
         data: { ids }
@@ -168,7 +169,7 @@ export const Experiments: React.FC = () => {
       <>
         { status === FetchDataStatus.Success &&
           <div className={styles.title_options_container}>
-            <label className={styles.experiments_title}>{`${ALL_EXPERIMENTS_TABLE_EN.TITLE} (${testSuites.length})`}</label>
+            <label className={styles.experiments_title}>{`${ALL_EXPERIMENTS_TABLE_EN.TITLE} (${experimentsData.length})`}</label>
             {Object.values(checkedRows).some((value: boolean) => value) && (
               <Button
                 ariaLabel={DeleteAriaLabel}
