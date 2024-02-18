@@ -39,7 +39,7 @@ export const AlgorithmsSelectorCustomOption: React.FC<SelectorCustomOptionProps>
   );
 };
 
-export const IterationsSelectorCustomOption: React.FC<SelectorCustomOptionProps> = (props: SelectorCustomOptionProps) => {
+export const SelectorCustomOption: React.FC<SelectorCustomOptionProps> = (props: SelectorCustomOptionProps) => {
   return (
     <>
       {!props.data.metadata && (
@@ -48,7 +48,7 @@ export const IterationsSelectorCustomOption: React.FC<SelectorCustomOptionProps>
             <input
               id={props.label}
               type="checkbox"
-              className={cn(styles.iterations_input_option, styles.input_option)}
+              className={cn(styles.custom_input_option, styles.input_option)}
               checked={props.isSelected}
               onChange={() => props.onOptionChanged}
             />

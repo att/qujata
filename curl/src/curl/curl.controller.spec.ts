@@ -3,6 +3,7 @@ import { CurlController } from './curl.controller';
 import { CurlService } from './curl.service';
 import { CurlRequest } from '../dto/curl-request.dto';
 import { HttpException } from '@nestjs/common';
+import { CurlResponseDto } from "../dto/curl-response.dto";
 describe('CurlController', () => {
   let curlController: CurlController;
   let curlService: CurlService;
@@ -41,7 +42,8 @@ describe('CurlController', () => {
         iterationsCount: 500,
         messageSize: 10
       };
-      const expectedResult = undefined;
+      const expectedResult = new CurlResponseDto();
+      expectedResult.totalRequestSize = 123;
       jest.spyOn(curlService, 'run').mockResolvedValue(expectedResult);
       const result = await curlController.create(curlRequest);
       expect(result).toBe(expectedResult);

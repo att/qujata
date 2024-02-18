@@ -19,12 +19,14 @@ POST_REQUEST = 'requests.post'
 GET_REQUEST = 'requests.get'
 INVALID_DATA_PROVIDED = "Invalid data provided"
 
-client_metrics = {str(datetime.now() + timedelta(seconds=30)) + "123Z":{"cpu":3.6, "memory":254}, str(datetime.now() + timedelta(seconds=36))+ "123Z":{"cpu":3.8, "memory":234}}
-server_metrics = {str(datetime.now() + timedelta(seconds=30))+ "123Z":{"cpu":2.3, "memory":154}, str(datetime.now() + timedelta(seconds=36))+ "123Z":{"cpu":2.7, "memory":156}}
+client_metrics = {str(datetime.now() + timedelta(seconds=30)) + "123Z":{"cpu_cores":3.6, "cpu":10, "memory":254}, str(datetime.now() + timedelta(seconds=36))+ "123Z":{"cpu_cores":3.8, "cpu":11, "memory":234}}
+server_metrics = {str(datetime.now() + timedelta(seconds=30))+ "123Z":{"cpu_cores":2.3, "cpu":7.5, "memory":154}, str(datetime.now() + timedelta(seconds=36))+ "123Z":{"cpu_cores":2.7, "cpu":8.5, "memory":156}}
 metrics = [client_metrics, server_metrics]
-@patch('src.services.metrics_service.start_collecting', return_value=None)
-@patch('src.services.metrics_service.stop_collecting', return_value=None)
-@patch('src.services.metrics_service.get_metrics', return_value=metrics)
+
+
+@patch('src.utils.metrics_collection_manager.start_collecting', return_value=None)
+@patch('src.utils.metrics_collection_manager.stop_collecting', return_value=None)
+@patch('src.utils.metrics_collection_manager.get_metrics', return_value=metrics)
 class TestAnalyzeAPI(unittest.TestCase):
     def setUp(self):
         self.app = Flask(__name__)
@@ -33,10 +35,10 @@ class TestAnalyzeAPI(unittest.TestCase):
         load_config(self.app)
         self.app.database_manager = Mock(spec=DatabaseManager)
 
-
-    def test_analyze(self, mock_start_collecting, mock_stop_collecting, mock_get_metrics):
+    @patch('src.services.metrics_service.parser.parse', side_effect=lambda x: datetime.fromisoformat(x))
+    def test_analyze(self, mock_parser, mock_start_collecting, mock_stop_collecting, mock_get_metrics):
         input_data = {
-            "algorithms":["kyber512"],
+            "algorithms": ["kyber512"],
             "iterationsCount": [1000, 2000],
             "experimentName": "name",
             "description": "name",
@@ -47,30 +49,51 @@ class TestAnalyzeAPI(unittest.TestCase):
             with patch(GET_REQUEST) as mock_get:
                 mock_get.return_value.status_code = 200
                 mock_get.return_value.json.return_value = {}
-                mock_post.return_value = MagicMock(status_code=200, json=lambda: {'result': 'success'})
+                mock_post.return_value = MagicMock(status_code=200, json=lambda: {'result': 'success', 'totalRequestSize': 10000})
+                with patch('src.services.analyze_service.datetime') as mock_datetime:
+                    mock_datetime.now.side_effect = [
+                        datetime(2024, 1, 1, 10, 0, 0),# test suite start time
+                        datetime(2024, 1, 1, 10, 0, 0),# first test run start time
+                        datetime(2024, 1, 1, 10, 2, 0),# first test run end time
+                        datetime(2024, 1, 1, 10, 2, 0),# second test run start time
+                        datetime(2024, 1, 1, 10, 3, 0),# second test run end time
+                        datetime(2024, 1, 1, 10, 3, 0)# test suite end time
+                    ]
 
-                response = self.client.post(PATH,
-                                        data=json.dumps(input_data),
-                                        content_type=CONTENT_TYPE)
+                    response = self.client.post(PATH,
+                                            data=json.dumps(input_data),
+                                            content_type=CONTENT_TYPE)
 
-            
-                self.assertEqual(self.app.database_manager.create.call_count, 11)# 1 for the test suite, and 2 for test runs and 4*2(8) for test run metrics
-                db_call = self.app.database_manager.create.call_args_list
-                self.assertEqual(db_call[2].args[0].metric_name, Metric.CLIENT_AVERAGE_CPU)
-                self.assertEqual(db_call[2].args[0].value, 3.7)
-                self.assertEqual(db_call[3].args[0].metric_name, Metric.CLIENT_AVERAGE_MEMORY)
-                self.assertEqual(db_call[3].args[0].value, 244.0)
-                self.assertEqual(db_call[4].args[0].metric_name, Metric.SERVER_AVERAGE_CPU)
-                self.assertEqual(db_call[4].args[0].value, 2.5)
-                self.assertEqual(db_call[5].args[0].metric_name, Metric.SERVER_AVERAGE_MEMORY)
-                self.assertEqual(db_call[5].args[0].value, 155.0)
-                
-                self.assertEqual(response.status_code, 200)
-                # Check the response content
-                response_data = json.loads(response.data)
-                self.assertIn('test_suite_id', response_data)
-                self.assertEqual(mock_start_collecting.call_count, 2)
-                self.assertEqual(mock_stop_collecting.call_count, 2)
+
+                    self.assertEqual(self.app.database_manager.create.call_count, 19)# 1 for the test suite, and 2 for test runs and 8*2(16) for test run metrics
+                    db_call = self.app.database_manager.create.call_args_list
+                    self.assertEqual(db_call[2].args[0].metric_name, Metric.CLIENT_AVERAGE_CPU_CORES)
+                    self.assertEqual(db_call[2].args[0].value, 3.7)
+                    self.assertEqual(db_call[3].args[0].metric_name, Metric.CLIENT_AVERAGE_MEMORY)
+                    self.assertEqual(db_call[3].args[0].value, 244.0)
+                    self.assertEqual(db_call[4].args[0].metric_name, Metric.CLIENT_AVERAGE_CPU)
+                    self.assertEqual(db_call[4].args[0].value, 10.5)
+                    self.assertEqual(db_call[5].args[0].metric_name, Metric.SERVER_AVERAGE_CPU_CORES)
+                    self.assertEqual(db_call[5].args[0].value, 2.5)
+                    self.assertEqual(db_call[6].args[0].metric_name, Metric.SERVER_AVERAGE_MEMORY)
+                    self.assertEqual(db_call[6].args[0].value, 155.0)
+                    self.assertEqual(db_call[7].args[0].metric_name, Metric.SERVER_AVERAGE_CPU)
+                    self.assertEqual(db_call[7].args[0].value, 8.0)
+                    self.assertEqual(db_call[8].args[0].metric_name, Metric.MESSAGES_THROUGHPUT_PER_SECOND)
+                    self.assertEqual(db_call[8].args[0].value, 8.33)
+                    self.assertEqual(db_call[9].args[0].metric_name, Metric.BYTES_THROUGHPUT_PER_SECOND)
+                    self.assertEqual(db_call[9].args[0].value, 83.0)
+                    self.assertEqual(db_call[17].args[0].metric_name, Metric.MESSAGES_THROUGHPUT_PER_SECOND)
+                    self.assertEqual(db_call[17].args[0].value, 33.33)
+                    self.assertEqual(db_call[18].args[0].metric_name, Metric.BYTES_THROUGHPUT_PER_SECOND)
+                    self.assertEqual(db_call[18].args[0].value, 167.0)
+
+                    self.assertEqual(response.status_code, 200)
+                    # Check the response content
+                    response_data = json.loads(response.data)
+                    self.assertIn('test_suite_id', response_data)
+                    self.assertEqual(mock_start_collecting.call_count, 2)
+                    self.assertEqual(mock_stop_collecting.call_count, 2)
 
 
 
@@ -176,6 +199,7 @@ class TestAnalyzeAPI(unittest.TestCase):
                                         data=json.dumps(input_data),
                                         content_type=CONTENT_TYPE)
                 self.assertEqual(response.status_code, 200)
+                self.assertEqual(self.app.database_manager.create.call_count, 2) #dont save metrics for when curl request failed
                 actual_test_run = self.app.database_manager.create.call_args_list[1].args
                 self.assertEqual(actual_test_run[0].status, Status.FAILED)
                 self.assertEqual(actual_test_run[0].status_message, '{"result": "failed"}')

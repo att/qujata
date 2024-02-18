@@ -56,9 +56,10 @@ def get_metrics(metrics_url):
         cur = stats[i]
         prev = stats[i - 1]
         interval_ns = __get_interval(cur['timestamp'], prev['timestamp'])
-        cpu_val = (cur['cpu']['usage']['total'] - prev['cpu']['usage']['total']) / interval_ns
+        cpu_cores_val = (cur['cpu']['usage']['total'] - prev['cpu']['usage']['total']) / interval_ns
+        cpu_val = cpu_cores_val / len(cur['cpu']['usage']['per_cpu_usage'])
         memory_val = cur['memory']['usage'] / ONE_MEGABYTE
-        data[cur['timestamp']] = {"cpu": cpu_val, "memory": memory_val}
+        data[cur['timestamp']] = {"cpu_cores": cpu_cores_val, "cpu": cpu_val, "memory": memory_val}
     return data
 
 

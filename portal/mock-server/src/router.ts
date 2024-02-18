@@ -29,7 +29,15 @@ router.get('/iterations', async (req: Request, res: Response) => {
   }, 1500);
 });
 
-router.get('/qujata-api/test_suites/:testSuiteId', async (req: Request, res: Response) => {
+router.get('/message_sizes', async (req: Request, res: Response) => {
+  console.log(`-${req.method} ${req.url}`);
+  const data = (await import('./message_sizes.json')).default;
+  setTimeout(() => {
+    res.json(data);
+  }, 1500);
+});
+
+router.get('/test_suites/:testSuiteId', async (req: Request, res: Response) => {
   console.log(`-${req.method} ${req.url}`);
   const data = (await import('./test.json')).default;
   setTimeout(() => {
@@ -37,7 +45,7 @@ router.get('/qujata-api/test_suites/:testSuiteId', async (req: Request, res: Res
   }, 1500);
 });
 
-router.get('/qujata-api/test_suites', async (req: Request, res: Response) => {
+router.get('/test_suites', async (req: Request, res: Response) => {
   console.log(`-${req.method} ${req.url}`);
   const data = (await import('./all-experiments.json')).default;
   setTimeout(() => {
@@ -45,21 +53,21 @@ router.get('/qujata-api/test_suites', async (req: Request, res: Response) => {
   }, 1500);
 });
 
-router.put('/qujata-api/test_suites/:testSuiteId', async (req: Request, res: Response) => {
+router.put('/test_suites/:testSuiteId', async (req: Request, res: Response) => {
   console.log(`-${req.method} ${req.url}`);
   setTimeout(() => {
     res.status(200).send();
   }, 1500);
 });
 
-router.delete('/qujata-api/test_suites/:testSuiteId', async (req: Request, res: Response) => {
+router.delete('/test_suites/:testSuiteId', async (req: Request, res: Response) => {
   console.log(`-${req.method} ${req.url}`);
   setTimeout(() => {
     res.status(200).send();
   }, 1500);
 });
 
-router.post('/qujata-api/test_suites/delete', async (req: Request, res: Response) => {
+router.post('/test_suites/delete', async (req: Request, res: Response) => {
   console.log(`-${req.method} ${req.url}`);
   setTimeout(() => {
     res.status(200).send();

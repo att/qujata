@@ -2,9 +2,9 @@ import { ChartData, ChartOptions, TooltipItem, Chart, LegendItem, ChartDataset }
 import { Bar } from 'react-chartjs-2';
 import { useEffect, useRef, useState } from 'react';
 import { IDatasets } from './models/BarChart.model';
-import { TITLE_PREFIX, colors, defaultOptions } from './barChart.const';
-import styles from './BarChart.module.scss';
+import { TITLE_PREFIX, defaultOptions } from './barChart.const';
 import { uniq } from 'lodash';
+import { getColorByName } from '../utils/charts.utils';
 
 export interface BarChartProps {
     labels: string[];
@@ -13,10 +13,11 @@ export interface BarChartProps {
     tooltipKeys: string[];
     tooltipLabels: string[];   
     title?: string;
+    xAxiosTitle?: string;
 }
 
 export const BarChart: React.FC<BarChartProps> = (props: BarChartProps) => {
-    const { labels, data, tooltipKeys, tooltipLabels, keyOfData, title } = props;
+    const { labels, data, tooltipKeys, tooltipLabels, keyOfData, title, xAxiosTitle } = props;
     const [dataValues, setDataValues] = useState();
     const [datasets, setDatasets] = useState<IDatasets[]>([]);
     const [algorithmsColors, setAlgorithmsColors] = useState<{[key: string]: string}>();
@@ -28,8 +29,8 @@ export const BarChart: React.FC<BarChartProps> = (props: BarChartProps) => {
 
         const algorithms: string[] = uniq(data.map((item: any) => item.algorithm));
         const algorithmColors: {[key: string]: string} = {};
-        algorithms.forEach((algorithm, index) => {
-          algorithmColors[algorithm] = colors[index % colors.length];
+        algorithms.forEach((algorithm) => {
+          algorithmColors[algorithm] = getColorByName(algorithm);
         });
         setAlgorithmsColors(algorithmColors);
     }, [data, keyOfData]);
@@ -99,8 +100,8 @@ export const BarChart: React.FC<BarChartProps> = (props: BarChartProps) => {
           },
           title: {
             display: true,
-            text: title,
-            align: 'start',
+            text: xAxiosTitle,
+            align: 'end',
             font: {
               size: 18,
               weight: '500',
@@ -153,7 +154,7 @@ export const BarChart: React.FC<BarChartProps> = (props: BarChartProps) => {
           (event.currentTarget as HTMLElement).style.cursor = 'default';
         }}
       >
-        <Bar ref={chartRef as any} data={tempData} options={options} style={{ height: '450px' }} className={styles.bar} />
+        <Bar ref={chartRef as any} data={tempData} options={options} style={{ height: '450px' }} />
       </div>
     );
 }

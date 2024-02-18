@@ -31,6 +31,7 @@ export const Experiments: React.FC = () => {
   const experimentsData = useMemo(() => (testSuites ? parseExperimentsData(testSuites): []), [testSuites]);
   const navigate = useNavigate();
 
+  
   const { post, status: deleteStatus, error: deleteError, cancelRequest: cancelRequestDelete }: IHttp<unknown>
     = useFetch<unknown>({ url: APIS.deleteExperiments });
   useFetchSpinner(deleteStatus);
@@ -105,6 +106,11 @@ export const Experiments: React.FC = () => {
         id: ALL_EXPERIMENTS_TABLE_EN.TABLE_COLUMNS.ITERATIONS.ID,
         name: ALL_EXPERIMENTS_TABLE_EN.TABLE_COLUMNS.ITERATIONS.NAME, 
         accessor: (row: ExperimentData) => row.iterations?.join(', ')
+      },
+      {
+        id: ALL_EXPERIMENTS_TABLE_EN.TABLE_COLUMNS.MESSAGE_SIZES.ID,
+        name: ALL_EXPERIMENTS_TABLE_EN.TABLE_COLUMNS.MESSAGE_SIZES.NAME, 
+        accessor: (row: ExperimentData) => row.message_sizes?.join(', ')
       },
       { 
         id: ALL_EXPERIMENTS_TABLE_EN.TABLE_COLUMNS.DATE.ID,

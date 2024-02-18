@@ -1,4 +1,4 @@
-import { Controller, Post, Body, HttpCode, HttpStatus, NotFoundException } from '@nestjs/common';
+import { Controller, Post, Body, HttpCode, HttpStatus } from '@nestjs/common';
 import { CurlService } from './curl.service';
 import { CurlRequest } from '../dto/curl-request.dto';
 
@@ -8,8 +8,10 @@ export class CurlController {
 
   @Post()
   @HttpCode(HttpStatus.CREATED)
-  async create(@Body() curlRequest: CurlRequest): Promise<void> {
+  async create(@Body() curlRequest: CurlRequest) {
     console.log('[CurlController:create] In Post func. Body: ', curlRequest);
-    return await this.curlService.run(curlRequest);
+    const curlInfo = await this.curlService.run(curlRequest);
+    console.log('[CurlController:create] In Post func. Response: ', curlInfo)
+    return curlInfo;
   }
 }

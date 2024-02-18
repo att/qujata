@@ -14,42 +14,53 @@
     "operatingSystem": "RELACE_WITH_OPERATING_SYSTEM",
     "resourceName": "RELACE_WITH_RESOURCE_NAME"
   },
- 
   "test_runs": [
     {
       "id":1,
       "algorithm": "bikel1",
       "iterations": 1000,
+      "message_size": 1024,
       "results": {
-        "averageCPU": 3.5,
-        "averageMemory": 3
+        "average_cpu": 3.5,
+        "average_memory": 3,
+        "bytes_throughput": 11,
+        "request_throughput": 21
       }
     },
     {
       "id":2,
       "algorithm": "bikel1",
       "iterations": 2000,
+      "message_size": 2048,
       "results": {
-        "averageCPU": 7.0,
-        "averageMemory": 6
+        "average_cpu": 7.0,
+        "average_memory": 6,
+        "bytes_throughput": 12,
+        "request_throughput": 24
       }
     },
     {
      "id":3,
       "algorithm": "kyber512",
       "iterations": 1000,
+      "message_size": 1024,
       "results": {
-        "averageCPU": 1.7,
-        "averageMemory": 2
+        "average_cpu": 1.7,
+        "average_memory": 2,
+        "bytes_throughput": 20,
+        "request_throughput": 30
       }
     },
     {
       "id":4,
       "algorithm": "kyber512",
       "iterations": 2000,
+      "message_size": 1024,
       "results": {
-        "averageCPU": 2.6,
-        "averageMemory": 2
+        "average_cpu": 2.6,
+        "average_memory": 2,
+        "bytes_throughput": 10,
+        "request_throughput": 20
       }
     }
   ]
