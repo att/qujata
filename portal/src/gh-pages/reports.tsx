@@ -8,7 +8,7 @@ export const Reports: React.FC = () => {
   const [selectedFile, setSelectedFile] = useState<string | null>(null);
   const [fileContent, setFileContent] = useState<string>("");
   useEffect(() => {
-    const apiUrl = 'https://api.github.com/repos/att/qujata/contents/reports?ref=static-web-page/US63/conditional-main-page';
+    const apiUrl = 'https://api.github.com/repos/att/qujata/contents/reports?ref=main';
     fetch(apiUrl)
       .then(response => response.json())
       .then((data: File[]) => {
@@ -21,7 +21,7 @@ export const Reports: React.FC = () => {
   }, []);
   useEffect(() => {
     if (selectedFile) {
-    fetch(`https://raw.githubusercontent.com/att/qujata/static-web-page/US63/conditional-main-page/${selectedFile}`)
+    fetch(`https://raw.githubusercontent.com/att/qujata/main/${selectedFile}`)
         .then(response => response.json())
         .then((data: any) => {
           const fileContent = JSON.stringify(data, null, 2); // Decode the base64 content
