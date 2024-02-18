@@ -25,13 +25,13 @@ const DeleteAriaLabel: string = ALL_EXPERIMENTS_TABLE_EN.BUTTONS.DELETE;
 const DuplicateAriaLabel: string = ALL_EXPERIMENTS_TABLE_EN.TABLE_COLUMNS.LINKS.DUPLICATE;
 
 export const Experiments: React.FC = () => {
-  const { testSuites, status }: IUseExperimentsData = useExperimentsData();
   const navigate = useNavigate();
+  const { testSuites, status }: IUseExperimentsData = useExperimentsData();
   const [openDeleteModal, setOpenDeleteModal] = useState<boolean>(false);
   const [checkedRows, setCheckedRows] = useState<Record<number, boolean>>({});
   const [experimentsData, setExperimentsData] = useState<ExperimentData[]>([]);
-  
-  const [deleteHandled, setDeleteHandled] = useState(false);
+  const [itemsToDelete, setItemsToDelete] = useState<ExperimentData[]>([]);
+
   const { post, status: deleteStatus, error: deleteError, cancelRequest: cancelRequestDelete }: IHttp<unknown>
     = useFetch<unknown>({ url: APIS.deleteExperiments });
   useFetchSpinner(deleteStatus);
@@ -47,12 +47,11 @@ export const Experiments: React.FC = () => {
 
   // Update the experimentsData state when delete operation is successful
   useEffect(() => {
-    if (deleteStatus === FetchDataStatus.Success && !deleteHandled) {
-      setExperimentsData(prevExperimentsData => prevExperimentsData.filter(experiment => !checkedRows[experiment.id]));
+    if (deleteStatus === FetchDataStatus.Success) {
+      setExperimentsData(prevExperimentsData => prevExperimentsData.filter(experiment => !itemsToDelete.includes(experiment)));
       setCheckedRows({});
-      setDeleteHandled(true);
     }
-  }, [deleteStatus, deleteHandled, checkedRows]);
+  }, [deleteStatus, itemsToDelete]);
 
   const handleDeleteClick: () => void = useCallback((): void => {
     setOpenDeleteModal(true);
@@ -60,14 +59,15 @@ export const Experiments: React.FC = () => {
 
   const handleCloseDeleteExperimentModal: (confirm?: boolean) => void = useCallback((confirm?: boolean): void => {
     if (confirm) {
-      setDeleteHandled(false);
+      const items = experimentsData.filter(experiment => checkedRows[experiment.id]);
+      setItemsToDelete(items);
       const ids: number[] = Object.keys(checkedRows).map((key: string) => parseInt(key))
       post({
         data: { ids }
       });
     }
     setOpenDeleteModal(false);
-  }, [post, checkedRows]);
+  }, [post, experimentsData, checkedRows]);
 
   const handleCheckboxClick = useCallback((rowInfo: ExperimentData): void => {
     const rowId = rowInfo.id as number;
