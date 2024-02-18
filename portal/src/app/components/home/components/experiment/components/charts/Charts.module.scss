@@ -1,7 +1,23 @@
 @import "src/styles/variables-keys";
 
-.charts_wrapper {
+.charts_content {
     margin-block-start: 20px;
+}
+
+.charts_wrapper {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+.chart {
+    flex: 0 0 50%;
+    box-sizing: border-box;
+    overflow: hidden;
+    padding: 0 10px 10px 0;
+
+    &:nth-child(2n) {
+        padding-inline-end: 0;
+    }
 }
 
 .title {

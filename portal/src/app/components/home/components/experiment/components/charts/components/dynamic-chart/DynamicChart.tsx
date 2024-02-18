@@ -18,13 +18,16 @@ import { getChartTitleByType } from "../../utils/chart.utils";
 
 export interface DynamicChartProps {
     chartData: ITestRunResult;
+    xDefaultOption: AttSelectOption;
+    yDefaultOption: AttSelectOption;
+    chartDefaultType: AttSelectOption;
 }
 export const DynamicChart: React.FC<DynamicChartProps> = (props: DynamicChartProps) => {
-    const { chartData } = props;
-    const { yAxiosOptions } = useDynamicChartData(chartData);
-    const [chartType, setChartType] = useState<AttSelectOption>();
-    const [xAxisValue, setXAxisValue] = useState<AttSelectOption>();
-    const [yAxisValue, setYAxisValue] = useState<AttSelectOption>();
+    const { chartData, xDefaultOption, yDefaultOption, chartDefaultType } = props;
+    const { yAxisOptions } = useDynamicChartData(chartData);
+    const [chartType, setChartType] = useState<AttSelectOption>(chartDefaultType);
+    const [xAxisValue, setXAxisValue] = useState<AttSelectOption>(xDefaultOption);
+    const [yAxisValue, setYAxisValue] = useState<AttSelectOption>(yDefaultOption);
     const { barChartData, barChartLabels, lineChartData } = useChartsData({ data: chartData });
     const [lineChartConvertData, setLineChartConvertData] = useState<{labels: number[], datasets: unknown}>();
 
@@ -68,7 +71,7 @@ export const DynamicChart: React.FC<DynamicChartProps> = (props: DynamicChartPro
                         id='yAxiosSelector'
                         className={styles.select_item}
                         placeholder={DYNAMIC_CHART_EN.SELECTORS.PLACEHOLDERS.Y_AXIOS}
-                        options={yAxiosOptions}
+                        options={yAxisOptions}
                         value={yAxisValue as AttSelectOption}
                         onChange={onYAxisValueChanged}
                         required
