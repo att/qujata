@@ -7,14 +7,14 @@ import { ChartType, chartTypeOptions, xAxisTypeOptions } from './components/dyna
 import { CHARTS_EN } from './translate/en';
 
 export const Charts: React.FC<IExperimentData> = (props: IExperimentData) => {
-    const { yAxiosOptions } = useDynamicChartData(props.data);
+    const { yAxisOptions } = useDynamicChartData(props.data);
     const xDefaultOption: AttSelectOption = xAxisTypeOptions[0];
     return (
         <div className={styles.charts_content}>
             <div className={styles.title}>{CHARTS_EN.TITLE}</div>
             <div className={styles.charts_wrapper}>
                 {
-                    yAxiosOptions?.map((item, index) => (
+                    yAxisOptions?.map((item, index) => (
                         <div className={styles.chart}>
                             <DynamicChart chartData={props.data} xDefaultOption={xDefaultOption} yDefaultOption={item} chartDefaultType={getChartDefaultTypeByValue(item.value) as AttSelectOption} />
                         </div>

@@ -3,10 +3,10 @@ import { AttSelectOption } from "../../../../../../../../../shared/components/at
 import { ITestRunResult } from "../../../../../../../../../shared/models/test-run-result.interface";
 
 export interface IUseDynamicChartData {
-  yAxiosOptions: AttSelectOption[];
+  yAxisOptions: AttSelectOption[];
 }
 export function useDynamicChartData(chartData: ITestRunResult): IUseDynamicChartData {
-  const [yAxiosOptions, setYAxiosOptions] = useState<AttSelectOption[]>([]);
+  const [yAxisOptions, setYAxisOptions] = useState<AttSelectOption[]>([]);
 
   useEffect(() => {
     const uniqueKeys = new Set<string>();
@@ -19,12 +19,12 @@ export function useDynamicChartData(chartData: ITestRunResult): IUseDynamicChart
     }
 
     if (uniqueKeys.size > 0) {
-      setYAxiosOptions(Array.from(uniqueKeys).map(key => ({ label: convertLabelByCapitalLetter(key), value: key })));
+      setYAxisOptions(Array.from(uniqueKeys).map(key => ({ label: convertLabelByCapitalLetter(key), value: key })));
     }
   }, [chartData]);
 
   return {
-    yAxiosOptions,
+    yAxisOptions,
   };
 }
 
