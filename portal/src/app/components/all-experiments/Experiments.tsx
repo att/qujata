@@ -26,17 +26,33 @@ const DuplicateAriaLabel: string = ALL_EXPERIMENTS_TABLE_EN.TABLE_COLUMNS.LINKS.
 
 export const Experiments: React.FC = () => {
   const { testSuites, status }: IUseExperimentsData = useExperimentsData();
+  const navigate = useNavigate();
   const [openDeleteModal, setOpenDeleteModal] = useState<boolean>(false);
   const [checkedRows, setCheckedRows] = useState<Record<number, boolean>>({});
-  const experimentsData = useMemo(() => (testSuites ? parseExperimentsData(testSuites): []), [testSuites]);
-  const navigate = useNavigate();
-
+  const [experimentsData, setExperimentsData] = useState<ExperimentData[]>([]);
   
+  const [deleteHandled, setDeleteHandled] = useState(false);
   const { post, status: deleteStatus, error: deleteError, cancelRequest: cancelRequestDelete }: IHttp<unknown>
     = useFetch<unknown>({ url: APIS.deleteExperiments });
   useFetchSpinner(deleteStatus);
   useErrorMessage(deleteError);
   useEffect(() => cancelRequestDelete, [cancelRequestDelete]);
+
+  // Update the experimentsData state when testSuites changes
+  useEffect(() => {
+    if (testSuites) {
+      setExperimentsData(parseExperimentsData(testSuites));
+    }
+  }, [testSuites]);
+
+  // Update the experimentsData state when delete operation is successful
+  useEffect(() => {
+    if (deleteStatus === FetchDataStatus.Success && !deleteHandled) {
+      setExperimentsData(prevExperimentsData => prevExperimentsData.filter(experiment => !checkedRows[experiment.id]));
+      setCheckedRows({});
+      setDeleteHandled(true);
+    }
+  }, [deleteStatus, deleteHandled, checkedRows]);
 
   const handleDeleteClick: () => void = useCallback((): void => {
     setOpenDeleteModal(true);
@@ -122,6 +138,7 @@ export const Experiments: React.FC = () => {
         accessor: () => null,
         cell: (cellInfo: CellContext<ExperimentData, unknown>) => (
           <Button
+            key={cellInfo.row.original.id}
             ariaLabel={DuplicateAriaLabel}
             size={ButtonSize.NONE}
             styleType={ButtonStyleType.WRAPPER}
