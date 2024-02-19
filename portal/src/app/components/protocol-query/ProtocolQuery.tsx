@@ -206,10 +206,10 @@ export const ProtocolQuery: React.FC<ProtocolQueryProps> = (props: ProtocolQuery
                 {PROTOCOL_QUERY_EN.ACTION_BUTTONS.RUN}
               </Button>
               {isFetching && 
-              <div role='status' className={styles.spinnerWrapper}>
-                    <Spinner size={SpinnerSize.EXTRA_SMALL} />
-                    <span className={styles.text}>{PROTOCOL_QUERY_EN.FETCH_DATA}</span>
-              </div>}
+                <div role='status' className={styles.spinnerWrapper}>
+                  <Spinner size={SpinnerSize.EXTRA_SMALL} />
+                  <span className={styles.text}>{PROTOCOL_QUERY_EN.FETCH_DATA}</span>
+                </div>}
           </div>
        </form>
     </div>

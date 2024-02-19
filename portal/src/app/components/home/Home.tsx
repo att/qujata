@@ -1,12 +1,14 @@
-import { IUseDashboardData, useDashboardData } from "../../hooks/useDashboardData";
-import { FetchDataStatus } from "../../shared/hooks/useFetch";
-import { ITestParams } from "../../shared/models/quantum.interface";
-import { ProtocolQuery } from "../protocol-query";
-import { SubHeader } from "../sub-header";
-import { useCallback, useEffect, useState } from 'react';
 import styles from './Home.module.scss';
-import { useLocation, useNavigate } from "react-router-dom";
-import { ExperimentData } from "../all-experiments/models/experiments.interface";
+import cn from 'classnames';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { IUseDashboardData, useDashboardData } from '../../hooks/useDashboardData';
+import { FetchDataStatus } from '../../shared/hooks/useFetch';
+import { ITestParams } from '../../shared/models/quantum.interface';
+import { ProtocolQuery } from '../protocol-query';
+import { SubHeader } from '../sub-header';
+import { useCallback, useEffect, useState } from 'react';
+import { ExperimentData } from '../all-experiments/models/experiments.interface';
+import { LatestExperiments } from './components';
 
 export const Home: React.FC = () => {
     const [isSubHeaderOpen, setIsSubHeaderOpen] = useState<boolean>(true);
@@ -48,13 +50,14 @@ export const HomeContent: React.FC = () => {
   }, [handleRunQueryClick]);
 
   return (
-    <div className={styles.app_wrapper}>
+    <div className={cn(styles.app_wrapper, styles.protocolQueryWithDivider)}>
       <ProtocolQuery
         isFetching={status === FetchDataStatus.Fetching}
         onRunClick={handleRunClick}
         duplicateData={duplicateData}
         setDuplicateData={setDuplicateData}
       />
+      <LatestExperiments />
     </div>
   );
 };

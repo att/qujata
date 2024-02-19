@@ -32,9 +32,10 @@ export interface TableProps<T> {
   className?: string;
   headers: TableColumn<T>[];
   data: T[];
+  enableSorting?: boolean;
 }
 
-export const Table = <T extends any>({ headers, data, className }: TableProps<T>) => {
+export const Table = <T extends any>({ headers, data, className, enableSorting = true }: TableProps<T>) => {
   const [sorting, setSorting] = useState<SortingState>([])
   const columns: ColumnDef<T>[] = useMemo(() => {
     return headers.map(header => ({
@@ -51,7 +52,7 @@ export const Table = <T extends any>({ headers, data, className }: TableProps<T>
     state: {
       sorting,
     },
-    onSortingChange: setSorting,
+    onSortingChange: enableSorting ? setSorting : undefined,
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
   });
@@ -65,17 +66,17 @@ export const Table = <T extends any>({ headers, data, className }: TableProps<T>
               <th key={header.id} className={styles.table_titles}>
                 <div
                 {...{
-                  className: header.column.getCanSort()
+                  className: enableSorting && header.column.getCanSort()
                     ? styles.sort_style
                     : '',
-                  onClick: header.column.getToggleSortingHandler(),
+                  onClick: enableSorting ? header.column.getToggleSortingHandler() : undefined,
                 }}
                 >
                   { flexRender(header.column.columnDef.header, header.getContext()) }
-                  { {
+                  { enableSorting && ({
                     asc: <label>{' '}<img src={SortascendingSvg} alt={SortAscendingLabel} /></label>,
                     desc: <label>{' '}<img src={SortDescendingSvg} alt={SortDescendingLabel} /></label>,
-                  }[header.column.getIsSorted() as string] ?? null }
+                  }[header.column.getIsSorted() as string] ?? null) }
                 </div>
               </th>
             ))}
