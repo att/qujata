@@ -1,5 +1,5 @@
 import { ReactNode, useMemo, useState } from 'react';
-import { Table, TableColumn } from '../../../../shared/components/table';
+import { QujataTable, TableColumn } from '../../../../shared/components/qujata-table';
 import styles from './LatestExperiments.module.scss';
 import { LATEST_EXPERIMENTS_EN } from './translate/en';
 import { IUseExperimentsData, useExperimentsData } from '../../../all-experiments/hooks';
@@ -91,7 +91,7 @@ export const LatestExperiments: React.FC = () => {
             <span className={styles.experiment_name}>{LATEST_EXPERIMENTS_EN.ALL_EXPERIMENTS}</span>
           </Link>
         </div>
-        <Table className={styles.latest_experiments_table} headers={headers} data={data} enableSorting={false} />
+        <QujataTable className={styles.latest_experiments_table} headers={headers} data={data} enableSorting={false} limit={5} />
         {isInsightShowed && <QujataInsight
           closeImageUrl={CloseSvg}
           onInsightClose={() => setIsInsightShowed(false)}

@@ -1,7 +1,7 @@
 import { ReactNode, useMemo } from 'react';
 import styles from './ExperimentTable.module.scss';
 import { EXPERIMENT_TABLE_EN } from './translate/en';
-import { Table, TableColumn } from '../../../../../../shared/components/table';
+import { QujataTable, TableColumn } from '../../../../../../shared/components/qujata-table';
 import { ITestRunResult, ITestRunResultData } from '../../../../../../shared/models/test-run-result.interface';
 import { AttSelectOption } from '../../../../../../shared/components/att-select';
 import { CellContext } from '@tanstack/react-table';
@@ -44,7 +44,7 @@ export const ExperimentTable: React.FC<ExperimentTableProps> = (props: Experimen
 
   return (
     <div className={styles.experiment_table_wrapper}>
-      <Table className={styles.experiment_table} headers={headers} data={data} />
+      <QujataTable className={styles.experiment_table} headers={headers} data={data} />
     </div>
   );
 };

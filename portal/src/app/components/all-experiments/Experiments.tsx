@@ -5,7 +5,7 @@ import { IUseExperimentsData, useExperimentsData } from './hooks';
 import { FetchDataStatus, IHttp, useFetch } from '../../shared/hooks/useFetch';
 import { ALL_EXPERIMENTS_TABLE_EN } from './translate/en';
 import { CellContext } from '@tanstack/react-table';
-import { Table } from '../../shared/components/table';
+import { QujataTable } from '../../shared/components/qujata-table';
 import { Button, ButtonActionType, ButtonSize, ButtonStyleType } from '../../shared/components/att-button';
 import { APIS } from '../../apis';
 import { useNavigate } from 'react-router-dom';
@@ -186,7 +186,7 @@ export const Experiments: React.FC = () => {
             )}
           </div>
         }
-        {experimentsData.length > 0 && <Table className={styles.experiments_table} headers={headers} data={experimentsData} />}
+        {experimentsData.length > 0 && <QujataTable className={styles.experiments_table} headers={headers} data={experimentsData} />}
         {openDeleteModal && <DeleteExperimentModal name={checkedExperimentNames} onClose={handleCloseDeleteExperimentModal} />}
        </>
     </div>

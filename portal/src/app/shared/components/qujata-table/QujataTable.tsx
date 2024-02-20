@@ -1,4 +1,4 @@
-import styles from './Table.module.scss';
+import styles from './QujataTable.module.scss';
 import cn from 'classnames';
 import { useMemo, useState } from 'react';
 import {
@@ -33,9 +33,10 @@ export interface TableProps<T> {
   headers: TableColumn<T>[];
   data: T[];
   enableSorting?: boolean;
+  limit?: number;
 }
 
-export const Table = <T extends any>({ headers, data, className, enableSorting = true }: TableProps<T>) => {
+export const QujataTable = <T extends any>({ headers, data, className, enableSorting = true, limit }: TableProps<T>) => {
   const [sorting, setSorting] = useState<SortingState>([])
   const columns: ColumnDef<T>[] = useMemo(() => {
     return headers.map(header => ({
@@ -47,7 +48,7 @@ export const Table = <T extends any>({ headers, data, className, enableSorting =
   }, [headers]);
 
   const table = useReactTable({
-    data,
+    data: limit ? data.slice(0, limit) : data,
     columns,
     state: {
       sorting,
