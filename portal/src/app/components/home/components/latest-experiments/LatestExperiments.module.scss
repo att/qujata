@@ -4,16 +4,29 @@
     margin-inline-start: 160px;
     margin-inline-end: 80px;
 
-    .latest_experiments_title {
-        size: 18px;
-    }
+    .title_link_wrapper {
+        display: flex;
+        justify-content: space-between;
 
+        .latest_experiments_title {
+            size: 18px;
+        }
+
+        .all_experiments_link {
+            inset-inline-end: 100px;
+            margin-block-start: 50px;
+            color: var($attPurple);
+            cursor: pointer;
+            text-decoration: none;
+        }
+    }
+    
     .latest_experiments_table {
+        border-radius: 20px;
         background-color: var($backgroundColorWhite);
         margin-block-start: 40px;
         text-align: center;
-        padding-inline: 30px;
-        padding-block: 10px;
+        padding: 10px 30px;
 
         th {
             background-color: var($backgroundColorWhite);
@@ -29,6 +42,7 @@
             cursor: pointer;
             border: none;
         }
+        
         .experiment_link {
             color: var($attPurple);
             cursor: pointer;

@@ -9,8 +9,8 @@
 
   .close_insight_button {
     position: absolute;
-    top: 30px;
-    right: 30px;
+    inset-block-start: 30px;
+    inset-inline-end: 30px;
     cursor: pointer;
   }
 

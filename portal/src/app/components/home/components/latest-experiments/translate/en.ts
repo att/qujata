@@ -1,5 +1,6 @@
 export const LATEST_EXPERIMENTS_EN = {
   TITLE: 'Latest Experiments',
+  ALL_EXPERIMENTS: 'All Experiments',
   TABLE_TITLES: {
     EXPERIMENT_NAME: 'Experiment Name',
     DATE: 'Date',
@@ -20,5 +21,6 @@ export const LATEST_EXPERIMENTS_EN = {
     LINK_TITLE: 'Learn more',
     LINK_URL: 'https://github.com/att/qujata'
   },
-  HOMEPAGE_LINK: '/qujata'
+  HOMEPAGE_LINK: '/qujata',
+  ALL_EXPERIMENTS_LINK: '/qujata/test_suites',
 }

@@ -83,7 +83,14 @@ export const LatestExperiments: React.FC = () => {
   
   return ( status === FetchDataStatus.Success &&
       <div className={styles.latest_experiments_wrapper}>
-        <h2 className={styles.latest_experiments_title}>{LATEST_EXPERIMENTS_EN.TITLE}</h2>
+        <div className={styles.title_link_wrapper}>
+          <h2 className={styles.latest_experiments_title}>{LATEST_EXPERIMENTS_EN.TITLE}</h2>
+          <Link
+            className={styles.all_experiments_link}
+            to={LATEST_EXPERIMENTS_EN.ALL_EXPERIMENTS_LINK}>
+            <span className={styles.experiment_name}>{LATEST_EXPERIMENTS_EN.ALL_EXPERIMENTS}</span>
+          </Link>
+        </div>
         <Table className={styles.latest_experiments_table} headers={headers} data={data} enableSorting={false} />
         {isInsightShowed && <QujataInsight
           closeImageUrl={CloseSvg}
@@ -91,7 +98,7 @@ export const LatestExperiments: React.FC = () => {
           title={LATEST_EXPERIMENTS_EN.INSIGHT.TITLE}
           description={LATEST_EXPERIMENTS_EN.INSIGHT.DESCRIPTION}
           linkName={LATEST_EXPERIMENTS_EN.INSIGHT.LINK_TITLE}
-          linkUrl={LATEST_EXPERIMENTS_EN.INSIGHT.LINK_URL} // TODO: understand where this link should lead to
+          linkUrl={LATEST_EXPERIMENTS_EN.INSIGHT.LINK_URL}
         />}
       </div>
   );
