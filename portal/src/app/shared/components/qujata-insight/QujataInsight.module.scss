@@ -1,0 +1,55 @@
+@import "src/styles/variables-keys";
+
+.container {
+  position: relative;
+  display: flex;
+  margin-block: 30px;
+  background-color: rgba(109, 63, 252, 0.1);
+  border-radius: 20px;
+
+  .close_insight_button {
+    position: absolute;
+    top: 30px;
+    right: 30px;
+    cursor: pointer;
+  }
+
+  .image {
+    inline-size: 5%;
+    object-fit: cover;
+  }
+
+  .divider {
+    margin-inline-start: 40px;
+    margin-inline-end: 20px;
+    margin-block: 35px;
+    inline-size: 7px;
+    background-color: var($attPurple);
+  }
+
+  .content {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding-block: 20px;
+
+    .titleContainer {
+      display: flex;
+      align-items: left;
+      
+      .title {
+        block-size: 15px;
+        margin-block-start: 20px;
+        margin-inline: 7px;
+        color: var($attPurple);
+      }
+    }
+
+    .link {
+      color: var($attPurple);
+      text-decoration: none;
+      margin-block-start: 10px;
+      margin-block-end: 15px;
+    }
+  }
+}

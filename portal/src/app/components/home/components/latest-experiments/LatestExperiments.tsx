@@ -1,4 +1,4 @@
-import { ReactNode, useMemo } from 'react';
+import { ReactNode, useMemo, useState } from 'react';
 import { Table, TableColumn } from '../../../../shared/components/table';
 import styles from './LatestExperiments.module.scss';
 import { LATEST_EXPERIMENTS_EN } from './translate/en';
@@ -6,9 +6,12 @@ import { IUseExperimentsData, useExperimentsData } from '../../../all-experiment
 import { FetchDataStatus } from '../../../../shared/hooks/useFetch';
 import { Experiment, TestRunSubset } from '../../../all-experiments/models/experiments.interface';
 import { Link } from 'react-router-dom';
+import { QujataInsight } from '../../../../shared/components/qujata-insight';
+import CloseSvg from '../../../../../assets/images/close.svg';
 
 export const LatestExperiments: React.FC = () => {
   const { testSuites, status }: IUseExperimentsData = useExperimentsData();
+  const [isInsightShowed, setIsInsightShowed] = useState(true);
   
   const data = useMemo(() => (status === FetchDataStatus.Success && testSuites
     ? testSuites.sort((a, b) => new Date(b.end_time).getTime() - new Date(a.end_time).getTime())
@@ -74,6 +77,14 @@ export const LatestExperiments: React.FC = () => {
       <div className={styles.latest_experiments_wrapper}>
         <h2 className={styles.latest_experiments_title}>{LATEST_EXPERIMENTS_EN.TITLE}</h2>
         <Table className={styles.latest_experiments_table} headers={headers} data={data} enableSorting={false} />
+        {isInsightShowed && <QujataInsight
+          closeImageUrl={CloseSvg}
+          onInsightClose={() => setIsInsightShowed(false)}
+          title={LATEST_EXPERIMENTS_EN.INSIGHT.TITLE}
+          description={LATEST_EXPERIMENTS_EN.INSIGHT.DESCRIPTION}
+          linkName={LATEST_EXPERIMENTS_EN.INSIGHT.LINK_TITLE}
+          linkUrl='/qujata/experiment/15' // TODO: understand where this link should lead to
+        />}
       </div>
   );
 }
