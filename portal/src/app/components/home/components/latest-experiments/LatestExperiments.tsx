@@ -20,7 +20,7 @@ export const LatestExperiments: React.FC = () => {
 
   const headers: TableColumn<Experiment>[] = useMemo(() => [
     {
-      id: 'experimentName',
+      id: LATEST_EXPERIMENTS_EN.COLUMN_IDS.EXPERIMENT_NAME,
       header: () => <span>{LATEST_EXPERIMENTS_EN.TABLE_TITLES.EXPERIMENT_NAME}</span>,
       accessor: (row: Experiment) => row.name,
       cell: cellInfo => (
@@ -32,7 +32,7 @@ export const LatestExperiments: React.FC = () => {
       )
     },
     {
-      id: 'date',
+      id: LATEST_EXPERIMENTS_EN.COLUMN_IDS.DATE,
       header: () => <span>{LATEST_EXPERIMENTS_EN.TABLE_TITLES.DATE}</span>,
       accessor: (row: Experiment) => row.end_time,
       cell: cellInfo => {
@@ -42,7 +42,7 @@ export const LatestExperiments: React.FC = () => {
       }
     },
     {
-      id: 'numberOfAlgorithms',
+      id: LATEST_EXPERIMENTS_EN.COLUMN_IDS.NUMBER_OF_ALGORITHMS,
       header: () => <span>{LATEST_EXPERIMENTS_EN.TABLE_TITLES.NUMBER_OF_ALGORITHMS}</span>,
       accessor: (row: Experiment) => {
         const algorithms = new Set<string>();
@@ -52,22 +52,30 @@ export const LatestExperiments: React.FC = () => {
       cell: cellInfo => <span>{cellInfo.getValue() as ReactNode}</span>
     },
     {
-      id: 'iterations',
+      id: LATEST_EXPERIMENTS_EN.COLUMN_IDS.ITERATIONS,
       header: () => <span>{LATEST_EXPERIMENTS_EN.TABLE_TITLES.ITERATIONS}</span>,
       accessor: (row: Experiment) => {
         const iterations = new Set<number>();
         row.test_runs.forEach((testRun: TestRunSubset) => iterations.add(testRun.iterations));
-        return Array.from(iterations).sort((a, b) => a - b).join(', ');
+        const iterationsArrayUnique = Array.from(iterations);
+
+        return iterationsArrayUnique.length > 3
+        ? `${iterationsArrayUnique.slice(0, 3).sort((a, b) => a - b).join(', ')}...`
+        : iterationsArrayUnique.sort((a, b) => a - b).join(', ');
       },
       cell: cellInfo => <span>{cellInfo.getValue() as ReactNode}</span>
     },
     {
-      id: 'messageSizes',
-      header: () => <span>{LATEST_EXPERIMENTS_EN.TABLE_TITLES.MESSAGE_SIZE}</span>,
+      id: LATEST_EXPERIMENTS_EN.COLUMN_IDS.MESSAGE_SIZES,
+      header: () => <span>{LATEST_EXPERIMENTS_EN.TABLE_TITLES.MESSAGE_SIZES}</span>,
       accessor: (row: Experiment) => {
         const messageSizes = new Set<number>();
         row.test_runs.forEach((testRun: TestRunSubset) => messageSizes.add(testRun.message_size));
-        return Array.from(messageSizes).sort((a, b) => a - b).join(', ');
+        const messageSizesArrayUnique = Array.from(messageSizes);
+        
+        return messageSizesArrayUnique.length > 3
+          ? `${messageSizesArrayUnique.slice(0, 3).sort((a, b) => a - b).join(', ')}...`
+          : messageSizesArrayUnique.sort((a, b) => a - b).join(', ');
       },
       cell: cellInfo => <span>{cellInfo.getValue() as ReactNode}</span>
     },

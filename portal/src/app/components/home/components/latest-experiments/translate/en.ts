@@ -5,7 +5,14 @@ export const LATEST_EXPERIMENTS_EN = {
     DATE: 'Date',
     NUMBER_OF_ALGORITHMS: '#Algorithms',
     ITERATIONS: 'Iterations',
-    MESSAGE_SIZE: 'Message Size (KB)'
+    MESSAGE_SIZES: 'Message Size (KB)'
+  },
+  COLUMN_IDS: {
+    EXPERIMENT_NAME: 'experimentName',
+    DATE: 'date',
+    NUMBER_OF_ALGORITHMS: 'numberOfAlgorithms',
+    ITERATIONS: 'iterations',
+    MESSAGE_SIZES: 'messageSizes'
   },
   INSIGHT: {
     TITLE: 'Recommendation',
