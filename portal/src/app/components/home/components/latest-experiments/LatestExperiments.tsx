@@ -91,7 +91,7 @@ export const LatestExperiments: React.FC = () => {
           title={LATEST_EXPERIMENTS_EN.INSIGHT.TITLE}
           description={LATEST_EXPERIMENTS_EN.INSIGHT.DESCRIPTION}
           linkName={LATEST_EXPERIMENTS_EN.INSIGHT.LINK_TITLE}
-          linkUrl='/qujata/experiment/15' // TODO: understand where this link should lead to
+          linkUrl={LATEST_EXPERIMENTS_EN.INSIGHT.LINK_URL} // TODO: understand where this link should lead to
         />}
       </div>
   );

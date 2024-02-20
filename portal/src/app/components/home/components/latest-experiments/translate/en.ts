@@ -16,8 +16,9 @@ export const LATEST_EXPERIMENTS_EN = {
   },
   INSIGHT: {
     TITLE: 'Recommendation',
-    DESCRIPTION: 'Adjust the config file with your system and hardware properties to get more accurate results.',
-    LINK_TITLE: 'Learn more'
+    DESCRIPTION: 'Explore more about our product and his abilities, development process and how you can contribute.',
+    LINK_TITLE: 'Learn more',
+    LINK_URL: 'https://github.com/att/qujata'
   },
   HOMEPAGE_LINK: '/qujata'
 }

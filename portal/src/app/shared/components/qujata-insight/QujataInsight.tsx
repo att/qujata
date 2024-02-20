@@ -1,6 +1,5 @@
 import cn from 'classnames';
 import styles from './QujataInsight.module.scss';
-import { Link } from 'react-router-dom';
 import QujataLogoPurpleSvg from '../../../../assets/images/qujata-logo-purple.svg';
 
 const CloseAriaLabel: string = 'Close';
@@ -30,7 +29,7 @@ export const QujataInsight = ({ className, closeImageUrl, onInsightClose, imageU
           <h3 className={styles.title}>{title}</h3>
         </div>
         <div>{description}</div>
-        <Link to={linkUrl} className={styles.link}>{linkName}</Link>
+        <a href={linkUrl} target="_blank" rel="noopener noreferrer" className={styles.link}>{linkName}</a>
       </div>
     </div>
   );
