@@ -79,14 +79,14 @@ export const EditExperimentModal: React.FC<EditExperimentModalProps> = (props: E
       size={BaseModalSize.SMALL}
       showSpinner={showSpinner}
     >
-      <form id={formID} data-cy={formID} onSubmit={onSubmitHandler} className={styles.form_wrapper}>
+      <form data-testid="edit_experiment_form" id={formID} data-cy={formID} onSubmit={onSubmitHandler} className={styles.form_wrapper}>
         <label className={styles.name_input}>
             <div className={cn(styles.required_input, styles.label)}>{EDIT_EXPERIMENT_MODAL_EN.FORM.LABELS.NAME}</div>
-            <input className={cn(styles.form_input, styles.form_input_name)} type="text" name="name" value={name} onChange={e => setName(e.target.value)} required />
+            <input data-testid='experiment_name_input' className={cn(styles.form_input, styles.form_input_name)} type="text" name="name" value={name} onChange={e => setName(e.target.value)} required />
         </label>
         <label>
             <div className={styles.label}>{EDIT_EXPERIMENT_MODAL_EN.FORM.LABELS.DESCRIPTION}</div>
-            <textarea className={cn(styles.form_input, styles.form_input_description)} rows={4} id="description" value={description} name="description" onChange={e => setDescription(e.target.value)} />
+            <textarea data-testid='description_input' className={cn(styles.form_input, styles.form_input_description)} rows={4} id="description" value={description} name="description" onChange={e => setDescription(e.target.value)} />
         </label>
       </form>
     </BaseModal>

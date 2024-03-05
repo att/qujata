@@ -21,7 +21,7 @@ export const BarChart: React.FC<BarChartProps> = (props: BarChartProps) => {
     const [dataValues, setDataValues] = useState();
     const [datasets, setDatasets] = useState<IDatasets[]>([]);
     const [algorithmsColors, setAlgorithmsColors] = useState<{[key: string]: string}>();
-    const chartRef = useRef<any>(null);
+    const chartRef = useRef<Chart<"bar", number[], unknown>>(null);
 
     useEffect(() => {
         const temp = data.map((obj: any) => obj.results[keyOfData]);
@@ -136,6 +136,7 @@ export const BarChart: React.FC<BarChartProps> = (props: BarChartProps) => {
 
     return (
       <div
+        data-testid="bar_chart_wrapper"
         onMouseMove={(event) => {
           const elements = chartRef.current?.getElementsAtEventForMode(
             event.nativeEvent,
@@ -154,19 +155,19 @@ export const BarChart: React.FC<BarChartProps> = (props: BarChartProps) => {
           (event.currentTarget as HTMLElement).style.cursor = 'default';
         }}
       >
-        <Bar ref={chartRef as any} data={tempData} options={options} style={{ height: '450px' }} />
+        <Bar ref={chartRef} data={tempData} options={options} style={{ height: '450px' }} />
       </div>
     );
 }
 
 export function renderTooltipLabel(context: { datasetIndex : number }, dataValues: any, tooltipKeys: string[], tooltipLabels: string[], data: any): string {  
   const index = context.datasetIndex;
-    const valByKey = dataValues && dataValues[index];
-    const label1: string = tooltipKeys[0];
-    const label2: string = tooltipKeys[1];
-    const val1 = data[index][label1];
-    const val2 = data[index][label2];
-    return `${valByKey} (${tooltipLabels[0]}: ${val1}, ${tooltipLabels[1]}: ${val2})`;
+  const valByKey = dataValues && dataValues[index];
+  const label1: string = tooltipKeys[0];
+  const label2: string = tooltipKeys[1];
+  const val1 = data[index][label1];
+  const val2 = data[index][label2];
+  return `${valByKey} (${tooltipLabels[0]}: ${val1}, ${tooltipLabels[1]}: ${val2})`;
 }
 
 export function generateTooltipTitle(labels: string[], index: number): string {

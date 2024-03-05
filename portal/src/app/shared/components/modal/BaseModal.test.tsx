@@ -1,13 +1,22 @@
 /* eslint-disable @typescript-eslint/typedef */
-import { render, RenderResult } from '@testing-library/react';
+import { fireEvent, render, RenderResult, waitFor } from '@testing-library/react';
 import { BaseModalSize } from './base-modal.const';
-import { ButtonActionType, ButtonSize, ButtonStyleType } from '../att-button';
+import { Button, ButtonActionType, ButtonSize, ButtonStyleType } from '../att-button';
 import { BaseModal, BaseModalProps } from './BaseModal';
 
 jest.mock('../att-button', );
 
 describe('BaseModal', () => {
-  test('renders modal', async () => {
+  beforeEach(() => {
+    (Button as jest.Mock).mockImplementation(({ onButtonClick }) => {
+      const handleCloseClick: React.MouseEventHandler<HTMLDivElement> = (event) => {
+        onButtonClick(event);
+      }
+      return <div onClick={handleCloseClick} data-testid='close_modal'>Close</div>;
+    });
+  });
+
+  test('should render BaseModal correctly', async () => {
     const handleClose = jest.fn();
     const props: BaseModalProps = {
       title: 'Test Title',
@@ -20,9 +29,19 @@ describe('BaseModal', () => {
       }],
       onCloseClick: jest.fn(),
       size: BaseModalSize.MEDIUM,
+      showSpinner: true,
     };
-    const { getByText }: RenderResult = render(<BaseModal {...props}>TestMe</BaseModal>);
-    expect(getByText('Test Title')).toBeTruthy();
-    expect(getByText('TestMe')).toBeTruthy();
+    const { container, getByText, getAllByTestId }: RenderResult = render(<BaseModal {...props}>TestMe</BaseModal>);
+    const closeModalButtonElements: HTMLElement[] = getAllByTestId('close_modal');
+
+    closeModalButtonElements.forEach((element) => {
+      fireEvent.click(element);
+    });
+    
+    await waitFor(() => {
+      expect(container).toBeTruthy();
+      expect(getByText('Test Title')).toBeTruthy();
+      expect(getByText('TestMe')).toBeTruthy();
+    });
   });
 });

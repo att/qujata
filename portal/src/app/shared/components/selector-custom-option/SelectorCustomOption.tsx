@@ -26,6 +26,7 @@ export const AlgorithmsSelectorCustomOption: React.FC<SelectorCustomOptionProps>
     <components.Option {...props}>
       <div className={styles.option_wrapper}>
         <input
+          data-testid="algorithm_checkbox"
           id={props.label}
           type="checkbox"
           className={styles.input_option}
@@ -46,6 +47,7 @@ export const SelectorCustomOption: React.FC<SelectorCustomOptionProps> = (props:
         <components.Option {...props}>
           <div className={styles.option_wrapper}>
             <input
+              data-testid="selector_custom_option_checkbox"
               id={props.label}
               type="checkbox"
               className={cn(styles.custom_input_option, styles.input_option)}

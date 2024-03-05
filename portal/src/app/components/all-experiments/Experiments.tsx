@@ -5,7 +5,7 @@ import { IUseExperimentsData, useExperimentsData } from './hooks';
 import { FetchDataStatus, IHttp, useFetch } from '../../shared/hooks/useFetch';
 import { ALL_EXPERIMENTS_TABLE_EN } from './translate/en';
 import { CellContext } from '@tanstack/react-table';
-import { QujataTable } from '../../shared/components/qujata-table';
+import { QujataTable, TableColumn } from '../../shared/components/qujata-table';
 import { Button, ButtonActionType, ButtonSize, ButtonStyleType } from '../../shared/components/att-button';
 import { APIS } from '../../apis';
 import { useNavigate } from 'react-router-dom';
@@ -82,7 +82,7 @@ export const Experiments: React.FC = () => {
     navigate('/qujata', { state: { row } });
   }, [navigate]);
 
-  const headers = useMemo(() => {
+  const headers: TableColumn<ExperimentData>[] = useMemo(() => {
     const columnDefs = [
       { 
         id: ALL_EXPERIMENTS_TABLE_EN.TABLE_COLUMNS.CHECKBOX,

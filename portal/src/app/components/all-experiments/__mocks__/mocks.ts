@@ -1,4 +1,4 @@
-import { Experiment } from "../models/experiments.interface";
+import { Experiment, ExperimentData } from "../models/experiments.interface";
 
 export const MOCK_DATA_FOR_ALL_EXPERIMENTS: Experiment[] = [
   {
@@ -52,3 +52,12 @@ export const MOCK_DATA_FOR_ALL_EXPERIMENTS: Experiment[] = [
     ]
   }
 ];
+
+export const MOCK_EXPERIMENTS_DATA_FOR_ALL_EXPERIMENTS: ExperimentData[] = [{
+  id: 15,
+  name: 'test',
+  algorithms: ['algo1', 'algo2'],
+  iterations: [100, 500],
+  message_sizes: [1024, 2048],
+  end_time: 1234
+}];

@@ -39,11 +39,11 @@ describe('sections-scrolling utils', () => {
     expect(observe).toHaveBeenCalledTimes(2);
   });
 
-  // it('should unobserve sections on unmount', () => {
-  //   const { unmount } = renderHook(() => handleSectionScrolling(mockRef, mockRef, jest.fn()));
-  //   unmount();
-  //   expect(unobserve).toHaveBeenCalledTimes(2);
-  // });
+  it('should skip on observing sections on mount', () => {
+    const noRef = { current: null };
+    renderHook(() => handleSectionScrolling(noRef, noRef, jest.fn()));
+    expect(observe).not.toHaveBeenCalled();
+  });
 
   it('should set current section when intersecting', () => {
     let callback: IntersectionObserverCallback | undefined;
@@ -57,5 +57,19 @@ describe('sections-scrolling utils', () => {
     if (callback)
       callback([{ isIntersecting: true, target: { id: EXPERIMENT_EN.TABS.RESULTS_DATA } } as any], {} as IntersectionObserver);
     expect(setCurrentSection).toHaveBeenCalledWith(EXPERIMENT_EN.TABS.RESULTS_DATA);
+  });
+
+  it('should skip setting current section when not intersecting', () => {
+    let callback: IntersectionObserverCallback | undefined;
+    global.IntersectionObserver = jest.fn((cb) => {
+      callback = cb;
+      return { root: null, rootMargin: '', thresholds: [], disconnect: jest.fn(), observe: jest.fn(), unobserve: jest.fn(), takeRecords: jest.fn() };
+    });
+
+    const setCurrentSection = jest.fn();
+    renderHook(() => handleSectionScrolling(mockRef, mockRef, setCurrentSection));
+    if (callback)
+      callback([{ isIntersecting: false, target: { id: EXPERIMENT_EN.TABS.RESULTS_DATA } } as any], {} as IntersectionObserver);
+    expect(setCurrentSection).not.toHaveBeenCalled();
   });
 });

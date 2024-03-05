@@ -25,6 +25,6 @@ describe('useOutsideClick', () => {
     act(() => {
       fireEvent.mouseDown(insideElement);
     });
-    expect(onClickOutside).toHaveBeenCalledTimes(0);
+    expect(onClickOutside).not.toHaveBeenCalled();
   });
 });

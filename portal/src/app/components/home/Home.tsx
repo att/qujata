@@ -44,7 +44,7 @@ export const HomeContent: React.FC = () => {
   }, [navigate, status, testSuiteId]);
   
   const handleRunClick: (params: ITestParams) => void = useCallback((params: ITestParams): void => {
-    if (params.experimentName && params.algorithms && params.iterationsCount) {
+    if (params.experimentName && params.algorithms && params.iterationsCount && params.messageSizes) {
       handleRunQueryClick(params);
     }
   }, [handleRunQueryClick]);

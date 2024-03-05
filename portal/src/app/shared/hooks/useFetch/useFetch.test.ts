@@ -48,12 +48,30 @@ describe('useFetch', () => {
   test('should put data', async () => {
     const mock = new MockAdapter(axios);
     const requestOptions: IHttpRequestOptions = {
-      url: 'http://jsonplaceholder.typicode.com/posts',
+      // cover tests when no url was handed
+      url: undefined,
     };
     mock.onPut('https://us-central1-hutoma-backend.cloudfunctions.net/chat', mockData).reply(200);
     const { result } = renderHook(() => useFetch(requestOptions));
     act(() => {
       result.current.put({data: 'test data'});
+    });
+
+    const { status } = result.current;
+    await act( () => waitFor(() => {
+      expect(status).toBe(FetchDataStatus.Fetching);
+    }));
+  });
+
+  test('should patch data', async () => {
+    const mock = new MockAdapter(axios);
+    const requestOptions: IHttpRequestOptions = {
+      url: 'http://jsonplaceholder.typicode.com/posts',
+    };
+    mock.onPatch('https://us-central1-hutoma-backend.cloudfunctions.net/chat', mockData).reply(200);
+    const { result } = renderHook(() => useFetch(requestOptions));
+    act(() => {
+      result.current.patch({data: 'test data'});
     });
 
     const { status } = result.current;

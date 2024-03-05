@@ -60,4 +60,13 @@ describe('ATTToastService', () => {
 
     expect(warningSpy).toHaveBeenCalledWith(expect.any(Function), expect.any(Object));
   });
+
+  it('calls toast with default arguments', () => {
+    const message = '';
+    const title = '';
+    
+    attToast.success(message, title, {});
+
+    expect(successSpy).toHaveBeenCalledWith(expect.any(Function), expect.any(Object));
+  });
 });

@@ -31,8 +31,8 @@ export const SubHeader: React.FC<SubHeaderProps> = (props: SubHeaderProps) => {
     const { data } = props;
     const { name, description } = data;
     const [openEditModal, setOpenEditModal] = useState<boolean>(false);
-    const [experimentName, setExperimentName] = useState<string>(name || '');
-    const [experimentDescription, setExperimentDescription] = useState<string>(description || '');
+    const [experimentName, setExperimentName] = useState<string>(name);
+    const [experimentDescription, setExperimentDescription] = useState<string>(description);
     const [openDeleteModal, setOpenDeleteModal] = useState<boolean>(false);
     const { testSuiteId } = useParams<TestRunUrlParams>();
     const url: string = replaceParams(APIS.deleteExperiment, { testSuiteId });
@@ -61,7 +61,7 @@ export const SubHeader: React.FC<SubHeaderProps> = (props: SubHeaderProps) => {
     }, []);
 
     const handleDownloadClick: () => void = useCallback((): void => {
-        const csvFileName: string = `${SUB_HEADER_EN.CSV_REPORT.FILE_NAME}-${name || ''}.csv`;
+        const csvFileName: string = `${SUB_HEADER_EN.CSV_REPORT.FILE_NAME}-${name}.csv`;
         downloadCsvFile(mapExperimentDataToCsvDataType(data.test_runs), csvFileName);
     }, [data.test_runs, name]);
     
@@ -91,6 +91,7 @@ export const SubHeader: React.FC<SubHeaderProps> = (props: SubHeaderProps) => {
                             {experimentName}
                         </Link>
                         <Button
+                            data-testid='edit_name_button'
                             className={styles.action_button_edit}
                             ariaLabel={EditAriaLabel}
                             size={ButtonSize.NONE}
@@ -114,6 +115,7 @@ export const SubHeader: React.FC<SubHeaderProps> = (props: SubHeaderProps) => {
             </div>
             <div className={styles.sub_header_right_side}>
                 <Button
+                    data-testid='download_button'
                     className={styles.action_button}
                     ariaLabel={DownloadAriaLabel}
                     size={ButtonSize.NONE}
@@ -124,6 +126,7 @@ export const SubHeader: React.FC<SubHeaderProps> = (props: SubHeaderProps) => {
                     <img className={styles.close_icon} src={ArrowDownSvg} alt={DownloadAriaLabel} />
                 </Button>
                 <Button
+                    data-testid='delete_button'
                     className={styles.action_button_delete}
                     ariaLabel={DeleteAriaLabel}
                     size={ButtonSize.NONE}

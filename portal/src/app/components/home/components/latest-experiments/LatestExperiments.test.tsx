@@ -1,4 +1,4 @@
-import { fireEvent, render, screen, waitFor } from '@testing-library/react';
+import { fireEvent, render, waitFor } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
 import { LatestExperiments } from './LatestExperiments';
 import { FetchDataStatus } from '../../../../shared/hooks/useFetch';

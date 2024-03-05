@@ -14,6 +14,12 @@ export function sortDataByAlgorithm(dataObject: ITestRunResultData[]) {
     if (a.iterations > b.iterations) {
       return 1;
     }
+    if (a.message_size < b.message_size) {
+      return -1;
+    }
+    if (a.message_size > b.message_size) {
+      return 1;
+    }
     return 0;
   });
 }

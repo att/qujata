@@ -25,7 +25,7 @@ export const CustomValueContainer: React.FC<ValueContainerProps<AttSelectOption,
     }, [props.selectProps]);
 
     return (
-        <div onClick={handleClick} ref={containerRef}>
+        <div data-testid="value_container_wrapper" onClick={handleClick} ref={containerRef}>
             <components.ValueContainer {...props} >
                 <div className={styles.input_wrapper}>
                     {props.hasValue && <img className={styles.icon} src={getIconByValue(inputValue as ChartType)} alt={inputValue} />}

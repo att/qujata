@@ -5,8 +5,8 @@ import { useRef } from 'react';
 
 export interface LineChartProps {
     data: any;
-    tooltipLabel?: string;
     title?: string;
+    tooltipLabel: string;
     xAxiosTitle?: string;
 }
 
@@ -59,7 +59,7 @@ export const LineChart: React.FC<LineChartProps> = (props: LineChartProps) => {
               return generateTooltipTitle(context[0]);
             },
             label: function (context: TooltipItem<'line'>) {
-              return renderTooltipLabel(context, tooltipLabel || '');
+              return renderTooltipLabel(context, tooltipLabel);
             },
           },
         },
@@ -68,6 +68,7 @@ export const LineChart: React.FC<LineChartProps> = (props: LineChartProps) => {
 
     return  (
       <div
+        data-testid="line_chart_wrapper"
         onMouseMove={(event) => {
           const elements = chartRef.current?.getElementsAtEventForMode(
             event.nativeEvent,
@@ -96,5 +97,5 @@ export function generateTooltipTitle(tooltipItem: TooltipItem<'line'>) {
 }
 
 export function renderTooltipLabel(context: TooltipItem<'line'>, tooltipLabel: string): string {  
-  return `${tooltipLabel} ${context?.raw?.toString()}` || '';
+  return `${tooltipLabel} ${context?.raw?.toString()}`;
 }

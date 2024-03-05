@@ -9,6 +9,6 @@ export function getKeysOfData(results: IResult): string[] {
     return Object.keys(results);
 }
 
-export function getChartTitleByType(type: string): string | undefined {
+export function getChartTitleByType(type: string): string {
     return ChartTitleDisplayMapping[type as unknown as ChartKey];
 }

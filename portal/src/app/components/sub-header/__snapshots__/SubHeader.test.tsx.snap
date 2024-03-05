@@ -1,19 +1,12 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`SubHeader renders sub header  1`] = `
+exports[`SubHeader renders sub header successfuly 1`] = `
 <div
   class="sub_header_wrapper"
 >
   <div
     class="sub_header_action_buttons"
-  >
-    <div>
-      Button
-    </div>
-    <div>
-      Button
-    </div>
-  </div>
+  />
   <div
     class="items_wrapper_open items_wrapper"
   >

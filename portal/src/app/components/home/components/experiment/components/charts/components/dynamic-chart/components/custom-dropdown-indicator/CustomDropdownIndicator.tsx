@@ -15,7 +15,7 @@ export const CustomDropdownIndicator: React.FC<DropdownIndicatorProps<AttSelectO
     }, [selectProps]);
     
     return (
-        <div onClick={handleClick} >
+        <div data-testid="dropdown_indicator_wrapper" onClick={handleClick} >
             <components.DropdownIndicator {...props}>
                 <ArrowDownSelectorSvg />
             </components.DropdownIndicator>

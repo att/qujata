@@ -1,4 +1,4 @@
-import { render, waitFor } from '@testing-library/react';
+import { fireEvent, render, waitFor } from '@testing-library/react';
 import { SubHeader } from './components/sub-header';
 import { Charts } from './components/charts';
 import { Experiment, ExperimentContent } from './Experiment';
@@ -6,10 +6,12 @@ import { ExperimentTable } from './components/experiment-table';
 import { useExperimentData } from './components/hooks/useExperimentData';
 import { FetchDataStatus } from '../../../../shared/hooks/useFetch';
 import { MOCK_DATA_FOR_EXPERIMENT } from './components/__mocks__/mocks';
-import { ExperimentTabs } from './components/experiment-tabs';
-import { TableOptions } from './components/table-options';
-import { SelectColumnsPopup } from './components/table-options/components/select-columns-popup';
+import { ExperimentTabs, ExperimentTabsProps } from './components/experiment-tabs';
+import { TableOptions, TableOptionsProps } from './components/table-options';
+import { SelectColumnsPopup, SelectColumnsPopupProps } from './components/table-options/components/select-columns-popup';
 import { TABLE_OPTIONS_EN } from './components/table-options/translate/en';
+import { EXPERIMENT_EN } from './translate/en';
+import React from 'react';
 
 jest.mock('./components/hooks/useExperimentData');
 jest.mock('./components/sub-header');
@@ -23,12 +25,6 @@ jest.mock('./components/charts', () => ({
 
 describe('Experiment', () => {
   beforeEach(() => {
-    (SubHeader as jest.Mock).mockImplementation(() => <div>SubHeader</div>);
-    (ExperimentTabs as jest.Mock).mockImplementation(() => <div>ExperimentTabs</div>);
-    (TableOptions as jest.Mock).mockImplementation(() => <button>{TABLE_OPTIONS_EN.SELECT_COLUMNS}</button>);
-    (SelectColumnsPopup as jest.Mock).mockImplementation(() => <div>SelectColumnsPopup</div>);
-    (ExperimentTable as jest.Mock).mockImplementation(() => <div>ExperimentTable</div>);
-    (Charts as jest.Mock).mockImplementation(() => <div>Charts</div>);
     (useExperimentData as jest.Mock).mockReturnValue({
       data: MOCK_DATA_FOR_EXPERIMENT,
       status: FetchDataStatus.Success,
@@ -52,22 +48,12 @@ describe('Experiment', () => {
       expect(container).toBeTruthy();
     });
   });
-
-  test('should show spinner on render data', async () => {
-    const { container } = render(<Experiment />);
-
-    await waitFor(() => {
-      expect(container).toBeTruthy();
-    });
-  });
 });
 
 describe('ExperimentContent', () => {
-  let handleButtonClickMock: jest.Mock;
   let scrollIntoViewMock: jest.Mock;
 
   beforeEach(() => {
-    handleButtonClickMock = jest.fn();
     scrollIntoViewMock = jest.fn();
     window.HTMLElement.prototype.scrollIntoView = scrollIntoViewMock;
 
@@ -75,16 +61,62 @@ describe('ExperimentContent', () => {
       data: MOCK_DATA_FOR_EXPERIMENT,
       status: FetchDataStatus.Success,
     });
-  });
-
-  afterEach(() => {
-    scrollIntoViewMock.mockRestore();
+    (SubHeader as jest.Mock).mockImplementation(() => <div>SubHeader</div>);
+    (ExperimentTabs as jest.Mock).mockImplementation((props: ExperimentTabsProps) => {
+      function handleResultsDataClick() {
+        props.handleButtonClick(EXPERIMENT_EN.TABS.RESULTS_DATA);
+      }
+      function handleVisualizationClick() {
+        props.handleButtonClick(EXPERIMENT_EN.TABS.VISUALIZATION);
+      }
+      function handleNietherClick() {
+        props.handleButtonClick('Not Results Data or Visualization');
+      }
+      return (
+        <>
+          <div onClick={handleResultsDataClick} data-testid='results_data_button'>{EXPERIMENT_EN.TABS.RESULTS_DATA}</div>
+          <div onClick={handleVisualizationClick} data-testid='visualization_button'>{EXPERIMENT_EN.TABS.VISUALIZATION}</div>
+          <div onClick={handleNietherClick} data-testid='neither_results_data_nor_visualization'>Not Results Data or Visualization</div>
+        </>
+      )
+    });
+    (TableOptions as jest.Mock).mockImplementation((props: TableOptionsProps) => {
+      function handleSelectColumnsClick() {
+        props.handleSelectColumnsClick();
+      }
+      return <div onClick={handleSelectColumnsClick} data-testid='table_options'>TableOptions</div>
+    });
+    (SelectColumnsPopup as jest.Mock).mockImplementation((props: SelectColumnsPopupProps) => {
+      function onPopupClose() {
+        props.onPopupClose();
+      }
+      return <div onClick={onPopupClose} data-testid='select_columns_button'>{TABLE_OPTIONS_EN.SELECT_COLUMNS}</div>
+    });
+    (ExperimentTable as jest.Mock).mockImplementation(() => <div>ExperimentTable</div>);
+    (Charts as jest.Mock).mockImplementation(() => <div>Charts</div>);
   });
 
   test('should render without crashing', async () => {
-    const { container } = render(<ExperimentContent data={MOCK_DATA_FOR_EXPERIMENT} />);
+    const { container, getByTestId } = render(<ExperimentContent data={MOCK_DATA_FOR_EXPERIMENT} />);
+    fireEvent.click(getByTestId('results_data_button'));
+    fireEvent.click(getByTestId('visualization_button'));
+    fireEvent.click(getByTestId('neither_results_data_nor_visualization'));
+    fireEvent.click(getByTestId('table_options'));
+    fireEvent.click(getByTestId('select_columns_button'));
+
     await waitFor(() => {
       expect(container).toBeTruthy();
     });
+  });
+
+  test('should close the select columns popup when clicking outside', () => {
+    const setState = jest.fn();
+    const useStateSpy = jest.spyOn(React, 'useState');
+    useStateSpy.mockImplementation(() => [true, setState]);
+
+    render(<ExperimentContent data={MOCK_DATA_FOR_EXPERIMENT} />);
+    fireEvent.mouseDown(document);
+
+    expect(setState).toHaveBeenCalledWith(false);
   });
 });

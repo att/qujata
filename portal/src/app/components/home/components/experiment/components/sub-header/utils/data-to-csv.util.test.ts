@@ -1,10 +1,10 @@
 import { CsvDataType } from '../../../../../../../utils/download';
-import { CSV_MOCK } from '../../__mocks__/mocks';
+import { MOCK_DATA_FOR_SUB_HEADER_UTILS } from '../__mocks__/mocks';
 import { mapExperimentDataToCsvDataType } from './data-to-csv.util';
 
 describe('mapExperimentDataToCsvDataType', () => {
   it('should map the input list to CsvDataType correctly', () => {
-    const mockList = CSV_MOCK;
+    const mockList = MOCK_DATA_FOR_SUB_HEADER_UTILS;
 
     const expectedOutput: CsvDataType = [
       [ 'ID', 'Algorithm', 'Iterations', 'Average CPU', 'Average Memory' ],

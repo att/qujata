@@ -64,6 +64,7 @@ export const CustomInput: React.FC<SelectorCustomOptionProps> = (props: Selector
           <div className={styles.add_new_wrapper}>
             <div className={styles.add_new_checkbox_wrapper}>
               <input
+                data-testid="add_new_input"
                 id={props.label}
                 type="checkbox"
                 className={cn(styles.iterations_input_option, styles.input_option)}
@@ -74,6 +75,7 @@ export const CustomInput: React.FC<SelectorCustomOptionProps> = (props: Selector
             </div>
             <div className={styles.input_wrapper}>
               <input
+                data-testid="custom_input"
                 id={props.label}
                 ref={inputRef}
                 value={inputValue}
@@ -85,6 +87,7 @@ export const CustomInput: React.FC<SelectorCustomOptionProps> = (props: Selector
               {inputValue !== '' && (
                 <>
                   <img
+                    data-testid="clean_icon"
                     className={styles.clean_icon}
                     onClick={() => setInputValue('')}
                     src={CleanSvg}

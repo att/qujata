@@ -1,4 +1,4 @@
-import { handleAlgorithmsSelection } from './handleAlgorithmsChange';
+import { handleAlgorithmsSelection } from './handleAlgorithmsSelection';
 import { AttSelectOption } from '../../../shared/components/att-select';
 import { AlgosBySectionDict } from '../hooks';
 import { SelectOptionType } from '../ProtocolQuery';
@@ -43,6 +43,10 @@ describe('handleAlgorithmsSelection', () => {
   it('should handle no algorithms selected', () => {
     const options: SelectOptionType = [];
     const prevSelectedValues: string[] = [];
+    const algorithmOptions = [
+      { value: algorithmSections[1], label: algorithmSections[1], isDisabled: true },
+      { value: algorithmSections[2], label: algorithmSections[2], isDisabled: true },
+    ];
 
     const { newSelectedOptions, selectedValues } =
       handleAlgorithmsSelection(options, algorithmOptions, algosBySection, prevSelectedValues);
@@ -96,4 +100,5 @@ describe('handleAlgorithmsSelection', () => {
     expect(selectedValues).toStrictEqual(['option1']);
     expect(newSelectedOptions).toStrictEqual([{ label: 'option1', value: 'option1' }]);
   });
+  
 });

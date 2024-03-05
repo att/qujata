@@ -102,6 +102,7 @@ export const ProtocolQuery: React.FC<ProtocolQueryProps> = (props: ProtocolQuery
                 {PROTOCOL_QUERY_EN.FIELDS_LABEL.EXPERIMENT_NAME} <span className={styles.required}>{PROTOCOL_QUERY_EN.FIELDS_LABEL.REQUIRED}</span>
               </label>
               <input
+                data-testid="experiment_name_input"
                 className={styles.input_form_item}
                 value={experimentName}
                 onChange={onExperimentNameChanged}
@@ -189,6 +190,7 @@ export const ProtocolQuery: React.FC<ProtocolQueryProps> = (props: ProtocolQuery
                 {PROTOCOL_QUERY_EN.FIELDS_LABEL.DESCRIPTION}
               </label>
               <textarea
+                data-testid="description_input"
                 className={styles.form_item_text_area}
                 onChange={onDescriptionChanged}
                 placeholder=''
