@@ -17,4 +17,5 @@ case ${1} in
     ;;
 esac
 
+chmod -R 755 /usr/share/nginx/html/qujata
 nginx -g 'daemon off;'
