@@ -1,0 +1,11 @@
+url_path,views_total,views_unique
+/att/qujata,47,26
+/att/qujata/blob/afa50566d883cd33b85b1f6f93db1f37348bab53/portal/package.json,18,5
+/att/qujata/blob/main/portal/docker-entrypoint.sh,18,4
+/att/qujata/blob/main/LICENSE,16,4
+/att/qujata/blob/main/portal/Dockerfile,14,3
+/att/qujata/tree/main/portal,12,4
+/att/qujata/blob/main/run/kubernetes/charts/api/values.yaml,12,3
+/att/qujata/blob/main/run/docker/docker-compose.yml,10,2
+/att/qujata/branches,10,2
+/att/qujata/blob/main/README.md,8,3
