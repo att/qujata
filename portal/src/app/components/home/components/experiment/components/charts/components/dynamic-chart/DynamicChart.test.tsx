@@ -27,7 +27,7 @@ describe('DynamicChart', () => {
         }],
         });
 
-      const { container } = render(<BarChart title='Iterations' labels={[]} data={undefined} keyOfData={''} tooltipKeys={[]} tooltipLabels={[]} />);
+      const { container } = render(<BarChart titleX='Iterations' titleY='Bytes Throughput' labels={[]} data={undefined} keyOfData={''} tooltipKeys={[]} tooltipLabels={[]} />);
       expect(container).toBeTruthy();
     });
 });

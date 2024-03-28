@@ -7,7 +7,7 @@ describe('useDynamicChartData', () => {
 
     const { result } = renderHook(() => useDynamicChartData(MOCK_DATA_FOR_EXPERIMENT));
     act(() => {
-        expect(result.current).toEqual( {yAxiosOptions: [{label: "Average Cpu", value: "average_cpu"}, {label: "Average Memory", value: "average_memory"}, {label: "Bytes Throughput", value: "bytes_throughput"}, {label: "Request Throughput", value: "request_throughput"}]});
+        expect(result.current).toEqual( {yAxisOptions: [{label: "Average Cpu", value: "average_cpu"}, {label: "Average Memory", value: "average_memory"}, {label: "Bytes Throughput", value: "bytes_throughput"}, {label: "Request Throughput", value: "request_throughput"}]});
     });
   });
 });

@@ -52,7 +52,7 @@ const data = [
 ];
 describe('BarChart', () => {
   test('renders BarChart component', () => {
-    const { getByTestId }: RenderResult = render(<BarChart labels={['Algorithm1', 'Algorithm1']} data={data} title={'chart'} keyOfData={'average_cpu'} tooltipKeys={tooltipKeys} tooltipLabels={tooltipLabels} />);
+    const { getByTestId }: RenderResult = render(<BarChart labels={['Algorithm1', 'Algorithm1']} data={data} titleX='chartX' titleY='chartY' keyOfData={'average_cpu'} tooltipKeys={tooltipKeys} tooltipLabels={tooltipLabels} />);
     const chartElement: HTMLElement = getByTestId('chart');
     expect(chartElement).toBeTruthy();
   });

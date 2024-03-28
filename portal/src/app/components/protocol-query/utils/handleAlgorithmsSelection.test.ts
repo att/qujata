@@ -1,4 +1,4 @@
-import { handleAlgorithmsSelection } from './handleAlgorithmsChange';
+import { handleAlgorithmsSelection } from './handleAlgorithmsSelection';
 import { AttSelectOption } from '../../../shared/components/att-select';
 import { AlgosBySectionDict } from '../hooks';
 import { SelectOptionType } from '../ProtocolQuery';

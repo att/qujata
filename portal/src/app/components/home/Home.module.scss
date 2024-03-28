@@ -2,6 +2,9 @@
 @import "src/styles/z-index";
 
 .app_wrapper {
+  display: flex;
+  justify-content: flex-start;
+
   padding-block-start: 20px;
   padding-inline-start: 80px;
   padding-block-end: 40px;
@@ -48,4 +51,18 @@
   border-radius: 12px;
   background-color: var($attPurple);
   padding: 14px;
+}
+
+.protocolQueryWithDivider {
+  position: relative;
+}
+
+.protocolQueryWithDivider::after {
+  content: "";
+  position: absolute;
+  inset-block-start: 35px;
+  inset-inline-start: 900px;
+  inline-size: 2px;
+  block-size: 91%;
+  background: var($dividerColorGray);
 }

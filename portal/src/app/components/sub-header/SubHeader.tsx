@@ -16,7 +16,7 @@ export interface SubHeaderProps {
     handleCloseClick: () => void;
 }
 export const SubHeader: React.FC<SubHeaderProps> = (props: SubHeaderProps) => {
-  const [open, setOpen] = useState<boolean>(true);
+  const [open, setOpen] = useState<boolean>(false);
 
   const handleToggleClick: () => void = useCallback((): void => {
     setOpen((prev: boolean) => !prev);
