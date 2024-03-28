@@ -1,2 +1,2 @@
-export * from './handleAlgorithmsChange';
+export * from './handleAlgorithmsSelection';
 export * from './convertBytesToHumanReadable';

@@ -106,6 +106,7 @@ export const ProtocolQuery: React.FC<ProtocolQueryProps> = (props: ProtocolQuery
                 value={experimentName}
                 onChange={onExperimentNameChanged}
                 placeholder=''
+                disabled={isFetching}
                 required
               />
           </div>
@@ -122,6 +123,7 @@ export const ProtocolQuery: React.FC<ProtocolQueryProps> = (props: ProtocolQuery
                 isMulti
                 hideSelectedOptions={false}
                 closeMenuOnSelect={false}
+                disabled={isFetching}
                 required
                 customComponent={{ Option: AlgorithmsSelectorCustomOption as React.FC }}
               />
@@ -141,6 +143,7 @@ export const ProtocolQuery: React.FC<ProtocolQueryProps> = (props: ProtocolQuery
                 closeMenuOnSelect={false}
                 menuIsOpen={iterationsMenuIsOpen}
                 setMenuIsOpen={setIterationsMenuIsOpen}
+                disabled={isFetching}
                 required
                 customComponent={{
                   Option: (props: any) =>
@@ -170,6 +173,7 @@ export const ProtocolQuery: React.FC<ProtocolQueryProps> = (props: ProtocolQuery
                 closeMenuOnSelect={false}
                 menuIsOpen={messageSizeMenuIsOpen}
                 setMenuIsOpen={setMessageSizeMenuIsOpen}
+                disabled={isFetching}
                 required
                 customComponent={{
                   Option: (props: any) =>
@@ -192,6 +196,7 @@ export const ProtocolQuery: React.FC<ProtocolQueryProps> = (props: ProtocolQuery
                 className={styles.form_item_text_area}
                 onChange={onDescriptionChanged}
                 placeholder=''
+                disabled={isFetching}
               />
           </div>
           <div className={styles.submitButtonWrapper}>
