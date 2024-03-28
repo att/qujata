@@ -117,7 +117,8 @@
       "<rootDir>/src/index.tsx",
       "<rootDir>/src/reportWebVitals.ts",
       "<rootDir>/src/setupProxy.js",
-      "<rootDir>/src/environments/*.*"
+      "<rootDir>/src/environments/*.*",
+      "<rootDir>/src/gh-pages"
     ]
   }
 }
