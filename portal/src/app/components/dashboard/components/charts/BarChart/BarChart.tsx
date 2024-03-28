@@ -12,12 +12,13 @@ export interface BarChartProps {
     keyOfData: string;
     tooltipKeys: string[];
     tooltipLabels: string[];   
-    title?: string;
+    titleX?: string;
+    titleY?: string;
     xAxiosTitle?: string;
 }
 
 export const BarChart: React.FC<BarChartProps> = (props: BarChartProps) => {
-    const { labels, data, tooltipKeys, tooltipLabels, keyOfData, title, xAxiosTitle } = props;
+    const { labels, data, tooltipKeys, tooltipLabels, keyOfData, titleX, titleY, xAxiosTitle } = props;
     const [dataValues, setDataValues] = useState();
     const [datasets, setDatasets] = useState<IDatasets[]>([]);
     const [algorithmsColors, setAlgorithmsColors] = useState<{[key: string]: string}>();
@@ -55,7 +56,18 @@ export const BarChart: React.FC<BarChartProps> = (props: BarChartProps) => {
             display: true,
             title: {
               display: true,
-              text: title ? title.replace(TITLE_PREFIX, '').trim() : '',
+              text: titleX ? titleX.replace(TITLE_PREFIX, '').trim() : '',
+              padding: { bottom: 30, top: 10 },
+            },
+            ticks: {
+              display: false,
+            },
+          },
+          y: {
+            display: true,
+            title: {
+              display: true,
+              text: titleY ? titleY.replace(TITLE_PREFIX, '').trim() : '',
               padding: { bottom: 30, top: 10 },
             },
             ticks: {
