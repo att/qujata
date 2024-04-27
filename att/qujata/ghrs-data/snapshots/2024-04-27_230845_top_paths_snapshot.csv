@@ -1,0 +1,11 @@
+url_path,views_total,views_unique
+/att/qujata,35,25
+/att/qujata/tree/main,9,6
+/att/qujata/commits/main,6,1
+/att/qujata/tree/main/curl,6,1
+/att/qujata/blob/main/README.md,4,2
+/att/qujata/blob/9566a5e1c53087194c281e92c41b5e5f3422a993/curl/package.json,4,1
+/att/qujata/blob/9566a5e1c53087194c281e92c41b5e5f3422a993/portal/mock-server/package.json,4,1
+/att/qujata/blob/9566a5e1c53087194c281e92c41b5e5f3422a993/portal/package.json,4,1
+/att/qujata/blob/9566a5e1c53087194c281e92c41b5e5f3422a993/portal/tests/package.json,4,1
+/att/qujata/blob/9566a5e1c53087194c281e92c41b5e5f3422a993/run/docker/docker-compose.yml,4,1
