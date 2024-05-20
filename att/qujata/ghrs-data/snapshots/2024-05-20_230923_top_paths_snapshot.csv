@@ -1,0 +1,11 @@
+url_path,views_total,views_unique
+/att/qujata,42,26
+/att/qujata/blob/main/api/main.py,28,2
+/att/qujata/blob/main/api/config/settings.py,26,2
+/att/qujata/blob/main/curl/README.md,13,2
+/att/qujata/deployments/github-pages,13,2
+/att/qujata/blob/main/api/config/mysql_config.py,12,2
+/att/qujata/blob/main/api/src/api/analyze_api.py,12,1
+/att/qujata/commits,11,3
+/att/qujata/deployments,11,2
+/att/qujata/blob/main/.github/workflows/docker-image.yml,10,3
