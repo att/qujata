@@ -1,0 +1,11 @@
+url_path,views_total,views_unique
+/att/qujata,40,26
+/att/qujata/blob/main/api/main.py,38,1
+/att/qujata/blob/main/api/config/settings.py,30,1
+/att/qujata/blob/main/api/src/api/analyze_api.py,16,1
+/att/qujata/tree/main/api,14,1
+/att/qujata/deployments/github-pages,13,2
+/att/qujata/blob/main/api/src/services/analyze_service.py,13,1
+/att/qujata/blob/main/api/config/mysql_config.py,12,1
+/att/qujata/blob/main/api/.env,12,1
+/att/qujata/commits,11,3
