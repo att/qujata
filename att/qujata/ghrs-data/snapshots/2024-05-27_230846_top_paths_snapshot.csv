@@ -1,0 +1,11 @@
+url_path,views_total,views_unique
+/att/qujata/blob/main/api/main.py,52,5
+/att/qujata/tree/main/api,46,5
+/att/qujata,37,20
+/att/qujata/blob/main/api/src/services/analyze_service.py,33,3
+/att/qujata/blob/main/api/.env,30,3
+/att/qujata/tree/main/api/src,30,3
+/att/qujata/blob/main/api/config/settings.py,30,2
+/att/qujata/blob/main/api/src/api/analyze_api.py,29,3
+/att/qujata/blob/main/api/src/api/configurations_api.py,18,2
+/att/qujata/blob/main/curl/src/curl/curl.service.ts,16,2
