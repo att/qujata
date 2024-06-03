@@ -149,6 +149,11 @@ In order to install and run the various components in development mode, see thes
 2. [Api](https://github.com/att/qujata/tree/main/api/README.md)
 3. [Curl](https://github.com/att/qujata/tree/main/curl/README.md)
 
+For UI development contributors, please find below our current UI/UX design.
+Suggestions for improvement are always welcome.
+[Qujata_Wireframes.pdf](https://github.com/user-attachments/files/15531891/Qujata_Wireframes.pdf)
+
+
 # Project Roadmap and Architecture
 Information about our roadmap can be found [here](ROADMAP.md).
 
