@@ -1,28 +1,44 @@
 import { Line } from 'react-chartjs-2';
 import { ChartOptions, Chart, TooltipItem } from 'chart.js';
-import { TITLE_PREFIX, defaultOptions } from './LineChart.const';
+import { TITLE_PREFIX } from './LineChart.const';
 import { useRef } from 'react';
 
 export interface LineChartProps {
     data: any;
     tooltipLabel?: string;
-    title?: string;
+    titleX?: string;
+    titleY?: string;
     xAxiosTitle?: string;
 }
 
 export const LineChart: React.FC<LineChartProps> = (props: LineChartProps) => {
-    const { data, title, tooltipLabel, xAxiosTitle } = props;
+    const { data, titleX, titleY, tooltipLabel, xAxiosTitle } = props;
     const chartRef = useRef<Chart<"line", number[], unknown>>(null);
 
     const options: ChartOptions<any> = {
-        ...defaultOptions,
+      responsive: true,
+      aspectRatio: 2,
       scales: {
-        ...defaultOptions.scales,
         x: {
           display: true,
           title: {
             display: true,
-            text: title ? title.replace(TITLE_PREFIX, '').trim() : '',
+            text: titleX ? titleX.replace(TITLE_PREFIX, '').trim() : '',
+          },
+        },
+        y: {
+          display: true,
+          title: {
+            display: true,
+            text: titleY ? titleY.replace(TITLE_PREFIX, '').trim() : '',
+            padding: { bottom: 10 },
+          },
+          beginAtZero: true,
+          ticks: {
+            stepSize: 2,
+            font: {
+              size: 14,
+            },
           },
         },
       },

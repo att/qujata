@@ -12,7 +12,7 @@ import { CustomDropdownIndicator } from "./components/custom-dropdown-indicator"
 import { BarChart } from "../../../../../../../dashboard/components/charts/BarChart";
 import { useChartsData } from "../../hooks/useChartsData";
 import { tooltipKeys, tooltipLabels } from "../../models/bar-chart.const";
-import { getTitleByXAxiosValue } from "./utils/dynamic-chart.utils";
+import { getTitleByXAxiosValue, getTitleByYAxiosValue } from "./utils/dynamic-chart.utils";
 import { LineChart } from "../../../../../../../dashboard/components/charts/LineChart";
 import { getChartTitleByType } from "../../utils/chart.utils";
 
@@ -104,8 +104,8 @@ export const DynamicChart: React.FC<DynamicChartProps> = (props: DynamicChartPro
 
             {xAxisValue?.value && chartType?.value && yAxisValue?.value &&
                 <>
-                    {chartType?.value === ChartType.BAR && barChartData && <BarChart title={getTitleByXAxiosValue(xAxisValue.value)} labels={barChartLabels} data={barChartData} tooltipKeys={tooltipKeys} tooltipLabels={tooltipLabels} keyOfData={yAxisValue.value} />}
-                    {chartType?.value === ChartType.LINE && lineChartConvertData && <LineChart data={lineChartConvertData} title={getTitleByXAxiosValue(xAxisValue.value)} tooltipLabel={getChartTitleByType(yAxisValue.value)} />}
+                    {chartType?.value === ChartType.BAR && barChartData && <BarChart titleX={getTitleByXAxiosValue(xAxisValue.value)} titleY={getTitleByYAxiosValue(yAxisValue.value)} labels={barChartLabels} data={barChartData} tooltipKeys={tooltipKeys} tooltipLabels={tooltipLabels} keyOfData={yAxisValue.value} />}
+                    {chartType?.value === ChartType.LINE && lineChartConvertData && <LineChart data={lineChartConvertData} titleX={getTitleByXAxiosValue(xAxisValue.value)} titleY={getTitleByYAxiosValue(yAxisValue.value)} tooltipLabel={getChartTitleByType(yAxisValue.value)} />}
                 </>
             }
         </div>

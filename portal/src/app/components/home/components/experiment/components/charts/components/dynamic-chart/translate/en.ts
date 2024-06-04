@@ -12,5 +12,11 @@ export const DYNAMIC_CHART_EN = {
     },
     X_VALUES_TITLE: {
         ITERATIONS: 'Iterations',
+    },
+    Y_VALUES_TITLE: {
+        AVERAGE_CPU: 'Average CPU',
+        AVERAGE_MEMORY: 'Average Memory',
+        BYTES_THROUGHPUT: 'Bytes Throughput',
+        REQUEST_THROUGHPUT: 'Request Throughput',
     }
 };
