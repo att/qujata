@@ -1,0 +1,11 @@
+url_path,views_total,views_unique
+/att/qujata,29,14
+/att/qujata/issues/140,15,5
+/att/qujata/blob/main/api/main.py,15,2
+/att/qujata/blob/main/portal/src/app/apis.ts,14,2
+/att/qujata/blob/main/curl/src/main.ts,14,1
+/att/qujata/blob/main/nginx/Dockerfile,12,1
+/att/qujata/blob/main/portal/README.md,11,3
+/att/qujata/blob/main/api/README.md,10,2
+/att/qujata/blob/main/portal/docker-entrypoint.sh,10,2
+/att/qujata/blob/main/portal/Dockerfile,10,2
