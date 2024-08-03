@@ -1,0 +1,11 @@
+url_path,views_total,views_unique
+/att/qujata,24,17
+/att/qujata/tree/main/api,9,4
+/att/qujata/blob/main/CONTRIBUTING.md,6,3
+/att/qujata/blob/main/api/main.py,5,2
+/att/qujata/blob/main/api/requirements.txt,5,2
+/att/qujata/blob/9eb5db100dfdd13986d77f2f5d328e15b8dbf2c4/curl/package.json,4,2
+/att/qujata/tree/main/api/src,4,2
+/att/qujata/blob/9eb5db100dfdd13986d77f2f5d328e15b8dbf2c4/run/docker/docker-compose.yml,4,1
+/att/qujata/tree/main,3,3
+/att/qujata/blob/main/api/config/mysql_config.py,3,1
