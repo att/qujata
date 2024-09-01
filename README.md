@@ -1,6 +1,11 @@
 <img src="https://github.com/att/qujata/assets/7979328/199a9c84-840b-415e-a221-621c22184ad2" width="150">
 
 
+---
+
+**NOTE: As of September 2024 we are no longer maintaining att/qujata. Please refer to the fork by [ATIS](https://github.com/atisorg/qujata), as they will be resuming this work.**
+
+---
 # Table of Contents
 
 - [**Overview**](#overview)
